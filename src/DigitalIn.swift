@@ -2,7 +2,7 @@
 public class DigitalIn {
 		
 	let instanceNumber: Int32
-	var inputMode: InputMode
+	var inputMode: DigitalInMode
 
     /**
      Use this property to get the input value.
@@ -47,7 +47,7 @@ public class DigitalIn {
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
-	public init(_ name: DigitalName, mode: InputMode) {
+	public init(_ name: DigitalName, mode: DigitalInMode) {
 		instanceNumber = name.rawValue
 		inputMode = mode
 		swiftHal_pinConfig(instanceNumber, inputMode.rawValue)
@@ -58,7 +58,7 @@ public class DigitalIn {
      
      - Parameter mode : The input mode.
      */
-	public func setMode(_ mode: InputMode) {
+	public func setMode(_ mode: DigitalInMode) {
 		inputMode = mode
 		swiftHal_pinConfig(instanceNumber, inputMode.rawValue)
 	}

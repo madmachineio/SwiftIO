@@ -54,9 +54,6 @@
                 <a class="nav-group-task-link" href="../Classes/DigitalInOut.html">DigitalInOut</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/DigitalInOut/Direction.html">– Direction</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DigitalOut.html">DigitalOut</a>
               </li>
               <li class="nav-group-task">
@@ -71,13 +68,16 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalDirection.html">DigitalDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalInMode.html">DigitalInMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalName.html">DigitalName</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/InputMode.html">InputMode</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/OutputMode.html">OutputMode</a>
+                <a class="nav-group-task-link" href="../Enums/DigitalOutMode.html">DigitalOutMode</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/RGBLEDColor.html">RGBLEDColor</a>
@@ -117,34 +117,6 @@
           <div class="section-content">
             <div class="task-group">
               <ul class="item-container">
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC9DirectionO"></a>
-                    <a name="//apple_ref/swift/Enum/Direction" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC9DirectionO">Direction</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                        <a href="../Classes/DigitalInOut/Direction.html" class="slightly-smaller">See more</a>
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Direction</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
                 <li class="item">
                   <div>
                     <code>
@@ -202,9 +174,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC15directionStatusAC9DirectionOvp"></a>
-                    <a name="//apple_ref/swift/Property/directionStatus" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC15directionStatusAC9DirectionOvp">directionStatus</a>
+                    <a name="/s:7SwiftIO12DigitalInOutC16currentDirectionAA0cG0Ovp"></a>
+                    <a name="//apple_ref/swift/Property/currentDirection" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC16currentDirectionAA0cG0Ovp">currentDirection</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -219,7 +191,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">directionStatus</span><span class="p">:</span> <span class="kt"><a href="../Classes/DigitalInOut/Direction.html">Direction</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">currentDirection</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalDirection.html">DigitalDirection</a></span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
 
                         </div>
                       </div>
@@ -229,9 +201,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA10OutputModeOtcfc"></a>
+                    <a name="/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA0cE4ModeOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:mode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA10OutputModeOtcfc">init(_:mode:)</a>
+                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA0cE4ModeOtcfc">init(_:mode:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -246,7 +218,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalName.html">DigitalName</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/OutputMode.html">OutputMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalName.html">DigitalName</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalOutMode.html">DigitalOutMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -256,9 +228,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA9InputModeOtcfc"></a>
+                    <a name="/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA0cD4ModeOtcfc"></a>
                     <a name="//apple_ref/swift/Method/init(_:mode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA9InputModeOtcfc">init(_:mode:)</a>
+                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC_4modeAcA0C4NameO_AA0cD4ModeOtcfc">init(_:mode:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -273,7 +245,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalName.html">DigitalName</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/InputMode.html">InputMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">name</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalName.html">DigitalName</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalInMode.html">DigitalInMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -283,9 +255,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC11setToOutputyyAA0H4ModeOF"></a>
+                    <a name="/s:7SwiftIO12DigitalInOutC11setToOutputyyAA0cE4ModeOF"></a>
                     <a name="//apple_ref/swift/Method/setToOutput(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC11setToOutputyyAA0H4ModeOF">setToOutput(_:)</a>
+                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC11setToOutputyyAA0cE4ModeOF">setToOutput(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -300,7 +272,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setToOutput</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/OutputMode.html">OutputMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setToOutput</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalOutMode.html">DigitalOutMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -310,9 +282,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO12DigitalInOutC10setToInputyyAA0H4ModeOF"></a>
+                    <a name="/s:7SwiftIO12DigitalInOutC10setToInputyyAA0cD4ModeOF"></a>
                     <a name="//apple_ref/swift/Method/setToInput(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC10setToInputyyAA0H4ModeOF">setToInput(_:)</a>
+                    <a class="token" href="#/s:7SwiftIO12DigitalInOutC10setToInputyyAA0cD4ModeOF">setToInput(_:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -327,7 +299,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setToInput</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/InputMode.html">InputMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setToInput</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalInMode.html">DigitalInMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>

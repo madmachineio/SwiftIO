@@ -4,9 +4,9 @@ public class RGBLED {
 	}		
 
 	public init() {
-		swiftHal_pinConfig(RGBLEDColor.red.rawValue, OutputMode.pushPull.rawValue)
-		swiftHal_pinConfig(RGBLEDColor.green.rawValue, OutputMode.pushPull.rawValue)
-		swiftHal_pinConfig(RGBLEDColor.blue.rawValue, OutputMode.pushPull.rawValue)
+		swiftHal_pinConfig(RGBLEDColor.red.rawValue, DigitalOutMode.pushPull.rawValue)
+		swiftHal_pinConfig(RGBLEDColor.green.rawValue, DigitalOutMode.pushPull.rawValue)
+		swiftHal_pinConfig(RGBLEDColor.blue.rawValue, DigitalOutMode.pushPull.rawValue)
 
 		swiftHal_pinWrite(RGBLEDColor.red.rawValue, RGBLEDState.off.rawValue)
 		swiftHal_pinWrite(RGBLEDColor.green.rawValue, RGBLEDState.off.rawValue)

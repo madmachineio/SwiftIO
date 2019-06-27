@@ -22,7 +22,7 @@
 public class DigitalOut {
 
 	let instanceNumber: Int32
-	var outputMode: OutputMode
+	var outputMode: DigitalOutMode
 
     /**
      The current state of the output value.
@@ -60,7 +60,7 @@ public class DigitalOut {
      let pin = DigitalOut(.D0, mode: .pushPull)
      ````
      */
-    public init(_ name: DigitalName, mode: OutputMode) {
+    public init(_ name: DigitalName, mode: DigitalOutMode) {
         instanceNumber = name.rawValue
         outputMode = mode
         swiftHal_pinConfig(instanceNumber, outputMode.rawValue)
@@ -72,7 +72,7 @@ public class DigitalOut {
      
      - Parameter mode : The output mode.
      */
-    public func setMode(_ mode: OutputMode) {
+    public func setMode(_ mode: DigitalOutMode) {
         outputMode = mode
         swiftHal_pinConfig(instanceNumber, outputMode.rawValue)
 	}

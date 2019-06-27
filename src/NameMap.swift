@@ -5,16 +5,21 @@ public enum DigitalName: Int32 {
     case D39 = 59, D40 = 58, D41 = 57, D42 = 56, D43 = 55, D44 = 54, D45 = 53, D46 = 52
 }
 
-public enum OutputMode: Int32 {
+public enum DigitalDirection {
+    case output, input
+}
+
+public enum DigitalOutMode: Int32 {
 	case pushPull = 0, openDrain
 }
 
-public enum InputMode: Int32 {
-	case pullDown = 2, pullUp, float
+public enum DigitalInMode: Int32 {
+	case pullDown = 2, pullUp, pullNone
 }
 
 
 public enum RGBLEDColor: Int32 {
 	case red = 9, green = 10, blue = 11
 }
+
 

@@ -1,13 +1,9 @@
 public class DigitalInOut {
-
-	public enum Direction {
-		case output, input
-	}
 		
 	let instanceNumber: Int32
-	var outputMode: OutputMode = .pushPull
-	var inputMode: InputMode = .pullDown
-	var direction: Direction
+	var outputMode: DigitalOutMode = .pushPull
+	var inputMode: DigitalInMode = .pullDown
+    var direction: DigitalDirection
 
 	public var outputValue: Int {
 		willSet {
@@ -16,6 +12,7 @@ public class DigitalInOut {
 			}
 		}
 	}
+    
 
 	public var inputValue: Int {
 		get {
@@ -26,12 +23,12 @@ public class DigitalInOut {
 			}
 		}
 	}
-
-	public var directionStatus: Direction {
+    
+	public var currentDirection: DigitalDirection {
 		return direction
 	}
 
-	public init(_ name: DigitalName, mode: OutputMode) {
+	public init(_ name: DigitalName, mode: DigitalOutMode) {
 		instanceNumber = name.rawValue
 		direction = .output
 		inputMode = .pullDown
@@ -40,7 +37,7 @@ public class DigitalInOut {
 		outputValue = 0
 	}
 
-	public init(_ name: DigitalName, mode: InputMode) {
+	public init(_ name: DigitalName, mode: DigitalInMode) {
 		instanceNumber = name.rawValue
 		direction = .input
 		outputMode = .pushPull
@@ -49,13 +46,13 @@ public class DigitalInOut {
 		outputValue = 0
 	}
 
-	public func setToOutput(_ mode: OutputMode) {
+	public func setToOutput(_ mode: DigitalOutMode) {
 		outputMode = mode
 		direction = .output
 		swiftHal_pinConfig(instanceNumber, outputMode.rawValue)
 	}
 
-	public func setToInput(_ mode: InputMode) {
+	public func setToInput(_ mode: DigitalInMode) {
 		inputMode = mode
 		direction = .input
 		swiftHal_pinConfig(instanceNumber, inputMode.rawValue)
