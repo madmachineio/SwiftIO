@@ -10,11 +10,9 @@
     //Create a DigitalOut to .D0
     let pin = DigitalOut(.D0)
  
-    //Reverse the output every 1 second
+    //Reverse the output value every 1 second
     while true {
-        pin.write(1)
-        msSleep(1000)
-        pin.write(0)
+        pin.reverse()
         msSleep(1000)
     }
  }
@@ -27,12 +25,12 @@ public class DigitalOut {
 	var outputMode: OutputMode
 
     /**
-     Use this property to set the output value.
+     The current state of the output value.
+     Write to this property would change the output value.
      
-     - Attention: This property is **write only!**
      */
-	public var outputValue: Int {
-		willSet {
+    public var outputValue: Int {
+        willSet {
 			swiftHal_pinWrite(instanceNumber, Int32(newValue))
 		}
 	}
@@ -89,7 +87,7 @@ public class DigitalOut {
 	}
     
     /**
-     Reverse the current value of a pin.
+     Reverse the current output value of a pin.
      */
     public func reverse() {
         outputValue = outputValue == 1 ? 0 : 1

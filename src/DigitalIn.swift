@@ -7,7 +7,7 @@ public class DigitalIn {
     /**
      Use this property to get the input value.
      
-     - Attention: This property is **read only**!
+     - Attention: This property is **read only!**
      */
 	public var inputValue: Int {
 		return Int(swiftHal_pinRead(instanceNumber))

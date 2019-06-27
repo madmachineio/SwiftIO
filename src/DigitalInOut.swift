@@ -68,6 +68,13 @@ public class DigitalInOut {
 	public func read() -> Int {
 		return inputValue
 	}
+
+    /**
+     Reverse the current output value of a pin.
+     */
+    public func reverse() {
+        outputValue = outputValue == 1 ? 0 : 1
+    }
 }
 
 
