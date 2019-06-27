@@ -505,6 +505,27 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
+      "line": 25,
+      "symbol": "RGBLEDState",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
+      "line": 26,
+      "symbol": "RGBLEDState.off",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
+      "line": 26,
+      "symbol": "RGBLEDState.on",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/andy/Documents/SwiftIO/src/Platform.swift",
       "line": 1,
       "symbol": "usWait(_:)",
@@ -527,49 +548,28 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 2,
-      "symbol": "RGBLED.RGBLEDState",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
       "line": 3,
-      "symbol": "RGBLED.RGBLEDState.off",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 3,
-      "symbol": "RGBLED.RGBLEDState.on",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 6,
       "symbol": "RGBLED.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 16,
+      "line": 13,
       "symbol": "RGBLED.on(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 20,
+      "line": 17,
       "symbol": "RGBLED.off(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 24,
+      "line": 21,
       "symbol": "RGBLED.set(red:green:blue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

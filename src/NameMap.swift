@@ -22,4 +22,6 @@ public enum RGBLEDColor: Int32 {
 	case red = 9, green = 10, blue = 11
 }
 
-
+public enum RGBLEDState: Int32 {
+    case on = 0, off = 1
+}

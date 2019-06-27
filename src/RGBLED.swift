@@ -1,7 +1,4 @@
-public class RGBLED {
-	public enum RGBLEDState: Int32 {
-    		case on = 0, off = 1
-	}		
+public class RGBLED {	
 
 	public init() {
 		swiftHal_pinConfig(RGBLEDColor.red.rawValue, DigitalOutMode.pushPull.rawValue)
