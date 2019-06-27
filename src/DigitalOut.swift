@@ -1,4 +1,26 @@
-///  Use the DigitalOut class to set the value of a digital output pin.
+/**
+ Use the DigitalOut class to set the value of a digital output pin.
+ 
+ ### Example: A simple hello world.
+ 
+ ````
+ import SwiftIO
+ 
+ main() {
+    //Create a DigitalOut to .D0
+    let pin = DigitalOut(.D0)
+ 
+    //Reverse the output every 1 second
+    while true {
+        pin.write(1)
+        msSleep(1000)
+        pin.write(0)
+        msSleep(1000)
+    }
+ }
+ ````
+ 
+ */
 public class DigitalOut {
 
 	let instanceNumber: Int32
@@ -65,6 +87,14 @@ public class DigitalOut {
 	public func write(_ value: Int) {
 		outputValue = value
 	}
+    
+    /**
+     Reverse the current value of a pin.
+     */
+    public func reverse() {
+        outputValue = outputValue == 1 ? 0 : 1
+    }
+    
 }
 
 
