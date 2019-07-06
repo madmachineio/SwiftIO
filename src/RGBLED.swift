@@ -1,5 +1,7 @@
 public class RGBLED {	
 
+	public var value: Int
+
 	public init() {
 		swiftHal_pinConfig(RGBLEDColor.red.rawValue, DigitalOutMode.pushPull.rawValue)
 		swiftHal_pinConfig(RGBLEDColor.green.rawValue, DigitalOutMode.pushPull.rawValue)
@@ -8,6 +10,8 @@ public class RGBLED {
 		swiftHal_pinWrite(RGBLEDColor.red.rawValue, RGBLEDState.off.rawValue)
 		swiftHal_pinWrite(RGBLEDColor.green.rawValue, RGBLEDState.off.rawValue)
 		swiftHal_pinWrite(RGBLEDColor.blue.rawValue, RGBLEDState.off.rawValue)
+
+		value = 0
 	}
 
 	public func on(_ color: RGBLEDColor) {

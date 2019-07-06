@@ -1,7 +1,7 @@
 /// Use the DigitalIn class to read the value of a digital input pin.
 public class DigitalIn {
 		
-	let instanceNumber: Int32
+	let deviceNumber: Int32
 	var inputMode: DigitalInMode
 
     /**
@@ -10,7 +10,7 @@ public class DigitalIn {
      - Attention: This property is **read only!**
      */
 	public var inputValue: Int {
-		return Int(swiftHal_pinRead(instanceNumber))
+		return Int(swiftHal_pinRead(deviceNumber))
 	}
 
     /**
@@ -48,9 +48,9 @@ public class DigitalIn {
      ````
      */
 	public init(_ name: DigitalName, mode: DigitalInMode) {
-		instanceNumber = name.rawValue
+		deviceNumber = name.rawValue
 		inputMode = mode
-		swiftHal_pinConfig(instanceNumber, inputMode.rawValue)
+		swiftHal_pinConfig(deviceNumber, inputMode.rawValue)
 	}
 
     /**
@@ -60,7 +60,7 @@ public class DigitalIn {
      */
 	public func setMode(_ mode: DigitalInMode) {
 		inputMode = mode
-		swiftHal_pinConfig(instanceNumber, inputMode.rawValue)
+		swiftHal_pinConfig(deviceNumber, inputMode.rawValue)
 	}
 
     /**

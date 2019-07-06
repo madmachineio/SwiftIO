@@ -21,7 +21,7 @@
  */
 public class DigitalOut {
 
-	let instanceNumber: Int32
+	let deviceNumber: Int32
 	var outputMode: DigitalOutMode
 
     /**
@@ -31,7 +31,7 @@ public class DigitalOut {
      */
     public var outputValue: Int {
         willSet {
-			swiftHal_pinWrite(instanceNumber, Int32(newValue))
+			swiftHal_pinWrite(deviceNumber, Int32(newValue))
 		}
 	}
     
@@ -61,9 +61,9 @@ public class DigitalOut {
      ````
      */
     public init(_ name: DigitalName, mode: DigitalOutMode) {
-        instanceNumber = name.rawValue
+        deviceNumber = name.rawValue
         outputMode = mode
-        swiftHal_pinConfig(instanceNumber, outputMode.rawValue)
+        swiftHal_pinConfig(deviceNumber, outputMode.rawValue)
         outputValue = 0
     }
 
@@ -74,7 +74,7 @@ public class DigitalOut {
      */
     public func setMode(_ mode: DigitalOutMode) {
         outputMode = mode
-        swiftHal_pinConfig(instanceNumber, outputMode.rawValue)
+        swiftHal_pinConfig(deviceNumber, outputMode.rawValue)
 	}
 
     /**

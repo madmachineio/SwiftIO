@@ -5,6 +5,8 @@ public enum DigitalName: Int32 {
     case D39 = 59, D40 = 58, D41 = 57, D42 = 56, D43 = 55, D44 = 54, D45 = 53, D46 = 52
 }
 
+
+
 public enum DigitalDirection {
     case output, input
 }
@@ -18,10 +20,23 @@ public enum DigitalInMode: Int32 {
 }
 
 
+
+
 public enum RGBLEDColor: Int32 {
 	case red = 9, green = 10, blue = 11
 }
 
 public enum RGBLEDState: Int32 {
     case on = 0, off = 1
+}
+
+
+
+
+public enum I2CName: Int32 {
+    case I2C0 = 0, I2C1 = 1
+}
+
+public enum I2CSpeed: Int32 {
+    case standard = 1, fast = 2
 }
