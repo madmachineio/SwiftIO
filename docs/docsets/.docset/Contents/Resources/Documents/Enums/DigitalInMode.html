@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (14% documented)
+         (9% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -51,13 +51,16 @@
                 <a class="nav-group-task-link" href="../Classes/DigitalIn.html">DigitalIn</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/DigitalInOut.html">DigitalInOut</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DigitalOut.html">DigitalOut</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/RGBLED.html">RGBLED</a>
+                <a class="nav-group-task-link" href="../Classes/I2C.html">I2C</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/Timer.html">Timer</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/UART.html">UART</a>
               </li>
             </ul>
           </li>
@@ -65,16 +68,25 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalCallbackMode.html">DigitalCallbackMode</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalDirection.html">DigitalDirection</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalIOId.html">DigitalIOId</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalInMode.html">DigitalInMode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/DigitalName.html">DigitalName</a>
+                <a class="nav-group-task-link" href="../Enums/DigitalOutMode.html">DigitalOutMode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/DigitalOutMode.html">DigitalOutMode</a>
+                <a class="nav-group-task-link" href="../Enums/I2CId.html">I2CId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/I2CSpeed.html">I2CSpeed</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/RGBLEDColor.html">RGBLEDColor</a>
@@ -82,11 +94,41 @@
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/RGBLEDState.html">RGBLEDState</a>
               </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/TimerType.html">TimerType</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UARTBufLength.html">UARTBufLength</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UARTDataBits.html">UARTDataBits</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UARTId.html">UARTId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UARTParity.html">UARTParity</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/UARTStopBits.html">UARTStopBits</a>
+              </li>
             </ul>
           </li>
           <li class="nav-group-name">
             <a class="nav-group-name-link" href="../Functions.html">Functions</a>
             <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO15calcNanosecondsyS2uF">calcNanoseconds(_:)</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO13getClockCycleSuyF">getClockCycle()</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO9getUpTimeSuyF">getUpTime()</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO11getUpTime64s5Int64VyF">getUpTime64()</a>
+              </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO7msSleepyySiF">msSleep(_:)</a>
               </li>
@@ -104,7 +146,7 @@
             <h1>DigitalInMode</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DigitalInMode</span> <span class="p">:</span> <span class="kt">Int32</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DigitalInMode</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
 
                 </div>
               </div>
@@ -137,7 +179,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">pullDown</span> <span class="o">=</span> <span class="mi">2</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">pullDown</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
 
                         </div>
                       </div>
@@ -206,7 +248,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-06-28)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-07-21)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
