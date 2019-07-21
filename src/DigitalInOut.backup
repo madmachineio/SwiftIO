@@ -1,9 +1,6 @@
 public class DigitalInOut {
 		
-	let instanceNumber: Int32
-	var outputMode: DigitalOutMode = .pushPull
-	var inputMode: DigitalInMode = .pullDown
-    var direction: DigitalDirection
+	var device: DigitalIODevice
 
 	public var outputValue: Int {
 		willSet {

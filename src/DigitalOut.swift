@@ -21,17 +21,16 @@
  */
 public class DigitalOut {
 
-	let deviceNumber: Int32
-	var outputMode: DigitalOutMode
+    var obj: DigitalIOObject
 
     /**
      The current state of the output value.
      Write to this property would change the output value.
      
      */
-    public var outputValue: Int {
+    public var outputValue: UInt32 {
         willSet {
-			swiftHal_pinWrite(deviceNumber, Int32(newValue))
+			swiftHal_pinWrite(&obj, newValue)
 		}
 	}
     
@@ -45,8 +44,8 @@ public class DigitalOut {
      let pin = DigitalOut(.D0)
      ````
      */
-    public convenience init(_ name: DigitalName) {
-        self.init(name, mode: .pushPull)
+    public convenience init(_ id: DigitalIOId) {
+        self.init(id, mode: .pushPull)
     }
     
     /**
@@ -60,11 +59,18 @@ public class DigitalOut {
      let pin = DigitalOut(.D0, mode: .pushPull)
      ````
      */
-    public init(_ name: DigitalName, mode: DigitalOutMode) {
-        deviceNumber = name.rawValue
-        outputMode = mode
-        swiftHal_pinConfig(deviceNumber, outputMode.rawValue)
+    public init(_ id: DigitalIOId, mode: DigitalOutMode) {
+        obj = DigitalIOObject()
+        obj.id = id.rawValue
+        obj.direction = DigitalDirection.output.rawValue
+        obj.outputMode = mode.rawValue
+        swiftHal_pinInit(&obj)
         outputValue = 0
+    }
+
+    deinit {
+        print("DigitalOut Deinit")
+        swiftHal_pinDeinit(&obj)
     }
 
     /**
@@ -73,8 +79,8 @@ public class DigitalOut {
      - Parameter mode : The output mode.
      */
     public func setMode(_ mode: DigitalOutMode) {
-        outputMode = mode
-        swiftHal_pinConfig(deviceNumber, outputMode.rawValue)
+        obj.outputMode = mode.rawValue
+        swiftHal_pinConfig(&obj)
 	}
 
     /**
@@ -82,7 +88,7 @@ public class DigitalOut {
 
      - Parameter value : The value to be written.
      */
-	public func write(_ value: Int) {
+	public func write(_ value: UInt32) {
 		outputValue = value
 	}
     

@@ -1,8 +1,7 @@
 /// Use the DigitalIn class to read the value of a digital input pin.
 public class DigitalIn {
 		
-	let deviceNumber: Int32
-	var inputMode: DigitalInMode
+    var obj: DigitalIOObject
 
     /**
      Use this property to get the input value.
@@ -10,7 +9,7 @@ public class DigitalIn {
      - Attention: This property is **read only!**
      */
 	public var inputValue: Int {
-		return Int(swiftHal_pinRead(deviceNumber))
+		return Int(swiftHal_pinRead(&obj))
 	}
 
     /**
@@ -23,8 +22,8 @@ public class DigitalIn {
      let pin = DigitalIn(.D0)
      ````
      */
-    public convenience init(_ name: DigitalName) {
-        self.init(name, mode: .pullDown)
+    public convenience init(_ id: DigitalIOId) {
+        self.init(id, mode: .pullDown)
     }
 
     /**
@@ -47,11 +46,21 @@ public class DigitalIn {
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
-	public init(_ name: DigitalName, mode: DigitalInMode) {
-		deviceNumber = name.rawValue
-		inputMode = mode
-		swiftHal_pinConfig(deviceNumber, inputMode.rawValue)
+	public init(_ id: DigitalIOId, mode: DigitalInMode) {
+        obj = DigitalIOObject()
+        obj.id = id.rawValue
+        obj.direction = DigitalDirection.input.rawValue
+        obj.inputMode = mode.rawValue
+		swiftHal_pinInit(&obj)
 	}
+
+    deinit {
+        print("DigitalIn Deinit")
+        if obj.callbackMode != DigitalCallbackMode.disable.rawValue {
+            removeCallback()
+        }
+        swiftHal_pinDeinit(&obj)
+    }
 
     /**
      Set the input mode for a digital pin.
@@ -59,9 +68,10 @@ public class DigitalIn {
      - Parameter mode : The input mode.
      */
 	public func setMode(_ mode: DigitalInMode) {
-		inputMode = mode
-		swiftHal_pinConfig(deviceNumber, inputMode.rawValue)
+		obj.inputMode = mode.rawValue
+		swiftHal_pinConfig(&obj)
 	}
+
 
     /**
      Read value from a digital pin.
@@ -73,6 +83,23 @@ public class DigitalIn {
 	public func read() -> Int {
 		return inputValue
 	}
+    /*
+    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalCallbackMode) {
+        obj.callbackMode = mode.rawValue
+        swiftHal_pinAddCallback(&obj, callback)
+    }*/
+
+    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalCallbackMode) {
+        obj.callbackMode = mode.rawValue
+        obj.callback = callback
+        swiftHal_pinAddCallback(&obj)
+    }
+
+    public func removeCallback() {
+        obj.callbackMode = DigitalCallbackMode.disable.rawValue
+        swiftHal_pinRemoveCallback(&obj)
+    }
+
 }
 
 
