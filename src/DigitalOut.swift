@@ -28,9 +28,9 @@ public class DigitalOut {
      Write to this property would change the output value.
      
      */
-    public var outputValue: UInt32 {
+    public var value: Bool {
         willSet {
-			swiftHal_pinWrite(&obj, newValue)
+			swiftHal_gpioWrite(&obj, newValue ? 1 : 0)
 		}
 	}
     
@@ -62,15 +62,14 @@ public class DigitalOut {
     public init(_ id: DigitalIOId, mode: DigitalOutMode) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
-        obj.direction = DigitalDirection.output.rawValue
+        obj.direction = DigitalIODirection.output.rawValue
         obj.outputMode = mode.rawValue
-        swiftHal_pinInit(&obj)
-        outputValue = 0
+        swiftHal_gpioInit(&obj)
+        value = false
     }
 
     deinit {
-        print("DigitalOut Deinit")
-        swiftHal_pinDeinit(&obj)
+        swiftHal_gpioDeinit(&obj)
     }
 
     /**
@@ -80,7 +79,7 @@ public class DigitalOut {
      */
     public func setMode(_ mode: DigitalOutMode) {
         obj.outputMode = mode.rawValue
-        swiftHal_pinConfig(&obj)
+        swiftHal_gpioConfig(&obj)
 	}
 
     /**
@@ -88,15 +87,19 @@ public class DigitalOut {
 
      - Parameter value : The value to be written.
      */
-	public func write(_ value: UInt32) {
-		outputValue = value
+	public func write(_ value: Bool) {
+		self.value = value
 	}
     
     /**
      Reverse the current output value of a pin.
      */
     public func reverse() {
-        outputValue = outputValue == 1 ? 0 : 1
+        value = value ? false : true
+    }
+
+    public func getState() -> Bool {
+        return value
     }
     
 }

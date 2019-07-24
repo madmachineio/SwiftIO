@@ -17,26 +17,37 @@ public class I2C {
         swiftHal_i2cDeinit(&obj)
     }
 
-
-    public func write(to address: UInt8, _ writeArray: [UInt8]) {
-        swiftHal_i2cWrite(&obj, address, writeArray, UInt32(writeArray.count))
+    public func write(_ byte: UInt8, to address: UInt8) {
+        let array: [UInt8] = [byte]
+        swiftHal_i2cWrite(&obj, address, array, 1);
     }
 
-    public func read(from address: UInt8, count length: Int) -> [UInt8] {
-        var readArray: [UInt8] = Array(repeating: 0, count: length)
-        swiftHal_i2cRead(&obj, address, &readArray, UInt32(length))
-        return readArray
+    public func write(_ array: [UInt8], to address: UInt8) {
+        swiftHal_i2cWrite(&obj, address, array, UInt32(array.count))
     }
 
-    public func read8bitReg(from address: UInt8, for reg: UInt8, count length: Int) -> [UInt8] {
-        var readArray: [UInt8] = Array(repeating: 0, count: length)
-        swiftHal_i2cRead8bitReg(&obj, address, reg, &readArray, UInt32(length))
-        return readArray
+
+    public func read(from address: UInt8) -> UInt8 {
+        var array: [UInt8] = [0]
+        swiftHal_i2cRead(&obj, address, &array, 1)
+        return array[0]
     }
 
-    public func read16bitReg(from address: UInt8, for reg: UInt16, count length: Int) -> [UInt8] {
-        var readArray: [UInt8] = Array(repeating: 0, count: length)
-        swiftHal_i2cRead16bitReg(&obj, address, reg, &readArray, UInt32(length))
-        return readArray
+    public func readArray(_ count: Int, from address: UInt8) -> [UInt8] {
+        var array: [UInt8] = Array(repeating: 0, count: count)
+        swiftHal_i2cRead(&obj, address, &array, UInt32(count))
+        return array
+    }
+
+    public func read8bitReg(_ count: Int, from address: UInt8, in register: UInt8) -> [UInt8] {
+        var array: [UInt8] = Array(repeating: 0, count: count)
+        swiftHal_i2cRead8bitReg(&obj, address, register, &array, UInt32(count))
+        return array
+    }
+
+    public func read16bitReg(_ count: Int, from address: UInt8, in register: UInt16) -> [UInt8] {
+        var array: [UInt8] = Array(repeating: 0, count: count)
+        swiftHal_i2cRead16bitReg(&obj, address, register, &array, UInt32(count))
+        return array
     }
 }

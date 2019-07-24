@@ -8,8 +8,8 @@ public class DigitalIn {
      
      - Attention: This property is **read only!**
      */
-	public var inputValue: Int {
-		return Int(swiftHal_pinRead(&obj))
+	public var value: Bool {
+		return swiftHal_gpioRead(&obj) == 1 ? true : false
 	}
 
     /**
@@ -49,17 +49,16 @@ public class DigitalIn {
 	public init(_ id: DigitalIOId, mode: DigitalInMode) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
-        obj.direction = DigitalDirection.input.rawValue
+        obj.direction = DigitalIODirection.input.rawValue
         obj.inputMode = mode.rawValue
-		swiftHal_pinInit(&obj)
+		swiftHal_gpioInit(&obj)
 	}
 
     deinit {
-        print("DigitalIn Deinit")
-        if obj.callbackMode != DigitalCallbackMode.disable.rawValue {
+        if obj.callback != nil {
             removeCallback()
         }
-        swiftHal_pinDeinit(&obj)
+        swiftHal_gpioDeinit(&obj)
     }
 
     /**
@@ -69,7 +68,7 @@ public class DigitalIn {
      */
 	public func setMode(_ mode: DigitalInMode) {
 		obj.inputMode = mode.rawValue
-		swiftHal_pinConfig(&obj)
+		swiftHal_gpioConfig(&obj)
 	}
 
 
@@ -80,24 +79,25 @@ public class DigitalIn {
      
      - Returns: 0 or 1 of the logic value.
      */
-	public func read() -> Int {
-		return inputValue
+	public func read() -> Bool {
+		return value
 	}
     /*
-    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalCallbackMode) {
+    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
         obj.callbackMode = mode.rawValue
-        swiftHal_pinAddCallback(&obj, callback)
+        swiftHal_gpioAddCallback(&obj, callback)
     }*/
 
-    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalCallbackMode) {
+    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
         obj.callbackMode = mode.rawValue
         obj.callback = callback
-        swiftHal_pinAddCallback(&obj)
+        swiftHal_gpioAddCallback(&obj)
     }
 
     public func removeCallback() {
-        obj.callbackMode = DigitalCallbackMode.disable.rawValue
-        swiftHal_pinRemoveCallback(&obj)
+        obj.callbackMode = DigitalInCallbackMode.disable.rawValue
+        obj.callback = nil
+        swiftHal_gpioRemoveCallback(&obj)
     }
 
 }

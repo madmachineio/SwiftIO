@@ -1,17 +1,12 @@
-void swiftHal_msSleep(int t);
-
-void swiftHal_usWait(int t);
-
+void swiftHal_msSleep(unsigned int t);
+void swiftHal_usWait(unsigned int t);
 unsigned int swiftHal_getUpTimeInMs32(void);
-
 long long swiftHal_getUpTimeInMs64(void);
-
 unsigned int swiftHal_getClockCycle(void);
-
 unsigned int swiftHal_computeNanoseconds(unsigned int);
 
 
-typedef void (*GpioCallbackType)(void);
+typedef void (*VoidCallbackType)(void);
 
 typedef struct {
 	void *ptr;
@@ -20,16 +15,16 @@ typedef struct {
 	unsigned char inputMode;
 	unsigned char outputMode;
 	unsigned char callbackMode;
-	GpioCallbackType callback;
+	VoidCallbackType callback;
 } DigitalIOObject;
 
-int swiftHal_pinInit(DigitalIOObject *);
-int swiftHal_pinDeinit(DigitalIOObject *);
-int swiftHal_pinConfig(DigitalIOObject *);
-int swiftHal_pinWrite(DigitalIOObject *, unsigned int);
-int swiftHal_pinRead(DigitalIOObject *);
-int swiftHal_pinAddCallback(DigitalIOObject *);
-int swiftHal_pinRemoveCallback(DigitalIOObject *);
+int swiftHal_gpioInit(DigitalIOObject *);
+int swiftHal_gpioDeinit(DigitalIOObject *);
+int swiftHal_gpioConfig(DigitalIOObject *);
+int swiftHal_gpioWrite(DigitalIOObject *, unsigned int);
+int swiftHal_gpioRead(DigitalIOObject *);
+int swiftHal_gpioAddCallback(DigitalIOObject *);
+int swiftHal_gpioRemoveCallback(DigitalIOObject *);
 
 
 
@@ -62,22 +57,22 @@ typedef struct {
 	unsigned char stopBits;
 	unsigned char dataBits;
 	unsigned int baudRate;
-	unsigned int readBufLength;
+	unsigned int readBufferLength;
 } UARTObject;
 
 int swiftHal_uartInit(UARTObject *obj);
 int swiftHal_uartConfig(UARTObject *obj);
 int swiftHal_uartDeinit(UARTObject *obj);
 int swiftHal_uartWriteChar(UARTObject *obj, unsigned char byte);
-int swiftHal_uartWrite(UARTObject *obj, const char *buf, unsigned int length);
+int swiftHal_uartWrite(UARTObject *obj, const unsigned char *buf, unsigned int length);
 unsigned char swiftHal_uartReadChar(UARTObject *obj);
 int swiftHal_uartRead(UARTObject *obj, unsigned char *buf, unsigned int length);
 unsigned int swiftHal_uartCount(UARTObject *obj);
+int swiftHal_uartClearBuffer(UARTObject *obj);
 
 
 
 
-typedef void (*VoidCallbackType)(void);
 
 typedef struct {
 	void *ptr;
@@ -92,3 +87,34 @@ int swiftHal_timerDeinit(TimerObject *obj);
 int swiftHal_timerStart(TimerObject *obj);
 int swiftHal_timerStop(TimerObject *obj);
 unsigned int swiftHal_timerCount(TimerObject *obj);
+
+
+
+
+
+
+
+typedef struct {
+	void *ptr;
+	unsigned char id;
+	unsigned int period;
+	unsigned int pulse;
+} PWMObject;
+
+
+int swiftHal_PWMConfig(PWMObject *obj);
+int swiftHal_PWMUpdate(PWMObject *obj);
+int swiftHal_PWMInit(PWMObject *obj);
+
+
+
+
+typedef struct {
+	void *ptr;
+	unsigned char id;
+	unsigned int period;
+} AnalogInObject;
+
+
+int swiftHal_ADCInit(AnalogInObject *obj);
+unsigned int swiftHal_ADCRead(AnalogInObject *obj);
