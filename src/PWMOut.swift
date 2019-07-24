@@ -1,4 +1,4 @@
-public class PWM {
+public class PWMOut {
     var obj: PWMObject
 
     public init(_ id: PWMId, period: UInt, pulse: UInt) {

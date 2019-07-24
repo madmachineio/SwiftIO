@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>DigitalCallbackMode Enumeration Reference</title>
+    <title>DigitalIODirection Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,16 +14,16 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/DigitalCallbackMode" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/DigitalIODirection" class="dashAnchor"></a>
 
-    <a title="DigitalCallbackMode Enumeration Reference"></a>
+    <a title="DigitalIODirection Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (9% documented)
+         (7% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -38,7 +38,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../index.html"> Reference</a>
       <img class="carat" src="../img/carat.png" />
-      DigitalCallbackMode Enumeration Reference
+      DigitalIODirection Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -48,6 +48,9 @@
             <a class="nav-group-name-link" href="../Classes.html">Classes</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/AnalogIn.html">AnalogIn</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/DigitalIn.html">DigitalIn</a>
               </li>
               <li class="nav-group-task">
@@ -55,6 +58,9 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/I2C.html">I2C</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/PWMOut.html">PWMOut</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Timer.html">Timer</a>
@@ -68,13 +74,16 @@
             <a class="nav-group-name-link" href="../Enums.html">Enumerations</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/DigitalCallbackMode.html">DigitalCallbackMode</a>
+                <a class="nav-group-task-link" href="../Enums/AnalogInId.html">AnalogInId</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/DigitalDirection.html">DigitalDirection</a>
+                <a class="nav-group-task-link" href="../Enums/DigitalIODirection.html">DigitalIODirection</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalIOId.html">DigitalIOId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalInCallbackMode.html">DigitalInCallbackMode</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalInMode.html">DigitalInMode</a>
@@ -89,6 +98,9 @@
                 <a class="nav-group-task-link" href="../Enums/I2CSpeed.html">I2CSpeed</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/PWMId.html">PWMId</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/RGBLEDColor.html">RGBLEDColor</a>
               </li>
               <li class="nav-group-task">
@@ -98,7 +110,7 @@
                 <a class="nav-group-task-link" href="../Enums/TimerType.html">TimerType</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/UARTBufLength.html">UARTBufLength</a>
+                <a class="nav-group-task-link" href="../Enums/UARTBufferLength.html">UARTBufferLength</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/UARTDataBits.html">UARTDataBits</a>
@@ -130,10 +142,10 @@
                 <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO11getUpTime64s5Int64VyF">getUpTime64()</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO7msSleepyySiF">msSleep(_:)</a>
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO5sleepyySiF">sleep(_:)</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO6usWaityySiF">usWait(_:)</a>
+                <a class="nav-group-task-link" href="../Functions.html#/s:7SwiftIO4waityySiF">wait(_:)</a>
               </li>
             </ul>
           </li>
@@ -143,10 +155,10 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>DigitalCallbackMode</h1>
+            <h1>DigitalIODirection</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DigitalCallbackMode</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">DigitalIODirection</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
 
                 </div>
               </div>
@@ -162,9 +174,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO7disableyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/disable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO7disableyA2CmF">disable</a>
+                    <a name="/s:7SwiftIO18DigitalIODirectionO6outputyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/output" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO18DigitalIODirectionO6outputyA2CmF">output</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -179,7 +191,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">disable</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">output</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
 
                         </div>
                       </div>
@@ -189,9 +201,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO10risingEdgeyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/risingEdge" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO10risingEdgeyA2CmF">risingEdge</a>
+                    <a name="/s:7SwiftIO18DigitalIODirectionO5inputyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/input" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO18DigitalIODirectionO5inputyA2CmF">input</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -206,115 +218,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">risingEdge</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO11fallingEdgeyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/fallingEdge" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO11fallingEdgeyA2CmF">fallingEdge</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">fallingEdge</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO8bothEdgeyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/bothEdge" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO8bothEdgeyA2CmF">bothEdge</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">bothEdge</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO9highLevelyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/highLevel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO9highLevelyA2CmF">highLevel</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">highLevel</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO19DigitalCallbackModeO8lowLevelyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/lowLevel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO19DigitalCallbackModeO8lowLevelyA2CmF">lowLevel</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">lowLevel</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">input</span></code></pre>
 
                         </div>
                       </div>
@@ -329,7 +233,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-07-21)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-07-25)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
