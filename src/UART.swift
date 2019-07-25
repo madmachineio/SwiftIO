@@ -21,7 +21,7 @@ public class UART {
         swiftHal_uartDeinit(&obj)
     }
 
-    public func setBandrate(_ baudRate: Int) {
+    public func setBaudrate(_ baudRate: Int) {
         obj.baudRate = UInt32(baudRate)
         swiftHal_uartConfig(&obj)
     }
@@ -43,27 +43,19 @@ public class UART {
     }
 
     public func write(_ string: String) {
-        let array = Array(string.utf8CString)
-        var array1: [UInt8] = Array(repeating: 0, count: array.count)
-
-        for i in 0..<array.count {
-            array1[i] = UInt8(array[i])
-        }
-        swiftHal_uartWrite(&obj, array1, UInt32(array1.count))
-
+        let array: [UInt8] = string.utf8CString.map {UInt8($0)}
+        swiftHal_uartWrite(&obj, array, UInt32(array.count))
     }
 
     public func read() -> UInt8 {
         return swiftHal_uartReadChar(&obj)
     }
 
-
-
-    public func read(count length: Int) -> [UInt8] {
-        var readArray: [UInt8] = Array(repeating: 0, count: length)
-
-        swiftHal_uartRead(&obj, &readArray, UInt32(length))
-        return readArray
+    public func readArray(_ count: Int) -> [UInt8] {
+        var array: [UInt8] = Array(repeating: 0, count: count)
+        swiftHal_uartRead(&obj, &array, UInt32(count));
+        return array
     }
+
 
 }

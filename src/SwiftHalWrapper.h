@@ -6,6 +6,42 @@ unsigned int swiftHal_getClockCycle(void);
 unsigned int swiftHal_computeNanoseconds(unsigned int);
 
 
+
+
+
+typedef struct {
+	void *ptr;
+	unsigned char id;
+	unsigned char redState;
+	unsigned char greenState;
+	unsigned char blueState;
+} RGBLEDObject;
+
+int swiftHal_rgbInit(RGBLEDObject *);
+int swiftHal_rgbDeinit(RGBLEDObject *);
+int swiftHal_rgbConfig(RGBLEDObject *);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 typedef void (*VoidCallbackType)(void);
 
 typedef struct {
@@ -39,6 +75,7 @@ typedef struct {
 
 int swiftHal_i2cInit(I2CObject *obj);
 int swiftHal_i2cDeinit(I2CObject *obj);
+int swiftHal_i2cConfig(I2CObject *obj);
 int swiftHal_i2cWrite(I2CObject *obj, unsigned char address, const unsigned char *buf, unsigned int length);
 int swiftHal_i2cRead(I2CObject *obj, unsigned char address, unsigned char *buf, unsigned int length);
 int swiftHal_i2cRead8bitReg(I2CObject *obj, unsigned char address, unsigned char reg, unsigned char *buf, unsigned int length);
@@ -99,12 +136,14 @@ typedef struct {
 	unsigned char id;
 	unsigned int period;
 	unsigned int pulse;
-} PWMObject;
+	unsigned int countPerSecond;
+} PWMOutObject;
 
 
-int swiftHal_PWMConfig(PWMObject *obj);
-int swiftHal_PWMUpdate(PWMObject *obj);
-int swiftHal_PWMInit(PWMObject *obj);
+int swiftHal_PWMOutConfig(PWMOutObject *obj);
+int swiftHal_PWMOutUpdate(PWMOutObject *obj);
+int swiftHal_PWMOutInit(PWMOutObject *obj);
+int swiftHal_PWMOutDeinit(PWMOutObject *obj);
 
 
 
@@ -112,9 +151,11 @@ int swiftHal_PWMInit(PWMObject *obj);
 typedef struct {
 	void *ptr;
 	unsigned char id;
-	unsigned int period;
+	unsigned int resolution;
+	float refVoltage;
 } AnalogInObject;
 
 
-int swiftHal_ADCInit(AnalogInObject *obj);
-unsigned int swiftHal_ADCRead(AnalogInObject *obj);
+int swiftHal_AnalogInInit(AnalogInObject *obj);
+int swiftHal_AnalogInDeinit(AnalogInObject *obj);
+unsigned int swiftHal_AnalogInRead(AnalogInObject *obj);

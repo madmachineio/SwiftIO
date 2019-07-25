@@ -21,7 +21,7 @@ public class Timer {
         swiftHal_timerStop(&obj)
     }
 
-    public func countClear() -> UInt {
-        return UInt(swiftHal_timerCount(&obj))
+    public func clear() {
+        swiftHal_timerCount(&obj)
     }
 }

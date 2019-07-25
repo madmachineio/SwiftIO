@@ -24,13 +24,11 @@ public enum DigitalInCallbackMode: UInt8 {
 
 
 
-public enum RGBLEDColor: Int32 {
-	case red = 9, green = 10, blue = 11
+public enum RGBLEDColor {
+	case red, green, blue
 }
 
-public enum RGBLEDState: Int32 {
-    case on = 0, off = 1
-}
+
 
 
 
@@ -82,10 +80,10 @@ public enum TimerType: UInt8 {
 
 
 
-public enum PWMId: UInt8 {
-    case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5
+public enum PWMOutId: UInt8 {
+    case PWMOut0, PWMOut1, PWMOut2, PWMOut3, PWMOut4, PWMOut5
 }
 
 public enum AnalogInId: UInt8 {
-    case ADC0, ADC1, ADC2, ADC3, ADC4, ADC5, ADC6, ADC7
+    case AnalogIn0, AnalogIn1, AnalogIn2, AnalogIn3, AnalogIn4, AnalogIn5, AnalogIn6, AnalogIn7
 }

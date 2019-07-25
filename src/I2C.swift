@@ -17,6 +17,11 @@ public class I2C {
         swiftHal_i2cDeinit(&obj)
     }
 
+    public func setSpeed(_ speed: I2CSpeed) {
+        obj.speed = speed.rawValue
+        swiftHal_i2cConfig(&obj)
+    }
+
     public func write(_ byte: UInt8, to address: UInt8) {
         let array: [UInt8] = [byte]
         swiftHal_i2cWrite(&obj, address, array, 1);
