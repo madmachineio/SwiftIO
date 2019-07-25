@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (7% documented)
+         (8% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,7 +165,19 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>I2C is a two wire serial protocol for communicating between devices.</p>
+<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">//Create a i2c bus to .I2C0</span>
+<span class="k">let</span> <span class="nv">i2c</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>

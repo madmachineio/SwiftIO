@@ -13,7 +13,7 @@
     //Reverse the output value every 1 second
     while true {
         pin.reverse()
-        msSleep(1000)
+        sleep(1000)
     }
  }
  ````

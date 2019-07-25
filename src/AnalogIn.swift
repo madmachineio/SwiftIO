@@ -1,4 +1,25 @@
-public class AnalogIn {
+/**
+ Use the AnalogIn class to read the value of a analog pin.
+ 
+ ### Example: A simple hello world.
+ 
+ ````
+ import SwiftIO
+ 
+ main() {
+ //Create a AnalogIn to .A0
+ let pin = AnalogIn(.A0)
+ 
+ //Read the analog value of the pin every 1 second
+ while true {
+ var value = pin.read()
+ print("The analog value is \(value)")
+ sleep(1000)
+ }
+ }
+ ````
+ 
+ */public class AnalogIn {
     var obj: AnalogInObject
 
     public init(_ id: AnalogInId) {

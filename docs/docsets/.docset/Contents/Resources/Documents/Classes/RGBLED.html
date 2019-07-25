@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (7% documented)
+         (8% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,7 +165,33 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Use the RGBLED class to control the state of the on board RGB LED.</p>
+<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="k">var</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">//Create rgb</span>
+<span class="k">let</span> <span class="nv">rgb</span> <span class="o">=</span> <span class="kt">RGBLED</span><span class="p">()</span>
+
+<span class="c1">//Change the color every 500ms</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+<span class="k">switch</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+<span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
+<span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+<span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
+<span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="n">count</span><span class="o">++</span>
+<span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">{</span>
+<span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="p">}</span>
+<span class="nf">sleep</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>

@@ -1,4 +1,23 @@
-public class I2C {
+/**
+ I2C is a two wire serial protocol for communicating between devices.
+ 
+
+ ### Example: A simple hello world.
+ 
+ ````
+ import SwiftIO
+ 
+ main() {
+ //Create a i2c bus to .I2C0
+ let i2c = I2C(.I2C0)
+ 
+ while true {
+
+ }
+ }
+ ````
+ 
+ */public class I2C {
 
     var obj: I2CObject
 

@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (7% documented)
+         (8% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,7 +165,22 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Use the AnalogIn class to read the value of a analog pin.</p>
+<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+<span class="c1">//Create a AnalogIn to .A0</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+
+<span class="c1">//Read the analog value of the pin every 1 second</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+<span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+<span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>
