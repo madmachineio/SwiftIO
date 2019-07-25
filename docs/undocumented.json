@@ -885,42 +885,42 @@
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut0",
+      "symbol": "PWMOutId.PWM0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut1",
+      "symbol": "PWMOutId.PWM1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut2",
+      "symbol": "PWMOutId.PWM2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut3",
+      "symbol": "PWMOutId.PWM3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut4",
+      "symbol": "PWMOutId.PWM4",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 84,
-      "symbol": "PWMOutId.PWMOut5",
+      "symbol": "PWMOutId.PWM5",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
@@ -934,56 +934,56 @@
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn0",
+      "symbol": "AnalogInId.A0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn1",
+      "symbol": "AnalogInId.A1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn2",
+      "symbol": "AnalogInId.A2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn3",
+      "symbol": "AnalogInId.A3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn4",
+      "symbol": "AnalogInId.A4",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn5",
+      "symbol": "AnalogInId.A5",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn6",
+      "symbol": "AnalogInId.A6",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
       "line": 88,
-      "symbol": "AnalogInId.AnalogIn7",
+      "symbol": "AnalogInId.A7",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
