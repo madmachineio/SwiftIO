@@ -2,49 +2,42 @@
   "warnings": [
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 1,
-      "symbol": "AnalogIn",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 4,
+      "line": 25,
       "symbol": "AnalogIn.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 16,
+      "line": 37,
       "symbol": "AnalogIn.getResolution()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 20,
+      "line": 41,
       "symbol": "AnalogIn.getReference()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 24,
+      "line": 45,
       "symbol": "AnalogIn.read()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 28,
+      "line": 49,
       "symbol": "AnalogIn.readPercent()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 33,
+      "line": 54,
       "symbol": "AnalogIn.readVoltage()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -142,70 +135,63 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 1,
-      "symbol": "I2C",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 5,
+      "line": 24,
       "symbol": "I2C.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 9,
+      "line": 28,
       "symbol": "I2C.init(_:speed:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 20,
+      "line": 39,
       "symbol": "I2C.setSpeed(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 25,
+      "line": 44,
       "symbol": "I2C.write(_:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 30,
+      "line": 49,
       "symbol": "I2C.write(_:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 35,
+      "line": 54,
       "symbol": "I2C.read(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 41,
+      "line": 60,
       "symbol": "I2C.readArray(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 47,
+      "line": 66,
       "symbol": "I2C.read8bitReg(_:from:in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 53,
+      "line": 72,
       "symbol": "I2C.read16bitReg(_:from:in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1073,42 +1059,35 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 1,
-      "symbol": "RGBLED",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 4,
+      "line": 37,
       "symbol": "RGBLED.init()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 13,
+      "line": 46,
       "symbol": "RGBLED.turnOn(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 25,
+      "line": 58,
       "symbol": "RGBLED.turnOff(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 37,
+      "line": 70,
       "symbol": "RGBLED.set(red:green:blue:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 44,
+      "line": 77,
       "symbol": "RGBLED.reverse(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"

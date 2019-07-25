@@ -7,26 +7,26 @@
  import SwiftIO
  
  main() {
- var count = 1
- //Create rgb
- let rgb = RGBLED()
+    var count = 1
+    //Create rgb
+    let rgb = RGBLED()
  
- //Change the color every 500ms
- while true {
- switch(count) {
- case 1:
- rgb.set(red: true, green: false, blue: false)
- case 2:
- rgb.set(red: false, green: true, blue: false)
- case 3:
- rgb.set(red: false, green: false, blue: true)
- }
- count++
- if count > 3 {
- count = 1
- }
- sleep(500)
- }
+    //Change the color every 500ms
+    while true {
+        switch(count) {
+            case 1:
+            rgb.set(red: true, green: false, blue: false)
+            case 2:
+            rgb.set(red: false, green: true, blue: false)
+            case 3:
+            rgb.set(red: false, green: false, blue: true)
+        }
+        count++
+        if count > 3 {
+            count = 1
+        }
+        sleep(500)
+    }
  }
  ````
  
