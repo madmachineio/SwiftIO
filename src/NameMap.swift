@@ -81,9 +81,9 @@ public enum TimerType: UInt8 {
 
 
 public enum PWMOutId: UInt8 {
-    case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5
+    case PWM0, PWM1, PWM2, PWM3, PWM4
 }
 
 public enum AnalogInId: UInt8 {
-    case A0, A1, A2, A3, A4, A5, A6, A7
+    case A0, A1, A2, A3
 }
