@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (11% documented)
+         (15% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,15 +165,15 @@
 
                 </div>
               </div>
-            <p>Use the AnalogIn class to read the external voltage applied to an analog input pin.</p>
-<h3 id='example-read-an-analog-input-on-analoginid-a0' class='heading'>Example: Read an analog input on AnalogInId.A0</h3>
+            <p>Use AnalogIn class to read the external voltage applied to an analog input pin.</p>
+<h3 id='example-read-and-print-the-analog-input-value-on-a-specified-pin' class='heading'>Example: Read and print the analog input value on a specified pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">//Create an AnalogIn to AnalogInId.A0</span>
+    <span class="c1">//Initialize an AnalogIn to AnalogInId.A0</span>
     <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
-    <span class="c1">//Read and print the analog voltage value on .A0 every 1 second</span>
+    <span class="c1">//Read and print the analog input value on .A0 every 1 second</span>
     <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
        <span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
@@ -202,7 +202,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Initialize an AnalogIn to a specified pin.</p>
+<h3 id='usage-example' class='heading'>Usage Example:</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -212,6 +215,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt"><a href="../Enums/AnalogInId.html">AnalogInId</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The AnalogIn Id on the board.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -229,7 +251,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Get the current resolution.</p>
 
                       </div>
                       <div class="declaration">
@@ -256,7 +278,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Get the current reference voltage.</p>
 
                       </div>
                       <div class="declaration">
@@ -283,7 +305,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read the input voltage, represented as an UInt in the range 0 to max resolution.</p>
 
                       </div>
                       <div class="declaration">
@@ -310,7 +332,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read the input voltage, represented as a float in the range 0.0&hellip;1.0</p>
 
                       </div>
                       <div class="declaration">
@@ -337,7 +359,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read the input voltage.</p>
 
                       </div>
                       <div class="declaration">

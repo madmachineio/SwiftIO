@@ -2,42 +2,42 @@
   "warnings": [
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 25,
+      "line": 26,
       "symbol": "AnalogIn.init(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 37,
+      "line": 38,
       "symbol": "AnalogIn.getResolution()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 41,
+      "line": 42,
       "symbol": "AnalogIn.getReference()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 45,
+      "line": 46,
       "symbol": "AnalogIn.read()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 49,
+      "line": 50,
       "symbol": "AnalogIn.readPercent()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 54,
+      "line": 55,
       "symbol": "AnalogIn.readVoltage()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -1020,41 +1020,6 @@
       "line": 21,
       "symbol": "calcNanoseconds(_:)",
       "symbol_kind": "source.lang.swift.decl.function.free",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 37,
-      "symbol": "RGBLED.init()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 46,
-      "symbol": "RGBLED.turnOn(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 58,
-      "symbol": "RGBLED.turnOff(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 70,
-      "symbol": "RGBLED.set(red:green:blue:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/RGBLED.swift",
-      "line": 77,
-      "symbol": "RGBLED.reverse(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
