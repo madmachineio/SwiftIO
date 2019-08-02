@@ -76,11 +76,16 @@ public class RGBLED {
 	}
 
     /**
-     Set the three colors at the same time
+     Set the new state of three colors at the same time
      
      - Parameter red : The new state of the red color
      - Parameter green : The new state of the green color
      - Parameter blue : The new state of the blue color
+     ### Usage Example: ###
+     ````
+     let rgb = RGBLED()
+     rgb.set(red: false, green: false, blue: true)
+     ````
      */
     public func set(red: Bool, green: Bool, blue: Bool) {
 		obj.redState = red ? 1 : 0
