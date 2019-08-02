@@ -1,48 +1,6 @@
 {
   "warnings": [
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 26,
-      "symbol": "AnalogIn.init(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 38,
-      "symbol": "AnalogIn.getResolution()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 42,
-      "symbol": "AnalogIn.getReference()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 46,
-      "symbol": "AnalogIn.read()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 50,
-      "symbol": "AnalogIn.readPercent()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
-      "line": 55,
-      "symbol": "AnalogIn.readVoltage()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
       "line": 91,
       "symbol": "DigitalIn.addCallback(_:mode:)",

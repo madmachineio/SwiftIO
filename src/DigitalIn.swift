@@ -1,4 +1,24 @@
-/// Use the DigitalIn class to read the value of a digital input pin.
+/**
+ Use the DigitalIn class to red the value of a digital input pin.
+ 
+ ### Example: A simple hello world.
+ 
+ ````
+ import SwiftIO
+ 
+ main() {
+    //Initialize a DigitalIn to DigitalId.D0
+    let pin = DigitalIn(.D0)
+ 
+    //Read and print the input value every 1 second
+    while true {
+        var value = pin.read()
+        print("The input value is \(value)")
+        sleep(1000)
+    }
+ }
+ ````
+ */
 public class DigitalIn {
 		
     var obj: DigitalIOObject
@@ -13,9 +33,9 @@ public class DigitalIn {
 	}
 
     /**
-     Create a DigitalIn to a specified id.
+     Initialize a DigitalIn to a specified pin.
      
-     - Parameter name: The DigitalIn id on the board, the default input mode is `.pullDown`.
+     - Parameter id: The Digital id on the board, the default input mode is `.pullDown`.
      
      ### Usage Example: ###
      ````
@@ -27,9 +47,9 @@ public class DigitalIn {
     }
 
     /**
-     Create a DigitalIn to a specified pin.
+     Initialize a DigitalIn to a specified pin.
      
-     - parameter name: The Digital pin name on the board.
+     - parameter id: The Digital id on the board.
      - parameter mode: The input mode.
      
      This text is above the horizontal rule.
@@ -73,22 +93,22 @@ public class DigitalIn {
 
 
     /**
-     Read value from a digital pin.
+     Read the value on a digital pin.
      
      - Attention: Depends on the hardware, the internal pull resister may be very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!
      
-     - Returns: 0 or 1 of the logic value.
+     - Returns: `true` or `false` of the logic value.
      */
 	public func read() -> Bool {
 		return value
 	}
-    /*
-    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
-        obj.callbackMode = mode.rawValue
-        swiftHal_gpioAddCallback(&obj, callback)
-    }*/
 
-    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
+    /**
+     Add a callback function to a pin.
+    
+     
+     - Returns: 0 or 1 of the logic value.
+     */    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
         obj.callbackMode = mode.rawValue
         obj.callback = callback
         swiftHal_gpioAddCallback(&obj)

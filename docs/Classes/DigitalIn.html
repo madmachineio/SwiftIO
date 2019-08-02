@@ -165,7 +165,22 @@
 
                 </div>
               </div>
-            <p>Use the DigitalIn class to read the value of a digital input pin.</p>
+            <p>Use the DigitalIn class to red the value of a digital input pin.</p>
+<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">//Initialize a DigitalIn to DigitalId.D0</span>
+   <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+
+   <span class="c1">//Read and print the input value every 1 second</span>
+   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+       <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
           </div>
         </section>
@@ -219,7 +234,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a DigitalIn to a specified id.</p>
+                        <p>Initialize a DigitalIn to a specified pin.</p>
 <h3 id='usage-example' class='heading'>Usage Example:</h3>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 </code></pre>
@@ -240,12 +255,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>name</em>
+                                <em>id</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The DigitalIn id on the board, the default input mode is <code>.pullDown</code>.</p>
+                                  <p>The Digital id on the board, the default input mode is <code>.pullDown</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -268,7 +283,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a DigitalIn to a specified pin.</p>
+                        <p>Initialize a DigitalIn to a specified pin.</p>
 
 <p>This text is above the horizontal rule.</p>
 
@@ -302,12 +317,12 @@
                             <tr>
                               <td>
                                 <code>
-                                <em>name</em>
+                                <em>id</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The Digital pin name on the board.</p>
+                                  <p>The Digital id on the board.</p>
                                 </div>
                               </td>
                             </tr>
@@ -388,7 +403,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Read value from a digital pin.</p>
+                        <p>Read the value on a digital pin.</p>
 <div class="aside aside-attention">
     <p class="aside-title">Attention</p>
     <p>Depends on the hardware, the internal pull resister may be very weak. <strong>Don&rsquo;t</strong> just rely on the pull resister for reading the value. <strong>Especially</strong> when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!</p>
@@ -406,7 +421,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>0 or 1 of the logic value.</p>
+                        <p><code>true</code> or <code>false</code> of the logic value.</p>
                       </div>
                     </section>
                   </div>
@@ -424,16 +439,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Add a callback function to a pin.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">addCallback</span><span class="p">(</span><span class="n">_</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kd">@convention(c)</span> <span class="p">()</span><span class="o">-&gt;</span><span class="kt">Void</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalInCallbackMode.html">DigitalInCallbackMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="o">/</span>    <span class="kd">public</span> <span class="kd">func</span> <span class="nf">addCallback</span><span class="p">(</span><span class="n">_</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="kd">@convention(c)</span> <span class="p">()</span><span class="o">-&gt;</span><span class="kt">Void</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalInCallbackMode.html">DigitalInCallbackMode</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>0 or 1 of the logic value.</p>
                       </div>
                     </section>
                   </div>

@@ -48,6 +48,7 @@ public class AnalogIn {
     /**
      Get the current resolution.
      
+     - Returns: The current resolution.
      */
     public func getResolution() -> UInt {
         return UInt(obj.resolution)
@@ -56,22 +57,25 @@ public class AnalogIn {
     /**
      Get the current reference voltage.
      
+     - Returns: The current reference voltage.
      */
     public func getReference() -> Float {
         return obj.refVoltage
     }
 
     /**
-     Read the input voltage, represented as an UInt in the range 0 to max resolution.
+     Read the input voltage.
      
+     - Returns: An UInt in the range of 0 to max resolution.
      */
     public func read() -> UInt {
         return UInt(swiftHal_AnalogInRead(&obj))
     }
 
     /**
-     Read the input voltage, represented as a float in the range 0.0...1.0
+     Read the input voltage, represented as a float in the range 0.0 to 1.0
      
+     - Returns: The percentage of the referenced voltage.
      */
     public func readPercent() -> Float {
         let val: Float = Float(swiftHal_AnalogInRead(&obj))
@@ -81,6 +85,7 @@ public class AnalogIn {
     /**
      Read the input voltage.
      
+     - Returns: A float value in the range of 0.0 to the reference voltage.
      */
     public func readVoltage() -> Float {
         let val: Float = Float(swiftHal_AnalogInRead(&obj))

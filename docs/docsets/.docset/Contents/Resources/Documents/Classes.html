@@ -228,7 +228,22 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Use the DigitalIn class to read the value of a digital input pin.</p>
+                        <p>Use the DigitalIn class to red the value of a digital input pin.</p>
+<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">//Initialize a DigitalIn to DigitalId.D0</span>
+   <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+
+   <span class="c1">//Read and print the input value every 1 second</span>
+   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+       <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
 
                         <a href="Classes/DigitalIn.html" class="slightly-smaller">See more</a>
                       </div>
