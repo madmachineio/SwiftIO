@@ -1,25 +1,26 @@
 /**
- Use the AnalogIn class to read the value of a analog pin.
+ Use the AnalogIn class to read the external voltage applied to an analog input pin.
  
- ### Example: A simple hello world.
+ ### Example: Read an analog input on AnalogInId.A0
  
  ````
  import SwiftIO
  
- main() {
- //Create a AnalogIn to .A0
- let pin = AnalogIn(.A0)
+ func main() {
+     //Create an AnalogIn to AnalogInId.A0
+     let pin = AnalogIn(.A0)
  
- //Read the analog value of the pin every 1 second
- while true {
- var value = pin.read()
- print("The analog value is \(value)")
- sleep(1000)
- }
+     //Read and print the analog voltage value on .A0 every 1 second
+     while true {
+        var value = pin.read()
+        print("The analog value is \(value)")
+        sleep(1000)
+     }
  }
  ````
  
- */public class AnalogIn {
+ */
+public class AnalogIn {
     var obj: AnalogInObject
 
     public init(_ id: AnalogInId) {

@@ -1,31 +1,21 @@
 /**
  Use the RGBLED class to control the state of the on board RGB LED.
  
- ### Example: A simple hello world.
+ ### Example: Blink the blue LED every 1 second.
  
  ````
  import SwiftIO
  
- main() {
-    var count = 1
-    //Create rgb
+ func main() {
+    //Create rgb to the specific device
     let rgb = RGBLED()
  
-    //Change the color every 500ms
+    //This loop runs for ever
     while true {
-        switch(count) {
-            case 1:
-            rgb.set(red: true, green: false, blue: false)
-            case 2:
-            rgb.set(red: false, green: true, blue: false)
-            case 3:
-            rgb.set(red: false, green: false, blue: true)
-        }
-        count++
-        if count > 3 {
-            count = 1
-        }
-        sleep(500)
+        rgb.turnOn(.blue)
+        sleep(1000)
+        rgb.turnOff(.blue)
+        sleep(1000)
     }
  }
  ````
@@ -34,7 +24,15 @@
 public class RGBLED {
 	var obj: RGBLEDObject
 
-	public init() {
+    /**
+     Create a RGBLED, since there is only 1 RGB LED on board, we don't need to specify the id
+     
+     ### Usage Example: ###
+     ````
+     let rgb = RGBLED()
+     ````
+     */
+    public init() {
 		obj = RGBLEDObject()
 		swiftHal_rgbInit(&obj)
 	}
@@ -43,7 +41,12 @@ public class RGBLED {
 		swiftHal_rgbDeinit(&obj)
 	}
 
-	public func turnOn(_ color: RGBLEDColor) {
+    /**
+     Turn on the specified color of the RGB LED
+     
+     - Parameter color : The color need to be turned on.
+     */
+    public func turnOn(_ color: RGBLEDColor) {
 		switch(color) {
 			case .red:
 				obj.redState = 1
@@ -55,7 +58,12 @@ public class RGBLED {
 		swiftHal_rgbConfig(&obj)
 	}
 
-	public func turnOff(_ color: RGBLEDColor) {
+    /**
+     Turn off the specified color of the RGB LED
+     
+     - Parameter color : The color need to be turned off.
+     */
+    public func turnOff(_ color: RGBLEDColor) {
 		switch(color) {
 			case .red:
 				obj.redState = 0
@@ -67,14 +75,26 @@ public class RGBLED {
 		swiftHal_rgbConfig(&obj)
 	}
 
-	public func set(red: Bool, green: Bool, blue: Bool) {
+    /**
+     Set the three colors at the same time
+     
+     - Parameter red : The new state of the red color
+     - Parameter green : The new state of the green color
+     - Parameter blue : The new state of the blue color
+     */
+    public func set(red: Bool, green: Bool, blue: Bool) {
 		obj.redState = red ? 1 : 0
 		obj.greenState = green ? 1 : 0
 		obj.blueState = blue ? 1 : 0
 		swiftHal_rgbConfig(&obj)
 	}
 
-	public func reverse(_ color: RGBLEDColor) {
+    /**
+     Reverse the state of the specified color of the RGB LED
+     
+     - Parameter color : The color need to be reversed
+     */
+    public func reverse(_ color: RGBLEDColor) {
 		switch(color) {
 			case .red:
 				obj.redState = obj.redState == 1 ? 0 : 1

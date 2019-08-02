@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
            Docs
         </a>
-         (9% documented)
+         (11% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -181,20 +181,20 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Use the AnalogIn class to read the value of a analog pin.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+                        <p>Use the AnalogIn class to read the external voltage applied to an analog input pin.</p>
+<h3 id='example-read-an-analog-input-on-analoginid-a0' class='heading'>Example: Read an analog input on AnalogInId.A0</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<span class="c1">//Create a AnalogIn to .A0</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">//Create an AnalogIn to AnalogInId.A0</span>
+    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
-<span class="c1">//Read the analog value of the pin every 1 second</span>
-<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-<span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
-<span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-<span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
-<span class="p">}</span>
+    <span class="c1">//Read and print the analog voltage value on .A0 every 1 second</span>
+    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -415,29 +415,19 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Use the RGBLED class to control the state of the on board RGB LED.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<h3 id='example-blink-the-blue-led-every-1-second' class='heading'>Example: Blink the blue LED every 1 second.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="k">var</span> <span class="nv">count</span> <span class="o">=</span> <span class="mi">1</span>
-   <span class="c1">//Create rgb</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+   <span class="c1">//Create rgb to the specific device</span>
    <span class="k">let</span> <span class="nv">rgb</span> <span class="o">=</span> <span class="kt">RGBLED</span><span class="p">()</span>
 
-   <span class="c1">//Change the color every 500ms</span>
+   <span class="c1">//This loop runs for ever</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">switch</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="p">{</span>
-           <span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
-           <span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-           <span class="k">case</span> <span class="mi">2</span><span class="p">:</span>
-           <span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
-           <span class="k">case</span> <span class="mi">3</span><span class="p">:</span>
-           <span class="n">rgb</span><span class="o">.</span><span class="nf">set</span><span class="p">(</span><span class="nv">red</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">green</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="nv">blue</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
-       <span class="p">}</span>
-       <span class="n">count</span><span class="o">++</span>
-       <span class="k">if</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">3</span> <span class="p">{</span>
-           <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
-       <span class="p">}</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">500</span><span class="p">)</span>
+       <span class="n">rgb</span><span class="o">.</span><span class="nf">turnOn</span><span class="p">(</span><span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="n">rgb</span><span class="o">.</span><span class="nf">turnOff</span><span class="p">(</span><span class="o">.</span><span class="n">blue</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -527,7 +517,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-08-01)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-08-02)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

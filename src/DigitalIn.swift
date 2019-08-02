@@ -13,9 +13,9 @@ public class DigitalIn {
 	}
 
     /**
-     Create a DigitalIn to a specified pin.
+     Create a DigitalIn to a specified id.
      
-     - Parameter name: The Digital pin name on the board, the default input mode is `.pullDown`.
+     - Parameter name: The DigitalIn id on the board, the default input mode is `.pullDown`.
      
      ### Usage Example: ###
      ````
