@@ -73,9 +73,9 @@ public class AnalogIn {
     }
 
     /**
-     Read the input voltage, represented as a float in the range 0.0 to 1.0
+     Read the input voltage.
      
-     - Returns: The percentage of the referenced voltage.
+     - Returns: The percentage of the referenced voltage in the range of 0.0 to 1.0.
      */
     public func readPercent() -> Float {
         let val: Float = Float(swiftHal_AnalogInRead(&obj))

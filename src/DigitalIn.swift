@@ -6,7 +6,7 @@
  ````
  import SwiftIO
  
- main() {
+ func main() {
     //Initialize a DigitalIn to DigitalId.D0
     let pin = DigitalIn(.D0)
  

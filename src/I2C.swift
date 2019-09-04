@@ -41,19 +41,24 @@
         swiftHal_i2cConfig(&obj)
     }
 
-    public func write(_ byte: UInt8, to address: UInt8) {
-        let array: [UInt8] = [byte]
-        swiftHal_i2cWrite(&obj, address, array, 1);
+    public func write<T: BinaryInteger>(_ byte: T, to address: T) {
+        let byteU8: UInt8 = numericCast(byte)
+        let arrayU8: [UInt8] = [byteU8]
+        let addressU8: UInt8 = numericCast(address)
+        swiftHal_i2cWrite(&obj, addressU8, arrayU8, 1);
     }
 
-    public func write(_ array: [UInt8], to address: UInt8) {
-        swiftHal_i2cWrite(&obj, address, array, UInt32(array.count))
+    public func write<T: BinaryInteger>(_ array: [T], to address: T) {
+        let arrayU8: [UInt8] = array.map(numericCast) as [UInt8]
+        let addressU8: UInt8 = numericCast(address)
+        swiftHal_i2cWrite(&obj, addressU8, arrayU8, UInt32(array.count))
     }
 
 
-    public func read(from address: UInt8) -> UInt8 {
+    public func read<T: BinaryInteger>(from address: T) -> UInt8 {
+        let addressU8: UInt8 = numericCast(address)
         var array: [UInt8] = [0]
-        swiftHal_i2cRead(&obj, address, &array, 1)
+        swiftHal_i2cRead(&obj, addressU8, &array, 1)
         return array[0]
     }
 

@@ -2,14 +2,7 @@
   "warnings": [
     {
       "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
-      "line": 91,
-      "symbol": "DigitalIn.addCallback(_:mode:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
-      "line": 97,
+      "line": 117,
       "symbol": "DigitalIn.removeCallback()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
@@ -86,7 +79,7 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
-      "line": 101,
+      "line": 100,
       "symbol": "DigitalOut.getState()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
