@@ -1,7 +1,8 @@
 public enum DigitalIOId: UInt8 {
     case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,
          D17, D18, D19, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31,
-         D32, D33, D34, D35, D36, D37, D38, D39, D40, D41, D42, D43, D44, D45, D46
+         D32, D33, D34, D35, D36, D37, D38, D39, D40, D41, D42, D43, D44, D45,
+         RED, GREEN, BLUE
 }
 
 
@@ -19,13 +20,6 @@ public enum DigitalInMode: UInt8 {
 
 public enum DigitalInCallbackMode: UInt8 {
     case disable = 0, risingEdge, fallingEdge, bothEdge, highLevel, lowLevel
-}
-
-
-
-
-public enum RGBLEDColor {
-	case red, green, blue
 }
 
 
@@ -51,7 +45,7 @@ public enum I2CSpeed: UInt32 {
 
 
 public enum UARTId: UInt8 {
-    case UART0 = 0, UART1
+    case UART0 = 0, UART1, UART2, UART3
 }
 
 public enum UARTParity: UInt8 {
@@ -81,9 +75,9 @@ public enum TimerType: UInt8 {
 
 
 public enum PWMOutId: UInt8 {
-    case PWM0, PWM1, PWM2, PWM3, PWM4
+    case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, PWM8, PWM9, PWM10, PWM11, PWM12, PWM13
 }
 
 public enum AnalogInId: UInt8 {
-    case A0, A1, A2, A3
+    case A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11
 }

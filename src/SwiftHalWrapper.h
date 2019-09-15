@@ -141,7 +141,6 @@ typedef struct {
 
 
 int swiftHal_PWMOutConfig(PWMOutObject *obj);
-int swiftHal_PWMOutUpdate(PWMOutObject *obj);
 int swiftHal_PWMOutInit(PWMOutObject *obj);
 int swiftHal_PWMOutDeinit(PWMOutObject *obj);
 

@@ -1,6 +1,10 @@
 public class PWMOut {
     var obj: PWMOutObject
 
+    public convenience init(_ id: PWMOutId) {
+        self.init(id, period: 1000, pulse: 0)
+    }
+
     public init(_ id: PWMOutId, period: UInt, pulse: UInt) {
         obj = PWMOutObject()
         obj.id = id.rawValue
@@ -34,6 +38,6 @@ public class PWMOut {
 
     public func setDutycycle(_ dutycycle: Float) {
         obj.pulse = UInt32(Float(obj.period) * dutycycle)
-        swiftHal_PWMOutUpdate(&obj)
+        swiftHal_PWMOutConfig(&obj)
     }
 }

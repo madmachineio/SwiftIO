@@ -108,7 +108,8 @@ public class DigitalIn {
     
      
      - Returns: 0 or 1 of the logic value.
-     */    public func addCallback(_ callback: @escaping @convention(c) ()->Void, mode: DigitalInCallbackMode) {
+     */    
+    public func on(_ mode: DigitalInCallbackMode, callback: @escaping @convention(c) ()->Void) {
         obj.callbackMode = mode.rawValue
         obj.callback = callback
         swiftHal_gpioAddCallback(&obj)
