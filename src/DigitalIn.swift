@@ -22,6 +22,7 @@
 public class DigitalIn {
 		
     var obj: DigitalIOObject
+    var callback: (()->Void)?
 
     /**
      Use this property to get the input value.
@@ -75,7 +76,7 @@ public class DigitalIn {
 	}
 
     deinit {
-        if obj.callback != nil {
+        if obj.callbackState == DigitalInCallbackState.enable.rawValue {
             removeCallback()
         }
         swiftHal_gpioDeinit(&obj)
@@ -109,15 +110,19 @@ public class DigitalIn {
      
      - Returns: 0 or 1 of the logic value.
      */    
-    public func on(_ mode: DigitalInCallbackMode, callback: @escaping @convention(c) ()->Void) {
+    public func on(_ mode: DigitalInCallbackMode, callback: @escaping ()->Void) {
+        obj.callbackState = DigitalInCallbackState.enable.rawValue
         obj.callbackMode = mode.rawValue
-        obj.callback = callback
+        self.callback = callback
+        swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
+            let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
+            mySelf.callback!()
+        }
         swiftHal_gpioAddCallback(&obj)
     }
 
     public func removeCallback() {
-        obj.callbackMode = DigitalInCallbackMode.disable.rawValue
-        obj.callback = nil
+        obj.callbackState = DigitalInCallbackState.disable.rawValue
         swiftHal_gpioRemoveCallback(&obj)
     }
 

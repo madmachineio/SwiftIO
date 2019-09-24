@@ -47,11 +47,11 @@ public class UART {
         swiftHal_uartWrite(&obj, array, UInt32(array.count))
     }
 
-    public func read() -> UInt8 {
+    public func readByte() -> UInt8 {
         return swiftHal_uartReadChar(&obj)
     }
 
-    public func readArray(_ count: Int) -> [UInt8] {
+    public func read(_ count: Int) -> [UInt8] {
         var array: [UInt8] = Array(repeating: 0, count: count)
         swiftHal_uartRead(&obj, &array, UInt32(count));
         return array

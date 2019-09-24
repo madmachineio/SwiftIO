@@ -17,7 +17,8 @@
  }
  ````
  
- */public class I2C {
+ */
+ public class I2C {
 
     var obj: I2CObject
 
@@ -40,12 +41,12 @@
         obj.speed = speed.rawValue
         swiftHal_i2cConfig(&obj)
     }
-
+/*
     public func write<T: BinaryInteger>(_ byte: T, to address: T) {
         let byteU8: UInt8 = numericCast(byte)
         let arrayU8: [UInt8] = [byteU8]
         let addressU8: UInt8 = numericCast(address)
-        swiftHal_i2cWrite(&obj, addressU8, arrayU8, 1);
+        swiftHal_i2cWrite(&obj, addressU8, arrayU8, 1)
     }
 
     public func write<T: BinaryInteger>(_ array: [T], to address: T) {
@@ -53,30 +54,52 @@
         let addressU8: UInt8 = numericCast(address)
         swiftHal_i2cWrite(&obj, addressU8, arrayU8, UInt32(array.count))
     }
-
-
-    public func read<T: BinaryInteger>(from address: T) -> UInt8 {
-        let addressU8: UInt8 = numericCast(address)
-        var array: [UInt8] = [0]
-        swiftHal_i2cRead(&obj, addressU8, &array, 1)
-        return array[0]
+*/
+    public func readByte(from address: UInt8) -> UInt8 {
+        var data = [UInt8](repeating: 0, count: 1)
+        
+        swiftHal_i2cRead(&obj, address, &data, 1)
+        return data[0]
     }
 
-    public func readArray(_ count: Int, from address: UInt8) -> [UInt8] {
-        var array: [UInt8] = Array(repeating: 0, count: count)
-        swiftHal_i2cRead(&obj, address, &array, UInt32(count))
-        return array
+    public func readWord(from address: UInt8) -> UInt16 {
+        var data = [UInt8](repeating: 0, count: 2)
+
+        swiftHal_i2cRead(&obj, address, &data, 2)
+        return UInt16(data[1]) << 8 | UInt16(data[0])
     }
 
-    public func read8bitReg(_ count: Int, from address: UInt8, in register: UInt8) -> [UInt8] {
-        var array: [UInt8] = Array(repeating: 0, count: count)
-        swiftHal_i2cRead8bitReg(&obj, address, register, &array, UInt32(count))
-        return array
+    public func read(count: Int, from address: UInt8) -> [UInt8] {
+        var data = [UInt8](repeating: 0, count: count)
+
+        swiftHal_i2cRead(&obj, address, &data, UInt32(count))
+        return data
     }
 
-    public func read16bitReg(_ count: Int, from address: UInt8, in register: UInt16) -> [UInt8] {
-        var array: [UInt8] = Array(repeating: 0, count: count)
-        swiftHal_i2cRead16bitReg(&obj, address, register, &array, UInt32(count))
-        return array
+    public func writeByte(_ value: UInt8, to address: UInt8) {
+        var data = [UInt8](repeating: 0, count: 1)
+
+        data[0] = value
+        swiftHal_i2cWrite(&obj, address, data, 1)
     }
+
+    public func writeWord(_ value: UInt16, to address: UInt8) {
+        var data = [UInt8](repeating: 0, count: 2)
+
+        data[0] = UInt8(value & 0xFF)
+        data[1] = UInt8(value >> 8)
+        swiftHal_i2cWrite(&obj, address, data, 2)
+    }
+
+    public func write(_ value: [UInt8], to address: UInt8) {
+        swiftHal_i2cWrite(&obj, address, value, UInt32(value.count))
+    }
+
+    public func writeRead(_ value: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
+        var data = [UInt8](repeating:0, count: readCount)
+
+        swiftHal_i2cWriteRead(&obj, address, value, UInt32(value.count), &data, UInt32(readCount))
+        return data
+    }
+
 }

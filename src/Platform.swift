@@ -1,3 +1,7 @@
+func getClassPtr<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
+    return UnsafeMutableRawPointer(Unmanaged.passUnretained(obj).toOpaque())
+}
+
 public func wait(_ us: Int) {
     swiftHal_usWait(UInt32(us))
 }

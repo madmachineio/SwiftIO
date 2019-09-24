@@ -19,8 +19,14 @@ public enum DigitalInMode: UInt8 {
 }
 
 public enum DigitalInCallbackMode: UInt8 {
-    case disable = 0, risingEdge, fallingEdge, bothEdge, highLevel, lowLevel
+    case rising = 1, falling, bothEdge
 }
+
+public enum DigitalInCallbackState: UInt8 {
+    case disable, enable
+}
+
+
 
 
 
@@ -28,17 +34,12 @@ public enum DigitalInCallbackMode: UInt8 {
 
 
 public enum I2CId: UInt8 {
-    case I2C0 = 0, I2C1
+    case I2C0, I2C1
 }
 
 public enum I2CSpeed: UInt32 {
     case standard = 100000, fast = 400000, fastPlus = 1000000
 }
-
-
-
-
-
 
 
 

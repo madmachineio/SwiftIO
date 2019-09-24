@@ -1,3 +1,5 @@
+
+
 void swiftHal_msSleep(unsigned int t);
 void swiftHal_usWait(unsigned int t);
 unsigned int swiftHal_getUpTimeInMs32(void);
@@ -7,42 +9,10 @@ unsigned int swiftHal_computeNanoseconds(unsigned int);
 
 
 
-
-
 typedef struct {
-	void *ptr;
-	unsigned char id;
-	unsigned char redState;
-	unsigned char greenState;
-	unsigned char blueState;
-} RGBLEDObject;
-
-int swiftHal_rgbInit(RGBLEDObject *);
-int swiftHal_rgbDeinit(RGBLEDObject *);
-int swiftHal_rgbConfig(RGBLEDObject *);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-typedef void (*VoidCallbackType)(void);
+	void *classPtr;
+	void (*callback)(void *);
+} CallbackWrapper;
 
 typedef struct {
 	void *ptr;
@@ -51,7 +21,8 @@ typedef struct {
 	unsigned char inputMode;
 	unsigned char outputMode;
 	unsigned char callbackMode;
-	VoidCallbackType callback;
+	unsigned char callbackState;
+	CallbackWrapper callbackWrapper;
 } DigitalIOObject;
 
 int swiftHal_gpioInit(DigitalIOObject *);
@@ -61,8 +32,9 @@ int swiftHal_gpioWrite(DigitalIOObject *, unsigned int);
 int swiftHal_gpioRead(DigitalIOObject *);
 int swiftHal_gpioAddCallback(DigitalIOObject *);
 int swiftHal_gpioRemoveCallback(DigitalIOObject *);
-
-
+int swiftHal_gpioEnableCallback(DigitalIOObject *obj);
+int swiftHal_gpioDisableCallback(DigitalIOObject *obj);
+int swiftHal_gpioAddSwiftMember(DigitalIOObject *obj, void *classPtr, void (*function)(void *));
 
 
 
@@ -78,9 +50,7 @@ int swiftHal_i2cDeinit(I2CObject *obj);
 int swiftHal_i2cConfig(I2CObject *obj);
 int swiftHal_i2cWrite(I2CObject *obj, unsigned char address, const unsigned char *buf, unsigned int length);
 int swiftHal_i2cRead(I2CObject *obj, unsigned char address, unsigned char *buf, unsigned int length);
-int swiftHal_i2cRead8bitReg(I2CObject *obj, unsigned char address, unsigned char reg, unsigned char *buf, unsigned int length);
-int swiftHal_i2cRead16bitReg(I2CObject *obj, unsigned char address, unsigned short reg, unsigned char *buf, unsigned int length);
-
+int swiftHal_i2cWriteRead(I2CObject *obj, unsigned char address, const unsigned char *wBuf, unsigned int wLen, unsigned char *rBuf, unsigned int rLen);
 
 
 
@@ -98,8 +68,8 @@ typedef struct {
 } UARTObject;
 
 int swiftHal_uartInit(UARTObject *obj);
-int swiftHal_uartConfig(UARTObject *obj);
 int swiftHal_uartDeinit(UARTObject *obj);
+int swiftHal_uartConfig(UARTObject *obj);
 int swiftHal_uartWriteChar(UARTObject *obj, unsigned char byte);
 int swiftHal_uartWrite(UARTObject *obj, const unsigned char *buf, unsigned int length);
 unsigned char swiftHal_uartReadChar(UARTObject *obj);
@@ -110,20 +80,19 @@ int swiftHal_uartClearBuffer(UARTObject *obj);
 
 
 
-
 typedef struct {
 	void *ptr;
-	VoidCallbackType expiryCallback;
+	CallbackWrapper callbackWrapper;
 	unsigned char timerType;
 	int	period;
 } TimerObject;
-
 
 int swiftHal_timerInit(TimerObject *obj);
 int swiftHal_timerDeinit(TimerObject *obj);
 int swiftHal_timerStart(TimerObject *obj);
 int swiftHal_timerStop(TimerObject *obj);
 unsigned int swiftHal_timerCount(TimerObject *obj);
+int swiftHal_timerAddSwiftMember(TimerObject *obj, void *classPtr, void (*function)(void *));
 
 
 
