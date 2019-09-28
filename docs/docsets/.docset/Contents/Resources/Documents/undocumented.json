@@ -114,35 +114,35 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 49,
+      "line": 51,
       "symbol": "I2C.write(_:to:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 54,
+      "line": 58,
       "symbol": "I2C.read(from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 60,
+      "line": 65,
       "symbol": "I2C.readArray(_:from:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 66,
+      "line": 71,
       "symbol": "I2C.read8bitReg(_:from:in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/I2C.swift",
-      "line": 72,
+      "line": 77,
       "symbol": "I2C.read16bitReg(_:from:in:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
