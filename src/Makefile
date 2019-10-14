@@ -3,7 +3,7 @@ CHEADER = SwiftHalWrapper.h
 SRCS = $(wildcard *.swift)
 OBJS = $(SRCS:.swift=.o)
 
-FLAGS = -module-name SwiftIO -target thumbv7em-none--eabi -target-cpu cortex-m7 -target-fpu fpv5-dp-d16 -float-abi hard -parse-as-library -Osize -static-stdlib -function-sections -data-sections -no-link-objc-runtime -import-objc-header $(CHEADER) -I . 
+FLAGS = -module-name SwiftIO -target thumbv7em-none--eabi -target-cpu cortex-m7 -target-fpu fpv5-dp-d16 -float-abi soft -parse-as-library -O -static-stdlib -function-sections -data-sections -Xcc -D__ZEPHYR__ -Xfrontend -assume-single-threaded -no-link-objc-runtime -import-objc-header $(CHEADER) -I . 
 
 libSwiftIO.a: $(OBJS) SwiftIO.swiftmodule
 	$(AR) -rcs libSwiftIO.a $(OBJS)
