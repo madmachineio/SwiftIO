@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (15% documented)
+         (11% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -32,6 +32,12 @@
         </form>
       </p>
     
+        <p class="header-col header-col--secondary">
+          <a class="header-link" href="https://github.com/madmachine/SwiftIO">
+            <img class="header-icon" src="../img/gh.png"/>
+            View on GitHub
+          </a>
+        </p>
     
     </header>
 
@@ -66,9 +72,6 @@
                 <a class="nav-group-task-link" href="../Classes/PWMOut.html">PWMOut</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Classes/RGBLED.html">RGBLED</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/Timer.html">Timer</a>
               </li>
               <li class="nav-group-task">
@@ -92,6 +95,9 @@
                 <a class="nav-group-task-link" href="../Enums/DigitalInCallbackMode.html">DigitalInCallbackMode</a>
               </li>
               <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Enums/DigitalInCallbackState.html">DigitalInCallbackState</a>
+              </li>
+              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalInMode.html">DigitalInMode</a>
               </li>
               <li class="nav-group-task">
@@ -105,9 +111,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/PWMOutId.html">PWMOutId</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/RGBLEDColor.html">RGBLEDColor</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/TimerType.html">TimerType</a>
@@ -177,9 +180,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO21DigitalInCallbackModeO7disableyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/disable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO7disableyA2CmF">disable</a>
+                    <a name="/s:7SwiftIO21DigitalInCallbackModeO6risingyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/rising" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO6risingyA2CmF">rising</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -194,7 +197,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">disable</span> <span class="o">=</span> <span class="mi">0</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">rising</span> <span class="o">=</span> <span class="mi">1</span></code></pre>
 
                         </div>
                       </div>
@@ -204,9 +207,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO21DigitalInCallbackModeO10risingEdgeyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/risingEdge" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO10risingEdgeyA2CmF">risingEdge</a>
+                    <a name="/s:7SwiftIO21DigitalInCallbackModeO7fallingyA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/falling" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO7fallingyA2CmF">falling</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -221,34 +224,7 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">risingEdge</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO21DigitalInCallbackModeO11fallingEdgeyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/fallingEdge" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO11fallingEdgeyA2CmF">fallingEdge</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">fallingEdge</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">falling</span></code></pre>
 
                         </div>
                       </div>
@@ -282,60 +258,6 @@
                     </section>
                   </div>
                 </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO21DigitalInCallbackModeO9highLevelyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/highLevel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO9highLevelyA2CmF">highLevel</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">highLevel</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO21DigitalInCallbackModeO8lowLevelyA2CmF"></a>
-                    <a name="//apple_ref/swift/Element/lowLevel" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO21DigitalInCallbackModeO8lowLevelyA2CmF">lowLevel</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Undocumented</p>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">lowLevel</span></code></pre>
-
-                        </div>
-                      </div>
-                    </section>
-                  </div>
-                </li>
               </ul>
             </div>
           </div>
@@ -344,8 +266,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-09-04)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.10.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-17)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>
