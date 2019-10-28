@@ -22,11 +22,8 @@
 
     var obj: I2CObject
 
-    public convenience init(_ id: I2CId) {
-        self.init(id, speed: .standard)
-    }
 
-    public init(_ id: I2CId, speed: I2CSpeed) {
+    public init(_ id: I2CId, speed: I2CSpeed = .standard) {
         obj = I2CObject()
         obj.id = id.rawValue
         obj.speed = speed.rawValue

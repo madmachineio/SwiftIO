@@ -2,11 +2,13 @@ public class UART {
 
     var obj: UARTObject
 
-    public convenience init(_ id: UARTId) {
-        self.init(id, baudRate: 115200, dataBits: .eightBits, parity: .none, stopBits: .oneBit, readBufLength: .small)
-    }
 
-    public init(_ id: UARTId, baudRate: UInt32, dataBits: UARTDataBits, parity: UARTParity, stopBits: UARTStopBits, readBufLength: UARTBufferLength) {
+    public init(_ id: UARTId,
+                baudRate: UInt32 = 115200,
+                dataBits: UARTDataBits = .eightBits,
+                parity: UARTParity = .none,
+                stopBits: UARTStopBits = .oneBit,
+                readBufLength: UARTBufferLength = .small) {
         obj = UARTObject()
         obj.id = id.rawValue
         obj.baudRate = baudRate

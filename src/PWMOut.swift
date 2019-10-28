@@ -1,11 +1,8 @@
 public class PWMOut {
     var obj: PWMOutObject
 
-    public convenience init(_ id: PWMOutId) {
-        self.init(id, period: 1000, pulse: 0)
-    }
 
-    public init(_ id: PWMOutId, period: UInt, pulse: UInt) {
+    public init(_ id: PWMOutId, period: UInt = 1000, pulse: UInt = 0) {
         obj = PWMOutObject()
         obj.id = id.rawValue
         obj.period = UInt32(period)

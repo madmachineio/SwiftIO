@@ -20,7 +20,14 @@
  */
 public class DigitalOut {
 
-    var obj: DigitalIOObject
+    private var obj: DigitalIOObject
+
+    private var mode: DigitalOutMode {
+        willSet {
+            obj.outputMode = newValue.rawValue
+            print("newValue = \(newValue)")
+        }
+    }
 
     /**
      The current state of the output value.
@@ -33,38 +40,30 @@ public class DigitalOut {
 		}
 	}
     
-    /**
-     Create a DigitalOut to a specified pin, the default output mode is `.pushPull`.
-     
-     - Parameter name: The Digital pin name on the board.
-     
-     ### Usage Example: ###
-     ````
-     let pin = DigitalOut(.D0)
-     ````
-     */
-    public convenience init(_ id: DigitalIOId) {
-        self.init(id, mode: .pushPull)
-    }
     
     /**
      Create a DigitalOut to a specified pin.
      
      - Parameter name: The Digital pin name on the board.
      - Parameter mode: The output mode.
+     - Parameter value: The output value.
 
      ### Usage Example: ###
      ````
      let pin = DigitalOut(.D0, mode: .pushPull)
      ````
      */
-    public init(_ id: DigitalIOId, mode: DigitalOutMode) {
+    public init(_ id: DigitalIOId, mode: DigitalOutMode = .pushPull, value: Bool = false) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
         obj.direction = DigitalIODirection.output.rawValue
         obj.outputMode = mode.rawValue
+
+        self.mode = mode
+        self.value = value
+
         swiftHal_gpioInit(&obj)
-        value = false
+		swiftHal_gpioWrite(&obj, value ? 1 : 0)
     }
 
     deinit {
@@ -77,9 +76,17 @@ public class DigitalOut {
      - Parameter mode : The output mode.
      */
     public func setMode(_ mode: DigitalOutMode) {
-        obj.outputMode = mode.rawValue
+        self.mode = mode
         swiftHal_gpioConfig(&obj)
 	}
+
+    /**
+     Get the output mode of a pin.
+
+     */
+    public func getMode() -> DigitalOutMode {
+        return mode
+    }
 
     /**
      Write value to a pin.
@@ -91,13 +98,16 @@ public class DigitalOut {
 	}
     
     /**
-     Reverse the current output value of a pin.
+     Toggle the current output value of a pin.
      */
-    public func reverse() {
+    public func toggle() {
         value = value ? false : true
     }
 
-    public func getState() -> Bool {
+    /**
+     Get the current output value of a pin.
+     */
+    public func getValue() -> Bool {
         return value
     }
     

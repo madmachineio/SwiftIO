@@ -33,19 +33,6 @@ public class DigitalIn {
 		return swiftHal_gpioRead(&obj) == 1 ? true : false
 	}
 
-    /**
-     Initialize a DigitalIn to a specified pin.
-     
-     - Parameter id: The Digital id on the board, the default input mode is `.pullDown`.
-     
-     ### Usage Example: ###
-     ````
-     let pin = DigitalIn(.D0)
-     ````
-     */
-    public convenience init(_ id: DigitalIOId) {
-        self.init(id, mode: .pullDown)
-    }
 
     /**
      Initialize a DigitalIn to a specified pin.
@@ -67,7 +54,7 @@ public class DigitalIn {
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
-	public init(_ id: DigitalIOId, mode: DigitalInMode) {
+	public init(_ id: DigitalIOId, mode: DigitalInMode = .pullDown) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
         obj.direction = DigitalIODirection.input.rawValue
