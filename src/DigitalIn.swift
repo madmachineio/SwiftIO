@@ -22,7 +22,25 @@
 public class DigitalIn {
 		
     var obj: DigitalIOObject
-    var callback: (()->Void)?
+
+    private let id: Id
+    private var mode: Mode {
+        willSet {
+            obj.inputMode = newValue.rawValue
+        }
+    }
+    private var callback: (()->Void)?
+    private var callbackMode: CallbackMode {
+        willSet {
+            obj.callbackMode = newValue.rawValue
+        }
+    }
+    private var callbackState: CallbackState {
+        willSet {
+            obj.callbackState = newValue.rawValue
+        }
+    }
+    
 
     /**
      Use this property to get the input value.
@@ -33,6 +51,14 @@ public class DigitalIn {
 		return swiftHal_gpioRead(&obj) == 1 ? true : false
 	}
 
+    private func objectInit() {
+        obj.id = id.rawValue
+        obj.direction = Direction.input.rawValue
+        obj.inputMode = mode.rawValue
+        obj.callbackMode = callbackMode.rawValue
+        obj.callbackState = callbackState.rawValue
+        swiftHal_gpioInit(&obj)
+    }
 
     /**
      Initialize a DigitalIn to a specified pin.
@@ -56,18 +82,23 @@ public class DigitalIn {
      */
 	public init(_ id: Id,
                 mode: Mode = .pullDown) {
+        self.id = id
+        self.mode = mode
+        self.callbackMode = .rising
+        self.callbackState = .disable
         obj = DigitalIOObject()
-        obj.id = id.rawValue
-        obj.direction = Direction.input.rawValue
-        obj.inputMode = mode.rawValue
-		swiftHal_gpioInit(&obj)
+        objectInit()
 	}
 
     deinit {
-        if obj.callbackState == CallbackState.enable.rawValue {
+        if callbackState == .enable {
             removeCallback()
         }
         swiftHal_gpioDeinit(&obj)
+    }
+
+    public func getMode() -> Mode {
+        return mode
     }
 
     /**
@@ -76,7 +107,7 @@ public class DigitalIn {
      - Parameter mode : The input mode.
      */
 	public func setMode(_ mode: Mode) {
-		obj.inputMode = mode.rawValue
+		self.mode = mode
 		swiftHal_gpioConfig(&obj)
 	}
 
@@ -99,8 +130,8 @@ public class DigitalIn {
      - Returns: 0 or 1 of the logic value.
      */    
     public func on(_ mode: CallbackMode, callback: @escaping ()->Void) {
-        obj.callbackState = CallbackState.enable.rawValue
-        obj.callbackMode = mode.rawValue
+        callbackMode = mode
+        callbackState = .enable
         self.callback = callback
         swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
             let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
@@ -110,7 +141,7 @@ public class DigitalIn {
     }
 
     public func removeCallback() {
-        obj.callbackState = CallbackState.disable.rawValue
+        callbackState = .disable
         swiftHal_gpioRemoveCallback(&obj)
     }
 

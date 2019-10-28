@@ -22,10 +22,10 @@ public class DigitalOut {
 
     private var obj: DigitalIOObject
 
+    private let id: Id
     private var mode: Mode {
         willSet {
             obj.outputMode = newValue.rawValue
-            print("newValue = \(newValue)")
         }
     }
 
@@ -39,7 +39,15 @@ public class DigitalOut {
 			swiftHal_gpioWrite(&obj, newValue ? 1 : 0)
 		}
 	}
-    
+
+    private func objectInit() {
+        obj.id = id.rawValue
+        obj.direction = Direction.output.rawValue
+        obj.outputMode = mode.rawValue
+
+        swiftHal_gpioInit(&obj)
+		swiftHal_gpioWrite(&obj, value ? 1 : 0)
+    }
     
     /**
      Create a DigitalOut to a specified pin.
@@ -56,20 +64,23 @@ public class DigitalOut {
     public init(_ id: Id,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
-        obj = DigitalIOObject()
-        obj.id = id.rawValue
-        obj.direction = Direction.output.rawValue
-        obj.outputMode = mode.rawValue
-
+        self.id = id
         self.mode = mode
         self.value = value
-
-        swiftHal_gpioInit(&obj)
-		swiftHal_gpioWrite(&obj, value ? 1 : 0)
+        obj = DigitalIOObject()
+        objectInit()
     }
 
     deinit {
         swiftHal_gpioDeinit(&obj)
+    }
+
+    /**
+     Get the output mode of a pin.
+
+     */
+    public func getMode() -> Mode {
+        return mode
     }
 
     /**
@@ -82,13 +93,7 @@ public class DigitalOut {
         swiftHal_gpioConfig(&obj)
 	}
 
-    /**
-     Get the output mode of a pin.
 
-     */
-    public func getMode() -> Mode {
-        return mode
-    }
 
     /**
      Write value to a pin.
@@ -118,10 +123,6 @@ public class DigitalOut {
 
 extension DigitalOut {
 
-    public enum Mode: UInt8 {
-        case pushPull = 1, openDrain
-    }    
-
     public enum Id: UInt8 {
         case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,
             D17, D18, D19, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31,
@@ -131,6 +132,10 @@ extension DigitalOut {
 
     public enum Direction: UInt8 {
         case output = 1, input
+    }
+
+    public enum Mode: UInt8 {
+        case pushPull = 1, openDrain
     }
 }
 
