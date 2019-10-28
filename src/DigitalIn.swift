@@ -118,3 +118,17 @@ public class DigitalIn {
 
 
 
+extension DigitalIn {
+
+    public enum DigitalInMode: UInt8 {
+        case pullDown = 1, pullUp, pullNone
+    }
+
+    public enum DigitalInCallbackMode: UInt8 {
+        case rising = 1, falling, bothEdge
+    }
+
+    public enum DigitalInCallbackState: UInt8 {
+        case disable, enable
+    }
+}

@@ -29,7 +29,7 @@ public class DigitalInOut {
 		}
 	}
 
-	public init(_ id: DigitalIOId, mode: DigitalOutMode) {
+	public init(_ id: DigitalIOId, mode: DigitalOut.DigitalOutMode) {
 		obj = DigitalIOObject()
 		obj.id = id.rawValue
 		obj.direction = DigitalIODirection.output.rawValue
@@ -38,7 +38,7 @@ public class DigitalInOut {
 		outputValue = false
 	}
 
-	public init(_ id: DigitalIOId, mode: DigitalInMode) {
+	public init(_ id: DigitalIOId, mode: DigitalIn.DigitalInMode) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
         obj.direction = DigitalIODirection.input.rawValue
@@ -47,13 +47,13 @@ public class DigitalInOut {
 		outputValue = false
 	}
 
-	public func setToOutput(_ mode: DigitalOutMode) {
+	public func setToOutput(_ mode: DigitalOut.DigitalOutMode) {
 		obj.direction = DigitalIODirection.output.rawValue
 		obj.outputMode = mode.rawValue
 		swiftHal_gpioConfig(&obj)
 	}
 
-	public func setToInput(_ mode: DigitalInMode) {
+	public func setToInput(_ mode: DigitalIn.DigitalInMode) {
 		obj.direction = DigitalIODirection.input.rawValue
 		obj.outputMode = mode.rawValue
 		swiftHal_gpioConfig(&obj)

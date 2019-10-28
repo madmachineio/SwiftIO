@@ -38,3 +38,10 @@ public class PWMOut {
         swiftHal_PWMOutConfig(&obj)
     }
 }
+
+
+extension PWMOut {
+    public enum PWMOutId: UInt8 {
+        case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, PWM8, PWM9, PWM10, PWM11, PWM12, PWM13
+    }
+}

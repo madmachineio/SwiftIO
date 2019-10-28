@@ -61,3 +61,29 @@ public class UART {
 
 
 }
+
+
+
+
+extension UART {
+
+    public enum UARTId: UInt8 {
+        case UART0 = 0, UART1, UART2, UART3
+    }
+
+    public enum UARTParity: UInt8 {
+        case none, odd, even
+    }
+
+    public enum UARTStopBits: UInt8 {
+        case oneBit, twoBits
+    }
+
+    public enum UARTDataBits: UInt8 {
+        case eightBits
+    }
+
+    public enum UARTBufferLength: UInt32 {
+        case small = 64, medium = 256, large = 1024
+    }
+}

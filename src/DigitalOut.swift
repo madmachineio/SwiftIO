@@ -114,5 +114,10 @@ public class DigitalOut {
 }
 
 
+extension DigitalOut {
 
+    public enum DigitalOutMode: UInt8 {
+        case pushPull = 1, openDrain
+    }    
+}
 

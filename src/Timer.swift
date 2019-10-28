@@ -36,3 +36,10 @@ public class Timer {
     }
 
 }
+
+
+extension Timer {
+    public enum TimerType: UInt8 {
+        case oneShot, period
+    }
+}
