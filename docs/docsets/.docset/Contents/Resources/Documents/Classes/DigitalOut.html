@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
            Docs
         </a>
-         (11% documented)
+         (12% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -32,12 +32,6 @@
         </form>
       </p>
     
-        <p class="header-col header-col--secondary">
-          <a class="header-link" href="https://github.com/madmachine/SwiftIO">
-            <img class="header-icon" src="../img/gh.png"/>
-            View on GitHub
-          </a>
-        </p>
     
     </header>
 
@@ -67,6 +61,12 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/I2C.html">I2C</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/I2C/I2CId.html">– I2CId</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="../Classes/I2C/I2CSpeed.html">– I2CSpeed</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Classes/PWMOut.html">PWMOut</a>
@@ -102,12 +102,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/DigitalOutMode.html">DigitalOutMode</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/I2CId.html">I2CId</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../Enums/I2CSpeed.html">I2CSpeed</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../Enums/PWMOutId.html">PWMOutId</a>
@@ -222,58 +216,9 @@ Write to this property would change the output value.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO10DigitalOutCyAcA0C4IOIdOcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO10DigitalOutCyAcA0C4IOIdOcfc">init(_:)</a>
-                    </code>
-                  </div>
-                  <div class="height-container">
-                    <div class="pointer-container"></div>
-                    <section class="section">
-                      <div class="pointer"></div>
-                      <div class="abstract">
-                        <p>Create a DigitalOut to a specified pin, the default output mode is <code>.pushPull</code>.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
-</code></pre>
-
-                      </div>
-                      <div class="declaration">
-                        <h4>Declaration</h4>
-                        <div class="language">
-                          <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalIOId.html">DigitalIOId</a></span><span class="p">)</span></code></pre>
-
-                        </div>
-                      </div>
-                      <div>
-                        <h4>Parameters</h4>
-                        <table class="graybox">
-                          <tbody>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>name</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p>The Digital pin name on the board.</p>
-                                </div>
-                              </td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </section>
-                  </div>
-                </li>
-                <li class="item">
-                  <div>
-                    <code>
-                    <a name="/s:7SwiftIO10DigitalOutC_4modeAcA0C4IOIdO_AA0cD4ModeOtcfc"></a>
-                    <a name="//apple_ref/swift/Method/init(_:mode:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO10DigitalOutC_4modeAcA0C4IOIdO_AA0cD4ModeOtcfc">init(_:mode:)</a>
+                    <a name="/s:7SwiftIO10DigitalOutC_4mode5valueAcA0C4IOIdO_AA0cD4ModeOSbtcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(_:mode:value:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO10DigitalOutC_4mode5valueAcA0C4IOIdO_AA0cD4ModeOSbtcfc">init(_:mode:value:)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -291,7 +236,7 @@ Write to this property would change the output value.</p>
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalIOId.html">DigitalIOId</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalOutMode.html">DigitalOutMode</a></span><span class="p">)</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalIOId.html">DigitalIOId</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Enums/DigitalOutMode.html">DigitalOutMode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">pushPull</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">false</span><span class="p">)</span></code></pre>
 
                         </div>
                       </div>
@@ -320,6 +265,18 @@ Write to this property would change the output value.</p>
                               <td>
                                 <div>
                                   <p>The output mode.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The output value.</p>
                                 </div>
                               </td>
                             </tr>
@@ -378,6 +335,33 @@ Write to this property would change the output value.</p>
                 <li class="item">
                   <div>
                     <code>
+                    <a name="/s:7SwiftIO10DigitalOutC7getModeAA0cdF0OyF"></a>
+                    <a name="//apple_ref/swift/Method/getMode()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO10DigitalOutC7getModeAA0cdF0OyF">getMode()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Get the output mode of a pin.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getMode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Enums/DigitalOutMode.html">DigitalOutMode</a></span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
                     <a name="/s:7SwiftIO10DigitalOutC5writeyySbF"></a>
                     <a name="//apple_ref/swift/Method/write(_:)" class="dashAnchor"></a>
                     <a class="token" href="#/s:7SwiftIO10DigitalOutC5writeyySbF">write(_:)</a>
@@ -424,9 +408,9 @@ Write to this property would change the output value.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO10DigitalOutC7reverseyyF"></a>
-                    <a name="//apple_ref/swift/Method/reverse()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO10DigitalOutC7reverseyyF">reverse()</a>
+                    <a name="/s:7SwiftIO10DigitalOutC6toggleyyF"></a>
+                    <a name="//apple_ref/swift/Method/toggle()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO10DigitalOutC6toggleyyF">toggle()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -434,14 +418,14 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Reverse the current output value of a pin.</p>
+                        <p>Toggle the current output value of a pin.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">reverse</span><span class="p">()</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">toggle</span><span class="p">()</span></code></pre>
 
                         </div>
                       </div>
@@ -451,9 +435,9 @@ Write to this property would change the output value.</p>
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO10DigitalOutC8getStateSbyF"></a>
-                    <a name="//apple_ref/swift/Method/getState()" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO10DigitalOutC8getStateSbyF">getState()</a>
+                    <a name="/s:7SwiftIO10DigitalOutC8getValueSbyF"></a>
+                    <a name="//apple_ref/swift/Method/getValue()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO10DigitalOutC8getValueSbyF">getValue()</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -461,14 +445,14 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Get the current output value of a pin.</p>
 
                       </div>
                       <div class="declaration">
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getState</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getValue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
                       </div>
@@ -483,7 +467,7 @@ Write to this property would change the output value.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-17)</p>
+      <p>&copy; 2019 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-10-28)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.11.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

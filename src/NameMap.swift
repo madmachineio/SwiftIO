@@ -33,13 +33,7 @@ public enum DigitalInCallbackState: UInt8 {
 
 
 
-public enum I2CId: UInt8 {
-    case I2C0, I2C1
-}
 
-public enum I2CSpeed: UInt32 {
-    case standard = 100000, fast = 400000, fastPlus = 1000000
-}
 
 
 
