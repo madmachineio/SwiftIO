@@ -1,80 +1,584 @@
 {
   "warnings": [
     {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 99,
+      "symbol": "AnalogIn.Id",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A10",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A11",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A5",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A6",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A7",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/AnalogIn.swift",
+      "line": 100,
+      "symbol": "AnalogIn.Id.A9",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
-      "line": 111,
+      "line": 112,
       "symbol": "DigitalIn.removeCallback()",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 1,
-      "symbol": "DigitalInOut",
-      "symbol_kind": "source.lang.swift.decl.class",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 124,
+      "symbol": "DigitalIn.Id",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 5,
-      "symbol": "DigitalInOut.outputValue",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 126,
+      "symbol": "DigitalIn.Direction",
+      "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 14,
-      "symbol": "DigitalInOut.inputValue",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 129,
+      "symbol": "DigitalIn.Mode",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 24,
-      "symbol": "DigitalInOut.getDirection()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 130,
+      "symbol": "DigitalIn.Mode.pullDown",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 32,
-      "symbol": "DigitalInOut.init(_:mode:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 130,
+      "symbol": "DigitalIn.Mode.pullNone",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 41,
-      "symbol": "DigitalInOut.init(_:mode:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 130,
+      "symbol": "DigitalIn.Mode.pullUp",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 50,
-      "symbol": "DigitalInOut.setToOutput(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 133,
+      "symbol": "DigitalIn.CallbackMode",
+      "symbol_kind": "source.lang.swift.decl.enum",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 56,
-      "symbol": "DigitalInOut.setToInput(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 134,
+      "symbol": "DigitalIn.CallbackMode.bothEdge",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 62,
-      "symbol": "DigitalInOut.write(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 134,
+      "symbol": "DigitalIn.CallbackMode.falling",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/DigitalInOut.swift",
-      "line": 66,
-      "symbol": "DigitalInOut.read()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 134,
+      "symbol": "DigitalIn.CallbackMode.rising",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 137,
+      "symbol": "DigitalIn.CallbackState",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 138,
+      "symbol": "DigitalIn.CallbackState.disable",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalIn.swift",
+      "line": 138,
+      "symbol": "DigitalIn.CallbackState.enable",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 121,
+      "symbol": "DigitalOut.Mode",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 122,
+      "symbol": "DigitalOut.Mode.openDrain",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 122,
+      "symbol": "DigitalOut.Mode.pushPull",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 125,
+      "symbol": "DigitalOut.Id",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D10",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D11",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D12",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D13",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D14",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D15",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D16",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D5",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D6",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D7",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 126,
+      "symbol": "DigitalOut.Id.D9",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D17",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D18",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D19",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D20",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D21",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D22",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D23",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D24",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D25",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D26",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D27",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D28",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D29",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D30",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 127,
+      "symbol": "DigitalOut.Id.D31",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D32",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D33",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D34",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D35",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D36",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D37",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D38",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D39",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D40",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D41",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D42",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D43",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D44",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 128,
+      "symbol": "DigitalOut.Id.D45",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 129,
+      "symbol": "DigitalOut.Id.BLUE",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 129,
+      "symbol": "DigitalOut.Id.GREEN",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 129,
+      "symbol": "DigitalOut.Id.RED",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 132,
+      "symbol": "DigitalOut.Direction",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 133,
+      "symbol": "DigitalOut.Direction.input",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/DigitalOut.swift",
+      "line": 133,
+      "symbol": "DigitalOut.Direction.output",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -190,818 +694,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 1,
-      "symbol": "DigitalIOId",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D0",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D1",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D10",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D11",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D12",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D13",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D14",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D15",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D16",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D2",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D3",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D4",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D5",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D6",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D7",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D8",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 2,
-      "symbol": "DigitalIOId.D9",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D17",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D18",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D19",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D20",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D21",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D22",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D23",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D24",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D25",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D26",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D27",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D28",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D29",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D30",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 3,
-      "symbol": "DigitalIOId.D31",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D32",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D33",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D34",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D35",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D36",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D37",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D38",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D39",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D40",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D41",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D42",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D43",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D44",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 4,
-      "symbol": "DigitalIOId.D45",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 5,
-      "symbol": "DigitalIOId.BLUE",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 5,
-      "symbol": "DigitalIOId.GREEN",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 5,
-      "symbol": "DigitalIOId.RED",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 9,
-      "symbol": "DigitalIODirection",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 10,
-      "symbol": "DigitalIODirection.input",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 10,
-      "symbol": "DigitalIODirection.output",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 13,
-      "symbol": "DigitalOutMode",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 14,
-      "symbol": "DigitalOutMode.openDrain",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 14,
-      "symbol": "DigitalOutMode.pushPull",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 17,
-      "symbol": "DigitalInMode",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 18,
-      "symbol": "DigitalInMode.pullDown",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 18,
-      "symbol": "DigitalInMode.pullNone",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 18,
-      "symbol": "DigitalInMode.pullUp",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 21,
-      "symbol": "DigitalInCallbackMode",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 22,
-      "symbol": "DigitalInCallbackMode.bothEdge",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 22,
-      "symbol": "DigitalInCallbackMode.falling",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 22,
-      "symbol": "DigitalInCallbackMode.rising",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 25,
-      "symbol": "DigitalInCallbackState",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 26,
-      "symbol": "DigitalInCallbackState.disable",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 26,
-      "symbol": "DigitalInCallbackState.enable",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 42,
-      "symbol": "UARTId",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 43,
-      "symbol": "UARTId.UART0",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 43,
-      "symbol": "UARTId.UART1",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 43,
-      "symbol": "UARTId.UART2",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 43,
-      "symbol": "UARTId.UART3",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 46,
-      "symbol": "UARTParity",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 47,
-      "symbol": "UARTParity.even",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 47,
-      "symbol": "UARTParity.none",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 47,
-      "symbol": "UARTParity.odd",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 50,
-      "symbol": "UARTStopBits",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 51,
-      "symbol": "UARTStopBits.oneBit",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 51,
-      "symbol": "UARTStopBits.twoBits",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 54,
-      "symbol": "UARTDataBits",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 55,
-      "symbol": "UARTDataBits.eightBits",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 58,
-      "symbol": "UARTBufferLength",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 59,
-      "symbol": "UARTBufferLength.large",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 59,
-      "symbol": "UARTBufferLength.medium",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 59,
-      "symbol": "UARTBufferLength.small",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 65,
-      "symbol": "TimerType",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 66,
-      "symbol": "TimerType.oneShot",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 66,
-      "symbol": "TimerType.period",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 72,
-      "symbol": "PWMOutId",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM0",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM1",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM10",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM11",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM12",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM13",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM2",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM3",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM4",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM5",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM6",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM7",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM8",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 73,
-      "symbol": "PWMOutId.PWM9",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 76,
-      "symbol": "AnalogInId",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A0",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A1",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A10",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A11",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A2",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A3",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A4",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A5",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A6",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A7",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A8",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/src/NameMap.swift",
-      "line": 77,
-      "symbol": "AnalogInId.A9",
-      "symbol_kind": "source.lang.swift.decl.enumelement",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
       "line": 1,
       "symbol": "PWMOut",
@@ -1017,30 +709,142 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
-      "line": 19,
+      "line": 21,
       "symbol": "PWMOut.set(period:pulse:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
-      "line": 25,
+      "line": 27,
       "symbol": "PWMOut.setPeriod(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
-      "line": 31,
+      "line": 33,
       "symbol": "PWMOut.setFrequency(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
-      "line": 36,
+      "line": 38,
       "symbol": "PWMOut.setDutycycle(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 45,
+      "symbol": "PWMOut",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 46,
+      "symbol": "PWMOut.Id",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM10",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM11",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM12",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM13",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM4",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM5",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM6",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM7",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM8",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/PWMOut.swift",
+      "line": 47,
+      "symbol": "PWMOut.Id.PWM9",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
@@ -1128,6 +932,34 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/andy/Documents/SwiftIO/src/Timer.swift",
+      "line": 41,
+      "symbol": "Timer",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/Timer.swift",
+      "line": 42,
+      "symbol": "Timer.Mode",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/Timer.swift",
+      "line": 43,
+      "symbol": "Timer.Mode.oneShot",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/Timer.swift",
+      "line": 43,
+      "symbol": "Timer.Mode.period",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
       "line": 1,
       "symbol": "UART",
@@ -1195,6 +1027,139 @@
       "line": 56,
       "symbol": "UART.read(_:)",
       "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 68,
+      "symbol": "UART",
+      "symbol_kind": "source.lang.swift.decl.extension",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 70,
+      "symbol": "UART.Id",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 71,
+      "symbol": "UART.Id.UART0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 71,
+      "symbol": "UART.Id.UART1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 71,
+      "symbol": "UART.Id.UART2",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 71,
+      "symbol": "UART.Id.UART3",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 74,
+      "symbol": "UART.Parity",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 75,
+      "symbol": "UART.Parity.even",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 75,
+      "symbol": "UART.Parity.none",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 75,
+      "symbol": "UART.Parity.odd",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 78,
+      "symbol": "UART.StopBits",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 79,
+      "symbol": "UART.StopBits.oneBit",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 79,
+      "symbol": "UART.StopBits.twoBits",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 82,
+      "symbol": "UART.DataBits",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 83,
+      "symbol": "UART.DataBits.eightBits",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 86,
+      "symbol": "UART.BufferLength",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 87,
+      "symbol": "UART.BufferLength.large",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 87,
+      "symbol": "UART.BufferLength.medium",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/UART.swift",
+      "line": 87,
+      "symbol": "UART.BufferLength.small",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     }
   ],
