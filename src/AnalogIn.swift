@@ -7,7 +7,7 @@
  import SwiftIO
  
  func main() {
-     //Initialize an AnalogIn to AnalogInId.A0
+     //Initialize an AnalogIn to Id.A0
      let pin = AnalogIn(.A0)
  
      //Read and print the analog input value on .A0 every 1 second
@@ -33,7 +33,7 @@ public class AnalogIn {
      let pin = AnalogIn(.A0)
      ````
      */
-    public init(_ id: AnalogInId) {
+    public init(_ id: Id) {
         obj = AnalogInObject()
         obj.id = id.rawValue
         obj.resolution = 4095
@@ -96,7 +96,7 @@ public class AnalogIn {
 
 extension AnalogIn {
 
-    public enum AnalogInId: UInt8 {
+    public enum Id: UInt8 {
         case A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11
     }
 }

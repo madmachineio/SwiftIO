@@ -22,7 +22,7 @@ public class DigitalOut {
 
     private var obj: DigitalIOObject
 
-    private var mode: DigitalOutMode {
+    private var mode: Mode {
         willSet {
             obj.outputMode = newValue.rawValue
             print("newValue = \(newValue)")
@@ -53,10 +53,12 @@ public class DigitalOut {
      let pin = DigitalOut(.D0, mode: .pushPull)
      ````
      */
-    public init(_ id: DigitalIOId, mode: DigitalOutMode = .pushPull, value: Bool = false) {
+    public init(_ id: Id,
+                mode: Mode = .pushPull,
+                value: Bool = false) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
-        obj.direction = DigitalIODirection.output.rawValue
+        obj.direction = Direction.output.rawValue
         obj.outputMode = mode.rawValue
 
         self.mode = mode
@@ -75,7 +77,7 @@ public class DigitalOut {
      
      - Parameter mode : The output mode.
      */
-    public func setMode(_ mode: DigitalOutMode) {
+    public func setMode(_ mode: Mode) {
         self.mode = mode
         swiftHal_gpioConfig(&obj)
 	}
@@ -84,7 +86,7 @@ public class DigitalOut {
      Get the output mode of a pin.
 
      */
-    public func getMode() -> DigitalOutMode {
+    public func getMode() -> Mode {
         return mode
     }
 
@@ -116,19 +118,20 @@ public class DigitalOut {
 
 extension DigitalOut {
 
-    public enum DigitalOutMode: UInt8 {
+    public enum Mode: UInt8 {
         case pushPull = 1, openDrain
     }    
+
+    public enum Id: UInt8 {
+        case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,
+            D17, D18, D19, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31,
+            D32, D33, D34, D35, D36, D37, D38, D39, D40, D41, D42, D43, D44, D45,
+            RED, GREEN, BLUE
+    }
+
+    public enum Direction: UInt8 {
+        case output = 1, input
+    }
 }
 
-public enum DigitalIOId: UInt8 {
-    case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,
-         D17, D18, D19, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31,
-         D32, D33, D34, D35, D36, D37, D38, D39, D40, D41, D42, D43, D44, D45,
-         RED, GREEN, BLUE
-}
 
-
-public enum DigitalIODirection: UInt8 {
-    case output = 1, input
-}

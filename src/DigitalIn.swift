@@ -54,16 +54,17 @@ public class DigitalIn {
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
-	public init(_ id: DigitalIOId, mode: DigitalInMode = .pullDown) {
+	public init(_ id: Id,
+                mode: Mode = .pullDown) {
         obj = DigitalIOObject()
         obj.id = id.rawValue
-        obj.direction = DigitalIODirection.input.rawValue
+        obj.direction = Direction.input.rawValue
         obj.inputMode = mode.rawValue
 		swiftHal_gpioInit(&obj)
 	}
 
     deinit {
-        if obj.callbackState == DigitalInCallbackState.enable.rawValue {
+        if obj.callbackState == CallbackState.enable.rawValue {
             removeCallback()
         }
         swiftHal_gpioDeinit(&obj)
@@ -74,7 +75,7 @@ public class DigitalIn {
      
      - Parameter mode : The input mode.
      */
-	public func setMode(_ mode: DigitalInMode) {
+	public func setMode(_ mode: Mode) {
 		obj.inputMode = mode.rawValue
 		swiftHal_gpioConfig(&obj)
 	}
@@ -97,8 +98,8 @@ public class DigitalIn {
      
      - Returns: 0 or 1 of the logic value.
      */    
-    public func on(_ mode: DigitalInCallbackMode, callback: @escaping ()->Void) {
-        obj.callbackState = DigitalInCallbackState.enable.rawValue
+    public func on(_ mode: CallbackMode, callback: @escaping ()->Void) {
+        obj.callbackState = CallbackState.enable.rawValue
         obj.callbackMode = mode.rawValue
         self.callback = callback
         swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
@@ -109,7 +110,7 @@ public class DigitalIn {
     }
 
     public func removeCallback() {
-        obj.callbackState = DigitalInCallbackState.disable.rawValue
+        obj.callbackState = CallbackState.disable.rawValue
         swiftHal_gpioRemoveCallback(&obj)
     }
 
@@ -119,16 +120,21 @@ public class DigitalIn {
 
 
 extension DigitalIn {
+    
+    public typealias Id = DigitalOut.Id
+    
+    public typealias Direction = DigitalOut.Direction
+    
 
-    public enum DigitalInMode: UInt8 {
+    public enum Mode: UInt8 {
         case pullDown = 1, pullUp, pullNone
     }
 
-    public enum DigitalInCallbackMode: UInt8 {
+    public enum CallbackMode: UInt8 {
         case rising = 1, falling, bothEdge
     }
 
-    public enum DigitalInCallbackState: UInt8 {
+    public enum CallbackState: UInt8 {
         case disable, enable
     }
 }

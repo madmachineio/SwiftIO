@@ -21,7 +21,7 @@ public class Timer {
         }
     }
 
-    public func start(_ period: Int, mode: TimerType) {
+    public func start(_ period: Int, mode: Mode) {
         obj.period = Int32(period)
         obj.timerType = mode.rawValue
         swiftHal_timerStart(&obj)
@@ -39,7 +39,7 @@ public class Timer {
 
 
 extension Timer {
-    public enum TimerType: UInt8 {
+    public enum Mode: UInt8 {
         case oneShot, period
     }
 }

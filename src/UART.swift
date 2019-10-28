@@ -3,12 +3,12 @@ public class UART {
     var obj: UARTObject
 
 
-    public init(_ id: UARTId,
+    public init(_ id: Id,
                 baudRate: UInt32 = 115200,
-                dataBits: UARTDataBits = .eightBits,
-                parity: UARTParity = .none,
-                stopBits: UARTStopBits = .oneBit,
-                readBufLength: UARTBufferLength = .small) {
+                dataBits: DataBits = .eightBits,
+                parity: Parity = .none,
+                stopBits: StopBits = .oneBit,
+                readBufLength: BufferLength = .small) {
         obj = UARTObject()
         obj.id = id.rawValue
         obj.baudRate = baudRate
@@ -67,23 +67,23 @@ public class UART {
 
 extension UART {
 
-    public enum UARTId: UInt8 {
+    public enum Id: UInt8 {
         case UART0 = 0, UART1, UART2, UART3
     }
 
-    public enum UARTParity: UInt8 {
+    public enum Parity: UInt8 {
         case none, odd, even
     }
 
-    public enum UARTStopBits: UInt8 {
+    public enum StopBits: UInt8 {
         case oneBit, twoBits
     }
 
-    public enum UARTDataBits: UInt8 {
+    public enum DataBits: UInt8 {
         case eightBits
     }
 
-    public enum UARTBufferLength: UInt32 {
+    public enum BufferLength: UInt32 {
         case small = 64, medium = 256, large = 1024
     }
 }

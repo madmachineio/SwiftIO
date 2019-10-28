@@ -2,7 +2,9 @@ public class PWMOut {
     var obj: PWMOutObject
 
 
-    public init(_ id: PWMOutId, period: UInt = 1000, pulse: UInt = 0) {
+    public init(_ id: Id,
+                period: UInt = 1000,
+                pulse: UInt = 0) {
         obj = PWMOutObject()
         obj.id = id.rawValue
         obj.period = UInt32(period)
@@ -41,7 +43,7 @@ public class PWMOut {
 
 
 extension PWMOut {
-    public enum PWMOutId: UInt8 {
+    public enum Id: UInt8 {
         case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, PWM8, PWM9, PWM10, PWM11, PWM12, PWM13
     }
 }
