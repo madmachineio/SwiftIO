@@ -1,11 +1,28 @@
 
 public class Timer {
-    var obj: TimerObject
-    var callback: (()->Void)?
+    private var obj: TimerObject
+    private var callback: (()->Void)?
+
+    private var mode: Mode {
+        willSet {
+            obj.timerType = newValue.rawValue
+        }
+    }
+
+    private var period: Int {
+        willSet {
+            obj.period = Int32(newValue)
+        }
+    }
 
 
     public init() {
+        mode = .period
+        period = 0
+
         obj = TimerObject()
+        obj.timerType = mode.rawValue
+        obj.period = Int32(period)
         swiftHal_timerInit(&obj)
     }
 
@@ -13,7 +30,7 @@ public class Timer {
         swiftHal_timerDeinit(&obj)
     }
 
-    public func addCallback(_ callback: @escaping ()->Void) {
+    public func setCallback(_ callback: @escaping ()->Void) {
         self.callback = callback
         swiftHal_timerAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
             let mySelf = Unmanaged<Timer>.fromOpaque(ptr!).takeUnretainedValue()
@@ -21,9 +38,27 @@ public class Timer {
         }
     }
 
-    public func start(_ period: Int, mode: Mode) {
-        obj.period = Int32(period)
-        obj.timerType = mode.rawValue
+    public func setInterrupt(ms period: Int,
+                            mode: Mode = .period,
+                            start: Bool = true,
+                            _ callback: @escaping ()->Void) {
+        let initalSet = self.callback == nil ? true : false
+
+        self.period = period
+        self.mode = mode
+        self.callback = callback
+        swiftHal_timerAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
+            let mySelf = Unmanaged<Timer>.fromOpaque(ptr!).takeUnretainedValue()
+            mySelf.callback!()
+        }
+        if start {
+            swiftHal_timerStart(&obj)
+        } else if initalSet == false {
+            swiftHal_timerStop(&obj)
+        }
+    }
+
+    public func start() {
         swiftHal_timerStart(&obj)
     }
 
@@ -31,7 +66,7 @@ public class Timer {
         swiftHal_timerStop(&obj)
     }
 
-    public func clear() {
+    public func reset() {
         swiftHal_timerCount(&obj)
     }
 

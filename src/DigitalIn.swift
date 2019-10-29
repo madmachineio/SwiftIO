@@ -29,17 +29,13 @@ public class DigitalIn {
             obj.inputMode = newValue.rawValue
         }
     }
+    private var interruptMode: InterruptMode {
+        willSet {
+            obj.interruptMode = newValue.rawValue
+        }
+    }
     private var callback: (()->Void)?
-    private var callbackMode: CallbackMode {
-        willSet {
-            obj.callbackMode = newValue.rawValue
-        }
-    }
-    private var callbackState: CallbackState {
-        willSet {
-            obj.callbackState = newValue.rawValue
-        }
-    }
+
     
 
     /**
@@ -55,8 +51,7 @@ public class DigitalIn {
         obj.id = id.rawValue
         obj.direction = Direction.input.rawValue
         obj.inputMode = mode.rawValue
-        obj.callbackMode = callbackMode.rawValue
-        obj.callbackState = callbackState.rawValue
+        obj.interruptMode = interruptMode.rawValue
         swiftHal_gpioInit(&obj)
     }
 
@@ -84,14 +79,13 @@ public class DigitalIn {
                 mode: Mode = .pullDown) {
         self.id = id
         self.mode = mode
-        self.callbackMode = .rising
-        self.callbackState = .disable
+        self.interruptMode = .disable
         obj = DigitalIOObject()
         objectInit()
 	}
 
     deinit {
-        if callbackState == .enable {
+        if callback != nil {
             removeCallback()
         }
         swiftHal_gpioDeinit(&obj)
@@ -127,11 +121,13 @@ public class DigitalIn {
      Add a callback function to a pin.
     
      
-     - Returns: 0 or 1 of the logic value.
      */    
-    public func on(_ mode: CallbackMode, callback: @escaping ()->Void) {
-        callbackMode = mode
-        callbackState = .enable
+    public func setInterrupt(_ mode: InterruptMode, callback: @escaping ()->Void) {
+        guard mode != .disable else {
+            return
+        }
+
+        interruptMode = mode
         self.callback = callback
         swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
             let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
@@ -141,8 +137,9 @@ public class DigitalIn {
     }
 
     public func removeCallback() {
-        callbackState = .disable
+        interruptMode = .disable
         swiftHal_gpioRemoveCallback(&obj)
+        callback = nil
     }
 
 }
@@ -155,17 +152,12 @@ extension DigitalIn {
     public typealias Id = DigitalOut.Id
     
     public typealias Direction = DigitalOut.Direction
-    
 
     public enum Mode: UInt8 {
         case pullDown = 1, pullUp, pullNone
     }
 
-    public enum CallbackMode: UInt8 {
-        case rising = 1, falling, bothEdge
-    }
-
-    public enum CallbackState: UInt8 {
-        case disable, enable
+    public enum InterruptMode: UInt8 {
+        case disable, rising, falling, bothEdge
     }
 }

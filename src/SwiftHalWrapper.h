@@ -20,8 +20,7 @@ typedef struct {
 	unsigned char direction;
 	unsigned char inputMode;
 	unsigned char outputMode;
-	unsigned char callbackMode;
-	unsigned char callbackState;
+	unsigned char interruptMode;
 	CallbackWrapper callbackWrapper;
 } DigitalIOObject;
 
