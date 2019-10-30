@@ -30,14 +30,6 @@ public class Timer {
         swiftHal_timerDeinit(&obj)
     }
 
-    public func setCallback(_ callback: @escaping ()->Void) {
-        self.callback = callback
-        swiftHal_timerAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
-            let mySelf = Unmanaged<Timer>.fromOpaque(ptr!).takeUnretainedValue()
-            mySelf.callback!()
-        }
-    }
-
     public func setInterrupt(ms period: Int,
                             mode: Mode = .period,
                             start: Bool = true,

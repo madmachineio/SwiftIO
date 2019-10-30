@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>CallbackState Enumeration Reference</title>
+    <title>InterruptMode Enumeration Reference</title>
     <link rel="stylesheet" type="text/css" href="../../css/jazzy.css" />
     <link rel="stylesheet" type="text/css" href="../../css/highlight.css" />
     <meta charset="utf-8">
@@ -14,9 +14,9 @@
   </head>
   <body>
 
-    <a name="//apple_ref/swift/Enum/CallbackState" class="dashAnchor"></a>
+    <a name="//apple_ref/swift/Enum/InterruptMode" class="dashAnchor"></a>
 
-    <a title="CallbackState Enumeration Reference"></a>
+    <a title="InterruptMode Enumeration Reference"></a>
 
     <header class="header">
       <p class="header-col header-col--primary">
@@ -44,7 +44,7 @@
     <p class="breadcrumbs">
       <a class="breadcrumb" href="../../index.html"> Reference</a>
       <img class="carat" src="../../img/carat.png" />
-      CallbackState Enumeration Reference
+      InterruptMode Enumeration Reference
     </p>
 
     <div class="content-wrapper">
@@ -66,10 +66,7 @@
                 <a class="nav-group-task-link" href="../../Classes/DigitalIn/Mode.html">– Mode</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../../Classes/DigitalIn/CallbackMode.html">– CallbackMode</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="../../Classes/DigitalIn/CallbackState.html">– CallbackState</a>
+                <a class="nav-group-task-link" href="../../Classes/DigitalIn/InterruptMode.html">– InterruptMode</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="../../Classes/DigitalOut.html">DigitalOut</a>
@@ -153,10 +150,10 @@
 
         <section class="section">
           <div class="section-content">
-            <h1>CallbackState</h1>
+            <h1>InterruptMode</h1>
               <div class="declaration">
                 <div class="language">
-                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">CallbackState</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">InterruptMode</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
 
                 </div>
               </div>
@@ -172,9 +169,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO9DigitalInC13CallbackStateO7disableyA2EmF"></a>
+                    <a name="/s:7SwiftIO9DigitalInC13InterruptModeO7disableyA2EmF"></a>
                     <a name="//apple_ref/swift/Element/disable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO9DigitalInC13CallbackStateO7disableyA2EmF">disable</a>
+                    <a class="token" href="#/s:7SwiftIO9DigitalInC13InterruptModeO7disableyA2EmF">disable</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -199,9 +196,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO9DigitalInC13CallbackStateO6enableyA2EmF"></a>
-                    <a name="//apple_ref/swift/Element/enable" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO9DigitalInC13CallbackStateO6enableyA2EmF">enable</a>
+                    <a name="/s:7SwiftIO9DigitalInC13InterruptModeO6risingyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/rising" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO9DigitalInC13InterruptModeO6risingyA2EmF">rising</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -216,7 +213,61 @@
                         <h4>Declaration</h4>
                         <div class="language">
                           <p class="aside-title">Swift</p>
-                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">enable</span></code></pre>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">rising</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SwiftIO9DigitalInC13InterruptModeO7fallingyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/falling" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO9DigitalInC13InterruptModeO7fallingyA2EmF">falling</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">falling</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7SwiftIO9DigitalInC13InterruptModeO8bothEdgeyA2EmF"></a>
+                    <a name="//apple_ref/swift/Element/bothEdge" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO9DigitalInC13InterruptModeO8bothEdgeyA2EmF">bothEdge</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Undocumented</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="k">case</span> <span class="n">bothEdge</span></code></pre>
 
                         </div>
                       </div>
