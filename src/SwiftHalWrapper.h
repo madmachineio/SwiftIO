@@ -53,6 +53,22 @@ int swiftHal_i2cWriteRead(I2CObject *obj, unsigned char address, const unsigned 
 
 
 
+typedef struct {
+	void *ptr;
+	unsigned char id;
+	unsigned int speed;
+} SPIObject;
+
+int swiftHal_spiInit(SPIObject *obj);
+int swiftHal_spiDeinit(SPIObject *obj);
+int swiftHal_spiConfig(SPIObject *obj);
+int swiftHal_spiWrite(SPIObject *obj, const unsigned char *buf, unsigned int length);
+int swiftHal_spiRead(SPIObject *obj, unsigned char *buf, unsigned int length);
+
+
+
+
+
 
 
 
