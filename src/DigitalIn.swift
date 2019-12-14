@@ -34,6 +34,11 @@ public class DigitalIn {
             obj.interruptMode = newValue.rawValue
         }
     }
+    private var interruptState: InterruptState {
+        willSet {
+            obj.interruptState = newValue.rawValue
+        }
+    }
     private var callback: (()->Void)?
 
     
@@ -52,6 +57,7 @@ public class DigitalIn {
         obj.direction = Direction.input.rawValue
         obj.inputMode = mode.rawValue
         obj.interruptMode = interruptMode.rawValue
+        obj.interruptState = interruptState.rawValue
         swiftHal_gpioInit(&obj)
     }
 
@@ -79,14 +85,15 @@ public class DigitalIn {
                 mode: Mode = .pullDown) {
         self.id = id
         self.mode = mode
-        self.interruptMode = .disable
+        self.interruptMode = .rising
+        self.interruptState = .disable
         obj = DigitalIOObject()
         objectInit()
 	}
 
     deinit {
         if callback != nil {
-            removeCallback()
+            removeInterrupt()
         }
         swiftHal_gpioDeinit(&obj)
     }
@@ -122,13 +129,10 @@ public class DigitalIn {
     
      
      */    
-    public func setInterrupt(_ mode: InterruptMode, callback: @escaping ()->Void) {
-        guard mode != .disable else {
-            return
-        }
-
+    public func setInterrupt(_ mode: InterruptMode, enable: Bool = true, callback: @escaping ()->Void) {
         interruptMode = mode
         self.callback = callback
+        interruptState = enable ? .enable : .disable
         swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
             let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
             mySelf.callback!()
@@ -136,8 +140,22 @@ public class DigitalIn {
         swiftHal_gpioAddCallback(&obj)
     }
 
-    public func removeCallback() {
-        interruptMode = .disable
+    public func enableInterrupt() {
+        interruptState = .enable
+        swiftHal_gpioEnableCallback(&obj)
+    }
+
+    public func disableInterrupt() {
+        interruptState = .disable
+        swiftHal_gpioDisableCallback(&obj)
+    }
+
+    public func getInterruptState() -> InterruptState {
+        return interruptState
+    }
+
+    public func removeInterrupt() {
+        interruptState = .disable
         swiftHal_gpioRemoveCallback(&obj)
         callback = nil
     }
@@ -158,6 +176,10 @@ extension DigitalIn {
     }
 
     public enum InterruptMode: UInt8 {
-        case disable, rising, falling, bothEdge
+        case rising = 1, falling, bothEdge
+    }
+
+    public enum InterruptState: UInt8 {
+        case disable, enable
     }
 }

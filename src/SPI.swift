@@ -70,10 +70,9 @@
         return data
     }
 
-    public func writeByte(_ value: UInt8) {
-        var data = [UInt8](repeating: 0, count: 1)
+    public func write(_ value: UInt8) {
+        let data = [UInt8](repeating: value, count: 1)
 
-        data[0] = value
         swiftHal_spiWrite(&obj, data, 1)
     }
 
@@ -81,9 +80,6 @@
     public func write(_ value: [UInt8]) {
         swiftHal_spiWrite(&obj, value, UInt32(value.count))
     }
-
-
-
 }
 
 extension SPI {

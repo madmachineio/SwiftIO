@@ -21,6 +21,7 @@ typedef struct {
 	unsigned char inputMode;
 	unsigned char outputMode;
 	unsigned char interruptMode;
+	unsigned char interruptState;
 	CallbackWrapper callbackWrapper;
 } DigitalIOObject;
 
