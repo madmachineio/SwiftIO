@@ -1,18 +1,27 @@
 /**
- I2C is a two wire serial protocol for communicating between devices.
+ I2C (I square C) is a two wire protocol to communicate between different devices.
+
+ Currently the I2C ports support only master mode.
  
 
- ### Example: A simple hello world.
+ ### BASIC USAGE
+ 
+ The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
+ 
+ - Note:
+ Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
+ This class allows the reading and writing of a byte (Uint8) or an array of bytes ([UInt8]).
  
  ````
  import SwiftIO
  
  func main() {
- //Create a i2c bus to .I2C0
- let i2c = I2C(.I2C0)
+    // initiate an I2C interface to .I2C0
+    let i2cBus = I2C(.I2C0)
  
     while true {
-
+        pin.toggle()
+        sleep(ms: 1000)
     }
  }
  ````
@@ -35,6 +44,11 @@
         swiftHal_i2cInit(&obj)
     }
 
+    /**
+     An initiation of the class to a specific I2C interface as a master device.
+     - Parameter id: **REQUIRED** The name of the I2C interface.
+     - Parameter mode: **OPTIONAL** The output mode of the pin. `.pushPull` for default.
+     - Parameter value: **OPTIONAL** The output value after initiation. `false` for default.     */
     public init(_ id: Id,
                 speed: Speed = .standard) {
         self.id = id

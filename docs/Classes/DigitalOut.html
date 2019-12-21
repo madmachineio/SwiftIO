@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (13% documented)
+         (15% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -166,18 +166,39 @@
 
                 </div>
               </div>
-            <p>Use the DigitalOut class to set the value of a digital output pin.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+            <p>The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.</p>
+
+<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output. It is not capable of driving a device requires large current.</p>
+<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
+
+<p>After the initiation, the member functions of this class can be used freely. Here&rsquo;s some basic usage of this class.</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Create a DigitalOut to .D0</span>
+   <span class="c1">// Initiate a DigitalOut to Pin 0</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Reverse the output value every 1 second</span>
+   <span class="c1">// Reverse the output value every 1000 ms</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="n">pin</span><span class="o">.</span><span class="nf">reverse</span><span class="p">()</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Alternatively,</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Initiate a DigitalOut to the Green LED</span>
+    <span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="err">​</span>
+    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+      <span class="c1">// Toggle the output of the pin every 1000 ms using another member function.</span>
+      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -230,9 +251,19 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Create a DigitalOut to a specified pin.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">pushPull</span><span class="p">)</span>
+                        <p>An initiation of the class to a specific output pin.</p>
+<h4 id='usage-example' class='heading'>Usage Example</h4>
+<pre class="highlight swift"><code><span class="c1">// The most simple way of initiating a pin D0, with all other parameters set to default.</span>
+<span class="k">let</span> <span class="nv">outputPin0</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="err">​</span>
+<span class="c1">// Initiate the pin D1 with the output mode openDrain.</span>
+<span class="k">let</span> <span class="nv">outputPin1</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D1</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">)</span>
+<span class="err">​</span>
+<span class="c1">// Initiate the pin D2 with a High voltage output after initiation.</span>
+<span class="k">let</span> <span class="nv">outputPin2</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D2</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+
+<span class="c1">// Initiate the pin D3 with the openDrain mode and a High voltage output after initiation.</span>
+<span class="k">let</span> <span class="nv">outputPin3</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D3</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -253,12 +284,12 @@ Write to this property would change the output value.</p>
                             <tr>
                               <td>
                                 <code>
-                                <em>name</em>
+                                <em>id</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p>The Digital pin name on the board.</p>
+                                  <p><strong>REQUIRED</strong> The name of output pin. Reference the Id enumerate.</p>
                                 </div>
                               </td>
                             </tr>
@@ -270,7 +301,7 @@ Write to this property would change the output value.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The output mode.</p>
+                                  <p><strong>OPTIONAL</strong> The output mode of the pin. <code>.pushPull</code> for default.</p>
                                 </div>
                               </td>
                             </tr>
@@ -282,7 +313,7 @@ Write to this property would change the output value.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The output value.</p>
+                                  <p><strong>OPTIONAL</strong> The output value after initiation. <code>false</code> for default.</p>
                                 </div>
                               </td>
                             </tr>
@@ -305,7 +336,13 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the output mode of a pin.</p>
+                        <p>This function returns the current output mode in a format of DigitalOut.Mode enumerate.</p>
+<h4 id='usage-example' class='heading'>Usage Example</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">pin</span><span class="o">.</span><span class="nf">getMode</span><span class="p">()</span> <span class="o">==</span> <span class="o">.</span><span class="n">pushPull</span> <span class="p">{</span>
+   <span class="c1">//do something</span>
+<span class="p">}</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -315,6 +352,10 @@ Write to this property would change the output value.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getMode</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/DigitalOut/Mode.html">Mode</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>.pushPull</code> or <code>.openDrain</code> for the current mode.</p>
                       </div>
                     </section>
                   </div>
@@ -332,7 +373,7 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the output mode of a pin.</p>
+                        <p>Change the output mode.</p>
 
                       </div>
                       <div class="declaration">
@@ -355,7 +396,7 @@ Write to this property would change the output value.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The output mode.</p>
+                                  <p>The output mode. <code>.pushPull</code> or <code>.openDrain</code></p>
                                 </div>
                               </td>
                             </tr>
@@ -378,7 +419,7 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Write value to a pin.</p>
+                        <p>Set the output value of a specific pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -401,7 +442,7 @@ Write to this property would change the output value.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The value to be written.</p>
+                                  <p>The output value. <code>true</code> for high voltage and <code>false</code> for low voltage</p>
                                 </div>
                               </td>
                             </tr>
@@ -424,7 +465,7 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Toggle the current output value of a pin.</p>
+                        <p>Reverse the current output value of the specific pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -451,7 +492,13 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the current output value of a pin.</p>
+                        <p>Get the current output value in Boolean format.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    The return value of this function <strong>has nothing to do with the actual output</strong> of the pin.
+For example, the pin is set to <code>true</code> but it is short to ground. The actual pin voltage would be low. This function will still return <code>true</code> despite the actual low output, since this pin is set to HIGH.
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -461,6 +508,10 @@ Write to this property would change the output value.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getValue</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Bool</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> or <code>false</code> of the logic value.</p>
                       </div>
                     </section>
                   </div>
@@ -478,7 +529,12 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The Id enumerate includes available digital pin. They are D0 ~ D45, RED, GREEN, BLUE.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    Using digital pin D26 ~ D37 is not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
+
+</div>
 
                         <a href="../Classes/DigitalOut/Id.html" class="slightly-smaller">See more</a>
                       </div>
@@ -489,6 +545,10 @@ Write to this property would change the output value.</p>
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">Id</span> <span class="p">:</span> <span class="kt">UInt8</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p><code>true</code> or <code>false</code> of the logic value.</p>
                       </div>
                     </section>
                   </div>
@@ -506,7 +566,7 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>DO NOT USE**</p>
 
                         <a href="../Classes/DigitalOut/Direction.html" class="slightly-smaller">See more</a>
                       </div>
@@ -534,7 +594,7 @@ Write to this property would change the output value.</p>
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The Mode enumerate includes the available output modes.</p>
 
                         <a href="../Classes/DigitalOut/Mode.html" class="slightly-smaller">See more</a>
                       </div>
@@ -557,7 +617,7 @@ Write to this property would change the output value.</p>
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-21)</p>
+      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

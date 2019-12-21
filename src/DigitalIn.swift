@@ -1,5 +1,5 @@
 /**
- Use the DigitalIn class to red the value of a digital input pin.
+
  
  ### Example: A simple hello world.
  
@@ -14,7 +14,7 @@
     while true {
         var value = pin.read()
         print("The input value is \(value)")
-        sleep(1000)
+        sleep(ms: 1000)
     }
  }
  ````
@@ -76,7 +76,7 @@ public class DigitalIn {
      - SeeAlso:
      [The Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios//documentation/General/Reference/SwiftStandardLibraryReference/index.html)
      
-     ### Usage Example: ###
+     ### Usage Example
      ````
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````

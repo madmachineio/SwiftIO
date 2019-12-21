@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (13% documented)
+         (15% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -166,16 +166,27 @@
 
                 </div>
               </div>
-            <p>I2C is a two wire serial protocol for communicating between devices.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+            <p>I2C (I square C) is a two wire protocol to communicate between different devices.</p>
+
+<p>Currently the I2C ports support only master mode.</p>
+<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
+
+<p>The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
+This class allows the reading and writing of a byte (Uint8) or an array of bytes ([UInt8]).
+
+</div>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<span class="c1">//Create a i2c bus to .I2C0</span>
-<span class="k">let</span> <span class="nv">i2c</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
+   <span class="c1">// initiate an I2C interface to .I2C0</span>
+   <span class="k">let</span> <span class="nv">i2cBus</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
 
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-
+       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -200,7 +211,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>An initiation of the class to a specific I2C interface as a master device.</p>
 
                       </div>
                       <div class="declaration">
@@ -211,6 +222,49 @@
             <span class="nv">speed</span><span class="p">:</span> <span class="kt"><a href="../Classes/I2C/Speed.html">Speed</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">standard</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The name of the I2C interface.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The output mode of the pin. <code>.pushPull</code> for default.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>value</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The output value after initiation. <code>false</code> for default.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -468,7 +522,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-21)</p>
+      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

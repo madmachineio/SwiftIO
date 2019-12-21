@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           SwiftIO Docs
         </a>
-         (13% documented)
+         (15% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -225,8 +225,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Use the DigitalIn class to red the value of a digital input pin.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+                        <h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
@@ -237,7 +236,7 @@
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
        <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -268,18 +267,39 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Use the DigitalOut class to set the value of a digital output pin.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+                        <p>The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.</p>
+
+<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output. It is not capable of driving a device requires large current.</p>
+<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
+
+<p>After the initiation, the member functions of this class can be used freely. Here&rsquo;s some basic usage of this class.</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Create a DigitalOut to .D0</span>
+   <span class="c1">// Initiate a DigitalOut to Pin 0</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Reverse the output value every 1 second</span>
+   <span class="c1">// Reverse the output value every 1000 ms</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="n">pin</span><span class="o">.</span><span class="nf">reverse</span><span class="p">()</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Alternatively,</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// Initiate a DigitalOut to the Green LED</span>
+    <span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="err">​</span>
+    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+      <span class="c1">// Toggle the output of the pin every 1000 ms using another member function.</span>
+      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -310,16 +330,27 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>I2C is a two wire serial protocol for communicating between devices.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+                        <p>I2C (I square C) is a two wire protocol to communicate between different devices.</p>
+
+<p>Currently the I2C ports support only master mode.</p>
+<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
+
+<p>The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
+This class allows the reading and writing of a byte (Uint8) or an array of bytes ([UInt8]).
+
+</div>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<span class="c1">//Create a i2c bus to .I2C0</span>
-<span class="k">let</span> <span class="nv">i2c</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
+   <span class="c1">// initiate an I2C interface to .I2C0</span>
+   <span class="k">let</span> <span class="nv">i2cBus</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
 
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-
+       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -469,7 +500,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-21)</p>
+      <p>&copy; 2019 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2019-12-22)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.0</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
