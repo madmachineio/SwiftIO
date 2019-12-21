@@ -911,6 +911,76 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 38,
+      "symbol": "SPI.init(_:speed:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 50,
+      "symbol": "SPI.getSpeed()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 54,
+      "symbol": "SPI.setSpeed(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 59,
+      "symbol": "SPI.readByte()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 66,
+      "symbol": "SPI.read(count:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 73,
+      "symbol": "SPI.write(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 80,
+      "symbol": "SPI.write(_:)",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 87,
+      "symbol": "SPI.Id",
+      "symbol_kind": "source.lang.swift.decl.enum",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 88,
+      "symbol": "SPI.Id.SPI0",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/src/SPI.swift",
+      "line": 88,
+      "symbol": "SPI.Id.SPI1",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/andy/Documents/SwiftIO/src/Timer.swift",
       "line": 2,
       "symbol": "Timer",

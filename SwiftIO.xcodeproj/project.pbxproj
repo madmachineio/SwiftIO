@@ -9,12 +9,10 @@
 /* Begin PBXBuildFile section */
 		A103704D22E8BFE2004B755A /* AnalogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103704C22E8BFE2004B755A /* AnalogIn.swift */; };
 		A103704F22E8C00C004B755A /* PWMOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103704E22E8C00C004B755A /* PWMOut.swift */; };
-		A12CBC2722E9C923008BCA12 /* DigitalInOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CBC2522E9C923008BCA12 /* DigitalInOut.swift */; };
-		A12CBC2822E9C923008BCA12 /* RGBLED.swift in Sources */ = {isa = PBXBuildFile; fileRef = A12CBC2622E9C923008BCA12 /* RGBLED.swift */; };
+		A11ECA5E23AE3E4600912673 /* SPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11ECA5D23AE3E4600912673 /* SPI.swift */; };
 		A1740E0C22C4D276000194E0 /* DigitalIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0622C4D275000194E0 /* DigitalIn.swift */; };
 		A1740E0F22C4D276000194E0 /* DigitalOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0922C4D275000194E0 /* DigitalOut.swift */; };
 		A1740E1022C4D276000194E0 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0A22C4D275000194E0 /* Platform.swift */; };
-		A1740E1122C4D276000194E0 /* NameMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0B22C4D276000194E0 /* NameMap.swift */; };
 		A1EC8F5022E493D900D242EB /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4D22E493D900D242EB /* Timer.swift */; };
 		A1EC8F5122E493D900D242EB /* UART.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4E22E493D900D242EB /* UART.swift */; };
 		A1EC8F5222E493D900D242EB /* I2C.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4F22E493D900D242EB /* I2C.swift */; };
@@ -35,13 +33,11 @@
 /* Begin PBXFileReference section */
 		A103704C22E8BFE2004B755A /* AnalogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalogIn.swift; path = src/AnalogIn.swift; sourceTree = SOURCE_ROOT; };
 		A103704E22E8C00C004B755A /* PWMOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PWMOut.swift; path = src/PWMOut.swift; sourceTree = SOURCE_ROOT; };
-		A12CBC2522E9C923008BCA12 /* DigitalInOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalInOut.swift; path = src/DigitalInOut.swift; sourceTree = SOURCE_ROOT; };
-		A12CBC2622E9C923008BCA12 /* RGBLED.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RGBLED.swift; path = src/RGBLED.swift; sourceTree = SOURCE_ROOT; };
+		A11ECA5D23AE3E4600912673 /* SPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SPI.swift; path = src/SPI.swift; sourceTree = SOURCE_ROOT; };
 		A1740DFC22C4D064000194E0 /* libSwiftIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A1740E0622C4D275000194E0 /* DigitalIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalIn.swift; path = src/DigitalIn.swift; sourceTree = SOURCE_ROOT; };
 		A1740E0922C4D275000194E0 /* DigitalOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalOut.swift; path = src/DigitalOut.swift; sourceTree = SOURCE_ROOT; };
 		A1740E0A22C4D275000194E0 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = src/Platform.swift; sourceTree = SOURCE_ROOT; };
-		A1740E0B22C4D276000194E0 /* NameMap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NameMap.swift; path = src/NameMap.swift; sourceTree = SOURCE_ROOT; };
 		A1EC8F4D22E493D900D242EB /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = src/Timer.swift; sourceTree = SOURCE_ROOT; };
 		A1EC8F4E22E493D900D242EB /* UART.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UART.swift; path = src/UART.swift; sourceTree = SOURCE_ROOT; };
 		A1EC8F4F22E493D900D242EB /* I2C.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = I2C.swift; path = src/I2C.swift; sourceTree = SOURCE_ROOT; };
@@ -78,15 +74,13 @@
 			isa = PBXGroup;
 			children = (
 				A103704E22E8C00C004B755A /* PWMOut.swift */,
-				A12CBC2522E9C923008BCA12 /* DigitalInOut.swift */,
-				A12CBC2622E9C923008BCA12 /* RGBLED.swift */,
+				A11ECA5D23AE3E4600912673 /* SPI.swift */,
 				A103704C22E8BFE2004B755A /* AnalogIn.swift */,
 				A1740E0622C4D275000194E0 /* DigitalIn.swift */,
 				A1EC8F4F22E493D900D242EB /* I2C.swift */,
 				A1EC8F4D22E493D900D242EB /* Timer.swift */,
 				A1EC8F4E22E493D900D242EB /* UART.swift */,
 				A1740E0922C4D275000194E0 /* DigitalOut.swift */,
-				A1740E0B22C4D276000194E0 /* NameMap.swift */,
 				A1740E0A22C4D275000194E0 /* Platform.swift */,
 			);
 			path = SwiftIO;
@@ -151,16 +145,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A1740E1022C4D276000194E0 /* Platform.swift in Sources */,
-				A12CBC2822E9C923008BCA12 /* RGBLED.swift in Sources */,
 				A1740E0F22C4D276000194E0 /* DigitalOut.swift in Sources */,
 				A103704D22E8BFE2004B755A /* AnalogIn.swift in Sources */,
 				A1EC8F5222E493D900D242EB /* I2C.swift in Sources */,
 				A103704F22E8C00C004B755A /* PWMOut.swift in Sources */,
 				A1740E0C22C4D276000194E0 /* DigitalIn.swift in Sources */,
+				A11ECA5E23AE3E4600912673 /* SPI.swift in Sources */,
 				A1EC8F5122E493D900D242EB /* UART.swift in Sources */,
 				A1EC8F5022E493D900D242EB /* Timer.swift in Sources */,
-				A12CBC2722E9C923008BCA12 /* DigitalInOut.swift in Sources */,
-				A1740E1122C4D276000194E0 /* NameMap.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
