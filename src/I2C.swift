@@ -55,20 +55,7 @@
         self.speed = speed
         swiftHal_i2cConfig(&obj)
     }
-/*
-    public func write<T: BinaryInteger>(_ byte: T, to address: T) {
-        let byteU8: UInt8 = numericCast(byte)
-        let arrayU8: [UInt8] = [byteU8]
-        let addressU8: UInt8 = numericCast(address)
-        swiftHal_i2cWrite(&obj, addressU8, arrayU8, 1)
-    }
 
-    public func write<T: BinaryInteger>(_ array: [T], to address: T) {
-        let arrayU8: [UInt8] = array.map(numericCast) as [UInt8]
-        let addressU8: UInt8 = numericCast(address)
-        swiftHal_i2cWrite(&obj, addressU8, arrayU8, UInt32(array.count))
-    }
-*/
     public func readByte(from address: UInt8) -> UInt8 {
         var data = [UInt8](repeating: 0, count: 1)
         
@@ -76,12 +63,6 @@
         return data[0]
     }
 
-    public func readWord(from address: UInt8) -> UInt16 {
-        var data = [UInt8](repeating: 0, count: 2)
-
-        swiftHal_i2cRead(&obj, address, &data, 2)
-        return UInt16(data[1]) << 8 | UInt16(data[0])
-    }
 
     public func read(count: Int, from address: UInt8) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
@@ -90,19 +71,11 @@
         return data
     }
 
-    public func writeByte(_ value: UInt8, to address: UInt8) {
+    public func write(_ value: UInt8, to address: UInt8) {
         var data = [UInt8](repeating: 0, count: 1)
 
         data[0] = value
         swiftHal_i2cWrite(&obj, address, data, 1)
-    }
-
-    public func writeWord(_ value: UInt16, to address: UInt8) {
-        var data = [UInt8](repeating: 0, count: 2)
-
-        data[0] = UInt8(value & 0xFF)
-        data[1] = UInt8(value >> 8)
-        swiftHal_i2cWrite(&obj, address, data, 2)
     }
 
     public func write(_ value: [UInt8], to address: UInt8) {
