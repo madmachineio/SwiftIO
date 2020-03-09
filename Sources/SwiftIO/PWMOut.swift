@@ -3,8 +3,8 @@ public class PWMOut {
 
 
     public init(_ id: Id,
-                period: UInt = 1000,
-                pulse: UInt = 0) {
+                period: Int = 1000,
+                pulse: Int = 0) {
         obj = PWMOutObject()
         obj.id = id.rawValue
         obj.period = UInt32(period)
@@ -18,20 +18,15 @@ public class PWMOut {
         swiftHal_PWMOutDeinit(&obj)
     }
 
-    public func set(period: UInt, pulse: UInt) {
+    public func set(period: Int, pulse: Int) {
         obj.period = UInt32(period)
         obj.pulse = UInt32(pulse)
         swiftHal_PWMOutConfig(&obj)
     }
 
-    public func setPeriod(_ us: UInt) {
-        obj.period = UInt32(us)
-        swiftHal_PWMOutConfig(&obj)
-    }
-
-
-    public func setFrequency(_ hz: UInt) {
-        obj.period = obj.countPerSecond / UInt32(hz)
+    public func set(frequency hz: Int, dutycycle: Float) {
+        obj.period = UInt32(1000000 / hz)
+        obj.pulse = UInt32(1000000.0 / (Float(hz) * dutycycle))
         swiftHal_PWMOutConfig(&obj)
     }
 
@@ -39,6 +34,7 @@ public class PWMOut {
         obj.pulse = UInt32(Float(obj.period) * dutycycle)
         swiftHal_PWMOutConfig(&obj)
     }
+
 }
 
 

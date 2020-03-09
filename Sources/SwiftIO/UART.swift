@@ -4,18 +4,18 @@ public class UART {
 
 
     public init(_ id: Id,
-                baudRate: UInt32 = 115200,
+                baudRate: Int = 115200,
                 dataBits: DataBits = .eightBits,
                 parity: Parity = .none,
                 stopBits: StopBits = .oneBit,
                 readBufLength: BufferLength = .small) {
         obj = UARTObject()
         obj.id = id.rawValue
-        obj.baudRate = baudRate
+        obj.baudRate = Int32(baudRate)
         obj.dataBits = dataBits.rawValue
         obj.parity = parity.rawValue
         obj.stopBits = stopBits.rawValue
-        obj.readBufferLength = readBufLength.rawValue
+        obj.readBufferLength = Int32(readBufLength.rawValue)
         swiftHal_uartInit(&obj)
     }
 
@@ -24,7 +24,7 @@ public class UART {
     }
 
     public func setBaudrate(_ baudRate: Int) {
-        obj.baudRate = UInt32(baudRate)
+        obj.baudRate = Int32(baudRate)
         swiftHal_uartConfig(&obj)
     }
 
@@ -32,7 +32,7 @@ public class UART {
         swiftHal_uartClearBuffer(&obj)
     }
 
-    public func checkAvailable() -> Int {
+    public func checkBufferReceived() -> Int {
         return Int(swiftHal_uartCount(&obj))
     }
 
@@ -40,13 +40,13 @@ public class UART {
         swiftHal_uartWriteChar(&obj, byte)
     }
 
-    public func write(_ array: [UInt8]) {
-        swiftHal_uartWrite(&obj, array, UInt32(array.count))
+    public func write(_ data: [UInt8]) {
+        swiftHal_uartWrite(&obj, data, Int32(data.count))
     }
 
     public func write(_ string: String) {
-        let array: [UInt8] = string.utf8CString.map {UInt8($0)}
-        swiftHal_uartWrite(&obj, array, UInt32(array.count))
+        let data: [UInt8] = string.utf8CString.map {UInt8($0)}
+        swiftHal_uartWrite(&obj, data, Int32(data.count))
     }
 
     public func readByte() -> UInt8 {
@@ -54,9 +54,9 @@ public class UART {
     }
 
     public func read(_ count: Int) -> [UInt8] {
-        var array: [UInt8] = Array(repeating: 0, count: count)
-        swiftHal_uartRead(&obj, &array, UInt32(count));
-        return array
+        var data: [UInt8] = Array(repeating: 0, count: count)
+        swiftHal_uartRead(&obj, &data, Int32(count));
+        return data
     }
 
 
@@ -83,7 +83,7 @@ extension UART {
         case eightBits
     }
 
-    public enum BufferLength: UInt32 {
+    public enum BufferLength: Int32 {
         case small = 64, medium = 256, large = 1024
     }
 }

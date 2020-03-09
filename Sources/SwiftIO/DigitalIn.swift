@@ -42,16 +42,6 @@ public class DigitalIn {
     private var callback: (()->Void)?
 
     
-
-    /**
-     Use this property to get the input value.
-     
-     - Attention: This property is **read only!**
-     */
-	public var value: Bool {
-		return swiftHal_gpioRead(&obj) == 1 ? true : false
-	}
-
     private func objectInit() {
         obj.id = id.rawValue
         obj.direction = Direction.input.rawValue
@@ -120,8 +110,9 @@ public class DigitalIn {
      
      - Returns: `true` or `false` of the logic value.
      */
+    @inline(__always)
 	public func read() -> Bool {
-		return value
+		return swiftHal_gpioRead(&obj) == 1 ? true : false
 	}
 
     /**

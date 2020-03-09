@@ -81,26 +81,26 @@
     public func read(count: Int, from address: UInt8) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
-        swiftHal_i2cRead(&obj, address, &data, UInt32(count))
+        swiftHal_i2cRead(&obj, address, &data, Int32(count))
         return data
     }
 
-    public func write(_ value: UInt8, to address: UInt8) {
-        var data = [UInt8](repeating: 0, count: 1)
+    public func write(_ byte: UInt8, to address: UInt8) {
+        var _data = [UInt8](repeating: 0, count: 1)
 
-        data[0] = value
-        swiftHal_i2cWrite(&obj, address, data, 1)
+        _data[0] = byte
+        swiftHal_i2cWrite(&obj, address, _data, 1)
     }
 
-    public func write(_ value: [UInt8], to address: UInt8) {
-        swiftHal_i2cWrite(&obj, address, value, UInt32(value.count))
+    public func write(_ data: [UInt8], to address: UInt8) {
+        swiftHal_i2cWrite(&obj, address, data, Int32(data.count))
     }
 
-    public func writeRead(_ value: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
-        var data = [UInt8](repeating:0, count: readCount)
+    public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
+        var receivedData = [UInt8](repeating:0, count: readCount)
 
-        swiftHal_i2cWriteRead(&obj, address, value, UInt32(value.count), &data, UInt32(readCount))
-        return data
+        swiftHal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
+        return receivedData
     }
 
 }
@@ -111,7 +111,7 @@ extension I2C {
         case I2C0, I2C1
     }
 
-    public enum Speed: UInt32 {
+    public enum Speed: Int32 {
         case standard = 100000, fast = 400000, fastPlus = 1000000
     }
 }

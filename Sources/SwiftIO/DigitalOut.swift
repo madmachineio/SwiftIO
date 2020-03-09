@@ -56,7 +56,7 @@ public class DigitalOut {
      Write to this property would change the output value.
      
      */
-    public var value: Bool {
+    private var value: Bool {
         willSet {
 			swiftHal_gpioWrite(&obj, newValue ? 1 : 0)
 		}
@@ -142,6 +142,7 @@ public class DigitalOut {
 
      - Parameter value : The output value. `true` for high voltage and `false` for low voltage
      */
+    @inline(__always)
 	public func write(_ value: Bool) {
 		self.value = value
 	}
@@ -150,6 +151,7 @@ public class DigitalOut {
      Reverse the current output value of the specific pin.
      
      */
+    @inline(__always)
     public func toggle() {
         value = value ? false : true
     }

@@ -23,20 +23,20 @@
     private var obj: SPIObject
 
     private let id: Id
-    private var speed: UInt {
+    private var speed: Int {
         willSet {
-            obj.speed = UInt32(newValue)
+            obj.speed = Int32(newValue)
         }
     }
 
     private func objectInit() {
         obj.id = id.rawValue
-        obj.speed = UInt32(speed)
+        obj.speed = Int32(speed)
         swiftHal_spiInit(&obj)
     }
 
     public init(_ id: Id,
-                speed: UInt = 1000000) {
+                speed: Int = 1000000) {
         self.id = id
         self.speed = speed
         obj = SPIObject()
@@ -47,11 +47,11 @@
         swiftHal_spiDeinit(&obj)
     }
 
-    public func getSpeed() -> UInt {
+    public func getSpeed() -> Int {
         return speed
     }
 
-    public func setSpeed(_ speed: UInt) {
+    public func setSpeed(_ speed: Int) {
         self.speed = speed
         swiftHal_spiConfig(&obj)
     }
@@ -66,19 +66,19 @@
     public func read(count: Int) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
-        swiftHal_spiRead(&obj, &data, UInt32(count))
+        swiftHal_spiRead(&obj, &data, Int32(count))
         return data
     }
 
-    public func write(_ value: UInt8) {
-        let data = [UInt8](repeating: value, count: 1)
+    public func write(_ byte: UInt8) {
+        let _data = [UInt8](repeating: byte, count: 1)
 
-        swiftHal_spiWrite(&obj, data, 1)
+        swiftHal_spiWrite(&obj, _data, 1)
     }
 
 
-    public func write(_ value: [UInt8]) {
-        swiftHal_spiWrite(&obj, value, UInt32(value.count))
+    public func write(_ data: [UInt8]) {
+        swiftHal_spiWrite(&obj, data, Int32(data.count))
     }
 }
 

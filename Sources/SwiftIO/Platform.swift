@@ -3,19 +3,16 @@ func getClassPtr<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
 }
 
 public func wait(us: Int) {
-    swiftHal_usWait(UInt32(us))
+    swiftHal_usWait(Int32(us))
 }
 
 public func sleep(ms: Int) {
-    swiftHal_msSleep(UInt32(ms))
+    swiftHal_msSleep(Int32(ms))
 }
 
-public func getPowerUpMilliseconds() -> UInt {
-    return UInt(swiftHal_getUpTimeInMs32())
-}
 
-public func getPowerUpMilliseconds64() -> Int64 {
-    return Int64(swiftHal_getUpTimeInMs64())
+public func getPowerUpMilliseconds() -> Int64 {
+    return swiftHal_getUpTimeInMs()
 }
 
 public func getClockCycle() -> UInt {
