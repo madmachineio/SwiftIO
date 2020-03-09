@@ -7,19 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A103704D22E8BFE2004B755A /* AnalogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103704C22E8BFE2004B755A /* AnalogIn.swift */; };
-		A103704F22E8C00C004B755A /* PWMOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A103704E22E8C00C004B755A /* PWMOut.swift */; };
-		A11ECA5E23AE3E4600912673 /* SPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11ECA5D23AE3E4600912673 /* SPI.swift */; };
-		A1740E0C22C4D276000194E0 /* DigitalIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0622C4D275000194E0 /* DigitalIn.swift */; };
-		A1740E0F22C4D276000194E0 /* DigitalOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0922C4D275000194E0 /* DigitalOut.swift */; };
-		A1740E1022C4D276000194E0 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1740E0A22C4D275000194E0 /* Platform.swift */; };
-		A1EC8F5022E493D900D242EB /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4D22E493D900D242EB /* Timer.swift */; };
-		A1EC8F5122E493D900D242EB /* UART.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4E22E493D900D242EB /* UART.swift */; };
-		A1EC8F5222E493D900D242EB /* I2C.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1EC8F4F22E493D900D242EB /* I2C.swift */; };
+		A11AC51424167D30006C5BD8 /* AnalogIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51224167D30006C5BD8 /* AnalogIn.swift */; };
+		A11AC51524167D30006C5BD8 /* DigitalIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51324167D30006C5BD8 /* DigitalIn.swift */; };
+		A11AC51B24167DB4006C5BD8 /* DigitalOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51624167DB4006C5BD8 /* DigitalOut.swift */; };
+		A11AC51C24167DB4006C5BD8 /* PWMOut.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51724167DB4006C5BD8 /* PWMOut.swift */; };
+		A11AC51D24167DB4006C5BD8 /* I2C.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51824167DB4006C5BD8 /* I2C.swift */; };
+		A11AC51E24167DB4006C5BD8 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51924167DB4006C5BD8 /* Platform.swift */; };
+		A11AC51F24167DB4006C5BD8 /* SPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC51A24167DB4006C5BD8 /* SPI.swift */; };
+		A11AC52224167DBF006C5BD8 /* UART.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC52024167DBF006C5BD8 /* UART.swift */; };
+		A11AC52324167DBF006C5BD8 /* Timer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11AC52124167DBF006C5BD8 /* Timer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		A1740DFA22C4D064000194E0 /* CopyFiles */ = {
+		A11AC50424167C63006C5BD8 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
@@ -31,20 +31,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A103704C22E8BFE2004B755A /* AnalogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AnalogIn.swift; path = src/AnalogIn.swift; sourceTree = SOURCE_ROOT; };
-		A103704E22E8C00C004B755A /* PWMOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PWMOut.swift; path = src/PWMOut.swift; sourceTree = SOURCE_ROOT; };
-		A11ECA5D23AE3E4600912673 /* SPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SPI.swift; path = src/SPI.swift; sourceTree = SOURCE_ROOT; };
-		A1740DFC22C4D064000194E0 /* libSwiftIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A1740E0622C4D275000194E0 /* DigitalIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalIn.swift; path = src/DigitalIn.swift; sourceTree = SOURCE_ROOT; };
-		A1740E0922C4D275000194E0 /* DigitalOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DigitalOut.swift; path = src/DigitalOut.swift; sourceTree = SOURCE_ROOT; };
-		A1740E0A22C4D275000194E0 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Platform.swift; path = src/Platform.swift; sourceTree = SOURCE_ROOT; };
-		A1EC8F4D22E493D900D242EB /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Timer.swift; path = src/Timer.swift; sourceTree = SOURCE_ROOT; };
-		A1EC8F4E22E493D900D242EB /* UART.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UART.swift; path = src/UART.swift; sourceTree = SOURCE_ROOT; };
-		A1EC8F4F22E493D900D242EB /* I2C.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = I2C.swift; path = src/I2C.swift; sourceTree = SOURCE_ROOT; };
+		A11AC50624167C63006C5BD8 /* libSwiftIO.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSwiftIO.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		A11AC51224167D30006C5BD8 /* AnalogIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogIn.swift; sourceTree = "<group>"; };
+		A11AC51324167D30006C5BD8 /* DigitalIn.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalIn.swift; sourceTree = "<group>"; };
+		A11AC51624167DB4006C5BD8 /* DigitalOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DigitalOut.swift; sourceTree = "<group>"; };
+		A11AC51724167DB4006C5BD8 /* PWMOut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PWMOut.swift; sourceTree = "<group>"; };
+		A11AC51824167DB4006C5BD8 /* I2C.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I2C.swift; sourceTree = "<group>"; };
+		A11AC51924167DB4006C5BD8 /* Platform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		A11AC51A24167DB4006C5BD8 /* SPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPI.swift; sourceTree = "<group>"; };
+		A11AC52024167DBF006C5BD8 /* UART.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UART.swift; sourceTree = "<group>"; };
+		A11AC52124167DBF006C5BD8 /* Timer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Timer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		A1740DF922C4D064000194E0 /* Frameworks */ = {
+		A11AC50324167C63006C5BD8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -54,34 +54,42 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A1740DF322C4D064000194E0 = {
+		A11AC4FD24167C63006C5BD8 = {
 			isa = PBXGroup;
 			children = (
-				A1740DFE22C4D064000194E0 /* SwiftIO */,
-				A1740DFD22C4D064000194E0 /* Products */,
+				A11AC51024167CAA006C5BD8 /* Sources */,
+				A11AC50724167C63006C5BD8 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		A1740DFD22C4D064000194E0 /* Products */ = {
+		A11AC50724167C63006C5BD8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A1740DFC22C4D064000194E0 /* libSwiftIO.a */,
+				A11AC50624167C63006C5BD8 /* libSwiftIO.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A1740DFE22C4D064000194E0 /* SwiftIO */ = {
+		A11AC51024167CAA006C5BD8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A103704E22E8C00C004B755A /* PWMOut.swift */,
-				A11ECA5D23AE3E4600912673 /* SPI.swift */,
-				A103704C22E8BFE2004B755A /* AnalogIn.swift */,
-				A1740E0622C4D275000194E0 /* DigitalIn.swift */,
-				A1EC8F4F22E493D900D242EB /* I2C.swift */,
-				A1EC8F4D22E493D900D242EB /* Timer.swift */,
-				A1EC8F4E22E493D900D242EB /* UART.swift */,
-				A1740E0922C4D275000194E0 /* DigitalOut.swift */,
-				A1740E0A22C4D275000194E0 /* Platform.swift */,
+				A11AC51124167CB8006C5BD8 /* SwiftIO */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A11AC51124167CB8006C5BD8 /* SwiftIO */ = {
+			isa = PBXGroup;
+			children = (
+				A11AC52124167DBF006C5BD8 /* Timer.swift */,
+				A11AC52024167DBF006C5BD8 /* UART.swift */,
+				A11AC51624167DB4006C5BD8 /* DigitalOut.swift */,
+				A11AC51824167DB4006C5BD8 /* I2C.swift */,
+				A11AC51924167DB4006C5BD8 /* Platform.swift */,
+				A11AC51724167DB4006C5BD8 /* PWMOut.swift */,
+				A11AC51A24167DB4006C5BD8 /* SPI.swift */,
+				A11AC51224167D30006C5BD8 /* AnalogIn.swift */,
+				A11AC51324167D30006C5BD8 /* DigitalIn.swift */,
 			);
 			path = SwiftIO;
 			sourceTree = "<group>";
@@ -89,13 +97,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A1740DFB22C4D064000194E0 /* SwiftIO */ = {
+		A11AC50524167C63006C5BD8 /* SwiftIO */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A1740E0322C4D064000194E0 /* Build configuration list for PBXNativeTarget "SwiftIO" */;
+			buildConfigurationList = A11AC50D24167C63006C5BD8 /* Build configuration list for PBXNativeTarget "SwiftIO" */;
 			buildPhases = (
-				A1740DF822C4D064000194E0 /* Sources */,
-				A1740DF922C4D064000194E0 /* Frameworks */,
-				A1740DFA22C4D064000194E0 /* CopyFiles */,
+				A11AC50224167C63006C5BD8 /* Sources */,
+				A11AC50324167C63006C5BD8 /* Frameworks */,
+				A11AC50424167C63006C5BD8 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -103,63 +111,64 @@
 			);
 			name = SwiftIO;
 			productName = SwiftIO;
-			productReference = A1740DFC22C4D064000194E0 /* libSwiftIO.a */;
+			productReference = A11AC50624167C63006C5BD8 /* libSwiftIO.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		A1740DF422C4D064000194E0 /* Project object */ = {
+		A11AC4FE24167C63006C5BD8 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1020;
-				LastUpgradeCheck = 1020;
+				LastSwiftUpdateCheck = 1130;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Andy Liu";
 				TargetAttributes = {
-					A1740DFB22C4D064000194E0 = {
-						CreatedOnToolsVersion = 10.2.1;
-						LastSwiftMigration = 1020;
+					A11AC50524167C63006C5BD8 = {
+						CreatedOnToolsVersion = 11.3.1;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
-			buildConfigurationList = A1740DF722C4D064000194E0 /* Build configuration list for PBXProject "SwiftIO" */;
+			buildConfigurationList = A11AC50124167C63006C5BD8 /* Build configuration list for PBXProject "SwiftIO" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				Base,
 			);
-			mainGroup = A1740DF322C4D064000194E0;
-			productRefGroup = A1740DFD22C4D064000194E0 /* Products */;
+			mainGroup = A11AC4FD24167C63006C5BD8;
+			productRefGroup = A11AC50724167C63006C5BD8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A1740DFB22C4D064000194E0 /* SwiftIO */,
+				A11AC50524167C63006C5BD8 /* SwiftIO */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A1740DF822C4D064000194E0 /* Sources */ = {
+		A11AC50224167C63006C5BD8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1740E1022C4D276000194E0 /* Platform.swift in Sources */,
-				A1740E0F22C4D276000194E0 /* DigitalOut.swift in Sources */,
-				A103704D22E8BFE2004B755A /* AnalogIn.swift in Sources */,
-				A1EC8F5222E493D900D242EB /* I2C.swift in Sources */,
-				A103704F22E8C00C004B755A /* PWMOut.swift in Sources */,
-				A1740E0C22C4D276000194E0 /* DigitalIn.swift in Sources */,
-				A11ECA5E23AE3E4600912673 /* SPI.swift in Sources */,
-				A1EC8F5122E493D900D242EB /* UART.swift in Sources */,
-				A1EC8F5022E493D900D242EB /* Timer.swift in Sources */,
+				A11AC51F24167DB4006C5BD8 /* SPI.swift in Sources */,
+				A11AC52224167DBF006C5BD8 /* UART.swift in Sources */,
+				A11AC51E24167DB4006C5BD8 /* Platform.swift in Sources */,
+				A11AC51424167D30006C5BD8 /* AnalogIn.swift in Sources */,
+				A11AC51524167D30006C5BD8 /* DigitalIn.swift in Sources */,
+				A11AC51B24167DB4006C5BD8 /* DigitalOut.swift in Sources */,
+				A11AC52324167DBF006C5BD8 /* Timer.swift in Sources */,
+				A11AC51C24167DB4006C5BD8 /* PWMOut.swift in Sources */,
+				A11AC51D24167DB4006C5BD8 /* I2C.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		A1740E0122C4D064000194E0 /* Debug */ = {
+		A11AC50B24167C63006C5BD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -191,7 +200,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -210,7 +218,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -220,7 +228,7 @@
 			};
 			name = Debug;
 		};
-		A1740E0222C4D064000194E0 /* Release */ = {
+		A11AC50C24167C63006C5BD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -252,7 +260,6 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -265,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -275,7 +282,7 @@
 			};
 			name = Release;
 		};
-		A1740E0422C4D064000194E0 /* Debug */ = {
+		A11AC50E24167C63006C5BD8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -295,7 +302,7 @@
 			};
 			name = Debug;
 		};
-		A1740E0522C4D064000194E0 /* Release */ = {
+		A11AC50F24167C63006C5BD8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
@@ -317,25 +324,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A1740DF722C4D064000194E0 /* Build configuration list for PBXProject "SwiftIO" */ = {
+		A11AC50124167C63006C5BD8 /* Build configuration list for PBXProject "SwiftIO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1740E0122C4D064000194E0 /* Debug */,
-				A1740E0222C4D064000194E0 /* Release */,
+				A11AC50B24167C63006C5BD8 /* Debug */,
+				A11AC50C24167C63006C5BD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A1740E0322C4D064000194E0 /* Build configuration list for PBXNativeTarget "SwiftIO" */ = {
+		A11AC50D24167C63006C5BD8 /* Build configuration list for PBXNativeTarget "SwiftIO" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				A1740E0422C4D064000194E0 /* Debug */,
-				A1740E0522C4D064000194E0 /* Release */,
+				A11AC50E24167C63006C5BD8 /* Debug */,
+				A11AC50F24167C63006C5BD8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = A1740DF422C4D064000194E0 /* Project object */;
+	rootObject = A11AC4FE24167C63006C5BD8 /* Project object */;
 }
