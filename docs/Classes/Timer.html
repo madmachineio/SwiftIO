@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (14% documented)
+         (45% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -163,7 +163,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>Timer is used to set the occasion to raise the interrupt.</p>
 
           </div>
         </section>
@@ -185,7 +185,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Intialize a timer.</p>
 
                       </div>
                       <div class="declaration">
@@ -212,7 +212,25 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Execute a designated task  at a scheduled time interval. The task should be able to be executed in a very short time, in nanoseconds.</p>
+<h4 id='usage-example' class='heading'>Usage Example</h4>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="p">()</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+
+</code></pre>
+
+<p>The setInterrupt function can be written as the following:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">toggleLed</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">led</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="n">timer</span><span class="o">.</span><span class="nf">setInterrupt</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="nf">toggleLed</span><span class="p">())</span>
+</code></pre>
+
+<p><strong>or</strong></p>
+<pre class="highlight swift"><code><span class="n">timer</span><span class="o">.</span><span class="nf">setInterrupt</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">led</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -225,6 +243,61 @@
                         <span class="n">_</span> <span class="nv">callback</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">()</span><span class="o">-&gt;</span><span class="kt">Void</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>ms</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The time period set for the interrupt.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The times that the interrupt will occur: once or continuous.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>start</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> By default, the interrupt will start directly to work.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>callback</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> A void function without a return value.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -242,7 +315,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Start the timer.</p>
 
                       </div>
                       <div class="declaration">
@@ -269,7 +342,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Stop the timer.</p>
 
                       </div>
                       <div class="declaration">
@@ -296,7 +369,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Reset the timer. The timer will restart from 0.</p>
 
                       </div>
                       <div class="declaration">
@@ -323,7 +396,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>There are two timer mode: if set to <code>oneShot</code>, the interrupt happens only once; if set to <code>period</code>, the interrupt happens continuously.</p>
 
                         <a href="../Classes/Timer/Mode.html" class="slightly-smaller">See more</a>
                       </div>
@@ -346,7 +419,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-09)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

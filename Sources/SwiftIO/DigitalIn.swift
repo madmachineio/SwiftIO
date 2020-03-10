@@ -1,5 +1,5 @@
 /**
-
+ The DigitalIn class is intended to detect the state of a digital input pin. The input value is either true(1) or false(0).
  
  ### Example: A simple hello world.
  
@@ -54,8 +54,8 @@ public class DigitalIn {
     /**
      Initialize a DigitalIn to a specified pin.
      
-     - parameter id: The Digital id on the board.
-     - parameter mode: The input mode.
+     - parameter id: **REQUIRED** The Digital id on the board. See Id for reference.
+     - parameter mode: **OPTIONAL**The input mode.
      
      This text is above the horizontal rule.
      - - -
@@ -88,6 +88,11 @@ public class DigitalIn {
         swiftHal_gpioDeinit(&obj)
     }
 
+    /**
+     Get the current input mode on a specified pin.
+     
+     - Returns: The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
+     */
     public func getMode() -> Mode {
         return mode
     }
@@ -117,8 +122,9 @@ public class DigitalIn {
 
     /**
      Add a callback function to a pin.
-    
-     
+     - Parameter mode : The input mode.
+     - Parameter enable : Whether to enable the interrupt.
+     - Parameter callback : A void function without a return value.
      */    
     public func setInterrupt(_ mode: InterruptMode, enable: Bool = true, callback: @escaping ()->Void) {
         interruptMode = mode
@@ -131,20 +137,37 @@ public class DigitalIn {
         swiftHal_gpioAddCallback(&obj)
     }
 
+    /**
+     Enable the interrupt.
+    
+     */
     public func enableInterrupt() {
         interruptState = .enable
         swiftHal_gpioEnableCallback(&obj)
     }
 
+    /**
+     Disable the interrupt.
+    
+     */
     public func disableInterrupt() {
         interruptState = .disable
         swiftHal_gpioDisableCallback(&obj)
     }
 
+    /**
+     Get the current interrupt state.
+     
+     - Returns: The current input mode: `.enable` or `.diable`.
+     */
     public func getInterruptState() -> InterruptState {
         return interruptState
     }
 
+    /**
+     Remove the interrupt.
+    
+     */
     public func removeInterrupt() {
         interruptState = .disable
         swiftHal_gpioRemoveCallback(&obj)
@@ -158,18 +181,34 @@ public class DigitalIn {
 
 extension DigitalIn {
     
+    /**
+     The digital input pins are D0 to D45 on the board.
+    
+     */
     public typealias Id = DigitalOut.Id
     
     public typealias Direction = DigitalOut.Direction
 
+    /**
+     The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors.
+
+     */
     public enum Mode: UInt8 {
         case pullDown = 1, pullUp, pullNone
     }
 
+    /**
+     The interrupt modes are rising, falling and bothEdge. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high. The interrupt will be triggered when detecting either or both of them.
+
+     */
     public enum InterruptMode: UInt8 {
         case rising = 1, falling, bothEdge
     }
 
+    /**
+     This value determine whether the interrupt will be enabled and occur.
+
+     */
     public enum InterruptState: UInt8 {
         case disable, enable
     }

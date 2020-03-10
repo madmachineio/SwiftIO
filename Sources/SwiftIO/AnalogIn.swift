@@ -26,7 +26,7 @@ public class AnalogIn {
     /**
      Initialize an AnalogIn to a specified pin.
      
-     - Parameter id: The AnalogIn Id on the board.
+     - Parameter id: **REQUIRED** The AnalogIn Id on the board. See Id for reference.
      
      ### Usage Example: ###
      ````
@@ -46,9 +46,9 @@ public class AnalogIn {
     }
 
     /**
-     Get the current resolution.
+     Get the maximum raw value of the board. Each ADC has different resolution. The maximum raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is 4095.
      
-     - Returns: The current resolution.
+     - Returns: The maximum raw value.
      */
     public func getMaxRawValue() -> Int {
         return Int(obj.resolution)
@@ -64,18 +64,18 @@ public class AnalogIn {
     }
 
     /**
-     Read the input voltage.
+     Read the current raw value.
      
-     - Returns: An UInt in the range of 0 to max resolution.
+     - Returns: An integer in the range of 0 to max resolution.
      */
     public func readRawValue() -> Int {
         return Int(swiftHal_AnalogInRead(&obj))
     }
 
     /**
-     Read the input voltage.
+     Read the input voltage in percentage.
      
-     - Returns: The percentage of the referenced voltage in the range of 0.0 to 1.0.
+     - Returns: The percentage of the reference voltage in the range of 0.0 to 1.0.
      */
     public func readPercent() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
@@ -96,6 +96,10 @@ public class AnalogIn {
 
 extension AnalogIn {
 
+    /**
+     The analog input pins are A0 to A11 on the left side of your board.
+     
+     */
     public enum Id: UInt8 {
         case A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11
     }

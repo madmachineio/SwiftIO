@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (14% documented)
+         (45% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -163,7 +163,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>UART is a two-wire serial communication protocol used to communicate with serial devices.</p>
 
           </div>
         </section>
@@ -185,7 +185,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Initialize an interface for UART communication.</p>
 
                       </div>
                       <div class="declaration">
@@ -200,6 +200,85 @@
             <span class="nv">readBufLength</span><span class="p">:</span> <span class="kt"><a href="../Classes/UART/BufferLength.html">BufferLength</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">small</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The name of the UART interface.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>baudRate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong>The communication speed. The default baud rate is 115200.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dataBits</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong>The length of the data being transmitted.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>parity</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong>The parity bit to confirm the accuracy of the data transmission.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stopBits</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong>The bits reserved to stop the communication.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readBufLength</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong>The length of the serial buffer.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -217,7 +296,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the baud rate for communication.</p>
 
                       </div>
                       <div class="declaration">
@@ -227,6 +306,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setBaudrate</span><span class="p">(</span><span class="n">_</span> <span class="nv">baudRate</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>baudRate</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The communication speed.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -244,7 +342,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Clear all bytes from the buffer.</p>
 
                       </div>
                       <div class="declaration">
@@ -271,7 +369,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Return the number of the received data from the serial buffer.</p>
 
                       </div>
                       <div class="declaration">
@@ -281,6 +379,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">checkBufferReceived</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The number of data received in the buffer.</p>
                       </div>
                     </section>
                   </div>
@@ -298,7 +400,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write a byte of data through the serial connection.</p>
 
                       </div>
                       <div class="declaration">
@@ -308,6 +410,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="n">_</span> <span class="nv">byte</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>byte</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>One 8-bits binary data to be sent to the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -325,7 +446,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write a series of bytes through the serial connection.</p>
 
                       </div>
                       <div class="declaration">
@@ -335,6 +456,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">])</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A series of 8-bits binary data to be sent to the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -352,7 +492,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write a string through the serial connection.</p>
 
                       </div>
                       <div class="declaration">
@@ -362,6 +502,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="n">_</span> <span class="nv">string</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>string</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A string to be sent to the device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -379,7 +538,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read a byte of data from serial buffer.</p>
 
                       </div>
                       <div class="declaration">
@@ -389,6 +548,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">readByte</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">UInt8</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>One 8-bits binary data.</p>
                       </div>
                     </section>
                   </div>
@@ -406,7 +569,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read a series of bytes from serial buffer.</p>
 
                       </div>
                       <div class="declaration">
@@ -416,6 +579,10 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="n">_</span> <span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>A series of 8-bits binary data</p>
                       </div>
                     </section>
                   </div>
@@ -433,7 +600,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The interfaces UART0 to UART3 are used for UART communication. Two pins are necessary: TX is used to transmit data; RX is used to receive data.</p>
 
                         <a href="../Classes/UART/Id.html" class="slightly-smaller">See more</a>
                       </div>
@@ -461,7 +628,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This is used to ensure the data transmission according to the number of logical-high bits.</p>
 
                         <a href="../Classes/UART/Parity.html" class="slightly-smaller">See more</a>
                       </div>
@@ -489,7 +656,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>One or two stops bits are reserved to stop the communication.</p>
 
                         <a href="../Classes/UART/StopBits.html" class="slightly-smaller">See more</a>
                       </div>
@@ -517,7 +684,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This indicates the length of the data being transmitted.</p>
 
                         <a href="../Classes/UART/DataBits.html" class="slightly-smaller">See more</a>
                       </div>
@@ -545,7 +712,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>This indicates the storage size of the serial buffer.</p>
 
                         <a href="../Classes/UART/BufferLength.html" class="slightly-smaller">See more</a>
                       </div>
@@ -568,7 +735,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-09)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

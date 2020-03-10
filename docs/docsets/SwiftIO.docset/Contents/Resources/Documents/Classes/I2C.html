@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (14% documented)
+         (45% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -172,7 +172,7 @@
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
     Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
-This class allows the reading and writing of a byte (Uint8) or an array of bytes ([UInt8]).
+This class allows the reading and writing of a byte <code>UInt8</code> or an array of bytes <code>[UInt8]</code>.
 
 </div>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
@@ -182,8 +182,8 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
    <span class="k">let</span> <span class="nv">i2cBus</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
 
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+
+
    <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -239,24 +239,12 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                             <tr>
                               <td>
                                 <code>
-                                <em>mode</em>
+                                <em>speed</em>
                                 </code>
                               </td>
                               <td>
                                 <div>
-                                  <p><strong>OPTIONAL</strong> The output mode of the pin. <code>.pushPull</code> for default.</p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td>
-                                <code>
-                                <em>value</em>
-                                </code>
-                              </td>
-                              <td>
-                                <div>
-                                  <p><strong>OPTIONAL</strong> The output value after initiation. <code>false</code> for default.</p>
+                                  <p><strong>OPTIONAL</strong> The clock speed used to control the data transmission.</p>
                                 </div>
                               </td>
                             </tr>
@@ -279,7 +267,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Get the current clock speed.</p>
 
                       </div>
                       <div class="declaration">
@@ -289,6 +277,10 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">getSpeed</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt"><a href="../Classes/I2C/Speed.html">Speed</a></span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The current speed: <code>.standard</code>, <code>.fast</code> or <code>.fastPlus</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -306,7 +298,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the clock speed of I2C communication</p>
 
                       </div>
                       <div class="declaration">
@@ -316,6 +308,25 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setSpeed</span><span class="p">(</span><span class="n">_</span> <span class="nv">speed</span><span class="p">:</span> <span class="kt"><a href="../Classes/I2C/Speed.html">Speed</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>speed</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The clock speed used to control the data transmission.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -333,7 +344,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read one byte from a specified slave device with the given address.</p>
 
                       </div>
                       <div class="declaration">
@@ -343,6 +354,29 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">readByte</span><span class="p">(</span><span class="n">from</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UInt8</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The address of the slave device the board will communicate with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>One 8-bit binary number receiving from the slave device.</p>
                       </div>
                     </section>
                   </div>
@@ -360,7 +394,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read an array of data from a specified slave device with the given address.</p>
 
                       </div>
                       <div class="declaration">
@@ -370,6 +404,41 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">read</span><span class="p">(</span><span class="nv">count</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="n">from</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>count</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of bytes receiving from the slave device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The address of the slave device the board will communicate with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of 8-bit binary numbers receiving from the slave device.</p>
                       </div>
                     </section>
                   </div>
@@ -387,7 +456,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write a byte of data to a specified slave device with the given address.</p>
 
                       </div>
                       <div class="declaration">
@@ -397,6 +466,37 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="n">_</span> <span class="nv">byte</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">,</span> <span class="n">to</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>byte</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>One 8-bit binary number to be sent to the slave device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The address of the slave device the board will communicate with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -414,7 +514,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write an array of data to a specified slave device with the given address.</p>
 
                       </div>
                       <div class="declaration">
@@ -424,6 +524,37 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">write</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">],</span> <span class="n">to</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A byte array to be sent to the slave device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The address of the slave device the board will communicate with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -441,7 +572,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Write an array of bytes to the slave device with the given address and then read the bytes sent from the device.</p>
 
                       </div>
                       <div class="declaration">
@@ -451,6 +582,53 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">writeRead</span><span class="p">(</span><span class="n">_</span> <span class="nv">data</span><span class="p">:</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">],</span> <span class="nv">readCount</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">address</span><span class="p">:</span> <span class="kt">UInt8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">UInt8</span><span class="p">]</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>data</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>A byte array to be sent to the slave device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>readCount</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The number of bytes receiving from the slave device.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>address</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The address of the slave device the board will communicate with.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>An array of 8-bit binary numbers receiving from the slave device.</p>
                       </div>
                     </section>
                   </div>
@@ -468,7 +646,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>I2C0 and I2C1 are used  for I2C communication. SCL is for clock signal and SDA is for data signal.</p>
 
                         <a href="../Classes/I2C/Id.html" class="slightly-smaller">See more</a>
                       </div>
@@ -496,7 +674,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>There are several speed grade to control the data transmission between the devices.</p>
 
                         <a href="../Classes/I2C/Speed.html" class="slightly-smaller">See more</a>
                       </div>
@@ -519,7 +697,7 @@ This class allows the reading and writing of a byte (Uint8) or an array of bytes
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-09)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

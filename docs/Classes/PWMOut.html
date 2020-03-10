@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (14% documented)
+         (45% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -163,7 +163,7 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>The PWMOut class is used to vary the output voltage by controlling the duration of high output on the pin.</p>
 
           </div>
         </section>
@@ -185,7 +185,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Initialize a PWM output on a specified pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -197,6 +197,49 @@
             <span class="nv">pulse</span><span class="p">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The name of PWMOut pin. See Id for reference.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frequency</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The frequency of the PWM signal.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dutycycle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The duration of high output in the time period from 0.0 to 1.0.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -214,7 +257,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the period and pulse width of a PWM output signal.</p>
 
                       </div>
                       <div class="declaration">
@@ -224,6 +267,37 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="nv">period</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">pulse</span><span class="p">:</span> <span class="kt">Int</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>period</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The period of the PWM ouput signal in microsecond.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>pulse</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The pulse width in a the PWM period. This time can&rsquo;t be longer than the period.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -241,7 +315,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the frequency and the duty cycle of a PWM output signal. The value of the duty cycle should be a float between 0.0 and 1.0.</p>
 
                       </div>
                       <div class="declaration">
@@ -251,6 +325,37 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">set</span><span class="p">(</span><span class="n">frequency</span> <span class="nv">hz</span><span class="p">:</span> <span class="kt">Int</span><span class="p">,</span> <span class="nv">dutycycle</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>frequency</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The frequency of the PWM signal.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dutycycle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The duration of high output in the time period from 0.0 to 1.0.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -268,7 +373,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Set the duty cycle of a PWM output signal, that&rsquo;s to say, set the duration of the on-state of a signal. The value should be a float between 0.0 and 1.0.</p>
 
                       </div>
                       <div class="declaration">
@@ -278,6 +383,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setDutycycle</span><span class="p">(</span><span class="n">_</span> <span class="nv">dutycycle</span><span class="p">:</span> <span class="kt">Float</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>dutycycle</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The duration of high output in the time period from 0.0 to 1.0.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -295,7 +419,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The PWMOut pins are PMW0 to PMW13 marked with a tilde on the board.</p>
 
                         <a href="../Classes/PWMOut/Id.html" class="slightly-smaller">See more</a>
                       </div>
@@ -318,7 +442,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-09)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
