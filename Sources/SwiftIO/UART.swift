@@ -13,7 +13,14 @@ public class UART {
      - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
      - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy of the data transmission.
      - Parameter stopBits: **OPTIONAL**The bits reserved to stop the communication.
-     - Parameter readBufLength: **OPTIONAL**The length of the serial buffer.
+     - Parameter readBufLength: **OPTIONAL**The length of the serial buffer to store the data.
+     
+     ### Usage Example ###
+     ````
+     // Initialize a UART interface UART0.
+     let uart = UART(.UART0)
+
+     ````
      */
     public init(_ id: Id,
                 baudRate: Int = 115200,
@@ -53,15 +60,15 @@ public class UART {
     }
 
     /**
-     Return the number of the received data from the serial buffer.
-     - Returns: The number of data received in the buffer.
+     Return the number of received data from the serial buffer.
+     - Returns: The number of bytes received in the buffer.
      */
     public func checkBufferReceived() -> Int {
         return Int(swiftHal_uartCount(&obj))
     }
 
     /**
-     Write a byte of data through the serial connection.
+     Write a byte of data to the external device through the serial connection.
      - Parameter byte: One 8-bits binary data to be sent to the device.
 
      */
@@ -70,7 +77,7 @@ public class UART {
     }
 
     /**
-     Write a series of bytes through the serial connection.
+     Write a series of bytes to the external device through the serial connection.
      - Parameter data: A series of 8-bits binary data to be sent to the device.
 
      */
@@ -79,7 +86,7 @@ public class UART {
     }
 
     /**
-     Write a string through the serial connection.
+     Write a string to the external device through the serial connection.
      - Parameter string: A string to be sent to the device.
 
      */
@@ -89,7 +96,7 @@ public class UART {
     }
 
     /**
-     Read a byte of data from serial buffer.
+     Read a byte of data receiving from the external device.
      - Returns: One 8-bits binary data.
 
      */
@@ -98,8 +105,8 @@ public class UART {
     }
 
     /**
-     Read a series of bytes from serial buffer.
-     - Returns: A series of 8-bits binary data
+     Read a series of bytes receiving from the external device.
+     - Returns: A series of 8-bits binary data.
 
      */
     public func read(_ count: Int) -> [UInt8] {

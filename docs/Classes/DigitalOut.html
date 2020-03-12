@@ -165,17 +165,15 @@
               </div>
             <p>The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.</p>
 
-<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output. It is not capable of driving a device requires large current.</p>
-<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
-
-<p>After the initiation, the member functions of this class can be used freely. Here&rsquo;s some basic usage of this class.</p>
+<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output and is not capable of driving a device requires large current.</p>
+<h3 id='example-reverse-the-output-value-on-a-digital-output-pin' class='heading'>Example: Reverse the output value on a digital output pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// Initiate a DigitalOut to Pin 0</span>
+   <span class="c1">// Initiate a DigitalOut to Pin 0.</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">// Reverse the output value every 1000 ms</span>
+   <span class="c1">// Reverse the output value every 1 second.</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
        <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
@@ -187,11 +185,11 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Initiate a DigitalOut to the Green LED</span>
+    <span class="c1">// Initiate a DigitalOut to the onboard green LED.</span>
     <span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 <span class="err">​</span>
     <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-      <span class="c1">// Toggle the output of the pin every 1000 ms using another member function.</span>
+      <span class="c1">// Toggle the output of the pin every 1 second using another member function.</span>
       <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
       <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
@@ -220,18 +218,18 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>An initiation of the class to a specific output pin.</p>
+                        <p>Initialize a DigitalOut to a specific output pin.</p>
 <h4 id='usage-example' class='heading'>Usage Example</h4>
 <pre class="highlight swift"><code><span class="c1">// The most simple way of initiating a pin D0, with all other parameters set to default.</span>
 <span class="k">let</span> <span class="nv">outputPin0</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 <span class="err">​</span>
-<span class="c1">// Initiate the pin D1 with the output mode openDrain.</span>
+<span class="c1">// Initialize the pin D1 with the output mode openDrain.</span>
 <span class="k">let</span> <span class="nv">outputPin1</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D1</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">)</span>
 <span class="err">​</span>
-<span class="c1">// Initiate the pin D2 with a High voltage output after initiation.</span>
+<span class="c1">// Initialize the pin D2 with a High voltage output.</span>
 <span class="k">let</span> <span class="nv">outputPin2</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D2</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 
-<span class="c1">// Initiate the pin D3 with the openDrain mode and a High voltage output after initiation.</span>
+<span class="c1">// Initialize the pin D3 with the openDrain mode and a High voltage output.</span>
 <span class="k">let</span> <span class="nv">outputPin3</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D3</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 </code></pre>
 
@@ -270,7 +268,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><strong>OPTIONAL</strong> The output mode of the pin. <code>.pushPull</code> for default.</p>
+                                  <p><strong>OPTIONAL</strong> The output mode of the pin. <code>.pushPull</code> by default.</p>
                                 </div>
                               </td>
                             </tr>
@@ -282,7 +280,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><strong>OPTIONAL</strong> The output value after initiation. <code>false</code> for default.</p>
+                                  <p><strong>OPTIONAL</strong> The output value after initiation. <code>false</code> by default.</p>
                                 </div>
                               </td>
                             </tr>
@@ -305,7 +303,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This function returns the current output mode in a format of DigitalOut.Mode enumerate.</p>
+                        <p>Return the current output mode in a format of DigitalOut.Mode enumerate.</p>
 <h4 id='usage-example' class='heading'>Usage Example</h4>
 <pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">pin</span><span class="o">.</span><span class="nf">getMode</span><span class="p">()</span> <span class="o">==</span> <span class="o">.</span><span class="n">pushPull</span> <span class="p">{</span>
@@ -324,7 +322,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p><code>.pushPull</code> or <code>.openDrain</code> for the current mode.</p>
+                        <p>The current mode: <code>.pushPull</code> or <code>.openDrain</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -365,7 +363,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The output mode. <code>.pushPull</code> or <code>.openDrain</code></p>
+                                  <p>The output mode: <code>.pushPull</code> or <code>.openDrain</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -388,7 +386,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the output value of a specific pin.</p>
+                        <p>Set the output value of the specific pin: true for high voltage and false for low voltage.</p>
 
                       </div>
                       <div class="declaration">
@@ -412,7 +410,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The output value. <code>true</code> for high voltage and <code>false</code> for low voltage</p>
+                                  <p>The output value: <code>true</code>or <code>false</code>.</p>
                                 </div>
                               </td>
                             </tr>
@@ -467,7 +465,7 @@
 <div class="aside aside-attention">
     <p class="aside-title">Attention</p>
     The return value of this function <strong>has nothing to do with the actual output</strong> of the pin.
-For example, the pin is set to <code>true</code> but it is short to ground. The actual pin voltage would be low. This function will still return <code>true</code> despite the actual low output, since this pin is set to HIGH.
+For example, a pin is set to <code>true</code> but it is short to ground. The actual pin voltage would be low. This function will still return <code>true</code> despite of the actual low output, since this pin is set to HIGH.
 
 </div>
 
@@ -500,10 +498,10 @@ For example, the pin is set to <code>true</code> but it is short to ground. The 
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The Id enumerate includes available digital pin. They are D0 ~ D45, RED, GREEN, BLUE.</p>
+                        <p>The Id enumerate includes available digital pins. They are D0 ~ D45 and RED, GREEN, BLUE (onboard LED lights).</p>
 <div class="aside aside-attention">
     <p class="aside-title">Attention</p>
-    Using digital pin D26 ~ D37 is not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
+    Digital pins D26 ~ D37 are not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
 
 </div>
 
@@ -519,7 +517,7 @@ For example, the pin is set to <code>true</code> but it is short to ground. The 
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p><code>true</code> or <code>false</code> of the logic value.</p>
+                        <p>The logic value: <code>true</code> or <code>false</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -588,7 +586,7 @@ For example, the pin is set to <code>true</code> but it is short to ground. The 
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-11)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

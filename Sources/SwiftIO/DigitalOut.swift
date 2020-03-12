@@ -1,21 +1,19 @@
 /**
  The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.
 
- The driving capability of the digital output pins is not very strong. It is meant to be a **SIGNAL** output. It is not capable of driving a device requires large current.
+ The driving capability of the digital output pins is not very strong. It is meant to be a **SIGNAL** output and is not capable of driving a device requires large current.
  
  
- ### BASIC USAGE
- 
- After the initiation, the member functions of this class can be used freely. Here's some basic usage of this class.
+ ### Example: Reverse the output value on a digital output pin
 
  ````
  import SwiftIO
  
  func main() {
-    // Initiate a DigitalOut to Pin 0
+    // Initiate a DigitalOut to Pin 0.
     let pin = DigitalOut(.D0)
  
-    // Reverse the output value every 1000 ms
+    // Reverse the output value every 1 second.
     while true {
         pin.toggle()
         sleep(ms: 1000)
@@ -27,11 +25,11 @@
  import SwiftIO
  
  func main() {
-     // Initiate a DigitalOut to the Green LED
+     // Initiate a DigitalOut to the onboard green LED.
      let greenLED = DigitalOut(.GREEN)
  ​
      while true {
-       // Toggle the output of the pin every 1000 ms using another member function.
+       // Toggle the output of the pin every 1 second using another member function.
        greenLED.write(true)
        sleep(ms: 1000)
        greenLED.write(false)
@@ -72,11 +70,11 @@ public class DigitalOut {
     }
     
     /**
-     An initiation of the class to a specific output pin.
+     Initialize a DigitalOut to a specific output pin.
      
      - Parameter id: **REQUIRED** The name of output pin. Reference the Id enumerate.
-     - Parameter mode: **OPTIONAL** The output mode of the pin. `.pushPull` for default.
-     - Parameter value: **OPTIONAL** The output value after initiation. `false` for default.
+     - Parameter mode: **OPTIONAL** The output mode of the pin. `.pushPull` by default.
+     - Parameter value: **OPTIONAL** The output value after initiation. `false` by default.
 
 
      #### Usage Example
@@ -84,13 +82,13 @@ public class DigitalOut {
      // The most simple way of initiating a pin D0, with all other parameters set to default.
      let outputPin0 = DigitalOut(.D0)
      ​
-     // Initiate the pin D1 with the output mode openDrain.
+     // Initialize the pin D1 with the output mode openDrain.
      let outputPin1 = DigitalOut(.D1, mode: .openDrain)
      ​
-     // Initiate the pin D2 with a High voltage output after initiation.
+     // Initialize the pin D2 with a High voltage output.
      let outputPin2 = DigitalOut(.D2, value: true)
      
-     // Initiate the pin D3 with the openDrain mode and a High voltage output after initiation.
+     // Initialize the pin D3 with the openDrain mode and a High voltage output.
      let outputPin3 = DigitalOut(.D3, mode: .openDrain, value: true)
      ````
      */
@@ -109,9 +107,9 @@ public class DigitalOut {
     }
 
     /**
-     This function returns the current output mode in a format of DigitalOut.Mode enumerate.
+     Return the current output mode in a format of DigitalOut.Mode enumerate.
 
-     - Returns: `.pushPull` or `.openDrain` for the current mode.
+     - Returns: The current mode: `.pushPull` or `.openDrain`.
      
      #### Usage Example
      ````
@@ -128,7 +126,7 @@ public class DigitalOut {
     /**
      Change the output mode.
      
-     - Parameter mode : The output mode. `.pushPull` or `.openDrain`
+     - Parameter mode : The output mode: `.pushPull` or `.openDrain`.
      */
     public func setMode(_ mode: Mode) {
         self.mode = mode
@@ -138,9 +136,9 @@ public class DigitalOut {
 
 
     /**
-     Set the output value of a specific pin.
+     Set the output value of the specific pin: true for high voltage and false for low voltage.
 
-     - Parameter value : The output value. `true` for high voltage and `false` for low voltage
+     - Parameter value : The output value: `true`or `false`.
      */
     @inline(__always)
 	public func write(_ value: Bool) {
@@ -162,7 +160,7 @@ public class DigitalOut {
      - Returns: `true` or `false` of the logic value.
      - Attention:
         The return value of this function **has nothing to do with the actual output** of the pin.
-        For example, the pin is set to `true` but it is short to ground. The actual pin voltage would be low. This function will still return `true` despite the actual low output, since this pin is set to HIGH.
+        For example, a pin is set to `true` but it is short to ground. The actual pin voltage would be low. This function will still return `true` despite of the actual low output, since this pin is set to HIGH.
      */
     public func getValue() -> Bool {
         return value
@@ -174,11 +172,11 @@ public class DigitalOut {
 extension DigitalOut {
     
     /**
-     The Id enumerate includes available digital pin. They are D0 ~ D45, RED, GREEN, BLUE.
+     The Id enumerate includes available digital pins. They are D0 ~ D45 and RED, GREEN, BLUE (onboard LED lights).
      
-     - Returns: `true` or `false` of the logic value.
+     - Returns: The logic value: `true` or `false`.
      - Attention:
-        Using digital pin D26 ~ D37 is not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
+        Digital pins D26 ~ D37 are not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
      */
     public enum Id: UInt8 {
         case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,

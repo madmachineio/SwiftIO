@@ -2,20 +2,6 @@
  SPI is a four wire serial protocol for communication between devices.
  
 
- ### Example: A simple hello world.
- 
- ````
- import SwiftIO
- 
- func main() {
- //Create a spi bus to .SPI0
- let spi = SPI(.SPI0)
- 
-    while true {
-
-    }
- }
- ````
  
  */
  public class SPI {
@@ -39,6 +25,13 @@
      Initialize a specified interface for SPI communication as a master device.
      - Parameter id: **REQUIRED** The name of the SPI interface.
      - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
+     
+     ### Usage Example ###
+     ````
+     // Initialize a SPI interface SPI0.
+     let spi = SPI(.SPI0)
+
+     ````
      */
     public init(_ id: Id,
                 speed: Int = 1000000) {
@@ -62,7 +55,7 @@
     }
 
     /**
-     Set the speed of data transmission.
+     Set the speed of SPI communication.
      - Parameter speed: The clock speed used to control the data transmission.
      */
     public func setSpeed(_ speed: Int) {

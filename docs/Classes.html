@@ -179,19 +179,19 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Use AnalogIn class to read the external voltage applied to an analog input pin.</p>
-<h3 id='example-read-and-print-the-analog-input-value-on-a-specified-pin' class='heading'>Example: Read and print the analog input value on a specified pin</h3>
+                        <p>The AnalogIn class is used to read the external voltage applied to an analog input pin.</p>
+<h3 id='example-read-and-print-the-analog-input-value-on-a-analog-pin' class='heading'>Example: Read and print the analog input value on a analog pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">//Initialize an AnalogIn to Id.A0</span>
+    <span class="c1">//Initialize an AnalogIn to analog pin A0.</span>
     <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
-    <span class="c1">//Read and print the analog input value on .A0 every 1 second</span>
+    <span class="c1">//Read and print the analog input value every 1 second.</span>
     <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
-       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">readVoltage</span><span class="p">()</span>
+       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog input volatge is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -223,14 +223,14 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The DigitalIn class is intended to detect the state of a digital input pin. The input value is either true(1) or false(0).</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<h3 id='example-read-and-print-the-input-value-on-a-digital-input-pin' class='heading'>Example: Read and print the input value on a digital input pin.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Initialize a DigitalIn to DigitalId.D0</span>
+   <span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Read and print the input value every 1 second</span>
+   <span class="c1">//Read and print the input value every 1 second.</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
        <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
@@ -267,17 +267,15 @@
                       <div class="abstract">
                         <p>The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.</p>
 
-<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output. It is not capable of driving a device requires large current.</p>
-<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
-
-<p>After the initiation, the member functions of this class can be used freely. Here&rsquo;s some basic usage of this class.</p>
+<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output and is not capable of driving a device requires large current.</p>
+<h3 id='example-reverse-the-output-value-on-a-digital-output-pin' class='heading'>Example: Reverse the output value on a digital output pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// Initiate a DigitalOut to Pin 0</span>
+   <span class="c1">// Initiate a DigitalOut to Pin 0.</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">// Reverse the output value every 1000 ms</span>
+   <span class="c1">// Reverse the output value every 1 second.</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
        <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
@@ -289,11 +287,11 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Initiate a DigitalOut to the Green LED</span>
+    <span class="c1">// Initiate a DigitalOut to the onboard green LED.</span>
     <span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 <span class="err">​</span>
     <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-      <span class="c1">// Toggle the output of the pin every 1000 ms using another member function.</span>
+      <span class="c1">// Toggle the output of the pin every 1 second using another member function.</span>
       <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
       <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
@@ -328,30 +326,14 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>I2C (I square C) is a two wire protocol to communicate between different devices.</p>
-
-<p>Currently the I2C ports support only master mode.</p>
-<h3 id='basic-usage' class='heading'>BASIC USAGE</h3>
-
-<p>The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.</p>
+                        <p>I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
+Currently the I2C ports support only master mode.</p>
 <div class="aside aside-note">
     <p class="aside-title">Note</p>
-    Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
+    Different I2C devices have different attributes. Please reference the device manual before using the functions below.
 This class allows the reading and writing of a byte <code>UInt8</code> or an array of bytes <code>[UInt8]</code>.
 
 </div>
-<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// initiate an I2C interface to .I2C0</span>
-   <span class="k">let</span> <span class="nv">i2cBus</span> <span class="o">=</span> <span class="kt">I2C</span><span class="p">(</span><span class="o">.</span><span class="kt">I2C0</span><span class="p">)</span>
-
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-
-
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
 
                         <a href="Classes/I2C.html" class="slightly-smaller">See more</a>
                       </div>
@@ -379,7 +361,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The PWMOut class is used to vary the output voltage by controlling the duration of high output on the pin.</p>
+                        <p>The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.</p>
 
                         <a href="Classes/PWMOut.html" class="slightly-smaller">See more</a>
                       </div>
@@ -408,18 +390,6 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>SPI is a four wire serial protocol for communication between devices.</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
-<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
-
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-<span class="c1">//Create a spi bus to .SPI0</span>
-<span class="k">let</span> <span class="nv">spi</span> <span class="o">=</span> <span class="kt">SPI</span><span class="p">(</span><span class="o">.</span><span class="kt">SPI0</span><span class="p">)</span>
-
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-
-   <span class="p">}</span>
-<span class="p">}</span>
-</code></pre>
 
                         <a href="Classes/SPI.html" class="slightly-smaller">See more</a>
                       </div>
@@ -447,7 +417,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Timer is used to set the occasion to raise the interrupt.</p>
+                        <p>The Timer class is used to set the occasion to raise the interrupt.</p>
 
                         <a href="Classes/Timer.html" class="slightly-smaller">See more</a>
                       </div>
@@ -498,7 +468,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-11)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

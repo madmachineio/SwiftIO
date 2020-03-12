@@ -1,6 +1,6 @@
 
 /**
-Timer is used to set the occasion to raise the interrupt.
+The Timer class is used to set the occasion to raise the interrupt.
 
 */
 public class Timer {
@@ -37,7 +37,7 @@ public class Timer {
     }
 
     /**
-     Execute a designated task  at a scheduled time interval. The task should be able to be executed in a very short time, in nanoseconds.
+     Execute a designated task  at a scheduled time interval. The task should be executed in a very short time, usually in nanoseconds.
      - Parameter ms: **REQUIRED** The time period set for the interrupt.
      - Parameter mode: **OPTIONAL** The times that the interrupt will occur: once or continuous.
      - Parameter start: **OPTIONAL** By default, the interrupt will start directly to work.
@@ -46,16 +46,17 @@ public class Timer {
      #### Usage Example
      
      ````
+     
      let timer = Timer()
      let led = DigitalOut(.GREEN)
      
      ````
-     The setInterrupt function can be written as the following:
+     The setInterrupt function can be written as following:
      ````
      func toggleLed() {
          led.toggle()
      }
-     timer.setInterrupt(ms: 1000, toggleLed())
+     timer.setInterrupt(ms: 1000, toggleLed)
      ````
      **or**
      ````
@@ -111,7 +112,7 @@ public class Timer {
 extension Timer {
     
     /**
-     There are two timer mode: if set to `oneShot`, the interrupt happens only once; if set to `period`, the interrupt happens continuously.
+     There are two timer modes: if set to `oneShot`, the interrupt happens only once; if set to `period`, the interrupt happens continuously.
      */
     public enum Mode: UInt8 {
         case oneShot, period

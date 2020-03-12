@@ -164,14 +164,14 @@
                 </div>
               </div>
             <p>The DigitalIn class is intended to detect the state of a digital input pin. The input value is either true(1) or false(0).</p>
-<h3 id='example-a-simple-hello-world' class='heading'>Example: A simple hello world.</h3>
+<h3 id='example-read-and-print-the-input-value-on-a-digital-input-pin' class='heading'>Example: Read and print the input value on a digital input pin.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Initialize a DigitalIn to DigitalId.D0</span>
+   <span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Read and print the input value every 1 second</span>
+   <span class="c1">//Read and print the input value every 1 second.</span>
    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
        <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
        <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
@@ -201,21 +201,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Initialize a DigitalIn to a specified pin.</p>
-
-<p>This text is above the horizontal rule.</p>
-
-<hr>
-
-<p>And this is below.</p>
-
-<p>For more information, see <a href="http://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/">The Swift Programming Language.</a></p>
-<div class="aside aside-see-also">
-    <p class="aside-title">See also</p>
-    <a href="https://developer.apple.com/library/prerelease/ios//documentation/General/Reference/SwiftStandardLibraryReference/index.html">The Swift Standard Library Reference</a>
-
-</div>
 <h3 id='usage-example' class='heading'>Usage Example</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">pullDown</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="c1">// The most simple way of initiating a pin D0, with all other parameters set to default.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="c1">// Initialize the pin D0 with the pulldown mode.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">pullDown</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -252,7 +242,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p><strong>OPTIONAL</strong>The input mode.</p>
+                                  <p><strong>OPTIONAL</strong> The input mode. <code>.pullDown</code> by default.</p>
                                 </div>
                               </td>
                             </tr>
@@ -306,7 +296,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Set the input mode for a digital pin.</p>
+                        <p>Set the input mode for a digital input pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -352,10 +342,10 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Read the value on a digital pin.</p>
+                        <p>Read the value from a digital input pin.</p>
 <div class="aside aside-attention">
     <p class="aside-title">Attention</p>
-    <p>Depends on the hardware, the internal pull resister may be very weak. <strong>Don&rsquo;t</strong> just rely on the pull resister for reading the value. <strong>Especially</strong> when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!</p>
+    <p>Dependind on the hardware, the internal pull resister may be very weak. <strong>Don&rsquo;t</strong> just rely on the pull resister for reading the value. <strong>Especially</strong> when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!</p>
 
 </div>
 
@@ -389,7 +379,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a callback function to a pin.</p>
+                        <p>Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal.</p>
 
                       </div>
                       <div class="declaration">
@@ -412,7 +402,7 @@
                               </td>
                               <td>
                                 <div>
-                                  <p>The input mode.</p>
+                                  <p>The interrupt mode to detect rising or falling edge.</p>
                                 </div>
                               </td>
                             </tr>
@@ -459,7 +449,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Enable the interrupt.</p>
+                        <p>Trigger the interrupt after detecting the edge.</p>
 
                       </div>
                       <div class="declaration">
@@ -486,7 +476,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Disable the interrupt.</p>
+                        <p>Disable the interrupt until the interrupt state is changed.</p>
 
                       </div>
                       <div class="declaration">
@@ -513,7 +503,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the current interrupt state.</p>
+                        <p>Check whether the interrupt is enabled.</p>
 
                       </div>
                       <div class="declaration">
@@ -526,7 +516,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The current input mode: <code>.enable</code> or <code>.diable</code>.</p>
+                        <p>The input mode: <code>.enable</code> or <code>.diable</code>.</p>
                       </div>
                     </section>
                   </div>
@@ -571,7 +561,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The digital input pins are D0 to D45 on the board.</p>
+                        <p>The digital input pin numbers are D0 to D45, corresponding to P0 to P45  on the board.</p>
 
                       </div>
                       <div class="declaration">
@@ -653,7 +643,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The interrupt modes are rising, falling and bothEdge. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high. The interrupt will be triggered when detecting either or both of them.</p>
+                        <p>The interrupt mode determines the edge to raise the interrupt: rising, falling or both edges. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high.</p>
 
                         <a href="../Classes/DigitalIn/InterruptMode.html" class="slightly-smaller">See more</a>
                       </div>
@@ -681,7 +671,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>This value determine whether the interrupt will be enabled and occur.</p>
+                        <p>The interrupt state determines whether the interrupt will be enabled and occur.</p>
 
                         <a href="../Classes/DigitalIn/InterruptState.html" class="slightly-smaller">See more</a>
                       </div>
@@ -704,7 +694,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-11)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

@@ -1,20 +1,20 @@
 /**
- Use AnalogIn class to read the external voltage applied to an analog input pin.
+ The AnalogIn class is used to read the external voltage applied to an analog input pin.
  
- ### Example: Read and print the analog input value on a specified pin
+ ### Example: Read and print the analog input value on a analog pin
  
  ````
  import SwiftIO
  
  func main() {
-     //Initialize an AnalogIn to Id.A0
+     //Initialize an AnalogIn to analog pin A0.
      let pin = AnalogIn(.A0)
  
-     //Read and print the analog input value on .A0 every 1 second
+     //Read and print the analog input value every 1 second.
      while true {
-        var value = pin.read()
-        print("The analog value is \(value)")
-        sleep(1000)
+        var value = pin.readVoltage()
+        print("The analog input volatge is \(value)")
+        sleep(ms: 1000)
      }
  }
  ````
@@ -28,8 +28,9 @@ public class AnalogIn {
      
      - Parameter id: **REQUIRED** The AnalogIn Id on the board. See Id for reference.
      
-     ### Usage Example: ###
+     ### Usage Example ###
      ````
+     // Initialize an analog pin A0.
      let pin = AnalogIn(.A0)
      ````
      */
@@ -55,16 +56,16 @@ public class AnalogIn {
     }
 
     /**
-     Get the current reference voltage.
+     Get the reference voltage of the board.
      
-     - Returns: The current reference voltage.
+     - Returns: The reference voltage.
      */
     public func getReference() -> Float {
         return obj.refVoltage
     }
 
     /**
-     Read the current raw value.
+     Read the current raw value from the specified analog pin.
      
      - Returns: An integer in the range of 0 to max resolution.
      */
@@ -73,9 +74,9 @@ public class AnalogIn {
     }
 
     /**
-     Read the input voltage in percentage.
+     Read the input voltage in percentage from a specified analog pin.
      
-     - Returns: The percentage of the reference voltage in the range of 0.0 to 1.0.
+     - Returns: A percentage of the reference voltage in the range of 0.0 to 1.0.
      */
     public func readPercent() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
@@ -83,7 +84,7 @@ public class AnalogIn {
     }
 
     /**
-     Read the input voltage.
+     Read the input voltage from a specified analog pin.
      
      - Returns: A float value in the range of 0.0 to the reference voltage.
      */
@@ -97,7 +98,7 @@ public class AnalogIn {
 extension AnalogIn {
 
     /**
-     The analog input pins are A0 to A11 on the left side of your board.
+     The analog input pins are A0 to A11, corresponding to P14 to P25 on the left side of your board.
      
      */
     public enum Id: UInt8 {

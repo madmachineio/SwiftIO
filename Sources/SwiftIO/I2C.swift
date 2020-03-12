@@ -1,31 +1,11 @@
 /**
- I2C (I square C) is a two wire protocol to communicate between different devices.
-
+ I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
  Currently the I2C ports support only master mode.
-
-
- ### BASIC USAGE
- 
- The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
  
  - Note:
- Different I2C devices have different attributes to it. Please reference the device manual to use the functions below.
+ Different I2C devices have different attributes. Please reference the device manual before using the functions below.
  This class allows the reading and writing of a byte `UInt8` or an array of bytes `[UInt8]`.
- 
- ````
- import SwiftIO
- 
- func main() {
-    // initiate an I2C interface to .I2C0
-    let i2cBus = I2C(.I2C0)
- 
-    while true {
-        
-        
-    }
- }
- ````
- 
+
  */
  public class I2C {
 
@@ -45,9 +25,17 @@
     }
 
     /**
-     An initiation of the class to a specific I2C interface as a master device.
+     Initialize a specific I2C interface as a master device.
      - Parameter id: **REQUIRED** The name of the I2C interface.
      - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
+     
+     ### Usage Example ###
+     ````
+     // Initialize an I2C interface I2C0.
+     let i2cBus = I2C(.I2C0)
+
+     ````
+     
      */
     public init(_ id: Id,
                 speed: Speed = .standard) {
@@ -62,7 +50,7 @@
     }
 
     /**
-     Get the current clock speed.
+     Get the current clock speed of the data transmission.
      
      - Returns: The current speed: `.standard`, `.fast` or `.fastPlus`.
      */
@@ -71,7 +59,7 @@
     }
 
     /**
-     Set the clock speed of I2C communication
+     Set the clock speed of the data transmission.
      - Parameter speed: The clock speed used to control the data transmission.
      */
     public func setSpeed(_ speed: Speed) {

@@ -1,16 +1,16 @@
 /**
  The DigitalIn class is intended to detect the state of a digital input pin. The input value is either true(1) or false(0).
  
- ### Example: A simple hello world.
+ ### Example: Read and print the input value on a digital input pin.
  
  ````
  import SwiftIO
  
  func main() {
-    //Initialize a DigitalIn to DigitalId.D0
+    //Initialize a DigitalIn to the digital pin D0.
     let pin = DigitalIn(.D0)
  
-    //Read and print the input value every 1 second
+    //Read and print the input value every 1 second.
     while true {
         var value = pin.read()
         print("The input value is \(value)")
@@ -55,19 +55,14 @@ public class DigitalIn {
      Initialize a DigitalIn to a specified pin.
      
      - parameter id: **REQUIRED** The Digital id on the board. See Id for reference.
-     - parameter mode: **OPTIONAL**The input mode.
+     - parameter mode: **OPTIONAL** The input mode. `.pullDown` by default.
      
-     This text is above the horizontal rule.
-     - - -
-     And this is below.
      
-     For more information, see [The Swift Programming Language.](http://developer.apple.com/library/ios/documentation/Swift/Conceptual/Swift_Programming_Language/)
-     
-     - SeeAlso:
-     [The Swift Standard Library Reference](https://developer.apple.com/library/prerelease/ios//documentation/General/Reference/SwiftStandardLibraryReference/index.html)
-     
-     ### Usage Example
+     ### Usage Example ###
      ````
+     // The most simple way of initiating a pin D0, with all other parameters set to default.
+     let pin = DigitalIn(.D0)
+     // Initialize the pin D0 with the pulldown mode.
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
@@ -98,7 +93,7 @@ public class DigitalIn {
     }
 
     /**
-     Set the input mode for a digital pin.
+     Set the input mode for a digital input pin.
      
      - Parameter mode : The input mode.
      */
@@ -109,9 +104,9 @@ public class DigitalIn {
 
 
     /**
-     Read the value on a digital pin.
+     Read the value from a digital input pin.
      
-     - Attention: Depends on the hardware, the internal pull resister may be very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!
+     - Attention: Dependind on the hardware, the internal pull resister may be very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internel pad need some time to charge or discharge through the pull resister!
      
      - Returns: `true` or `false` of the logic value.
      */
@@ -121,8 +116,8 @@ public class DigitalIn {
 	}
 
     /**
-     Add a callback function to a pin.
-     - Parameter mode : The input mode.
+     Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal.
+     - Parameter mode : The interrupt mode to detect rising or falling edge.
      - Parameter enable : Whether to enable the interrupt.
      - Parameter callback : A void function without a return value.
      */    
@@ -138,7 +133,7 @@ public class DigitalIn {
     }
 
     /**
-     Enable the interrupt.
+     Trigger the interrupt after detecting the edge.
     
      */
     public func enableInterrupt() {
@@ -147,7 +142,7 @@ public class DigitalIn {
     }
 
     /**
-     Disable the interrupt.
+     Disable the interrupt until the interrupt state is changed.
     
      */
     public func disableInterrupt() {
@@ -156,9 +151,9 @@ public class DigitalIn {
     }
 
     /**
-     Get the current interrupt state.
+     Check whether the interrupt is enabled.
      
-     - Returns: The current input mode: `.enable` or `.diable`.
+     - Returns: The input mode: `.enable` or `.diable`.
      */
     public func getInterruptState() -> InterruptState {
         return interruptState
@@ -182,7 +177,7 @@ public class DigitalIn {
 extension DigitalIn {
     
     /**
-     The digital input pins are D0 to D45 on the board.
+     The digital input pin numbers are D0 to D45, corresponding to P0 to P45  on the board.
     
      */
     public typealias Id = DigitalOut.Id
@@ -198,7 +193,7 @@ extension DigitalIn {
     }
 
     /**
-     The interrupt modes are rising, falling and bothEdge. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high. The interrupt will be triggered when detecting either or both of them.
+     The interrupt mode determines the edge to raise the interrupt: rising, falling or both edges. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high.
 
      */
     public enum InterruptMode: UInt8 {
@@ -206,7 +201,7 @@ extension DigitalIn {
     }
 
     /**
-     This value determine whether the interrupt will be enabled and occur.
+     The interrupt state determines whether the interrupt will be enabled and occur.
 
      */
     public enum InterruptState: UInt8 {

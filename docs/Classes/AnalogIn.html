@@ -163,19 +163,19 @@
 
                 </div>
               </div>
-            <p>Use AnalogIn class to read the external voltage applied to an analog input pin.</p>
-<h3 id='example-read-and-print-the-analog-input-value-on-a-specified-pin' class='heading'>Example: Read and print the analog input value on a specified pin</h3>
+            <p>The AnalogIn class is used to read the external voltage applied to an analog input pin.</p>
+<h3 id='example-read-and-print-the-analog-input-value-on-a-analog-pin' class='heading'>Example: Read and print the analog input value on a analog pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">//Initialize an AnalogIn to Id.A0</span>
+    <span class="c1">//Initialize an AnalogIn to analog pin A0.</span>
     <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
-    <span class="c1">//Read and print the analog input value on .A0 every 1 second</span>
+    <span class="c1">//Read and print the analog input value every 1 second.</span>
     <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
-       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">readVoltage</span><span class="p">()</span>
+       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog input volatge is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
@@ -201,8 +201,9 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>Initialize an AnalogIn to a specified pin.</p>
-<h3 id='usage-example' class='heading'>Usage Example:</h3>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<pre class="highlight swift"><code><span class="c1">// Initialize an analog pin A0.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -280,7 +281,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the current reference voltage.</p>
+                        <p>Get the reference voltage of the board.</p>
 
                       </div>
                       <div class="declaration">
@@ -293,7 +294,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The current reference voltage.</p>
+                        <p>The reference voltage.</p>
                       </div>
                     </section>
                   </div>
@@ -311,7 +312,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Read the current raw value.</p>
+                        <p>Read the current raw value from the specified analog pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -342,7 +343,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Read the input voltage in percentage.</p>
+                        <p>Read the input voltage in percentage from a specified analog pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -355,7 +356,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The percentage of the reference voltage in the range of 0.0 to 1.0.</p>
+                        <p>A percentage of the reference voltage in the range of 0.0 to 1.0.</p>
                       </div>
                     </section>
                   </div>
@@ -373,7 +374,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Read the input voltage.</p>
+                        <p>Read the input voltage from a specified analog pin.</p>
 
                       </div>
                       <div class="declaration">
@@ -404,7 +405,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The analog input pins are A0 to A11 on the left side of your board.</p>
+                        <p>The analog input pins are A0 to A11, corresponding to P14 to P25 on the left side of your board.</p>
 
                         <a href="../Classes/AnalogIn/Id.html" class="slightly-smaller">See more</a>
                       </div>
@@ -427,7 +428,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-10)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-11)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
