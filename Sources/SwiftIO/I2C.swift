@@ -34,6 +34,7 @@
      // Initialize an I2C interface I2C0.
      let i2cBus = I2C(.I2C0)
 
+
      ````
      
      */
@@ -59,7 +60,7 @@
     }
 
     /**
-     Set the clock speed of the data transmission.
+     Set the clock speed to change the transmission rate.
      - Parameter speed: The clock speed used to control the data transmission.
      */
     public func setSpeed(_ speed: Speed) {
@@ -82,7 +83,7 @@
 
     /**
      Read an array of data from a specified slave device with the given address.
-     - Parameter count : The number of bytes receiving from the slave device.
+     - Parameter count : The number of bytes to read.
      - Parameter address : The address of the slave device the board will communicate with.
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
@@ -118,7 +119,7 @@
     /**
      Write an array of bytes to the slave device with the given address and then read the bytes sent from the device.
      - Parameter data : A byte array to be sent to the slave device.
-     - Parameter readCount : The number of bytes receiving from the slave device.
+     - Parameter readCount : The number of bytes to read.
      - Parameter address : The address of the slave device the board will communicate with.
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
@@ -142,7 +143,7 @@ extension I2C {
     }
 
     /**
-     There are several speed grade to control the data transmission between the devices.
+     The clock signal is used to synchronize the data transmission between the devices.There are three available speed grades.
      */
     public enum Speed: Int32 {
         case standard = 100000, fast = 400000, fastPlus = 1000000

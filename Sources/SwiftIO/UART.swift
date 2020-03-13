@@ -1,5 +1,5 @@
 /**
-UART is a two-wire serial communication protocol used to communicate with serial devices.
+UART is a two-wire serial communication protocol used to communicate with serial devices. The devices must agree on a common transmisson rate before communication.
 
 */
 public class UART {
@@ -19,6 +19,7 @@ public class UART {
      ````
      // Initialize a UART interface UART0.
      let uart = UART(.UART0)
+
 
      ````
      */
@@ -43,7 +44,7 @@ public class UART {
     }
 
     /**
-     Set the baud rate for communication.
+     Set the baud rate for communication. It should be set ahead of time to ensure the same baud rate between two devices.
      - Parameter baudRate: The communication speed.
 
      */
@@ -53,7 +54,7 @@ public class UART {
     }
 
     /**
-     Clear all bytes from the buffer.
+     Clear all bytes from the buffer to store the incoming data.
      */
     public func clearBuffer() {
         swiftHal_uartClearBuffer(&obj)
@@ -69,7 +70,7 @@ public class UART {
 
     /**
      Write a byte of data to the external device through the serial connection.
-     - Parameter byte: One 8-bits binary data to be sent to the device.
+     - Parameter byte: One 8-bit binary data to be sent to the device.
 
      */
     public func write(_ byte: UInt8) {
@@ -78,7 +79,7 @@ public class UART {
 
     /**
      Write a series of bytes to the external device through the serial connection.
-     - Parameter data: A series of 8-bits binary data to be sent to the device.
+     - Parameter data: A byte array to be sent to the device.
 
      */
     public func write(_ data: [UInt8]) {
@@ -97,7 +98,7 @@ public class UART {
 
     /**
      Read a byte of data receiving from the external device.
-     - Returns: One 8-bits binary data.
+     - Returns: One 8-bit binary data read from the device.
 
      */
     public func readByte() -> UInt8 {
@@ -106,7 +107,7 @@ public class UART {
 
     /**
      Read a series of bytes receiving from the external device.
-     - Returns: A series of 8-bits binary data.
+     - Returns: A byte array read from the device.
 
      */
     public func read(_ count: Int) -> [UInt8] {
@@ -132,7 +133,7 @@ extension UART {
     }
 
     /**
-     This is used to ensure the data transmission according to the number of logical-high bits.
+     The parity bit is used to ensure the data transmission according to the number of logical-high bits.
 
      */
     public enum Parity: UInt8 {
@@ -140,7 +141,7 @@ extension UART {
     }
 
     /**
-     One or two stops bits are reserved to stop the communication.
+     One or two stops bits are reserved to end the communication.
 
      */
     public enum StopBits: UInt8 {

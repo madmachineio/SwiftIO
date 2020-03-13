@@ -1,7 +1,21 @@
 /**
-The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin. 
+ The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.
 
+ ### Example: Light a LED
 
+ ````
+ import SwiftIO
+ 
+ func main() {
+    // Initiate a PWMOut to Pin PWM0.
+    let led = PWMOut(.PWM0)
+ 
+    // Set the brightness of the LED by setting the duty cycle.
+    while true {
+        led.setDutycycle(0.5)
+    }
+ }
+ ````
 */
 public class PWMOut {
     var obj: PWMOutObject
@@ -19,9 +33,6 @@ public class PWMOut {
      ​
      // Initialize the pin PWM0 with the frequency set to 1000hz.
      let pin = PWMOut(.PWM0, hz: 1000)
-     ​
-     // Initialize the pin PWM0 with the dutycycle set to 0.5.
-     let pin = PWMOut(.PWM0, dutycycle: 0.5)
      
      // Initialize the pin PWM0 with the frequency set to 1000hz and the dutycycle set to 0.5.
      let pin = PWMOut(.PWM0, hz: 1000, dutycycle: 0.5)

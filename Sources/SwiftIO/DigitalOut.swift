@@ -193,7 +193,7 @@ extension DigitalOut {
     }
 
     /**
-     The Mode enumerate includes the available output modes.
+     The Mode enumerate includes the available output modes. The default output mode in most cases is pushPull. The pushPull mode enables the digital pin to output high and low voltage levels while the open-drain output cannot truly output a high level.
      
      */
     public enum Mode: UInt8 {
