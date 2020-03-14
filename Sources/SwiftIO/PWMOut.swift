@@ -31,20 +31,20 @@ public class PWMOut {
      // The most simple way of initiating a pin PWM0, with all other parameters set to default.
      let pin = PWMOut(.PWM0)
      ​
-     // Initialize the pin PWM0 with the frequency set to 1000hz.
-     let pin = PWMOut(.PWM0, hz: 1000)
+     // Initialize the pin PWM0 with the frequency set to 2000hz.
+     let pin = PWMOut(.PWM0, hz: 2000)
      
-     // Initialize the pin PWM0 with the frequency set to 1000hz and the dutycycle set to 0.5.
-     let pin = PWMOut(.PWM0, hz: 1000, dutycycle: 0.5)
+     // Initialize the pin PWM0 with the frequency set to 2000hz and the dutycycle set to 0.5.
+     let pin = PWMOut(.PWM0, hz: 2000, dutycycle: 0.5)
      ````
      */
     public init(_ id: Id,
-                period: Int = 1000,
-                pulse: Int = 0) {
+                frequency: Int = 1000,
+                dutycycle: Float = 0.0) {
         obj = PWMOutObject()
         obj.id = id.rawValue
-        obj.period = UInt32(period)
-        obj.pulse = UInt32(pulse)
+        obj.period = UInt32(1000000 / frequency)
+        obj.pulse = UInt32(1000000.0 / (Float(frequency) * dutycycle))
         obj.countPerSecond = 1000000
 
         swiftHal_PWMOutInit(&obj)
@@ -53,6 +53,18 @@ public class PWMOut {
     deinit {
         swiftHal_PWMOutDeinit(&obj)
     }
+
+    /**
+     Set the frequency and the duty cycle of a PWM output signal. The value of the duty cycle should be a float between 0.0 and 1.0.
+     - Parameter hz: The frequency of the PWM signal.
+     - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
+     */
+    public func set(frequency: Int, dutycycle: Float) {
+        obj.period = UInt32(1000000 / frequency)
+        obj.pulse = UInt32(1000000.0 / (Float(frequency) * dutycycle))
+        swiftHal_PWMOutConfig(&obj)
+    }
+
 
     /**
      Set the period and pulse width of a PWM output signal.
@@ -65,16 +77,6 @@ public class PWMOut {
         swiftHal_PWMOutConfig(&obj)
     }
 
-    /**
-     Set the frequency and the duty cycle of a PWM output signal. The value of the duty cycle should be a float between 0.0 and 1.0.
-     - Parameter hz: The frequency of the PWM signal.
-     - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
-     */
-    public func set(frequency hz: Int, dutycycle: Float) {
-        obj.period = UInt32(1000000 / hz)
-        obj.pulse = UInt32(1000000.0 / (Float(hz) * dutycycle))
-        swiftHal_PWMOutConfig(&obj)
-    }
 
     /**
      Set the duty cycle of a PWM output signal, that's to say, set the duration of the on-state of a signal. The value should be a float between 0.0 and 1.0.
