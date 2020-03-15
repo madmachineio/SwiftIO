@@ -46,10 +46,8 @@ public class Timer {
      #### Usage Example
      
      ````
-     
      let timer = Timer()
      let led = DigitalOut(.GREEN)
-     
      ````
      The setInterrupt function can be written as following:
      ````

@@ -33,8 +33,6 @@
      ````
      // Initialize an I2C interface I2C0.
      let i2cBus = I2C(.I2C0)
-
-
      ````
      
      */

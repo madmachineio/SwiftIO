@@ -23,7 +23,7 @@ public class PWMOut {
     /**
      Initialize a PWM output on a specified pin.
      - Parameter id: **REQUIRED** The name of PWMOut pin. See Id for reference.
-     - Parameter hz: **OPTIONAL** The frequency of the PWM signal.
+     - Parameter frequency: **OPTIONAL** The frequency of the PWM signal.
      - Parameter dutycycle: **OPTIONAL** The duration of high output in the time period from 0.0 to 1.0.
      
      #### Usage Example
@@ -32,10 +32,10 @@ public class PWMOut {
      let pin = PWMOut(.PWM0)
      ​
      // Initialize the pin PWM0 with the frequency set to 2000hz.
-     let pin = PWMOut(.PWM0, hz: 2000)
+     let pin = PWMOut(.PWM0, frequency: 2000)
      
      // Initialize the pin PWM0 with the frequency set to 2000hz and the dutycycle set to 0.5.
-     let pin = PWMOut(.PWM0, hz: 2000, dutycycle: 0.5)
+     let pin = PWMOut(.PWM0, frequency: 2000, dutycycle: 0.5)
      ````
      */
     public init(_ id: Id,
@@ -55,8 +55,8 @@ public class PWMOut {
     }
 
     /**
-     Set the frequency and the duty cycle of a PWM output signal. The value of the duty cycle should be a float between 0.0 and 1.0.
-     - Parameter hz: The frequency of the PWM signal.
+     Set the frequency and the dutycycle of a PWM output signal. The value of the dutycycle should be a float between 0.0 and 1.0.
+     - Parameter frequency: The frequency of the PWM signal.
      - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
      */
     public func set(frequency: Int, dutycycle: Float) {

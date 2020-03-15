@@ -86,63 +86,63 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 185,
+      "line": 186,
       "symbol": "DigitalIn.Direction",
       "symbol_kind": "source.lang.swift.decl.typealias",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 192,
+      "line": 193,
       "symbol": "DigitalIn.Mode.pullDown",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 192,
+      "line": 193,
       "symbol": "DigitalIn.Mode.pullNone",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 192,
+      "line": 193,
       "symbol": "DigitalIn.Mode.pullUp",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 200,
+      "line": 201,
       "symbol": "DigitalIn.InterruptMode.bothEdge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 200,
+      "line": 201,
       "symbol": "DigitalIn.InterruptMode.falling",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 200,
+      "line": 201,
       "symbol": "DigitalIn.InterruptMode.rising",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 208,
+      "line": 209,
       "symbol": "DigitalIn.InterruptState.disable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/DigitalIn.swift",
-      "line": 208,
+      "line": 209,
       "symbol": "DigitalIn.InterruptState.enable",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -520,35 +520,35 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 142,
+      "line": 140,
       "symbol": "I2C.Id.I2C0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 142,
+      "line": 140,
       "symbol": "I2C.Id.I2C1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 149,
+      "line": 147,
       "symbol": "I2C.Speed.fast",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 149,
+      "line": 147,
       "symbol": "I2C.Speed.fastPlus",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 149,
+      "line": 147,
       "symbol": "I2C.Speed.standard",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -667,105 +667,105 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Timer.swift",
-      "line": 118,
+      "line": 116,
       "symbol": "Timer.Mode.oneShot",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Timer.swift",
-      "line": 118,
+      "line": 116,
       "symbol": "Timer.Mode.period",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 132,
+      "line": 130,
       "symbol": "UART.Id.UART0",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 132,
+      "line": 130,
       "symbol": "UART.Id.UART1",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 132,
+      "line": 130,
       "symbol": "UART.Id.UART2",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 132,
+      "line": 130,
       "symbol": "UART.Id.UART3",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 140,
+      "line": 138,
       "symbol": "UART.Parity.even",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 140,
+      "line": 138,
       "symbol": "UART.Parity.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 140,
+      "line": 138,
       "symbol": "UART.Parity.odd",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 148,
+      "line": 146,
       "symbol": "UART.StopBits.oneBit",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 148,
+      "line": 146,
       "symbol": "UART.StopBits.twoBits",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 156,
+      "line": 154,
       "symbol": "UART.DataBits.eightBits",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 164,
+      "line": 162,
       "symbol": "UART.BufferLength.large",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 164,
+      "line": 162,
       "symbol": "UART.BufferLength.medium",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 164,
+      "line": 162,
       "symbol": "UART.BufferLength.small",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

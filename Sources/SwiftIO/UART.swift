@@ -19,8 +19,6 @@ public class UART {
      ````
      // Initialize a UART interface UART0.
      let uart = UART(.UART0)
-
-
      ````
      */
     public init(_ id: Id,
