@@ -9,32 +9,28 @@
  ````
  import SwiftIO
  
- func main() {
-    // Initiate a DigitalOut to Pin 0.
-    let pin = DigitalOut(.D0)
+ // Initiate a DigitalOut to Pin 0.
+ let pin = DigitalOut(.D0)
  
-    // Reverse the output value every 1 second.
-    while true {
-        pin.toggle()
-        sleep(ms: 1000)
-    }
+ // Reverse the output value every 1 second.
+ while true {
+     pin.toggle()
+     sleep(ms: 1000)
  }
  ````
  Alternatively,
  ````
  import SwiftIO
  
- func main() {
-     // Initiate a DigitalOut to the onboard green LED.
-     let greenLED = DigitalOut(.GREEN)
+ // Initiate a DigitalOut to the onboard green LED.
+ let greenLED = DigitalOut(.GREEN)
  ​
-     while true {
-       // Toggle the output of the pin every 1 second using another member function.
-       greenLED.write(true)
-       sleep(ms: 1000)
-       greenLED.write(false)
-       sleep(ms: 1000)
-    }
+ // Toggle the output of the pin every 1 second using another member function.
+ while true {
+     greenLED.write(true)
+     sleep(ms: 1000)
+     greenLED.write(false)
+     sleep(ms: 1000)
  }
  ````
  */

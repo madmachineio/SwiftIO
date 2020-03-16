@@ -167,16 +167,14 @@
 <h3 id='example-read-and-print-the-input-value-on-a-digital-input-pin' class='heading'>Example: Read and print the input value on a digital input pin.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
-   <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Read and print the input value every 1 second.</span>
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
-       <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-   <span class="p">}</span>
+<span class="c1">//Read and print the input value every 1 second.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -380,7 +378,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal.</p>
+                        <p>Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal. Once the risng or falling edge is detected, the processor will suspend the normal execution to execute the designated task. The task should be able to finish in a very short time, usually in nanoseconds. Then,  the processor will return back to where it stopped and continue the previous operation.</p>
 
                       </div>
                       <div class="declaration">
@@ -562,7 +560,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The digital input pin numbers are D0 to D45, corresponding to P0 to P45  on the board.</p>
+                        <p>The digital input pin are D0 to D45, corresponding to P0 to P45  on the board. See the id enumerated in the DigitalOut class for reference.</p>
 
                       </div>
                       <div class="declaration">
@@ -616,7 +614,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors.</p>
+                        <p>The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors. The pins D26 to D37 are connected separately to an external 10kΩ resistor on the board. So even if they are changed to pullUp, the output voltage of these pins is still low.</p>
 
                         <a href="../Classes/DigitalIn/Mode.html" class="slightly-smaller">See more</a>
                       </div>
@@ -695,7 +693,7 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-15)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

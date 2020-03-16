@@ -30,8 +30,6 @@
      ````
      // Initialize a SPI interface SPI0.
      let spi = SPI(.SPI0)
-
-
      ````
      */
     public init(_ id: Id,

@@ -6,16 +6,14 @@
  ````
  import SwiftIO
  
- func main() {
-     //Initialize an AnalogIn to analog pin A0.
-     let pin = AnalogIn(.A0)
+ //Initialize an AnalogIn to analog pin A0.
+ let pin = AnalogIn(.A0)
  
-     //Read and print the analog input value every 1 second.
-     while true {
-        var value = pin.readVoltage()
-        print("The analog input volatge is \(value)")
-        sleep(ms: 1000)
-     }
+ //Read and print the analog input value every 1 second.
+ while true {
+     var value = pin.readVoltage()
+     print("The analog input volatge is \(value)")
+     sleep(ms: 1000)
  }
  ````
  

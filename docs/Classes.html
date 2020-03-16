@@ -183,16 +183,14 @@
 <h3 id='example-read-and-print-the-analog-input-value-on-a-analog-pin' class='heading'>Example: Read and print the analog input value on a analog pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">//Initialize an AnalogIn to analog pin A0.</span>
-    <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+<span class="c1">//Initialize an AnalogIn to analog pin A0.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
-    <span class="c1">//Read and print the analog input value every 1 second.</span>
-    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">readVoltage</span><span class="p">()</span>
-       <span class="nf">print</span><span class="p">(</span><span class="s">"The analog input volatge is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-    <span class="p">}</span>
+<span class="c1">//Read and print the analog input value every 1 second.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">readVoltage</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"The analog input volatge is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -226,16 +224,14 @@
 <h3 id='example-read-and-print-the-input-value-on-a-digital-input-pin' class='heading'>Example: Read and print the input value on a digital input pin.</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
-   <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">//Read and print the input value every 1 second.</span>
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
-       <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-   <span class="p">}</span>
+<span class="c1">//Read and print the input value every 1 second.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">pin</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"The input value is </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -271,32 +267,28 @@
 <h3 id='example-reverse-the-output-value-on-a-digital-output-pin' class='heading'>Example: Reverse the output value on a digital output pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// Initiate a DigitalOut to Pin 0.</span>
-   <span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="c1">// Initiate a DigitalOut to Pin 0.</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
-   <span class="c1">// Reverse the output value every 1 second.</span>
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
-       <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-   <span class="p">}</span>
+<span class="c1">// Reverse the output value every 1 second.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="n">pin</span><span class="o">.</span><span class="nf">toggle</span><span class="p">()</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
 <p>Alternatively,</p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1">// Initiate a DigitalOut to the onboard green LED.</span>
-    <span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="c1">// Initiate a DigitalOut to the onboard green LED.</span>
+<span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 <span class="err">​</span>
-    <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-      <span class="c1">// Toggle the output of the pin every 1 second using another member function.</span>
-      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
-      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-      <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
-      <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
-   <span class="p">}</span>
+<span class="c1">// Toggle the output of the pin every 1 second using another member function.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">true</span><span class="p">)</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
+    <span class="n">greenLED</span><span class="o">.</span><span class="nf">write</span><span class="p">(</span><span class="kc">false</span><span class="p">)</span>
+    <span class="nf">sleep</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -365,14 +357,12 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
 <h3 id='example-light-a-led' class='heading'>Example: Light a LED</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
-<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-   <span class="c1">// Initiate a PWMOut to Pin PWM0.</span>
-   <span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
+<span class="c1">// Initiate a PWMOut to Pin PWM0.</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
 
-   <span class="c1">// Set the brightness of the LED by setting the duty cycle.</span>
-   <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
-       <span class="n">led</span><span class="o">.</span><span class="nf">setDutycycle</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-   <span class="p">}</span>
+<span class="c1">// Set the brightness of the LED by setting the duty cycle.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="n">led</span><span class="o">.</span><span class="nf">setDutycycle</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre>
 
@@ -481,7 +471,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-15)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-16)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

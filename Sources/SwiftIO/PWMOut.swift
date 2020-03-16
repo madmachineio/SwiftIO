@@ -6,14 +6,12 @@
  ````
  import SwiftIO
  
- func main() {
-    // Initiate a PWMOut to Pin PWM0.
-    let led = PWMOut(.PWM0)
+ // Initiate a PWMOut to Pin PWM0.
+ let led = PWMOut(.PWM0)
  
-    // Set the brightness of the LED by setting the duty cycle.
-    while true {
-        led.setDutycycle(0.5)
-    }
+ // Set the brightness of the LED by setting the duty cycle.
+ while true {
+     led.setDutycycle(0.5)
  }
  ````
 */
