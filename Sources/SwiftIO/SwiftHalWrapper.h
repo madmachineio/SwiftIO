@@ -21,7 +21,6 @@ typedef struct {
 	unsigned char outputMode;
 	unsigned char interruptMode;
 	unsigned char interruptState;
-	CallbackWrapper callbackWrapper;
 } DigitalIOObject;
 
 int swiftHal_gpioInit(DigitalIOObject *);
@@ -145,3 +144,28 @@ typedef struct {
 int swiftHal_AnalogInInit(AnalogInObject *obj);
 int swiftHal_AnalogInDeinit(AnalogInObject *obj);
 int swiftHal_AnalogInRead(AnalogInObject *obj);
+
+
+
+
+
+typedef struct {
+	void *ptr;
+	int initalCount;
+	int limit;
+} SemObject;
+
+/*
+int swiftHal_semInit(SemObject *obj);
+int swiftHal_semDeinit(SemObject *obj);
+int swiftHal_semTake(SemObject *obj, int timeout);
+void swiftHal_semGive(SemObject *obj);
+void swiftHal_semReset(SemObject *obj);
+int swiftHal_semGetCount(SemObject *obj);
+*/
+int swiftHal_semInit(void *obj);
+int swiftHal_semDeinit(void *obj);
+int swiftHal_semTake(void *obj, int timeout);
+void swiftHal_semGive(void *obj);
+void swiftHal_semReset(void *obj);
+int swiftHal_semGetCount(void *obj);

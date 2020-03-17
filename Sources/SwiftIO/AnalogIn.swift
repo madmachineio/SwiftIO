@@ -19,7 +19,16 @@
  
  */
 public class AnalogIn {
-    var obj: AnalogInObject
+    private var obj: AnalogInObject
+
+    private let id: Id
+    private let resolution: Int
+    private let refVoltage: Float
+
+    private func objectInit() {
+        obj.id = id.rawValue
+        swiftHal_AnalogInInit(&obj)
+    }
 
     /**
      Initialize an AnalogIn to a specified pin.
@@ -33,11 +42,11 @@ public class AnalogIn {
      ````
      */
     public init(_ id: Id) {
+        self.id = id
+        self.resolution = 4095
+        self.refVoltage = 3.3
         obj = AnalogInObject()
-        obj.id = id.rawValue
-        obj.resolution = 4095
-        obj.refVoltage = 3.3
-        swiftHal_AnalogInInit(&obj)
+        objectInit()
     }
 
     deinit {
@@ -50,7 +59,7 @@ public class AnalogIn {
      - Returns: The maximum raw value.
      */
     public func getMaxRawValue() -> Int {
-        return Int(obj.resolution)
+        return resolution
     }
 
     /**
@@ -59,7 +68,7 @@ public class AnalogIn {
      - Returns: The reference voltage.
      */
     public func getReference() -> Float {
-        return obj.refVoltage
+        return refVoltage
     }
 
     /**
@@ -78,7 +87,7 @@ public class AnalogIn {
      */
     public func readPercent() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
-        return val / Float(obj.resolution)
+        return val / Float(resolution)
     }
 
     /**
@@ -88,7 +97,7 @@ public class AnalogIn {
      */
     public func readVoltage() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
-        return obj.refVoltage * val / Float(obj.resolution)
+        return refVoltage * val / Float(resolution)
     }
 }
 

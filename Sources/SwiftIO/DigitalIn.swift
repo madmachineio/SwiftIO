@@ -19,7 +19,7 @@
  */
 public class DigitalIn {
 		
-    var obj: DigitalIOObject
+    private var obj: DigitalIOObject
 
     private let id: Id
     private var mode: Mode {

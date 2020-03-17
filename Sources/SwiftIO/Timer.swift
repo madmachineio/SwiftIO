@@ -19,17 +19,21 @@ public class Timer {
         }
     }
 
+    private func objectInit() {
+        obj.timerType = mode.rawValue
+        obj.period = Int32(period)
+        swiftHal_timerInit(&obj)
+    }
+
     /**
      Intialize a timer.
      */
     public init() {
-        mode = .period
-        period = 0
+        self.mode = .period
+        self.period = 0
 
         obj = TimerObject()
-        obj.timerType = mode.rawValue
-        obj.period = Int32(period)
-        swiftHal_timerInit(&obj)
+        objectInit()
     }
 
     deinit {

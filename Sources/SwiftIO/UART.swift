@@ -4,7 +4,44 @@ UART is a two-wire serial communication protocol used to communicate with serial
 */
 public class UART {
 
-    var obj: UARTObject
+    private var obj: UARTObject
+
+    private let id: Id
+    private var baudRate: Int {
+        willSet {
+            obj.baudRate = Int32(newValue)
+        }
+    }
+    private var dataBits: DataBits {
+        willSet {
+            obj.dataBits = newValue.rawValue
+        }
+    }
+    private var parity: Parity {
+        willSet {
+            obj.parity = newValue.rawValue
+        }
+    }
+    private var stopBits: StopBits {
+        willSet {
+            obj.stopBits = newValue.rawValue
+        }
+    }
+    private var readBufferLength: BufferLength {
+        willSet {
+            obj.readBufferLength = Int32(newValue.rawValue)
+        }
+    }
+
+    private func objectInit() {
+        obj.id = id.rawValue
+        obj.baudRate = Int32(baudRate)
+        obj.dataBits = dataBits.rawValue
+        obj.parity = parity.rawValue
+        obj.stopBits = stopBits.rawValue
+        obj.readBufferLength = Int32(readBufferLength.rawValue)
+        swiftHal_uartInit(&obj)
+    }
 
     /**
      Initialize an interface for UART communication.
@@ -13,7 +50,7 @@ public class UART {
      - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
      - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy of the data transmission.
      - Parameter stopBits: **OPTIONAL**The bits reserved to stop the communication.
-     - Parameter readBufLength: **OPTIONAL**The length of the serial buffer to store the data.
+     - Parameter readBufferLength: **OPTIONAL**The length of the serial buffer to store the data.
      
      ### Usage Example ###
      ````
@@ -26,15 +63,15 @@ public class UART {
                 dataBits: DataBits = .eightBits,
                 parity: Parity = .none,
                 stopBits: StopBits = .oneBit,
-                readBufLength: BufferLength = .small) {
+                readBufferLength: BufferLength = .small) {
+        self.id = id
+        self.baudRate = baudRate
+        self.dataBits = dataBits
+        self.parity = parity
+        self.stopBits = stopBits
+        self.readBufferLength = readBufferLength
         obj = UARTObject()
-        obj.id = id.rawValue
-        obj.baudRate = Int32(baudRate)
-        obj.dataBits = dataBits.rawValue
-        obj.parity = parity.rawValue
-        obj.stopBits = stopBits.rawValue
-        obj.readBufferLength = Int32(readBufLength.rawValue)
-        swiftHal_uartInit(&obj)
+        objectInit()
     }
 
     deinit {
