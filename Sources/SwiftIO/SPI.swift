@@ -103,6 +103,16 @@
     public func write(_ data: [UInt8]) {
         swiftHal_spiWrite(&obj, data, Int32(data.count))
     }
+
+    /**
+     Write raw data to the slave device.
+     - Parameter data: Raw data to be sent to the slave device.
+     */
+    public func write(_ data: UnsafeRawBufferPointer) {
+        guard data.baseAddress != nil else { return }
+        let ptr = data.bindMemory(to: UInt8.self)
+        swiftHal_spiWrite(&obj, ptr.baseAddress!, Int32(ptr.count))
+    }
 }
 
 extension SPI {
