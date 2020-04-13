@@ -108,6 +108,7 @@ public class UART {
      - Parameter byte: One 8-bit binary data to be sent to the device.
 
      */
+    @inline(__always)
     public func write(_ byte: UInt8) {
         swiftHal_uartWriteChar(&obj, byte)
     }
@@ -117,6 +118,7 @@ public class UART {
      - Parameter data: A byte array to be sent to the device.
 
      */
+    @inline(__always)
     public func write(_ data: [UInt8]) {
         swiftHal_uartWrite(&obj, data, Int32(data.count))
     }
@@ -126,6 +128,7 @@ public class UART {
      - Parameter string: A string to be sent to the device.
 
      */
+    @inline(__always)
     public func write(_ string: String) {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
         swiftHal_uartWrite(&obj, data, Int32(data.count))
@@ -136,6 +139,7 @@ public class UART {
      - Returns: One 8-bit binary data read from the device.
 
      */
+    @inline(__always)
     public func readByte() -> UInt8 {
         return swiftHal_uartReadChar(&obj)
     }
@@ -145,6 +149,7 @@ public class UART {
      - Returns: A byte array read from the device.
 
      */
+    @inline(__always)
     public func read(_ count: Int) -> [UInt8] {
         var data: [UInt8] = Array(repeating: 0, count: count)
         swiftHal_uartRead(&obj, &data, Int32(count));

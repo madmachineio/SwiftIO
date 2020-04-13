@@ -76,6 +76,7 @@ public class AnalogIn {
      
      - Returns: An integer in the range of 0 to max resolution.
      */
+    @inline(__always)
     public func readRawValue() -> Int {
         return Int(swiftHal_AnalogInRead(&obj))
     }
@@ -85,6 +86,7 @@ public class AnalogIn {
      
      - Returns: A percentage of the reference voltage in the range of 0.0 to 1.0.
      */
+    @inline(__always)
     public func readPercent() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
         return val / Float(resolution)
@@ -95,6 +97,7 @@ public class AnalogIn {
      
      - Returns: A float value in the range of 0.0 to the reference voltage.
      */
+    @inline(__always)
     public func readVoltage() -> Float {
         let val = Float(swiftHal_AnalogInRead(&obj))
         return refVoltage * val / Float(resolution)

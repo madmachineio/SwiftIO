@@ -67,6 +67,7 @@
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
+    @inline(__always)
     public func readByte() -> UInt8 {
         var data = [UInt8](repeating: 0, count: 1)
         
@@ -79,6 +80,7 @@
      - Parameter count: The number of bytes receiving from the slave device.
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
+    @inline(__always)
     public func read(count: Int) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
@@ -90,6 +92,7 @@
      Write a byte of data to the slave device.
      - Parameter byte: One 8-bit binary number to be sent to the slave device.
      */
+    @inline(__always)
     public func write(_ byte: UInt8) {
         let _data = [UInt8](repeating: byte, count: 1)
 
@@ -100,6 +103,7 @@
      Write an array of data to the slave device.
      - Parameter data: A byte array to be sent to the slave device.
      */
+    @inline(__always)
     public func write(_ data: [UInt8]) {
         swiftHal_spiWrite(&obj, data, Int32(data.count))
     }
@@ -108,6 +112,7 @@
      Write raw data to the slave device.
      - Parameter data: Raw data to be sent to the slave device.
      */
+    @inline(__always)
     public func write(_ data: UnsafeRawBufferPointer) {
         guard data.baseAddress != nil else { return }
         let ptr = data.bindMemory(to: UInt8.self)

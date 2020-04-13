@@ -71,6 +71,7 @@
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
+    @inline(__always)
     public func readByte(from address: UInt8) -> UInt8 {
         var data = [UInt8](repeating: 0, count: 1)
         
@@ -85,6 +86,7 @@
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
+    @inline(__always)
     public func read(count: Int, from address: UInt8) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
@@ -97,6 +99,7 @@
      - Parameter byte : One 8-bit binary number to be sent to the slave device.
      - Parameter address : The address of the slave device the board will communicate with.
      */
+    @inline(__always)
     public func write(_ byte: UInt8, to address: UInt8) {
         var _data = [UInt8](repeating: 0, count: 1)
 
@@ -109,6 +112,7 @@
      - Parameter data : A byte array to be sent to the slave device.
      - Parameter address : The address of the slave device the board will communicate with.
      */
+    @inline(__always)
     public func write(_ data: [UInt8], to address: UInt8) {
         swiftHal_i2cWrite(&obj, address, data, Int32(data.count))
     }
@@ -121,6 +125,7 @@
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
+    @inline(__always)
     public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
         var receivedData = [UInt8](repeating:0, count: readCount)
 

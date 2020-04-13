@@ -76,6 +76,7 @@ public class PWMOut {
      - Parameter frequency: The frequency of the PWM signal.
      - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
      */
+    @inline(__always)
     public func set(frequency: Int, dutycycle: Float) {
         guard frequency > 0 else {
             return
@@ -91,6 +92,7 @@ public class PWMOut {
      - Parameter period: The period of the PWM ouput signal in microsecond.
      - Parameter pulse: The pulse width in the PWM period. This time can't be longer than the period.
      */
+    @inline(__always)
     public func set(period: Int, pulse: Int) {
         usPeriod = period
         usPulse = pulse
@@ -102,6 +104,7 @@ public class PWMOut {
      Set the duty cycle of a PWM output signal, that's to say, set the duration of the on-state of a signal. The value should be a float between 0.0 and 1.0.
      - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
      */
+    @inline(__always)
     public func setDutycycle(_ dutycycle: Float) {
         usPulse = Int(Float(usPeriod) * dutycycle)
         swiftHal_PWMOutConfig(&obj)
