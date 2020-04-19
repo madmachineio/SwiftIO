@@ -112,7 +112,6 @@ final public class Timer {
 
 
 extension Timer {
-    
     /**
      There are two timer modes: if set to `oneShot`, the interrupt happens only once; if set to `period`, the interrupt happens continuously.
      */

@@ -6,7 +6,7 @@ final public class UART {
 
     private var obj: UARTObject
 
-    private let id: Id
+    private let id: IdName
     private var baudRate: Int {
         willSet {
             obj.baudRate = Int32(newValue)
@@ -34,7 +34,7 @@ final public class UART {
     }
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.baudRate = Int32(baudRate)
         obj.dataBits = dataBits.rawValue
         obj.parity = parity.rawValue
@@ -58,7 +58,7 @@ final public class UART {
      let uart = UART(.UART0)
      ````
      */
-    public init(_ id: Id,
+    public init(_ id: IdName,
                 baudRate: Int = 115200,
                 dataBits: DataBits = .eightBits,
                 parity: Parity = .none,
@@ -163,15 +163,6 @@ final public class UART {
 
 
 extension UART {
-    
-    /**
-     The interfaces UART0 to UART3 are used for UART communication. Two pins are necessary: TX is used to transmit data; RX is used to receive data.
-
-     */
-    public enum Id: UInt8 {
-        case UART0 = 0, UART1, UART2, UART3
-    }
-
     /**
      The parity bit is used to ensure the data transmission according to the number of logical-high bits.
 

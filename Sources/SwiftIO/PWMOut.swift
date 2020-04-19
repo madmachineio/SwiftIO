@@ -18,7 +18,7 @@
 final public class PWMOut {
     private var obj: PWMOutObject
 
-    private let id: Id
+    private let id: IdName
     private var usPeriod: Int {
         willSet {
             obj.period = UInt32(newValue)
@@ -31,7 +31,7 @@ final public class PWMOut {
     }
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.period = UInt32(usPeriod)
         obj.pulse = UInt32(usPulse)
         swiftHal_PWMOutInit(&obj)
@@ -55,7 +55,7 @@ final public class PWMOut {
      let pin = PWMOut(.PWM0, frequency: 2000, dutycycle: 0.5)
      ````
      */
-    public init(_ id: Id,
+    public init(_ id: IdName,
                 frequency: Int = 1000,
                 dutycycle: Float = 0.0) {
 
@@ -111,13 +111,3 @@ final public class PWMOut {
     }
 }
 
-
-extension PWMOut {
-    
-    /**
-     The PWMOut pins are PMW0 to PMW13 marked with a tilde on the board.
-     */
-    public enum Id: UInt8 {
-        case PWM0, PWM1, PWM2, PWM3, PWM4, PWM5, PWM6, PWM7, PWM8, PWM9, PWM10, PWM11, PWM12, PWM13
-    }
-}

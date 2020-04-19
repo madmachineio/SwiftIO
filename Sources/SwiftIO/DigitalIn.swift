@@ -21,7 +21,7 @@ final public class DigitalIn {
 		
     private var obj: DigitalIOObject
 
-    private let id: Id
+    private let id: IdName
     private var mode: Mode {
         willSet {
             obj.inputMode = newValue.rawValue
@@ -41,7 +41,7 @@ final public class DigitalIn {
 
     
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.direction = Direction.input.rawValue
         obj.inputMode = mode.rawValue
         obj.interruptMode = interruptMode.rawValue
@@ -65,7 +65,7 @@ final public class DigitalIn {
      let pin = DigitalIn(.D0, mode: .pullDown)
      ````
      */
-	public init(_ id: Id,
+	public init(_ id: IdName,
                 mode: Mode = .pullDown) {
         self.id = id
         self.mode = mode
@@ -174,14 +174,7 @@ final public class DigitalIn {
 
 
 extension DigitalIn {
-    
-    /**
-     The digital input pin are D0 to D45, corresponding to P0 to P45  on the board. See the id enumerated in the DigitalOut class for reference.
-    
-     */
-    public typealias Id = DigitalOut.Id
-    
-    public typealias Direction = DigitalOut.Direction
+    typealias Direction = DigitalOut.Direction
 
     /**
      The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors. The pins D26 to D37 are connected separately to an external 10kΩ resistor on the board. So even if they are changed to pullUp, the output voltage of these pins is still low.

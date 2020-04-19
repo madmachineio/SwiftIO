@@ -8,7 +8,7 @@
 
     private var obj: SPIObject
 
-    private let id: Id
+    private let id: IdName
     private var speed: Int {
         willSet {
             obj.speed = Int32(newValue)
@@ -16,7 +16,7 @@
     }
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.speed = Int32(speed)
         swiftHal_spiInit(&obj)
     }
@@ -32,7 +32,7 @@
      let spi = SPI(.SPI0)
      ````
      */
-    public init(_ id: Id,
+    public init(_ id: IdName,
                 speed: Int = 1000000) {
         self.id = id
         self.speed = speed
@@ -120,14 +120,3 @@
     }
 }
 
-extension SPI {
-
-    /**
-     SPI0 and SPI1 are designed for SPI communication. Four wires are required: SCK (serial clock), SDO (data sending), SDI (data receiving), CS (slave selection).
-     
-     */
-    public enum Id: UInt8 {
-        case SPI0, SPI1
-    }
-
-}

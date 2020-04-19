@@ -11,7 +11,7 @@
 
     private var obj: I2CObject
 
-    private let id: Id
+    private let id: IdName
     private var speed: Speed {
         willSet {
             obj.speed = newValue.rawValue
@@ -19,7 +19,7 @@
     }
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.speed = speed.rawValue
         swiftHal_i2cInit(&obj)
     }
@@ -35,7 +35,7 @@
      let i2cBus = I2C(.I2C0)
      ````
      */
-    public init(_ id: Id,
+    public init(_ id: IdName,
                 speed: Speed = .standard) {
         self.id = id
         self.speed = speed
@@ -136,14 +136,6 @@
 }
 
 extension I2C {
-
-    /**
-     I2C0 and I2C1 are used  for I2C communication. SCL is for clock signal and SDA is for data signal.
-     */
-    public enum Id: UInt8 {
-        case I2C0, I2C1
-    }
-
     /**
      The clock signal is used to synchronize the data transmission between the devices.There are three available speed grades.
      */

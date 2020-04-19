@@ -38,7 +38,7 @@ final public class DigitalOut {
 
     private var obj: DigitalIOObject
 
-    private let id: Id
+    private let id: IdName
     private var mode: Mode {
         willSet {
             obj.outputMode = newValue.rawValue
@@ -57,7 +57,7 @@ final public class DigitalOut {
 	}
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         obj.direction = Direction.output.rawValue
         obj.outputMode = mode.rawValue
 
@@ -88,7 +88,7 @@ final public class DigitalOut {
      let outputPin3 = DigitalOut(.D3, mode: .openDrain, value: true)
      ````
      */
-    public init(_ id: Id,
+    public init(_ id: IdName,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
         self.id = id
@@ -166,25 +166,10 @@ final public class DigitalOut {
 
 
 extension DigitalOut {
-    
-    /**
-     The Id enumerate includes available digital pins. They are D0 ~ D45 and RED, GREEN, BLUE (onboard LED lights).
-     
-     - Returns: The logic value: `true` or `false`.
-     - Attention:
-        Digital pins D26 ~ D37 are not recommended, as they are required to be pulled down upon startup of the MCU. After startup they act as normal digital pins.
-     */
-    public enum Id: UInt8 {
-        case D0, D1, D2, D3, D4, D5, D6, D7, D8, D9, D10, D11, D12, D13, D14, D15, D16,
-            D17, D18, D19, D20, D21, D22, D23, D24, D25, D26, D27, D28, D29, D30, D31,
-            D32, D33, D34, D35, D36, D37, D38, D39, D40, D41, D42, D43, D44, D45,
-            RED, GREEN, BLUE
-    }
-
     /**
         **DO NOT USE**
      */
-    public enum Direction: UInt8 {
+    enum Direction: UInt8 {
         case output = 1, input
     }
 

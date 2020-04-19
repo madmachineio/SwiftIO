@@ -15,7 +15,7 @@ typedef struct {
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	unsigned char direction;
 	unsigned char inputMode;
 	unsigned char outputMode;
@@ -39,7 +39,7 @@ int swiftHal_gpioAddSwiftMember(DigitalIOObject *obj, void *classPtr, void (*fun
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	int speed;
 } I2CObject;
 
@@ -55,7 +55,7 @@ int swiftHal_i2cWriteRead(I2CObject *obj, unsigned char address, const unsigned 
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	int speed;
 } SPIObject;
 
@@ -75,7 +75,7 @@ int swiftHal_spiRead(SPIObject *obj, unsigned char *buf, int length);
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	unsigned char parity;
 	unsigned char stopBits;
 	unsigned char dataBits;
@@ -119,7 +119,7 @@ int swiftHal_timerAddSwiftMember(TimerObject *obj, void *classPtr, void (*functi
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	unsigned int period;
 	unsigned int pulse;
 	unsigned int countPerSecond;
@@ -135,7 +135,7 @@ int swiftHal_PWMOutDeinit(PWMOutObject *obj);
 
 typedef struct {
 	void *ptr;
-	unsigned char id;
+	unsigned char idNumber;
 	int resolution;
 	float refVoltage;
 } AnalogInObject;

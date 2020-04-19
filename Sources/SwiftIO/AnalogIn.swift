@@ -21,12 +21,12 @@
 final public class AnalogIn {
     private var obj: AnalogInObject
 
-    private let id: Id
+    private let id: IdName
     private let resolution: Int
     private let refVoltage: Float
 
     private func objectInit() {
-        obj.id = id.rawValue
+        obj.idNumber = id.number
         swiftHal_AnalogInInit(&obj)
     }
 
@@ -41,7 +41,7 @@ final public class AnalogIn {
      let pin = AnalogIn(.A0)
      ````
      */
-    public init(_ id: Id) {
+    public init(_ id: IdName) {
         self.id = id
         self.resolution = 4095
         self.refVoltage = 3.3
@@ -105,13 +105,3 @@ final public class AnalogIn {
 }
 
 
-extension AnalogIn {
-
-    /**
-     The analog input pins are A0 to A11, corresponding to P14 to P25 on the left side of your board.
-     
-     */
-    public enum Id: UInt8 {
-        case A0, A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11
-    }
-}
