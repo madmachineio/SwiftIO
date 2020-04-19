@@ -18,7 +18,7 @@
  ````
  
  */
-public class AnalogIn {
+final public class AnalogIn {
     private var obj: AnalogInObject
 
     private let id: Id

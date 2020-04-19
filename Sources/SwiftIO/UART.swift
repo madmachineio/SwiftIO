@@ -2,7 +2,7 @@
 UART is a two-wire serial communication protocol used to communicate with serial devices. The devices must agree on a common transmisson rate before communication.
 
 */
-public class UART {
+final public class UART {
 
     private var obj: UARTObject
 

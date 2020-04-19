@@ -3,7 +3,7 @@
 The Timer class is used to set the occasion to raise the interrupt.
 
 */
-public class Timer {
+final public class Timer {
     private var obj: TimerObject
     private var callback: (()->Void)?
 

@@ -4,7 +4,7 @@
 
  
  */
- public class SPI {
+ final public class SPI {
 
     private var obj: SPIObject
 

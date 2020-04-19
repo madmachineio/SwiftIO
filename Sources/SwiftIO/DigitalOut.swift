@@ -34,7 +34,7 @@
  }
  ````
  */
-public class DigitalOut {
+final public class DigitalOut {
 
     private var obj: DigitalIOObject
 

@@ -7,7 +7,7 @@
  This class allows the reading and writing of a byte `UInt8` or an array of bytes `[UInt8]`.
 
  */
- public class I2C {
+ final public class I2C {
 
     private var obj: I2CObject
 

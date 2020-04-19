@@ -17,7 +17,7 @@
  }
  ````
  */
-public class DigitalIn {
+final public class DigitalIn {
 		
     private var obj: DigitalIOObject
 

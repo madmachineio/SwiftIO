@@ -15,7 +15,7 @@
  }
  ````
 */
-public class PWMOut {
+final public class PWMOut {
     private var obj: PWMOutObject
 
     private let id: Id
