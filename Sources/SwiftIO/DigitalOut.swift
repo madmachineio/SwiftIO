@@ -10,7 +10,7 @@
  import SwiftIO
  
  // Initiate a DigitalOut to Pin 0.
- let pin = DigitalOut(.D0)
+ let pin = DigitalOut(Id.D0)
  
  // Reverse the output value every 1 second.
  while true {
@@ -76,16 +76,16 @@ public final class DigitalOut {
      #### Usage Example
      ````
      // The most simple way of initiating a pin D0, with all other parameters set to default.
-     let outputPin0 = DigitalOut(.D0)
+     let outputPin0 = DigitalOut(Id.D0)
      ​
      // Initialize the pin D1 with the output mode openDrain.
-     let outputPin1 = DigitalOut(.D1, mode: .openDrain)
+     let outputPin1 = DigitalOut(Id.D1, mode: .openDrain)
      ​
      // Initialize the pin D2 with a High voltage output.
-     let outputPin2 = DigitalOut(.D2, value: true)
+     let outputPin2 = DigitalOut(Id.D2, value: true)
      
      // Initialize the pin D3 with the openDrain mode and a High voltage output.
-     let outputPin3 = DigitalOut(.D3, mode: .openDrain, value: true)
+     let outputPin3 = DigitalOut(Id.D3, mode: .openDrain, value: true)
      ````
      */
     public init(_ id: IdName,
@@ -109,7 +109,7 @@ public final class DigitalOut {
      
      #### Usage Example
      ````
-     let pin = DigitalOut(.D0)
+     let pin = DigitalOut(Id.D0)
      if pin.getMode() == .pushPull {
         //do something
      }

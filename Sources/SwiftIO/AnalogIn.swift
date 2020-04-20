@@ -7,7 +7,7 @@
  import SwiftIO
  
  //Initialize an AnalogIn to analog pin A0.
- let pin = AnalogIn(.A0)
+ let pin = AnalogIn(Id.A0)
  
  //Read and print the analog input value every 1 second.
  while true {
@@ -38,7 +38,7 @@ public final class AnalogIn {
      ### Usage Example ###
      ````
      // Initialize an analog pin A0.
-     let pin = AnalogIn(.A0)
+     let pin = AnalogIn(Id.A0)
      ````
      */
     public init(_ id: IdName) {

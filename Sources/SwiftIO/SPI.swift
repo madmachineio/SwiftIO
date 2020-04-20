@@ -27,7 +27,7 @@
      ### Usage Example ###
      ````
      // Initialize a SPI interface SPI0.
-     let spi = SPI(.SPI0)
+     let spi = SPI(Id.SPI0)
      ````
      */
     public init(_ id: IdName,

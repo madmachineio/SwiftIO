@@ -7,7 +7,7 @@
  import SwiftIO
  
  //Initialize a DigitalIn to the digital pin D0.
- let pin = DigitalIn(.D0)
+ let pin = DigitalIn(Id.D0)
  
  //Read and print the input value every 1 second.
  while true {
@@ -59,10 +59,10 @@ public final class DigitalIn {
      ### Usage Example ###
      ````
      // The most simple way of initiating a pin D0, with all other parameters set to default.
-     let pin = DigitalIn(.D0)
+     let pin = DigitalIn(Id.D0)
      
      // Initialize the pin D0 with the pulldown mode.
-     let pin = DigitalIn(.D0, mode: .pullDown)
+     let pin = DigitalIn(Id.D0, mode: .pullDown)
      ````
      */
 	public init(_ id: IdName,

@@ -55,7 +55,7 @@ public final class UART {
      ### Usage Example ###
      ````
      // Initialize a UART interface UART0.
-     let uart = UART(.UART0)
+     let uart = UART(Id.UART0)
      ````
      */
     public init(_ id: IdName,
