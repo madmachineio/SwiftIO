@@ -1,5 +1,3 @@
-import CHal
-
 /**
  The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.
 

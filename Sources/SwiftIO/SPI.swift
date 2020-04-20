@@ -1,6 +1,3 @@
-import CHal
-
-
 /**
  SPI is a four wire serial protocol for communication between devices.
   

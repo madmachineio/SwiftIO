@@ -1,5 +1,3 @@
-import CHal
-
 /**
  The DigitalIn class is intended to detect the state of a digital input pin. The input value is either true(1) or false(0).
  
