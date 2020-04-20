@@ -165,7 +165,7 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">// Initiate a DigitalOut to Pin 0.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
 <span class="c1">// Reverse the output value every 1 second.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -212,16 +212,16 @@
                         <p>Initialize a DigitalOut to a specific output pin.</p>
 <h4 id='usage-example' class='heading'>Usage Example</h4>
 <pre class="highlight swift"><code><span class="c1">// The most simple way of initiating a pin D0, with all other parameters set to default.</span>
-<span class="k">let</span> <span class="nv">outputPin0</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">outputPin0</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 <span class="err">​</span>
 <span class="c1">// Initialize the pin D1 with the output mode openDrain.</span>
-<span class="k">let</span> <span class="nv">outputPin1</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D1</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">outputPin1</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D1</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">)</span>
 <span class="err">​</span>
 <span class="c1">// Initialize the pin D2 with a High voltage output.</span>
-<span class="k">let</span> <span class="nv">outputPin2</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D2</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">outputPin2</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D2</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 
 <span class="c1">// Initialize the pin D3 with the openDrain mode and a High voltage output.</span>
-<span class="k">let</span> <span class="nv">outputPin3</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D3</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">outputPin3</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D3</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">openDrain</span><span class="p">,</span> <span class="nv">value</span><span class="p">:</span> <span class="kc">true</span><span class="p">)</span>
 </code></pre>
 
                       </div>
@@ -296,7 +296,7 @@
                       <div class="abstract">
                         <p>Return the current output mode in a format of DigitalOut.Mode enumerate.</p>
 <h4 id='usage-example' class='heading'>Usage Example</h4>
-<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 <span class="k">if</span> <span class="n">pin</span><span class="o">.</span><span class="nf">getMode</span><span class="p">()</span> <span class="o">==</span> <span class="o">.</span><span class="n">pushPull</span> <span class="p">{</span>
    <span class="c1">//do something</span>
 <span class="p">}</span>

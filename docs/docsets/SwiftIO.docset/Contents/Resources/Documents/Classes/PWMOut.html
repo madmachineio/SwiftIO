@@ -163,7 +163,7 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">// Initiate a PWMOut to Pin PWM0.</span>
-<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
 
 <span class="c1">// Set the brightness of the LED by setting the duty cycle.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -194,13 +194,13 @@
                         <p>Initialize a PWM output on a specified pin.</p>
 <h4 id='usage-example' class='heading'>Usage Example</h4>
 <pre class="highlight swift"><code><span class="c1">// The most simple way of initiating a pin PWM0, with all other parameters set to default.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
 <span class="err">​</span>
 <span class="c1">// Initialize the pin PWM0 with the frequency set to 2000hz.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="mi">2000</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="mi">2000</span><span class="p">)</span>
 
 <span class="c1">// Initialize the pin PWM0 with the frequency set to 2000hz and the dutycycle set to 0.5.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span> <span class="nv">dutycycle</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">,</span> <span class="nv">frequency</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span> <span class="nv">dutycycle</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">)</span>
 </code></pre>
 
                       </div>

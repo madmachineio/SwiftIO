@@ -179,7 +179,7 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">//Initialize an AnalogIn to analog pin A0.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">AnalogIn</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">A0</span><span class="p">)</span>
 
 <span class="c1">//Read and print the analog input value every 1 second.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -220,7 +220,7 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">//Initialize a DigitalIn to the digital pin D0.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalIn</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
 <span class="c1">//Read and print the input value every 1 second.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -263,7 +263,7 @@
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">// Initiate a DigitalOut to Pin 0.</span>
-<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">pin</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">D0</span><span class="p">)</span>
 
 <span class="c1">// Reverse the output value every 1 second.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -353,7 +353,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">// Initiate a PWMOut to Pin PWM0.</span>
-<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">PWMOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">PWM0</span><span class="p">)</span>
 
 <span class="c1">// Set the brightness of the LED by setting the duty cycle.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
