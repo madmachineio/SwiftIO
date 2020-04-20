@@ -1,3 +1,5 @@
+import CHal
+
 public protocol IdName {
     var number: UInt8 { get }
 }

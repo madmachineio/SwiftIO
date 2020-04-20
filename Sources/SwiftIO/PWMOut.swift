@@ -1,3 +1,5 @@
+import CHal
+
 /**
  The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.
 
@@ -15,7 +17,7 @@
  }
  ````
 */
-final public class PWMOut {
+public final class PWMOut {
     private var obj: PWMOutObject
 
     private let id: IdName

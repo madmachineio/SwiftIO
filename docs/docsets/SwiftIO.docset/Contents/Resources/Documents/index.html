@@ -22,7 +22,7 @@
         <a class="header-link" href="index.html">
           SwiftIO Docs
         </a>
-         (45% documented)
+         (42% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -56,9 +56,6 @@
                 <a class="nav-group-task-link" href="Classes/AnalogIn.html">AnalogIn</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/AnalogIn/Id.html">– Id</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/DigitalIn.html">DigitalIn</a>
               </li>
               <li class="nav-group-task">
@@ -74,19 +71,10 @@
                 <a class="nav-group-task-link" href="Classes/DigitalOut.html">DigitalOut</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/DigitalOut/Id.html">– Id</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/DigitalOut/Direction.html">– Direction</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/DigitalOut/Mode.html">– Mode</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/I2C.html">I2C</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/I2C/Id.html">– Id</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/I2C/Speed.html">– Speed</a>
@@ -95,13 +83,7 @@
                 <a class="nav-group-task-link" href="Classes/PWMOut.html">PWMOut</a>
               </li>
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/PWMOut/Id.html">– Id</a>
-              </li>
-              <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/SPI.html">SPI</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/SPI/Id.html">– Id</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/Timer.html">Timer</a>
@@ -111,9 +93,6 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/UART.html">UART</a>
-              </li>
-              <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Classes/UART/Id.html">– Id</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/UART/Parity.html">– Parity</a>
@@ -126,6 +105,14 @@
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/UART/BufferLength.html">– BufferLength</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Enums/Id.html">Id</a>
               </li>
             </ul>
           </li>
@@ -149,6 +136,14 @@
               </li>
             </ul>
           </li>
+          <li class="nav-group-name">
+            <a class="nav-group-name-link" href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Protocols/IdName.html">IdName</a>
+              </li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <article class="main-content">
@@ -158,11 +153,47 @@
             
             <h1 id='swiftio' class='heading'>SwiftIO</h1>
 
-<p>A Swift framework for microcontrollers.</p>
+<p><img src="https://github.com/madmachineio/SwiftIO/raw/master/images/swiftio_pinout.png" alt="SwiftIO pinout"></p>
 
-<p><a href="https://madmachine.io">Project Homepage</a></p>
+<p>A Swift framework for microcontrollers. The SwiftIO board provides a good way to learn Swift code. Write your code in the IDE, download to your board, and you&rsquo;ll get the results in real time if you&rsquo;ve had the circuit connected.</p>
+<h2 id='documentation' class='heading'>Documentation</h2>
 
-<p><a href="https://madmachineio.github.io/SwiftIO">API Documention</a></p>
+<p>The SwiftIO library provides an easy access to communicate with the external circuits simply by invoking the related classes/methods in the MadMachine IDE. You can read or write the digital and analog signal, as well as using the communication protocol.</p>
+
+<ul>
+<li><a href="https://madmachineio.github.io/SwiftIO/">API Documention</a> - acquire detailed information about the library</li>
+</ul>
+<h2 id='library-structure' class='heading'>Library structure</h2>
+
+<p>You can obtain the source code of each clasee in the following links.</p>
+
+<ul>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/DigitalIn.swift">DigitalIn</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/DigitalOut.swift">DigitalOut</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/AnalogIn.swift">AnalogIn</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/PWMOut.swift">PWMOut</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/Timer.swift">Timer</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/I2C.swift">I2C</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/SPI.swift">SPI</a></li>
+<li><a href="https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/UART.swift">UART</a></li>
+</ul>
+<h2 id='examples' class='heading'>Examples</h2>
+
+<p>Before starting to write your project, you can download and run the example codes here to get familiar with the library usage.</p>
+
+<ul>
+<li><a href="https://github.com/madmachineio/Examples/tree/master/GetStarted">GetStarted</a> - simple code to learn the basic skill</li>
+<li><a href="https://github.com/madmachineio/Examples/tree/master/SimpleIO">SimpleIO</a> - examples using analog and digital signal</li>
+<li><a href="https://github.com/madmachineio/Examples/tree/master/AdvancedIO/SHT3x">AdvancedIO</a> - examples using communication protocle</li>
+</ul>
+<h2 id='ide-installation' class='heading'>IDE Installation</h2>
+
+<p>Please choose the version according to your operating system and install the IDE following the instructions below.</p>
+
+<ul>
+<li><a href="https://www.madmachine.io/downloads">Download</a>- three versions of installation packages: Mac, Windows, Linux</li>
+<li><a href="https://www.madmachine.io/blog/categories/swiftio">Installation instruction</a> - step-by-step instruction to help you install the IDE</li>
+</ul>
 
           </div>
         </section>
@@ -171,8 +202,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2020-03-16)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.1</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external">Ines</a>. All rights reserved. (Last updated: 2020-04-20)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

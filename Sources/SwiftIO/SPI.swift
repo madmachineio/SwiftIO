@@ -1,10 +1,11 @@
+import CHal
+
+
 /**
  SPI is a four wire serial protocol for communication between devices.
- 
-
- 
+  
  */
- final public class SPI {
+ public final class SPI {
 
     private var obj: SPIObject
 

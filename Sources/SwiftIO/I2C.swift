@@ -1,3 +1,5 @@
+import CHal
+
 /**
  I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
  Currently the I2C ports support only master mode.
@@ -7,7 +9,7 @@
  This class allows the reading and writing of a byte `UInt8` or an array of bytes `[UInt8]`.
 
  */
- final public class I2C {
+ public final class I2C {
 
     private var obj: I2CObject
 

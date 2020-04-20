@@ -1,9 +1,10 @@
+import CHal
 
 /**
 The Timer class is used to set the occasion to raise the interrupt.
 
 */
-final public class Timer {
+public final class Timer {
     private var obj: TimerObject
     private var callback: (()->Void)?
 

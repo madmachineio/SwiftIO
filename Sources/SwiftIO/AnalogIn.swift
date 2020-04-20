@@ -1,3 +1,5 @@
+import CHal
+
 /**
  The AnalogIn class is used to read the external voltage applied to an analog input pin.
  
@@ -18,7 +20,7 @@
  ````
  
  */
-final public class AnalogIn {
+public final class AnalogIn {
     private var obj: AnalogInObject
 
     private let id: IdName
