@@ -8,6 +8,7 @@ unsigned int swiftHal_computeNanoseconds(unsigned int);
 
 
 
+
 typedef struct {
 	void *classPtr;
 	void (*callback)(void *);
@@ -37,12 +38,12 @@ int swiftHal_gpioAddSwiftMember(DigitalIOObject *obj, void *classPtr, void (*fun
 
 
 
+
 typedef struct {
 	void *ptr;
 	unsigned char idNumber;
 	int speed;
 } I2CObject;
-
 
 int swiftHal_i2cInit(I2CObject *obj);
 int swiftHal_i2cDeinit(I2CObject *obj);
@@ -50,6 +51,7 @@ int swiftHal_i2cConfig(I2CObject *obj);
 int swiftHal_i2cWrite(I2CObject *obj, unsigned char address, const unsigned char *buf, int length);
 int swiftHal_i2cRead(I2CObject *obj, unsigned char address, unsigned char *buf, int length);
 int swiftHal_i2cWriteRead(I2CObject *obj, unsigned char address, const unsigned char *wBuf, int wLen, unsigned char *rBuf, int rLen);
+
 
 
 
@@ -64,10 +66,6 @@ int swiftHal_spiDeinit(SPIObject *obj);
 int swiftHal_spiConfig(SPIObject *obj);
 int swiftHal_spiWrite(SPIObject *obj, const unsigned char *buf, int length);
 int swiftHal_spiRead(SPIObject *obj, unsigned char *buf, int length);
-
-
-
-
 
 
 
@@ -96,7 +94,6 @@ int swiftHal_uartClearBuffer(UARTObject *obj);
 
 
 
-
 typedef struct {
 	void *ptr;
 	CallbackWrapper callbackWrapper;
@@ -114,9 +111,6 @@ int swiftHal_timerAddSwiftMember(TimerObject *obj, void *classPtr, void (*functi
 
 
 
-
-
-
 typedef struct {
 	void *ptr;
 	unsigned char idNumber;
@@ -124,7 +118,6 @@ typedef struct {
 	unsigned int pulse;
 	unsigned int countPerSecond;
 } PWMOutObject;
-
 
 int swiftHal_PWMOutConfig(PWMOutObject *obj);
 int swiftHal_PWMOutInit(PWMOutObject *obj);
@@ -140,12 +133,9 @@ typedef struct {
 	float refVoltage;
 } AnalogInObject;
 
-
 int swiftHal_AnalogInInit(AnalogInObject *obj);
 int swiftHal_AnalogInDeinit(AnalogInObject *obj);
 int swiftHal_AnalogInRead(AnalogInObject *obj);
-
-
 
 
 

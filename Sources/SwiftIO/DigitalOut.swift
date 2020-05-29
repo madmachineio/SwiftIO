@@ -1,3 +1,5 @@
+import CHal
+
 /**
  The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.
 
@@ -138,7 +140,7 @@ public final class DigitalOut {
      */
     @inline(__always)
 	public func write(_ value: Bool) {
-		self.value = value
+		swiftHal_gpioWrite(&obj, value ? 1 : 0)
 	}
     
     /**

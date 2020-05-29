@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           SwiftIO Docs
         </a>
-         (42% documented)
+         (39% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -55,6 +55,12 @@
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/AnalogIn.html">AnalogIn</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Counter.html">Counter</a>
+              </li>
+              <li class="nav-group-task">
+                <a class="nav-group-task-link" href="Classes/Counter/Mode.html">– Mode</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Classes/DigitalIn.html">DigitalIn</a>
@@ -121,7 +127,7 @@
             <a class="nav-group-name-link" href="Functions.html">Functions</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
-                <a class="nav-group-task-link" href="Functions.html#/s:7SwiftIO15calcNanosecondsyS2uF">calcNanoseconds(_:)</a>
+                <a class="nav-group-task-link" href="Functions.html#/s:7SwiftIO19cyclesToNanoseconds5start4stops5Int64VSu_SutF">cyclesToNanoseconds(start:stop:)</a>
               </li>
               <li class="nav-group-task">
                 <a class="nav-group-task-link" href="Functions.html#/s:7SwiftIO13getClockCycleSuyF">getClockCycle()</a>
@@ -262,7 +268,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Get the clock cycle time of the processor.</p>
+                        <div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    This value is got from a 32bit register driven by the CPU frequency, it would overflow evey a few seconds.
+This function is only used to mesuare very short time duration with <code>cyclesToNanoseconds(start: UInt, stop: UInt)</code>
+Get the current clock cycle of the low level 32bit timer.
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -276,7 +288,7 @@
                       </div>
                       <div>
                         <h4>Return Value</h4>
-                        <p>The time period.</p>
+                        <p>The current clock cycle in UInt.</p>
                       </div>
                     </section>
                   </div>
@@ -284,9 +296,9 @@
                 <li class="item">
                   <div>
                     <code>
-                    <a name="/s:7SwiftIO15calcNanosecondsyS2uF"></a>
-                    <a name="//apple_ref/swift/Function/calcNanoseconds(_:)" class="dashAnchor"></a>
-                    <a class="token" href="#/s:7SwiftIO15calcNanosecondsyS2uF">calcNanoseconds(_:<wbr>)</a>
+                    <a name="/s:7SwiftIO19cyclesToNanoseconds5start4stops5Int64VSu_SutF"></a>
+                    <a name="//apple_ref/swift/Function/cyclesToNanoseconds(start:stop:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7SwiftIO19cyclesToNanoseconds5start4stops5Int64VSu_SutF">cyclesToNanoseconds(start:<wbr>stop:<wbr>)</a>
                     </code>
                   </div>
                   <div class="height-container">
@@ -294,7 +306,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Convert the clock cycle into nanosecond. This function is usually used together with getClockCycle.</p>
+                        <p>Convert the clock cycle into nanoseconds. This function is usually used together with <code><a href="Functions.html#/s:7SwiftIO13getClockCycleSuyF">getClockCycle()</a></code>.</p>
 
                       </div>
                       <div class="declaration">
@@ -302,13 +314,44 @@
                         <div class="language">
                           <p class="aside-title">Swift</p>
                           <pre class="highlight swift"><code><span class="kd">@inline</span><span class="p">(</span><span class="n">__always</span><span class="p">)</span>
-<span class="kd">public</span> <span class="kd">func</span> <span class="nf">calcNanoseconds</span><span class="p">(</span><span class="n">_</span> <span class="nv">cycles</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">UInt</span></code></pre>
+<span class="kd">public</span> <span class="kd">func</span> <span class="nf">cyclesToNanoseconds</span><span class="p">(</span><span class="nv">start</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">,</span> <span class="nv">stop</span><span class="p">:</span> <span class="kt">UInt</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Int64</span></code></pre>
 
                         </div>
                       </div>
                       <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>start</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The star cycle get by <code><a href="Functions.html#/s:7SwiftIO13getClockCycleSuyF">getClockCycle()</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stop</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The stop cycle get by <code><a href="Functions.html#/s:7SwiftIO13getClockCycleSuyF">getClockCycle()</a></code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
                         <h4>Return Value</h4>
-                        <p>The time in nanosecond after the calculation.</p>
+                        <p>The duration in nanoseconds.</p>
                       </div>
                     </section>
                   </div>
@@ -321,8 +364,8 @@
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external">Ines</a>. All rights reserved. (Last updated: 2020-04-20)</p>
-      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external">Ines</a>. All rights reserved. (Last updated: 2020-05-29)</p>
+      <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>
 </div>

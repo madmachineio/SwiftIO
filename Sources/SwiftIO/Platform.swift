@@ -1,3 +1,5 @@
+import CHal
+
 public protocol IdName {
     var number: UInt8 { get }
 }
@@ -48,7 +50,7 @@ public func getClockCycle() -> UInt {
 /**
 Convert the clock cycle into nanoseconds. This function is usually used together with `getClockCycle()`.
  - Parameter start: **REQUIRED** The star cycle get by `getClockCycle()`
- - Parameter callback: **REQUIRED** The stop cycle get by `getClockCycle()`
+ - Parameter stop: **REQUIRED** The stop cycle get by `getClockCycle()`
  - Returns: The duration in nanoseconds.
 */
 @inline(__always)

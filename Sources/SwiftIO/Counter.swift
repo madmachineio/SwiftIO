@@ -1,3 +1,4 @@
+import CHal
 
 public final class Counter {
     private var obj: CounterObject

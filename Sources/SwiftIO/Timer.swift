@@ -1,39 +1,43 @@
+import CHal
+
 /**
-The Timer class is used to set the occasion to raise the interrupt.
+ The Timer class is used to set the occasion to raise the interrupt.
 
-   ### Examples
-   ````
-   import SwiftIO
 
-   let timer = Timer()
-   let led = DigitalOut(.GREEN)
+ ### Example: Reverse the output value on a digital output pin
 
-   // The setInterrupt function can be written as following:
-   func toggleLed() {
-       led.toggle()
-   }
-   timer.setInterrupt(ms: 1000, toggleLed)
+ ````
+ import SwiftIO
 
-   while true {
+ let timer = Timer()
+ let led = DigitalOut(.GREEN)
 
-   }
-   ````
-   **or**
-   ````
-   import SwiftIO
+ // The setInterrupt function can be written as following:
+ func toggleLed() {
+    led.toggle()
+ }
+ timer.setInterrupt(ms: 1000, toggleLed)
 
-   let timer = Timer()
-   let led = DigitalOut(.GREEN)
+ while true {
+ }
+ ````
 
-   // setInterrupt with a closure
-   timer.setInterrupt(ms: 1000) {
-       led.toggle()
-   }
+ **or**
 
-   while true {
+ ````
+ import SwiftIO
 
-   }
-   ````
+ let timer = Timer()
+ let led = DigitalOut(.GREEN)
+
+ // Set interrupt with a closure
+ timer.setInterrupt(ms: 1000) {
+    led.toggle()
+ }
+
+ while true {
+ }
+ ````
 */
 public final class Timer {
     private var obj: TimerObject
