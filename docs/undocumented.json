@@ -2,84 +2,14 @@
   "warnings": [
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 3,
-      "symbol": "Counter",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 18,
-      "symbol": "Counter.maxCountValue",
-      "symbol_kind": "source.lang.swift.decl.var.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 22,
-      "symbol": "Counter.init(_:mode:start:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 36,
-      "symbol": "Counter.setMode(_:)",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 42,
-      "symbol": "Counter.read()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 47,
-      "symbol": "Counter.start()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 52,
-      "symbol": "Counter.stop()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 57,
-      "symbol": "Counter.clear()",
-      "symbol_kind": "source.lang.swift.decl.function.method.instance",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 63,
-      "symbol": "Counter",
-      "symbol_kind": "source.lang.swift.decl.extension",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 64,
-      "symbol": "Counter.Mode",
-      "symbol_kind": "source.lang.swift.decl.enum",
-      "warning": "undocumented"
-    },
-    {
-      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 65,
+      "line": 147,
       "symbol": "Counter.Mode.bothEdge",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Counter.swift",
-      "line": 65,
+      "line": 147,
       "symbol": "Counter.Mode.rising",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

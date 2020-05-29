@@ -140,7 +140,7 @@ public final class DigitalOut {
      */
     @inline(__always)
 	public func write(_ value: Bool) {
-		swiftHal_gpioWrite(&obj, value ? 1 : 0)
+        self.value = value
 	}
     
     /**

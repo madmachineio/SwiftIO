@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (39% documented)
+         (44% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -164,7 +164,51 @@
 
                 </div>
               </div>
-            <p>Undocumented</p>
+            <p>The counter class can be used to count the external signal and measure the number of the pulse. It can detect the rising edge or both edges.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    The maximum count value depends on the lowlevel hardware. For example, SwiftIO Board’s counter is 16bit, so the max count value is 65535. If the counter reaches the value, it will overflow and start from 0 again.
+
+</div>
+<h3 id='example-read-the-count-value-every-10ms' class='heading'>Example: Read the count value every 10ms</h3>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+<span class="c1">// Initiate the counter0.</span>
+<span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">C0</span><span class="p">)</span>
+
+<span class="c1">// Count and print the value every 10ms. Use wait here to get a more precise delay.</span>
+<span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+    <span class="c1">// Clear the counter to set the value to 0.</span>
+    <span class="n">counter</span><span class="o">.</span><span class="nf">clear</span><span class="p">()</span>
+    <span class="nf">wait</span><span class="p">(</span><span class="nv">us</span><span class="p">:</span> <span class="mi">10_000</span><span class="p">)</span>
+    <span class="c1">// Read the value accumulated in 10ms.</span>
+    <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+    <span class="nf">print</span><span class="p">(</span><span class="s">"Conter value = </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+<span class="p">}</span>
+
+</code></pre>
+
+<p><strong>or</strong></p>
+<pre class="highlight swift"><code> <span class="kd">import</span> <span class="kt">SwiftIO</span>
+
+ <span class="c1">// Initiate the counter0.</span>
+ <span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">Counter0</span><span class="p">)</span>
+
+ <span class="c1">// Initialize a timer to set interrupt.</span>
+ <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="p">()</span>
+
+ <span class="c1">// Use the timer to read and print the value every 10ms.</span>
+ <span class="n">timer</span><span class="o">.</span><span class="nf">setInterrupt</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">10</span><span class="p">)</span> <span class="p">{</span>
+     <span class="k">let</span> <span class="nv">value</span> <span class="o">=</span> <span class="n">counter</span><span class="o">.</span><span class="nf">read</span><span class="p">()</span>
+     <span class="c1">// Clear the value to to 0.</span>
+     <span class="n">counter</span><span class="o">.</span><span class="nf">clear</span><span class="p">()</span>
+     <span class="nf">print</span><span class="p">(</span><span class="s">"Conter value = </span><span class="se">\(</span><span class="n">value</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+ <span class="p">}</span>
+
+ <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
+ <span class="p">}</span>
+
+</code></pre>
 
           </div>
         </section>
@@ -186,7 +230,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The maximum count value.</p>
 
                       </div>
                       <div class="declaration">
@@ -213,7 +257,13 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Initialize the counter.</p>
+<h3 id='usage-example' class='heading'>Usage Example</h3>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="n">counter0</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="n">counter0</span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="o">.</span><span class="n">rising</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="n">counter0</span><span class="p">,</span> <span class="nv">start</span><span class="p">:</span> <span class="kc">false</span><span class="p">)</span>
+
+</code></pre>
 
                       </div>
                       <div class="declaration">
@@ -223,6 +273,49 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">id</span><span class="p">:</span> <span class="kt"><a href="../Protocols/IdName.html">IdName</a></span><span class="p">,</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Classes/Counter/Mode.html">Mode</a></span> <span class="o">=</span> <span class="o">.</span><span class="n">rising</span><span class="p">,</span> <span class="nv">start</span><span class="p">:</span> <span class="kt">Bool</span> <span class="o">=</span> <span class="kc">true</span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>id</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>REQUIRED</strong> The id of the counter. See the Id enumeration for reference.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> The edge of the external signal to detect, rising edge or both edges.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>start</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p><strong>OPTIONAL</strong> Whether or not to start the counter after initialization.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -240,7 +333,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Change the mode to decide whether it detects the rising edge or both rising and falling edges.</p>
 
                       </div>
                       <div class="declaration">
@@ -250,6 +343,25 @@
                           <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">setMode</span><span class="p">(</span><span class="n">_</span> <span class="nv">mode</span><span class="p">:</span> <span class="kt"><a href="../Classes/Counter/Mode.html">Mode</a></span><span class="p">)</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>mode</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The edge of the external signal to detect, rising edge or both edges.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
                       </div>
                     </section>
                   </div>
@@ -267,7 +379,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Read the number of edges that has been detected.</p>
 
                       </div>
                       <div class="declaration">
@@ -278,6 +390,10 @@
 <span class="kd">public</span> <span class="kd">func</span> <span class="nf">read</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Int</span></code></pre>
 
                         </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>Return the number of edges.</p>
                       </div>
                     </section>
                   </div>
@@ -295,7 +411,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Start the counter to measure the value.</p>
 
                       </div>
                       <div class="declaration">
@@ -323,7 +439,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Stop the counter.</p>
 
                       </div>
                       <div class="declaration">
@@ -351,7 +467,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>Clear the value of counter, it will set the value to 0.</p>
 
                       </div>
                       <div class="declaration">
@@ -379,7 +495,7 @@
                     <section class="section">
                       <div class="pointer"></div>
                       <div class="abstract">
-                        <p>Undocumented</p>
+                        <p>The Mode enumerate is to decide whether the count detects the rising edge or both rising and falling edges.</p>
 
                         <a href="../Classes/Counter/Mode.html" class="slightly-smaller">See more</a>
                       </div>

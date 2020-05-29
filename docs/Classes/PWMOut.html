@@ -23,7 +23,7 @@
         <a class="header-link" href="../index.html">
           SwiftIO Docs
         </a>
-         (39% documented)
+         (44% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -165,6 +165,11 @@
                 </div>
               </div>
             <p>The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    The PWM pins with same number are paired, like PWM3A and PWM3B. They can only share the same frequency.
+
+</div>
 <h3 id='example-light-a-led' class='heading'>Example: Light a LED</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 

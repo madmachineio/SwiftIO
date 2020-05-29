@@ -15,13 +15,14 @@ The SwiftIO library provides an easy access to communicate with the external cir
 ## Library structure
 
 You can obtain the source code of each clasee in the following links.
+* [AnalogIn](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/AnalogIn.swift)
+* [Counter](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/Counter.swift)
 * [DigitalIn](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/DigitalIn.swift)
 * [DigitalOut](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/DigitalOut.swift)
-* [AnalogIn](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/AnalogIn.swift)
 * [PWMOut](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/PWMOut.swift)
-* [Timer](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/Timer.swift)
 * [I2C](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/I2C.swift)
 * [SPI](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/SPI.swift)
+* [Timer](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/Timer.swift)
 * [UART](https://github.com/madmachineio/SwiftIO/blob/master/Sources/SwiftIO/UART.swift)
 
 

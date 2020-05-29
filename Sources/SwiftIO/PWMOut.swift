@@ -2,20 +2,22 @@ import CHal
 
 /**
  The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.
-
- ### Example: Light a LED
-
- ````
- import SwiftIO
  
- // Initiate a PWMOut to Pin PWM0A.
- let led = PWMOut(Id.PWM0A)
+- Attention: The PWM pins with same number are paired, like PWM3A and PWM3B. They can only share the same frequency.
+
+### Example: Light a LED
+
+````
+import SwiftIO
  
- // Set the brightness of the LED by setting the duty cycle.
- while true {
-     led.setDutycycle(0.5)
- }
- ````
+// Initiate a PWMOut to Pin PWM0A.
+let led = PWMOut(Id.PWM0A)
+ 
+// Set the brightness of the LED by setting the duty cycle.
+while true {
+    led.setDutycycle(0.5)
+}
+````
 */
 public final class PWMOut {
     private var obj: PWMOutObject

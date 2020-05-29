@@ -28,7 +28,7 @@ public func sleep(ms: Int) {
 
 /**
 Get the elapsed time in millisecond since the board powered up.
-- Returns: The elapsed time in millisecond.
+- Returns: The elapsed time since power up in millisecond.
 */
 @inline(__always)
 public func getPowerUpMilliseconds() -> Int64 {
@@ -39,6 +39,7 @@ public func getPowerUpMilliseconds() -> Int64 {
  - Attention:
     This value is got from a 32bit register driven by the CPU frequency, it would overflow evey a few seconds.
     This function is only used to mesuare very short time duration with `cyclesToNanoseconds(start: UInt, stop: UInt)`
+
 Get the current clock cycle of the low level 32bit timer.
 - Returns: The current clock cycle in UInt.
 */
@@ -53,7 +54,6 @@ Convert the clock cycle into nanoseconds. This function is usually used together
  - Parameter stop: **REQUIRED** The stop cycle get by `getClockCycle()`
  - Returns: The duration in nanoseconds.
 */
-@inline(__always)
 public func cyclesToNanoseconds(start: UInt, stop: UInt) -> Int64 {
     var cycles: UInt
 
