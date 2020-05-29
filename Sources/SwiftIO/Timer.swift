@@ -1,6 +1,39 @@
 /**
 The Timer class is used to set the occasion to raise the interrupt.
 
+   ### Examples
+   ````
+   import SwiftIO
+
+   let timer = Timer()
+   let led = DigitalOut(.GREEN)
+
+   // The setInterrupt function can be written as following:
+   func toggleLed() {
+       led.toggle()
+   }
+   timer.setInterrupt(ms: 1000, toggleLed)
+
+   while true {
+
+   }
+   ````
+   **or**
+   ````
+   import SwiftIO
+
+   let timer = Timer()
+   let led = DigitalOut(.GREEN)
+
+   // setInterrupt with a closure
+   timer.setInterrupt(ms: 1000) {
+       led.toggle()
+   }
+
+   while true {
+
+   }
+   ````
 */
 public final class Timer {
     private var obj: TimerObject
@@ -46,25 +79,6 @@ public final class Timer {
      - Parameter start: **OPTIONAL** By default, the interrupt will start directly to work.
      - Parameter callback: **REQUIRED** A void function without a return value.
      
-     #### Usage Example
-     
-     ````
-     let timer = Timer()
-     let led = DigitalOut(.GREEN)
-     ````
-     The setInterrupt function can be written as following:
-     ````
-     func toggleLed() {
-         led.toggle()
-     }
-     timer.setInterrupt(ms: 1000, toggleLed)
-     ````
-     **or**
-     ````
-     timer.setInterrupt(ms: 1000) {
-         led.toggle()
-     }
-     ````
      */
     public func setInterrupt(ms period: Int,
                             mode: Mode = .period,
@@ -101,9 +115,9 @@ public final class Timer {
     }
 
     /**
-     Reset the timer. The timer will restart from 0.
+     Clear the timer. The timer will be reset to inital value.
      */
-    public func reset() {
+    public func clear() {
         swiftHal_timerCount(&obj)
     }
 

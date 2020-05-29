@@ -106,6 +106,7 @@
         swiftHal_spiWrite(&obj, data, Int32(data.count))
     }
 
+
     /**
      Write raw data to the slave device.
      - Parameter data: Raw data to be sent to the slave device.

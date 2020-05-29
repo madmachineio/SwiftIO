@@ -148,3 +148,22 @@ int swiftHal_AnalogInRead(AnalogInObject *obj);
 
 
 
+
+
+typedef struct {
+	int maxCountValue;
+} CounterInfo;
+
+typedef struct {
+	void *ptr;
+	CounterInfo info;
+	unsigned char idNumber;
+	unsigned char mode;
+} CounterObject;
+
+int swiftHal_CounterInit(CounterObject *obj);
+int swiftHal_CounterDeinit(CounterObject *obj);
+int swiftHal_CounterRead(CounterObject *obj);
+void swiftHal_CounterStart(CounterObject *obj);
+void swiftHal_CounterStop(CounterObject *obj);
+void swiftHal_CounterClear(CounterObject *obj);

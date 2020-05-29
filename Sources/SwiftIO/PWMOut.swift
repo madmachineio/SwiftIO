@@ -6,8 +6,8 @@
  ````
  import SwiftIO
  
- // Initiate a PWMOut to Pin PWM0.
- let led = PWMOut(Id.PWM0)
+ // Initiate a PWMOut to Pin PWM0A.
+ let led = PWMOut(Id.PWM0A)
  
  // Set the brightness of the LED by setting the duty cycle.
  while true {
@@ -45,14 +45,14 @@ public final class PWMOut {
      
      #### Usage Example
      ````
-     // The most simple way of initiating a pin PWM0, with all other parameters set to default.
-     let pin = PWMOut(Id.PWM0)
+     // The most simple way of initiating a pin PWM0A, with all other parameters set to default.
+     let pin = PWMOut(Id.PWM0A)
      ​
-     // Initialize the pin PWM0 with the frequency set to 2000hz.
-     let pin = PWMOut(Id.PWM0, frequency: 2000)
+     // Initialize the pin PWM0A with the frequency set to 2000hz.
+     let pin = PWMOut(Id.PWM0A, frequency: 2000)
      
-     // Initialize the pin PWM0 with the frequency set to 2000hz and the dutycycle set to 0.5.
-     let pin = PWMOut(Id.PWM0, frequency: 2000, dutycycle: 0.5)
+     // Initialize the pin PWM0A with the frequency set to 2000hz and the dutycycle set to 0.5.
+     let pin = PWMOut(Id.PWM0A, frequency: 2000, dutycycle: 0.5)
      ````
      */
     public init(_ id: IdName,
