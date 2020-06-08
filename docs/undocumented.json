@@ -86,21 +86,21 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 145,
+      "line": 150,
       "symbol": "I2C.Speed.fast",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 145,
+      "line": 150,
       "symbol": "I2C.Speed.fastPlus",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/I2C.swift",
-      "line": 145,
+      "line": 150,
       "symbol": "I2C.Speed.standard",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
@@ -729,6 +729,34 @@
       "warning": "undocumented"
     },
     {
+      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/PWMOut.swift",
+      "line": 32,
+      "symbol": "PWMOut.maxFrequency",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/PWMOut.swift",
+      "line": 36,
+      "symbol": "PWMOut.minFrequency",
+      "symbol_kind": "source.lang.swift.decl.var.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/PWMOut.swift",
+      "line": 112,
+      "symbol": "PWMOut.suspend()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/PWMOut.swift",
+      "line": 116,
+      "symbol": "PWMOut.resume()",
+      "symbol_kind": "source.lang.swift.decl.function.method.instance",
+      "warning": "undocumented"
+    },
+    {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Platform.swift",
       "line": 3,
       "symbol": "IdName",
@@ -744,14 +772,14 @@
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Timer.swift",
-      "line": 136,
+      "line": 135,
       "symbol": "Timer.Mode.oneShot",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/andy/Documents/SwiftIO/Sources/SwiftIO/Timer.swift",
-      "line": 136,
+      "line": 135,
       "symbol": "Timer.Mode.period",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

@@ -1,3 +1,4 @@
+import CHal
 
 /**
 The counter class can be used to count the external signal and measure the number of the pulse. It can detect the rising edge or both edges.

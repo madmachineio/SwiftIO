@@ -1,3 +1,4 @@
+import CHal
 
 /**
  I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
