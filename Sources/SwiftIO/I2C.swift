@@ -1,4 +1,3 @@
-import CHal
 
 /**
  I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
@@ -75,10 +74,15 @@ import CHal
      */
     @inline(__always)
     public func readByte(from address: UInt8) -> UInt8 {
-        var data = [UInt8](repeating: 0, count: 1)
+        var data: [UInt8] = []
+        data.reserveCapacity(1)
         
         swiftHal_i2cRead(&obj, address, &data, 1)
-        return data[0]
+        if data.count > 0 {
+            return data[0]
+        } else {
+            return 0
+        }
     }
 
     /**
@@ -90,7 +94,8 @@ import CHal
      */
     @inline(__always)
     public func read(count: Int, from address: UInt8) -> [UInt8] {
-        var data = [UInt8](repeating: 0, count: count)
+        var data = [UInt8]()
+        data.reserveCapacity(count)
 
         swiftHal_i2cRead(&obj, address, &data, Int32(count))
         return data
@@ -103,10 +108,9 @@ import CHal
      */
     @inline(__always)
     public func write(_ byte: UInt8, to address: UInt8) {
-        var _data = [UInt8](repeating: 0, count: 1)
+        let data: [UInt8] = [byte]
 
-        _data[0] = byte
-        swiftHal_i2cWrite(&obj, address, _data, 1)
+        swiftHal_i2cWrite(&obj, address, data, 1)
     }
 
     /**

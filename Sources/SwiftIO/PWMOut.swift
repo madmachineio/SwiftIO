@@ -1,7 +1,6 @@
-import CHal
 
 /**
- The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time period on the pin.
+ The PWMOut class is used to vary the output voltage by controlling the duration of high output in the time periodCycles on the pin.
  
 - Attention: The PWM pins with same number are paired, like PWM3A and PWM3B. They can only share the same frequency.
 
@@ -23,22 +22,18 @@ public final class PWMOut {
     private var obj: PWMOutObject
 
     private let id: IdName
-    private var usPeriod: Int {
-        willSet {
-            obj.period = UInt32(newValue)
-        }
-    }
-    private var usPulse: Int {
-        willSet {
-            obj.pulse = UInt32(newValue)
-        }
-    }
 
     private func objectInit() {
         obj.idNumber = id.number
-        obj.period = UInt32(usPeriod)
-        obj.pulse = UInt32(usPulse)
         swiftHal_PWMOutInit(&obj)
+    }
+
+    public var maxFrequency: Int {
+        Int(obj.info.maxFrequency)
+    }
+
+    public var minFrequency: Int {
+        Int(obj.info.minFrequency)
     }
 
     /**
@@ -64,11 +59,11 @@ public final class PWMOut {
                 dutycycle: Float = 0.0) {
 
         self.id = id
-        self.usPeriod = 1000000 / frequency
-        self.usPulse = Int((1000000.0 / Float(frequency)) * dutycycle)
 
         obj = PWMOutObject()
         objectInit()
+
+        set(frequency: frequency, dutycycle: dutycycle)
     }
 
     deinit {
@@ -80,14 +75,13 @@ public final class PWMOut {
      - Parameter frequency: The frequency of the PWM signal.
      - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
      */
-    @inline(__always)
     public func set(frequency: Int, dutycycle: Float) {
-        guard frequency > 0 else {
+        guard frequency >= 0 && dutycycle >= 0 && dutycycle <= 1.0 else {
+            print("Frequency must be non-negative and dutycycle must fit in [0.0, 1.0]!")
             return
         }
-        usPeriod = 1000000 / frequency
-        usPulse = Int((1000000.0 / Float(frequency)) * dutycycle)
-        swiftHal_PWMOutConfig(&obj)
+
+        swiftHal_PWMOutSetFrequency(&obj, Int32(frequency), dutycycle)
     }
 
 
@@ -96,11 +90,8 @@ public final class PWMOut {
      - Parameter period: The period of the PWM ouput signal in microsecond.
      - Parameter pulse: The pulse width in the PWM period. This time can't be longer than the period.
      */
-    @inline(__always)
     public func set(period: Int, pulse: Int) {
-        usPeriod = period
-        usPulse = pulse
-        swiftHal_PWMOutConfig(&obj)
+        swiftHal_PWMOutSetUsec(&obj, Int32(period), Int32(pulse))
     }
 
 
@@ -110,8 +101,19 @@ public final class PWMOut {
      */
     @inline(__always)
     public func setDutycycle(_ dutycycle: Float) {
-        usPulse = Int(Float(usPeriod) * dutycycle)
-        swiftHal_PWMOutConfig(&obj)
+        guard dutycycle >= 0 && dutycycle <= 1.0 else {
+            print("Dutycycle must fit in [0.0, 1.0]!")
+            return
+        }
+        swiftHal_PWMOutSetDutycycle(&obj, dutycycle);
+    }
+
+    public func suspend() {
+        swiftHal_PWMOutSuspend(&obj)
+    }
+
+    public func resume() {
+        swiftHal_PWMOutResume(&obj)
     }
 }
 

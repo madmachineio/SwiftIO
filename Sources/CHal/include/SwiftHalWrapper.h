@@ -86,8 +86,8 @@ int swiftHal_uartDeinit(UARTObject *obj);
 int swiftHal_uartConfig(UARTObject *obj);
 int swiftHal_uartWriteChar(UARTObject *obj, unsigned char byte);
 int swiftHal_uartWrite(UARTObject *obj, const unsigned char *buf, int length);
-unsigned char swiftHal_uartReadChar(UARTObject *obj);
-int swiftHal_uartRead(UARTObject *obj, unsigned char *buf, int length);
+unsigned char swiftHal_uartReadChar(UARTObject *obj, int timeout);
+int swiftHal_uartRead(UARTObject *obj, unsigned char *buf, int length, int timeout);
 int swiftHal_uartCount(UARTObject *obj);
 int swiftHal_uartClearBuffer(UARTObject *obj);
 
@@ -112,25 +112,38 @@ int swiftHal_timerAddSwiftMember(TimerObject *obj, void *classPtr, void (*functi
 
 
 typedef struct {
+	int maxFrequency;
+	int minFrequency;
+} PWMOutInfo;
+
+typedef struct {
 	void *ptr;
+	const PWMOutInfo info;
 	unsigned char idNumber;
-	unsigned int period;
-	unsigned int pulse;
-	unsigned int countPerSecond;
 } PWMOutObject;
 
-int swiftHal_PWMOutConfig(PWMOutObject *obj);
+
 int swiftHal_PWMOutInit(PWMOutObject *obj);
 int swiftHal_PWMOutDeinit(PWMOutObject *obj);
+int swiftHal_PWMOutSetUsec(PWMOutObject *obj, int period, int pulse);
+int swiftHal_PWMOutSetFrequency(PWMOutObject *obj, int fre, float dutycycle);
+int swiftHal_PWMOutSetDutycycle(PWMOutObject *obj, float dutycycle);
+int swiftHal_PWMOutSuspend(PWMOutObject *obj);
+int swiftHal_PWMOutResume(PWMOutObject *obj);
+
 
 
 
 
 typedef struct {
-	void *ptr;
-	unsigned char idNumber;
-	int resolution;
+	int maxRawValue;
 	float refVoltage;
+} AnalogInInfo;
+
+typedef struct {
+	void *ptr;
+	const AnalogInInfo info;
+	unsigned char idNumber;
 } AnalogInObject;
 
 int swiftHal_AnalogInInit(AnalogInObject *obj);
@@ -146,7 +159,7 @@ typedef struct {
 
 typedef struct {
 	void *ptr;
-	CounterInfo info;
+	const CounterInfo info;
 	unsigned char idNumber;
 	unsigned char mode;
 } CounterObject;

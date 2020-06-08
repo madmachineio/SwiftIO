@@ -1,4 +1,3 @@
-import CHal
 
 /**
  SPI is a four wire serial protocol for communication between devices.
@@ -82,7 +81,8 @@ import CHal
      */
     @inline(__always)
     public func read(count: Int) -> [UInt8] {
-        var data = [UInt8](repeating: 0, count: count)
+        var data = [UInt8]()
+        data.reserveCapacity(count)
 
         swiftHal_spiRead(&obj, &data, Int32(count))
         return data
@@ -94,9 +94,7 @@ import CHal
      */
     @inline(__always)
     public func write(_ byte: UInt8) {
-        let _data = [UInt8](repeating: byte, count: 1)
-
-        swiftHal_spiWrite(&obj, _data, 1)
+        swiftHal_spiWrite(&obj, [byte], 1)
     }
 
     /**

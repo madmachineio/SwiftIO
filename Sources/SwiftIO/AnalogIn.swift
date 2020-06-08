@@ -1,4 +1,3 @@
-import CHal
 
 /**
  The AnalogIn class is used to read the external voltage applied to an analog input pin.
@@ -24,12 +23,27 @@ public final class AnalogIn {
     private var obj: AnalogInObject
 
     private let id: IdName
-    private let resolution: Int
-    private let refVoltage: Float
+
 
     private func objectInit() {
         obj.idNumber = id.number
         swiftHal_AnalogInInit(&obj)
+    }
+
+    /**
+     The max raw value of the ADC. Different ADC has different resolutions. The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is 4095.
+
+     */
+    public var maxRawValue: Int {
+        Int(obj.info.maxRawValue)
+    }
+
+    /**
+     The reference voltage of the board.
+
+     */
+    public var refVoltage: Float {
+        obj.info.refVoltage
     }
 
     /**
@@ -45,8 +59,6 @@ public final class AnalogIn {
      */
     public init(_ id: IdName) {
         self.id = id
-        self.resolution = 4095
-        self.refVoltage = 3.3
         obj = AnalogInObject()
         objectInit()
     }
@@ -55,23 +67,6 @@ public final class AnalogIn {
         swiftHal_AnalogInDeinit(&obj)
     }
 
-    /**
-     Get the maximum raw value of the board. Each ADC has different resolution. The maximum raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is 4095.
-     
-     - Returns: The maximum raw value.
-     */
-    public func getMaxRawValue() -> Int {
-        return resolution
-    }
-
-    /**
-     Get the reference voltage of the board.
-     
-     - Returns: The reference voltage.
-     */
-    public func getReference() -> Float {
-        return refVoltage
-    }
 
     /**
      Read the current raw value from the specified analog pin.
@@ -90,8 +85,8 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readPercent() -> Float {
-        let val = Float(swiftHal_AnalogInRead(&obj))
-        return val / Float(resolution)
+        let rawValue = Float(swiftHal_AnalogInRead(&obj))
+        return rawValue / Float(maxRawValue)
     }
 
     /**
@@ -101,8 +96,8 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readVoltage() -> Float {
-        let val = Float(swiftHal_AnalogInRead(&obj))
-        return refVoltage * val / Float(resolution)
+        let rawValue = Float(swiftHal_AnalogInRead(&obj))
+        return refVoltage * rawValue / Float(maxRawValue)
     }
 }
 

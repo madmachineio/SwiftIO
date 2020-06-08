@@ -1,4 +1,3 @@
-import CHal
 
 /**
  The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.
