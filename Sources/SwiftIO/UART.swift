@@ -1,4 +1,5 @@
 import CHal
+
 /**
 UART is a two-wire serial communication protocol used to communicate with serial devices. The devices must agree on a common transmisson rate before communication.
 
@@ -152,10 +153,9 @@ public final class UART {
      */
     @inline(__always)
     public func read(count: Int, timeout: Int = -1) -> [UInt8] {
-        var data: [UInt8] = []
-        data.reserveCapacity(count)
-        swiftHal_uartRead(&obj, &data, Int32(count), Int32(timeout));
-        return data
+        var data = [UInt8](repeating: 0, count: count)
+        let received = Int(swiftHal_uartRead(&obj, &data, Int32(count), Int32(timeout)))
+        return Array(data[0..<received])
     }
 
 

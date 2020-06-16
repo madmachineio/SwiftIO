@@ -1,4 +1,5 @@
 import CHal
+
 /**
  The Timer class is used to set the occasion to raise the interrupt.
 

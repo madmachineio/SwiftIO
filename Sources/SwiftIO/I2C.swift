@@ -75,13 +75,13 @@ import CHal
      */
     @inline(__always)
     public func readByte(from address: UInt8) -> UInt8 {
-        var data: [UInt8] = []
-        data.reserveCapacity(1)
+        var data: [UInt8] = [0]
         
-        swiftHal_i2cRead(&obj, address, &data, 1)
-        if data.count > 0 {
+        let ret = swiftHal_i2cRead(&obj, address, &data, 1)
+        if ret == 0 {
             return data[0]
         } else {
+            print("I2C readByte error!")
             return 0
         }
     }
@@ -95,11 +95,15 @@ import CHal
      */
     @inline(__always)
     public func read(count: Int, from address: UInt8) -> [UInt8] {
-        var data = [UInt8]()
-        data.reserveCapacity(count)
+        var data = [UInt8](repeating: 0, count: count)
 
-        swiftHal_i2cRead(&obj, address, &data, Int32(count))
-        return data
+        let ret = swiftHal_i2cRead(&obj, address, &data, Int32(count))
+        if ret == 0 {
+            return data
+        } else {
+            print("I2C read error!")
+            return []
+        }
     }
 
     /**
@@ -136,8 +140,13 @@ import CHal
     public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
         var receivedData = [UInt8](repeating:0, count: readCount)
 
-        swiftHal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
-        return receivedData
+        let ret = swiftHal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
+        if ret == 0 {
+            return receivedData
+        } else {
+            print("I2C writeRead error!")
+            return []
+        }
     }
 
 }
