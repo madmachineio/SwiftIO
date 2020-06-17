@@ -758,63 +758,63 @@
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 185,
+      "line": 186,
       "symbol": "UART.Parity.even",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 185,
+      "line": 186,
       "symbol": "UART.Parity.none",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 185,
+      "line": 186,
       "symbol": "UART.Parity.odd",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 193,
+      "line": 194,
       "symbol": "UART.StopBits.oneBit",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 193,
+      "line": 194,
       "symbol": "UART.StopBits.twoBits",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 201,
+      "line": 202,
       "symbol": "UART.DataBits.eightBits",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 209,
+      "line": 210,
       "symbol": "UART.BufferLength.large",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 209,
+      "line": 210,
       "symbol": "UART.BufferLength.medium",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"
     },
     {
       "file": "/Users/ines/Documents/SwiftIO/Sources/SwiftIO/UART.swift",
-      "line": 209,
+      "line": 210,
       "symbol": "UART.BufferLength.small",
       "symbol_kind": "source.lang.swift.decl.enumelement",
       "warning": "undocumented"

@@ -159,6 +159,7 @@ public final class UART {
      0 is set to end up the read immediately no matter whether the data is received or not. 
      A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
      - Parameter timeout: The max time for data reception.
+     - Parameter count: The number of bytes to read.
 
      - Returns: A byte array read from the device.
 
