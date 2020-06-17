@@ -36,12 +36,12 @@ public func getPowerUpMilliseconds() -> Int64 {
 }
 
 /**
- - Attention:
-    This value is got from a 32bit register driven by the CPU frequency, it would overflow evey a few seconds.
-    This function is only used to mesuare very short time duration with `cyclesToNanoseconds(start: UInt, stop: UInt)`
-
 Get the current clock cycle of the low level 32bit timer.
-- Returns: The current clock cycle in UInt.
+ - Attention:
+    This value is got from a 32bit register driven by the CPU frequency, it would overflow every a few seconds.
+    This function is only used to measure very short time duration with `cyclesToNanoseconds(start: UInt, stop: UInt)`.
+
+ - Returns: The current clock cycle in UInt.
 */
 @inline(__always)
 public func getClockCycle() -> UInt {
@@ -50,8 +50,8 @@ public func getClockCycle() -> UInt {
 
 /**
 Convert the clock cycle into nanoseconds. This function is usually used together with `getClockCycle()`.
- - Parameter start: **REQUIRED** The star cycle get by `getClockCycle()`
- - Parameter stop: **REQUIRED** The stop cycle get by `getClockCycle()`
+ - Parameter start: The start cycle get by `getClockCycle()`.
+ - Parameter stop: The stop cycle get by `getClockCycle()`.
  - Returns: The duration in nanoseconds.
 */
 public func cyclesToNanoseconds(start: UInt, stop: UInt) -> Int64 {

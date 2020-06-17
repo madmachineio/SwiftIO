@@ -137,7 +137,13 @@ public final class UART {
     }
 
     /**
-     Read a byte of data receiving from the external device.
+     Read a byte of data receiving from the external device. The maximum time for data reception is decided by the timeout value. If the data is received before the time set, the read process will end up automatically. 
+     
+     -1 is set to wait until receiving the required data. 
+     0 is set to end up the read immediately no matter whether the data is received or not. 
+     A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
+     - Parameter timeout: The max time for data reception.
+
      - Returns: One 8-bit binary data read from the device.
 
      */
@@ -147,7 +153,13 @@ public final class UART {
     }
 
     /**
-     Read a series of bytes receiving from the external device.
+     Read a series of bytes receiving from the external device.The maximum time for data reception is decided by the timeout value. If the data is received before the time set, the read process will end up automatically. 
+     
+     -1 is set to wait until receiving the required data. 
+     0 is set to end up the read immediately no matter whether the data is received or not. 
+     A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
+     - Parameter timeout: The max time for data reception.
+
      - Returns: A byte array read from the device.
 
      */

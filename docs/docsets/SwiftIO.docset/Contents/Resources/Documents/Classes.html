@@ -23,7 +23,7 @@
         <a class="header-link" href="index.html">
           SwiftIO Docs
         </a>
-         (43% documented)
+         (45% documented)
       </p>
     
       <p class="header-col--secondary">
@@ -249,7 +249,7 @@
 <pre class="highlight swift"><code> <span class="kd">import</span> <span class="kt">SwiftIO</span>
 
  <span class="c1">// Initiate the counter0.</span>
- <span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">Counter0</span><span class="p">)</span>
+ <span class="k">let</span> <span class="nv">counter</span> <span class="o">=</span> <span class="kt">Counter</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">C0</span><span class="p">)</span>
 
  <span class="c1">// Initialize a timer to set interrupt.</span>
  <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="p">()</span>
@@ -335,8 +335,11 @@
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.</p>
+<div class="aside aside-attention">
+    <p class="aside-title">Attention</p>
+    The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output and is not capable of driving a device requires large current.
 
-<p>The driving capability of the digital output pins is not very strong. It is meant to be a <strong>SIGNAL</strong> output and is not capable of driving a device requires large current.</p>
+</div>
 <h3 id='example-reverse-the-output-value-on-a-digital-output-pin' class='heading'>Example: Reverse the output value on a digital output pin</h3>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
@@ -350,11 +353,11 @@
 <span class="p">}</span>
 </code></pre>
 
-<p>Alternatively,</p>
+<p><strong>or</strong></p>
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="c1">// Initiate a DigitalOut to the onboard green LED.</span>
-<span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">greenLED</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 <span class="err">​</span>
 <span class="c1">// Toggle the output of the pin every 1 second using another member function.</span>
 <span class="k">while</span> <span class="kc">true</span> <span class="p">{</span>
@@ -503,7 +506,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 
 <span class="c1">// The setInterrupt function can be written as following:</span>
 <span class="kd">func</span> <span class="nf">toggleLed</span><span class="p">()</span> <span class="p">{</span>
@@ -519,7 +522,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
 <pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftIO</span>
 
 <span class="k">let</span> <span class="nv">timer</span> <span class="o">=</span> <span class="kt">Timer</span><span class="p">()</span>
-<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">led</span> <span class="o">=</span> <span class="kt">DigitalOut</span><span class="p">(</span><span class="kt">Id</span><span class="o">.</span><span class="kt">GREEN</span><span class="p">)</span>
 
 <span class="c1">// Set interrupt with a closure</span>
 <span class="n">timer</span><span class="o">.</span><span class="nf">setInterrupt</span><span class="p">(</span><span class="nv">ms</span><span class="p">:</span> <span class="mi">1000</span><span class="p">)</span> <span class="p">{</span>
@@ -579,7 +582,7 @@ This class allows the reading and writing of a byte <code>UInt8</code> or an arr
       </article>
     </div>
     <section class="footer">
-      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external">Ines</a>. All rights reserved. (Last updated: 2020-06-08)</p>
+      <p>&copy; 2020 <a class="link" href="https://madmachine.io" target="_blank" rel="external">Ines</a>. All rights reserved. (Last updated: 2020-06-17)</p>
       <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.13.4</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external">Realm</a> project.</p>
     </section>
   </body>

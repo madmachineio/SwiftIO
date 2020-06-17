@@ -3,7 +3,7 @@ import CHal
 /**
  The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.
 
- The driving capability of the digital output pins is not very strong. It is meant to be a **SIGNAL** output and is not capable of driving a device requires large current.
+ - Attention: The driving capability of the digital output pins is not very strong. It is meant to be a **SIGNAL** output and is not capable of driving a device requires large current.
  
  
  ### Example: Reverse the output value on a digital output pin
@@ -20,12 +20,12 @@ import CHal
      sleep(ms: 1000)
  }
  ````
- Alternatively,
+ **or**
  ````
  import SwiftIO
  
  // Initiate a DigitalOut to the onboard green LED.
- let greenLED = DigitalOut(.GREEN)
+ let greenLED = DigitalOut(Id.GREEN)
  ​
  // Toggle the output of the pin every 1 second using another member function.
  while true {

@@ -117,7 +117,9 @@ public final class DigitalIn {
 	}
 
     /**
-     Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal. Once the risng or falling edge is detected, the processor will suspend the normal execution to execute the designated task. The task should be able to finish in a very short time, usually in nanoseconds. Then,  the processor will return back to where it stopped and continue the previous operation.
+     Add a callback function to a specified digital pin to set interrupt by detcting the changes of the signal. Once the risng or falling edge is detected, the processor will suspend the normal execution to execute the designated task. 
+     
+     The task should be able to finish in a very short time, usually in nanoseconds. Then,  the processor will return back to where it stopped and continue the previous operation.
      - Parameter mode : The interrupt mode to detect rising or falling edge.
      - Parameter enable : Whether to enable the interrupt.
      - Parameter callback : A void function without a return value.
@@ -179,8 +181,8 @@ extension DigitalIn {
     typealias Direction = DigitalOut.Direction
 
     /**
-     The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors. The pins D26 to D37 are connected separately to an external 10kΩ resistor on the board. So even if they are changed to pullUp, the output voltage of these pins is still low.
-
+     The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors. 
+     - Attention: The pins D26 to D37 are connected separately to an external 10kΩ resistor on the board. So even if they are changed to pullUp, the output voltage of these pins is still low.
      */
     public enum Mode: UInt8 {
         case pullDown = 1, pullUp, pullNone

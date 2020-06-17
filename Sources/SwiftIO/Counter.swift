@@ -30,7 +30,7 @@ while true {
  import SwiftIO
 
  // Initiate the counter0.
- let counter = Counter(Id.Counter0)
+ let counter = Counter(Id.C0)
 
  // Initialize a timer to set interrupt.
  let timer = Timer()
@@ -77,9 +77,9 @@ public final class Counter {
      
      ### Usage Example ###
      ````
-     let counter = Counter(Id.counter0)
-     let counter = Counter(Id.counter0, mode: .rising)
-     let counter = Counter(Id.counter0, start: false)
+     let counter = Counter(Id.C0)
+     let counter = Counter(Id.C0, mode: .rising)
+     let counter = Counter(Id.C0, start: false)
 
      ````
      */

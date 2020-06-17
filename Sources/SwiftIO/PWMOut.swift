@@ -29,10 +29,17 @@ public final class PWMOut {
         swiftHal_PWMOutInit(&obj)
     }
 
+    /**
+     The max frequency of PWM output.
+     */
+
     public var maxFrequency: Int {
         Int(obj.info.maxFrequency)
     }
 
+    /**
+     The min frequency of PWM output.
+     */
     public var minFrequency: Int {
         Int(obj.info.minFrequency)
     }
@@ -108,11 +115,17 @@ public final class PWMOut {
         }
         swiftHal_PWMOutSetDutycycle(&obj, dutycycle);
     }
-
+    
+    /**
+     Stop the PWM output.
+     */
     public func suspend() {
         swiftHal_PWMOutSuspend(&obj)
     }
 
+    /**
+     Continue the PWM output.
+     */
     public func resume() {
         swiftHal_PWMOutResume(&obj)
     }

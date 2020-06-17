@@ -10,7 +10,7 @@ import CHal
  import SwiftIO
 
  let timer = Timer()
- let led = DigitalOut(.GREEN)
+ let led = DigitalOut(Id.GREEN)
 
  // The setInterrupt function can be written as following:
  func toggleLed() {
@@ -28,7 +28,7 @@ import CHal
  import SwiftIO
 
  let timer = Timer()
- let led = DigitalOut(.GREEN)
+ let led = DigitalOut(Id.GREEN)
 
  // Set interrupt with a closure
  timer.setInterrupt(ms: 1000) {
