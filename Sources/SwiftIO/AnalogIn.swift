@@ -1,4 +1,3 @@
-import CHal
 
 /**
  The AnalogIn class is used to read the external voltage applied to an analog input pin.
