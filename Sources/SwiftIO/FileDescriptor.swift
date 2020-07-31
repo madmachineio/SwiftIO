@@ -18,18 +18,20 @@ public struct FileDescriptor {
     private(set) var filePath: FilePath
 
 
-    public static func open(_ path: String) -> FileDescriptor {
+    public static func open(_ path: String) -> FileDescriptor? {
         let _filePath = FilePath(path)
         var _dirEntry = DirEntry()
 
-        let mountPoint = swiftHal_FsGetMountPoint()!
-        print(String(cString: mountPoint))
+        //let mountPoint = swiftHal_FsGetMountPoint()!
+        //print(String(cString: mountPoint))
 
-        let _filePointer = swiftHal_FsOpen(_filePath.value)!
-        swiftHal_FsStat(_filePath.value, &_dirEntry)
-        print(_dirEntry.size)
-
-        return FileDescriptor(dirEntry: _dirEntry, filePointer: _filePointer, filePath: _filePath)
+        if let _filePointer = swiftHal_FsOpen(_filePath.value) {
+            swiftHal_FsStat(_filePath.value, &_dirEntry)
+            //print(_dirEntry.size)
+            return FileDescriptor(dirEntry: _dirEntry, filePointer: _filePointer, filePath: _filePath)
+        } else {
+            return nil
+        }
     }
 
 
@@ -53,8 +55,8 @@ public struct FileDescriptor {
     }
 
 
-    public func seek(offset: Int, from origin: SeekOrigin) {
-        swiftHal_FsSeek(filePointer, Int32(offset), origin.rawValue)
+    public func seek(offset: Int, from origin: SeekOrigin) -> Int {
+        Int(swiftHal_FsSeek(filePointer, Int32(offset), origin.rawValue))
     }
 
     public func write(_ data: UnsafeRawBufferPointer) {
@@ -62,24 +64,15 @@ public struct FileDescriptor {
         swiftHal_FsWrite(filePointer, data.baseAddress!, size)
     }
 
-/*
-    func write(_ str: String) {
-        var data = str.utf8CString
-        let size = UInt32(data.count - 1) 
-        swiftHal_FsWrite(filePointer, UnsafeRawBufferPointer(data).baseAddress!, size)
-    }
-*/
-
     public func write(_ str: String) {
         let data = str.utf8CString
         let size = UInt32(data.count - 1) 
 
-        data.withUnsafeBytes { bufferPointer in
-            swiftHal_FsWrite(filePointer, bufferPointer.baseAddress!, size)
+        _ = data.withUnsafeBytes { dataPointer in
+            swiftHal_FsWrite(filePointer, dataPointer.baseAddress!, size)
         }
 
     }
-
 
     public func write(toAbsoluteOffset offset: Int, _ data: UnsafeRawBufferPointer) {
         let size = UInt32(data.count)
@@ -104,7 +97,7 @@ public struct FilePath {
         description = str
         length = str.count
         value = Array<CChar>(str.utf8CString)
-        print(value)
+        //print(value)
     }
 
 }

@@ -1,0 +1,2 @@
+rm -rf ~/Documents/MadMachine/Library/SwiftIO
+cp -r ../SwiftIO ~/Documents/MadMachine/Library

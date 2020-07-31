@@ -170,3 +170,32 @@ int swiftHal_CounterRead(CounterObject *obj);
 void swiftHal_CounterStart(CounterObject *obj);
 void swiftHal_CounterStop(CounterObject *obj);
 void swiftHal_CounterClear(CounterObject *obj);
+
+
+
+
+#define MAX_FILE_NAME 255
+
+typedef struct {
+    unsigned char type;
+    char name[MAX_FILE_NAME + 1];
+    unsigned int size;
+} DirEntry;
+
+//char *swiftHal_FsGetMountPoint(void);
+void *swiftHal_FsOpen(const char *path);
+int swiftHal_FsClose(const void* fp);
+//int swiftHal_FsRemove(char *path);
+//int swiftHal_FsRename(char *from, char *to);
+int swiftHal_FsWrite(const void* fp, const void *ptr, unsigned int size);
+int swiftHal_FsRead(const void* fp, void *ptr, unsigned int size);
+int swiftHal_FsSeek(const void* fp, int offset, int whence);
+int swiftHal_FsTell(const void* fp);
+//int swiftHal_FsTruncate(const void* fp, unsigned int length);
+int swiftHal_FsSync(const void* fp);
+//int swiftHal_Fsmkdir(char *path);
+//void *swiftHal_FsOpenDir(char *path);
+//int swiftHal_FsReadDir(void *dp, DirEntry *entry);
+//int swiftHal_FsCloseDir(void *dp);
+int swiftHal_FsStat(const char *path, DirEntry *entry);
+//int swiftHal_FsStatvfs(char *path, DirEntry *stat);
