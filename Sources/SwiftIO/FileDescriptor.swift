@@ -1,9 +1,3 @@
-/*typedef struct {
-    unsigned char type;
-    char name[MAX_FILE_NAME + 1];
-    unsigned int size;
-} DirEntry;
-*/
 
 public struct FileDescriptor {
     public enum SeekOrigin: Int32 {
