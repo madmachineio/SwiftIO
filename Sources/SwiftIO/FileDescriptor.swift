@@ -164,19 +164,22 @@ public struct FileDescriptor {
 
 /**
 A null-terminated sequence of bytes that represents a location in the file system.
- 
 
 */
-public struct FilePath {
+struct FilePath {
     private(set) var length: Int = 0
     private(set) var description: String = ""
 
     private(set) var value: [CChar]
 
-    public init(_ str: String) {
-        description = str
-        length = str.count
-        value = Array<CChar>(str.utf8CString)
+    /**
+     Creates a file path from a string.
+      - Parameter string: **REQUIRED** A string whose ASCII contents to use as the contents of the path.
+     */
+    init(_ string: String) {
+        description = string
+        length = string.count
+        value = Array<CChar>(string.utf8CString)
         //print(value)
     }
 
