@@ -185,7 +185,7 @@ typedef struct {
 //char *swiftHal_FsGetMountPoint(void);
 void *swiftHal_FsOpen(const char *path);
 int swiftHal_FsClose(const void* fp);
-//int swiftHal_FsRemove(char *path);
+int swiftHal_FsRemove(const char *path);
 //int swiftHal_FsRename(char *from, char *to);
 int swiftHal_FsWrite(const void* fp, const void *ptr, unsigned int size);
 int swiftHal_FsRead(const void* fp, void *ptr, unsigned int size);

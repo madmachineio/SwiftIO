@@ -28,6 +28,12 @@ public struct FileDescriptor {
         }
     }
 
+    public static func unlink(_ path: String) {
+        let _filePath = FilePath(path)
+
+        swiftHal_FsRemove(_filePath.value) 
+    }
+
 
     public func close() {
         swiftHal_FsClose(filePointer)
@@ -47,7 +53,6 @@ public struct FileDescriptor {
         swiftHal_FsSeek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
         return Int(swiftHal_FsRead(filePointer, buffer.baseAddress!, size))
     }
-
 
     public func seek(offset: Int, from origin: SeekOrigin) -> Int {
         Int(swiftHal_FsSeek(filePointer, Int32(offset), origin.rawValue))
