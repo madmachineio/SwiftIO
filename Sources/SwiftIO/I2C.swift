@@ -9,25 +9,14 @@
 
  */
  public final class I2C {
-
-    private var obj: I2CObject
-
-    private let id: IdName
-    private var speed: Speed {
-        willSet {
-            obj.speed = newValue.rawValue
-        }
-    }
-
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.speed = speed.rawValue
-        swiftHal_i2cInit(&obj)
-    }
+    private let id: Int32
+    private let obj: UnsafeRawPointer
+    
+    private var speed: Speed
 
     /**
      Initialize a specific I2C interface as a master device.
-     - Parameter id: **REQUIRED** The name of the I2C interface.
+     - Parameter idName: **REQUIRED** The name of the I2C interface.
      - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
      
      ### Usage Example ###
@@ -36,16 +25,25 @@
      let i2cBus = I2C(Id.I2C0)
      ````
      */
-    public init(_ id: IdName,
+    public init(_ idName: IdName,
                 speed: Speed = .standard) {
-        self.id = id
+        self.id = idName.value
         self.speed = speed
-        obj = I2CObject()
-        objectInit()
+
+        if let ptr = swifthal_i2c_open(id) {
+            obj = UnsafeRawPointer(ptr)
+            if swifthal_i2c_config(obj, speed.rawValue) != 0 {
+                print("I2C\(id) config failed!")
+            }
+        } else {
+            fatalError("I2C\(idName.value) initialization failed!")
+        }
+
+
     }
 
     deinit {
-        swiftHal_i2cDeinit(&obj)
+        swifthal_i2c_close(obj)
     }
 
     /**
@@ -63,7 +61,7 @@
      */
     public func setSpeed(_ speed: Speed) {
         self.speed = speed
-        swiftHal_i2cConfig(&obj)
+        swifthal_i2c_config(speed.rawValue)
     }
 
     /**
@@ -76,7 +74,7 @@
     public func readByte(from address: UInt8) -> UInt8 {
         var data: [UInt8] = [0]
         
-        let ret = swiftHal_i2cRead(&obj, address, &data, 1)
+        let ret = swifthal_i2cRead(&obj, address, &data, 1)
         if ret == 0 {
             return data[0]
         } else {
@@ -96,7 +94,7 @@
     public func read(count: Int, from address: UInt8) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
-        let ret = swiftHal_i2cRead(&obj, address, &data, Int32(count))
+        let ret = swifthal_i2cRead(&obj, address, &data, Int32(count))
         if ret == 0 {
             return data
         } else {
@@ -114,7 +112,7 @@
     public func write(_ byte: UInt8, to address: UInt8) {
         let data: [UInt8] = [byte]
 
-        swiftHal_i2cWrite(&obj, address, data, 1)
+        swifthal_i2cWrite(&obj, address, data, 1)
     }
 
     /**
@@ -124,7 +122,7 @@
      */
     @inline(__always)
     public func write(_ data: [UInt8], to address: UInt8) {
-        swiftHal_i2cWrite(&obj, address, data, Int32(data.count))
+        swifthal_i2cWrite(&obj, address, data, Int32(data.count))
     }
 
     /**
@@ -139,7 +137,7 @@
     public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
         var receivedData = [UInt8](repeating:0, count: readCount)
 
-        let ret = swiftHal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
+        let ret = swifthal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
         if ret == 0 {
             return receivedData
         } else {
@@ -147,14 +145,15 @@
             return []
         }
     }
-
 }
 
 extension I2C {
     /**
      The clock signal is used to synchronize the data transmission between the devices.There are three available speed grades.
      */
-    public enum Speed: Int32 {
-        case standard = 100000, fast = 400000, fastPlus = 1000000
+    public enum Speed: UInt32 {
+        case standard = UInt32(SWIFT_I2C_SPEED_STANDARD)
+        case fast = UInt32(SWIFT_I2C_SPEED_FAST)
+        case fastPlus = UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
     }
 }

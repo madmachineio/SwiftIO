@@ -20,22 +20,16 @@
  
  */
 public final class AnalogIn {
-    private var obj: AnalogInObject
-
-    private let id: IdName
-
-
-    private func objectInit() {
-        obj.idNumber = id.number
-        swiftHal_AnalogInInit(&obj)
-    }
+    private let id: Int32
+    private let obj: UnsafeRawPointer
+    private var info = swift_adc_info_t()
 
     /**
      The max raw value of the ADC. Different ADC has different resolutions. The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is 4095.
 
      */
     public var maxRawValue: Int {
-        Int(obj.info.maxRawValue)
+        Int(info.max_raw_value)
     }
 
     /**
@@ -43,13 +37,13 @@ public final class AnalogIn {
 
      */
     public var refVoltage: Float {
-        obj.info.refVoltage
+        Float(info.ref_voltage)
     }
 
     /**
      Initialize an AnalogIn to a specified pin.
      
-     - Parameter id: **REQUIRED** The AnalogIn Id on the board. See Id for reference.
+     - Parameter idName: **REQUIRED** The AnalogIn Id name on the board. See Id for reference.
      
      ### Usage Example ###
      ````
@@ -57,16 +51,19 @@ public final class AnalogIn {
      let pin = AnalogIn(Id.A0)
      ````
      */
-    public init(_ id: IdName) {
-        self.id = id
-        obj = AnalogInObject()
-        objectInit()
+    public init(_ idName: IdName) {
+        id = idName.value
+        if let ptr = swifthal_adc_open(id) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("Initialize AnalogIn A\(idName.value) failed!")
+        }
+        swifthal_adc_info_get(obj, &info)
     }
 
     deinit {
-        swiftHal_AnalogInDeinit(&obj)
+        swifthal_adc_close(obj)
     }
-
 
     /**
      Read the current raw value from the specified analog pin.
@@ -75,7 +72,7 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readRawValue() -> Int {
-        return Int(swiftHal_AnalogInRead(&obj))
+        return Int(swifthal_adc_read(obj))
     }
 
     /**
@@ -85,7 +82,7 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readPercent() -> Float {
-        let rawValue = Float(swiftHal_AnalogInRead(&obj))
+        let rawValue = Float(swifthal_adc_read(obj))
         return rawValue / Float(maxRawValue)
     }
 
@@ -96,9 +93,7 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readVoltage() -> Float {
-        let rawValue = Float(swiftHal_AnalogInRead(&obj))
+        let rawValue = Float(swifthal_adc_read(obj))
         return refVoltage * rawValue / Float(maxRawValue)
     }
 }
-
-

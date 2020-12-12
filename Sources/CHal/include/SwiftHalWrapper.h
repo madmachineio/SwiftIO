@@ -1,201 +1,210 @@
 
 
-void swiftHal_msSleep(int t);
-void swiftHal_usWait(int t);
-long long swiftHal_getUpTimeInMs(void);
-unsigned int swiftHal_getClockCycle(void);
-unsigned int swiftHal_computeNanoseconds(unsigned int);
-
-
-
-
 typedef struct {
 	void *classPtr;
 	void (*callback)(void *);
 } CallbackWrapper;
 
-typedef struct {
-	void *ptr;
-	unsigned char idNumber;
-	unsigned char direction;
-	unsigned char inputMode;
-	unsigned char outputMode;
-	unsigned char interruptMode;
-	unsigned char interruptState;
-} DigitalIOObject;
 
-int swiftHal_gpioInit(DigitalIOObject *);
-int swiftHal_gpioDeinit(DigitalIOObject *);
-int swiftHal_gpioConfig(DigitalIOObject *);
-int swiftHal_gpioInterruptConfig(DigitalIOObject *);
-int swiftHal_gpioWrite(DigitalIOObject *, int);
-int swiftHal_gpioRead(DigitalIOObject *);
-int swiftHal_gpioAddCallback(DigitalIOObject *);
-int swiftHal_gpioRemoveCallback(DigitalIOObject *);
-int swiftHal_gpioEnableCallback(DigitalIOObject *obj);
-int swiftHal_gpioDisableCallback(DigitalIOObject *obj);
-int swiftHal_gpioAddSwiftMember(DigitalIOObject *obj, void *classPtr, void (*function)(void *));
+/**
+ * @brief Structure to receive adc information
+ *
+ * @param max_raw_value max raw value for adc value
+ * @param ref_voltage adc refer volage
+ */
+struct swift_adc_info {
+	int max_raw_value;
+	float ref_voltage;
+};
 
+typedef struct swift_adc_info swift_adc_info_t;
 
+/**
+ * @brief Open adc
+ *
+ * @param id ADC id
+ * @return ADC handle, NULL is fail
+ */
+void *swifthal_adc_open(int id);
 
+/**
+ * @brief Close adc
+ *
+ * @param adc ADC handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_adc_close(const void *adc);
 
-typedef struct {
-	void *ptr;
-	unsigned char idNumber;
-	int speed;
-} I2CObject;
+/**
+ * @brief Read adc value
+ *
+ * @param adc ADC handle
+ *
+ * @retval Positive indicates the adc value.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_adc_read(const void *adc);
 
-int swiftHal_i2cInit(I2CObject *obj);
-int swiftHal_i2cDeinit(I2CObject *obj);
-int swiftHal_i2cConfig(I2CObject *obj);
-int swiftHal_i2cWrite(I2CObject *obj, unsigned char address, const unsigned char *buf, int length);
-int swiftHal_i2cRead(I2CObject *obj, unsigned char address, unsigned char *buf, int length);
-int swiftHal_i2cWriteRead(I2CObject *obj, unsigned char address, const unsigned char *wBuf, int wLen, unsigned char *rBuf, int rLen);
-
-
-
-
-typedef struct {
-	void *ptr;
-	unsigned char idNumber;
-	int speed;
-} SPIObject;
-
-int swiftHal_spiInit(SPIObject *obj);
-int swiftHal_spiDeinit(SPIObject *obj);
-int swiftHal_spiConfig(SPIObject *obj);
-int swiftHal_spiWrite(SPIObject *obj, const unsigned char *buf, int length);
-int swiftHal_spiRead(SPIObject *obj, unsigned char *buf, int length);
-
-
-
-
-
-typedef struct {
-	void *ptr;
-	unsigned char idNumber;
-	unsigned char parity;
-	unsigned char stopBits;
-	unsigned char dataBits;
-	int baudRate;
-	int readBufferLength;
-} UARTObject;
-
-int swiftHal_uartInit(UARTObject *obj);
-int swiftHal_uartDeinit(UARTObject *obj);
-int swiftHal_uartConfig(UARTObject *obj);
-int swiftHal_uartWriteChar(UARTObject *obj, unsigned char byte);
-int swiftHal_uartWrite(UARTObject *obj, const unsigned char *buf, int length);
-unsigned char swiftHal_uartReadChar(UARTObject *obj, int timeout);
-int swiftHal_uartRead(UARTObject *obj, unsigned char *buf, int length, int timeout);
-int swiftHal_uartCount(UARTObject *obj);
-int swiftHal_uartClearBuffer(UARTObject *obj);
-
-
-
-
-typedef struct {
-	void *ptr;
-	CallbackWrapper callbackWrapper;
-	unsigned char timerType;
-	int	period;
-} TimerObject;
-
-int swiftHal_timerInit(TimerObject *obj);
-int swiftHal_timerDeinit(TimerObject *obj);
-int swiftHal_timerStart(TimerObject *obj);
-int swiftHal_timerStop(TimerObject *obj);
-int swiftHal_timerCount(TimerObject *obj);
-int swiftHal_timerAddSwiftMember(TimerObject *obj, void *classPtr, void (*function)(void *));
-
-
-
-
-typedef struct {
-	int maxFrequency;
-	int minFrequency;
-} PWMOutInfo;
-
-typedef struct {
-	void *ptr;
-	const PWMOutInfo info;
-	unsigned char idNumber;
-} PWMOutObject;
-
-
-int swiftHal_PWMOutInit(PWMOutObject *obj);
-int swiftHal_PWMOutDeinit(PWMOutObject *obj);
-int swiftHal_PWMOutSetUsec(PWMOutObject *obj, int period, int pulse);
-int swiftHal_PWMOutSetFrequency(PWMOutObject *obj, int fre, float dutycycle);
-int swiftHal_PWMOutSetDutycycle(PWMOutObject *obj, float dutycycle);
-int swiftHal_PWMOutSuspend(PWMOutObject *obj);
-int swiftHal_PWMOutResume(PWMOutObject *obj);
+/**
+ * @brief Get adc infomation
+ *
+ * @param adc ADC handle
+ * @param info adc information, use @ref swift_adc_info
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_adc_info_get(const void *adc, swift_adc_info_t *info);
 
 
 
 
 
-typedef struct {
-	int maxRawValue;
-	float refVoltage;
-} AnalogInInfo;
-
-typedef struct {
-	void *ptr;
-	const AnalogInInfo info;
-	unsigned char idNumber;
-} AnalogInObject;
-
-int swiftHal_AnalogInInit(AnalogInObject *obj);
-int swiftHal_AnalogInDeinit(AnalogInObject *obj);
-int swiftHal_AnalogInRead(AnalogInObject *obj);
 
 
+#define SWIFT_I2C_SPEED_STANDARD (100 * 1000)
+#define SWIFT_I2C_SPEED_FAST (400 * 1000)
+#define SWIFT_I2C_SPEED_FAST_PLUS (1000 * 1000)
 
 
-typedef struct {
-	int maxCountValue;
-} CounterInfo;
+/**
+ * @brief Open a i2c
+ *
+ * @param id I2C id
+ * @return I2C handle, NULL is fail
+ */
+void *swifthal_i2c_open(int id);
 
-typedef struct {
-	void *ptr;
-	const CounterInfo info;
-	unsigned char idNumber;
-	unsigned char mode;
-} CounterObject;
+/**
+ * @brief Close i2c
+ *
+ * @param i2c I2C handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_i2c_close(const void *i2c);
 
-int swiftHal_CounterInit(CounterObject *obj);
-int swiftHal_CounterDeinit(CounterObject *obj);
-int swiftHal_CounterRead(CounterObject *obj);
-void swiftHal_CounterStart(CounterObject *obj);
-void swiftHal_CounterStop(CounterObject *obj);
-void swiftHal_CounterClear(CounterObject *obj);
+/**
+ * @brief Config i2c speed
+ *
+ * @param i2c I2C Handle
+ * @param speed I2C speed
+ * - SWIFT_I2C_SPEED_STANDARD = 100K
+ * - SWIFT_I2C_SPEED_FAST = 400K
+ * - SWIFT_I2C_SPEED_FAST_PLUS = 1M
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_i2c_config(const void *i2c, unsigned int speed);
+
+/**
+ * @brief Write a set amount of data to an I2C device.
+ *
+ * This routine writes a set amount of data synchronously.
+ *
+ * @param i2c I2C handle
+ * @param addr Address to the target I2C device for writing.
+ * @param buf Memory pool from which the data is transferred.
+ * @param length Number of bytes to write.
+ *
+ * @retval 0 If successful.
+ * @retval -EIO General input / output error.
+ */
+int swifthal_i2c_write(const void *i2c, unsigned char address, const unsigned char *buf, int length);
+
+/**
+ * @brief Read a set amount of data from an I2C device.
+ *
+ * This routine reads a set amount of data synchronously.
+ *
+ * @param i2c I2C handle.
+ * @param addr Address of the I2C device being read.
+ * @param buf Memory pool that stores the retrieved data.
+ * @param length Number of bytes to read.
+ *
+ * @retval 0 If successful.
+ * @retval -EIO General input / output error.
+ */
+int swifthal_i2c_read(const void *i2c, unsigned char address, unsigned char *buf, int length);
+
+/**
+ * @brief Write then read data from an I2C device.
+ *
+ * This supports the common operation "this is what I want", "now give
+ * it to me" transaction pair through a combined write-then-read bus
+ * transaction.
+ *
+ * @param i2c I2C handle
+ * @param addr Address of the I2C device
+ * @param write_buf Pointer to the data to be written
+ * @param num_write Number of bytes to write
+ * @param read_buf Pointer to storage for read data
+ * @param num_read Number of bytes to read
+ *
+ * @retval 0 if successful
+ * @retval negative on error.
+ */
+int swifthal_i2c_write_read(const void *i2c, unsigned char addr,
+			    const void *write_buf, int num_write,
+			    void *read_buf, int num_read);
 
 
 
 
-#define MAX_FILE_NAME 255
 
-typedef struct {
-    unsigned char type;
-    char name[MAX_FILE_NAME + 1];
-    unsigned int size;
-} DirEntry;
 
-//char *swiftHal_FsGetMountPoint(void);
-void *swiftHal_FsOpen(const char *path);
-int swiftHal_FsClose(const void* fp);
-int swiftHal_FsRemove(const char *path);
-//int swiftHal_FsRename(char *from, char *to);
-int swiftHal_FsWrite(const void* fp, const void *ptr, unsigned int size);
-int swiftHal_FsRead(const void* fp, void *ptr, unsigned int size);
-int swiftHal_FsSeek(const void* fp, int offset, int whence);
-int swiftHal_FsTell(const void* fp);
-//int swiftHal_FsTruncate(const void* fp, unsigned int length);
-int swiftHal_FsSync(const void* fp);
-//int swiftHal_Fsmkdir(char *path);
-//void *swiftHal_FsOpenDir(char *path);
-//int swiftHal_FsReadDir(void *dp, DirEntry *entry);
-//int swiftHal_FsCloseDir(void *dp);
-int swiftHal_FsStat(const char *path, DirEntry *entry);
-//int swiftHal_FsStatvfs(char *path, DirEntry *stat);
+
+
+
+
+
+
+
+
+
+
+
+
+
+#define SWIFT_NO_WAIT   0
+#define SWIFT_FOREVER (-1)
+
+/**
+ * @brief Put the current thread to sleep.
+ *
+ * @param ms Desired duration of sleep in ms.
+ */
+void swifthal_ms_sleep(int ms);
+
+/**
+ * @brief Cause the current thread to busy wait.
+ *
+ * @param us Desired duration of wait in us.
+ */
+void swifthal_us_wait(unsigned int us);
+
+/**
+ * @brief Get system uptime.
+ *
+ * @return Current uptime in milliseconds.
+ */
+long long swifthal_uptime_get(void);
+
+/**
+ * @brief Read the hardware clock.
+ *
+ * @return Current hardware clock up-counter (in cycles).
+ */
+unsigned int swifthal_hwcycle_get(void);
+
+/**
+ * @brief Convert hardware cycles to nanoseconds
+ *
+ * @param cycles hardware cycle number
+ * @return nanoseconds
+ */
+unsigned int swifthal_hwcycle_to_ns(unsigned int cycles);

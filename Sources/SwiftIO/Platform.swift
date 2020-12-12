@@ -1,9 +1,3 @@
-
-public protocol IdName {
-    var number: UInt8 { get }
-}
-
-
 @inline(__always)
 func getClassPtr<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
     return UnsafeMutableRawPointer(Unmanaged.passUnretained(obj).toOpaque())
@@ -14,7 +8,7 @@ When you invoke the wait function, the CPU keeps on working and checking if the 
 */
 @inline(__always)
 public func wait(us: Int) {
-    swiftHal_usWait(Int32(us))
+    swifthal_us_wait(UInt32(us))
 }
 
 /**
@@ -22,7 +16,7 @@ public func wait(us: Int) {
  */
 @inline(__always)
 public func sleep(ms: Int) {
-    swiftHal_msSleep(Int32(ms))
+    swifthal_ms_sleep(Int32(ms))
 }
 
 /**
@@ -31,7 +25,7 @@ Get the elapsed time in millisecond since the board powered up.
 */
 @inline(__always)
 public func getPowerUpMilliseconds() -> Int64 {
-    return swiftHal_getUpTimeInMs()
+    return swifthal_uptime_get()
 }
 
 /**
@@ -44,7 +38,7 @@ Get the current clock cycle of the low level 32bit timer.
 */
 @inline(__always)
 public func getClockCycle() -> UInt {
-    return UInt(swiftHal_getClockCycle())
+    return UInt(swifthal_hwcycle_get())
 }
 
 /**
@@ -62,5 +56,5 @@ public func cyclesToNanoseconds(start: UInt, stop: UInt) -> Int64 {
         cycles = UInt.max - start + stop + 1
     }
 
-    return Int64(swiftHal_computeNanoseconds(UInt32(cycles)))
+    return Int64(swifthal_hwcycle_to_ns(UInt32(cycles)))
 }
