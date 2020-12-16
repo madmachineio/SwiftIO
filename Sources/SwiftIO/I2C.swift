@@ -11,8 +11,21 @@
  public final class I2C {
     private let id: Int32
     private let obj: UnsafeRawPointer
+    private var speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
     
-    private var speed: Speed
+    private var speed: Speed {
+        didSet {
+            switch speed {
+                case .standard:
+                speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
+                case .fast:
+                speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST)
+                case .fastPlus:
+                speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
+            }
+        }
+    }
+
 
     /**
      Initialize a specific I2C interface as a master device.
@@ -32,14 +45,12 @@
 
         if let ptr = swifthal_i2c_open(id) {
             obj = UnsafeRawPointer(ptr)
-            if swifthal_i2c_config(obj, speed.rawValue) != 0 {
+            if swifthal_i2c_config(obj, speedRawValue) != 0 {
                 print("I2C\(id) config failed!")
             }
         } else {
             fatalError("I2C\(idName.value) initialization failed!")
         }
-
-
     }
 
     deinit {
@@ -61,7 +72,9 @@
      */
     public func setSpeed(_ speed: Speed) {
         self.speed = speed
-        swifthal_i2c_config(speed.rawValue)
+        if swifthal_i2c_config(obj, speedRawValue) != 0 {
+            print("I2C\(id) setSpeed error!")
+        }
     }
 
     /**
@@ -74,11 +87,11 @@
     public func readByte(from address: UInt8) -> UInt8 {
         var data: [UInt8] = [0]
         
-        let ret = swifthal_i2cRead(&obj, address, &data, 1)
+        let ret = swifthal_i2c_read(obj, address, &data, 1)
         if ret == 0 {
             return data[0]
         } else {
-            print("I2C readByte error!")
+            print("I2C\(id) readByte error!")
             return 0
         }
     }
@@ -94,11 +107,12 @@
     public func read(count: Int, from address: UInt8) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
-        let ret = swifthal_i2cRead(&obj, address, &data, Int32(count))
+        let ret = swifthal_i2c_read(obj, address, &data, Int32(count))
+
         if ret == 0 {
             return data
         } else {
-            print("I2C read error!")
+            print("I2C\(id) read error!")
             return []
         }
     }
@@ -112,7 +126,9 @@
     public func write(_ byte: UInt8, to address: UInt8) {
         let data: [UInt8] = [byte]
 
-        swifthal_i2cWrite(&obj, address, data, 1)
+        if swifthal_i2c_write(obj, address, data, 1) != 0 {
+            print("I2C\(id) write error!")
+        }
     }
 
     /**
@@ -122,7 +138,27 @@
      */
     @inline(__always)
     public func write(_ data: [UInt8], to address: UInt8) {
-        swifthal_i2cWrite(&obj, address, data, Int32(data.count))
+        if swifthal_i2c_write(obj, address, data, Int32(data.count)) != 0 {
+            print("I2C\(id) write error!")
+        }
+    }
+
+
+
+
+
+    @inline(__always)
+    public func writeRead(_ data: UInt8, readCount: Int, address: UInt8) -> [UInt8] {
+        let sendData = [UInt8](repeating: data, count: 1)
+        var receivedData = [UInt8](repeating: 0, count: readCount)
+
+        let ret = swifthal_i2c_write_read(obj, address, sendData, 1, &receivedData, Int32(readCount))
+        if ret == 0 {
+            return receivedData
+        } else {
+            print("I2C\(id) writeRead error!")
+            return []
+        }
     }
 
     /**
@@ -137,11 +173,11 @@
     public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
         var receivedData = [UInt8](repeating:0, count: readCount)
 
-        let ret = swifthal_i2cWriteRead(&obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
+        let ret = swifthal_i2c_write_read(obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
         if ret == 0 {
             return receivedData
         } else {
-            print("I2C writeRead error!")
+            print("I2C\(id) writeRead error!")
             return []
         }
     }
@@ -151,9 +187,9 @@ extension I2C {
     /**
      The clock signal is used to synchronize the data transmission between the devices.There are three available speed grades.
      */
-    public enum Speed: UInt32 {
-        case standard = UInt32(SWIFT_I2C_SPEED_STANDARD)
-        case fast = UInt32(SWIFT_I2C_SPEED_FAST)
-        case fastPlus = UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
+    public enum Speed {
+        case standard
+        case fast
+        case fastPlus
     }
 }
