@@ -5,20 +5,10 @@
  */
  public final class SPI {
 
-    private var obj: SPIObject
+    private let id: Int32
+    private let obj: UnsafeRawPointer 
 
-    private let id: IdName
-    private var speed: Int {
-        willSet {
-            obj.speed = Int32(newValue)
-        }
-    }
-
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.speed = Int32(speed)
-        swiftHal_spiInit(&obj)
-    }
+    private var speed: Int
 
     /**
      Initialize a specified interface for SPI communication as a master device.
@@ -31,16 +21,20 @@
      let spi = SPI(Id.SPI0)
      ````
      */
-    public init(_ id: IdName,
-                speed: Int = 1000000) {
-        self.id = id
+    public init(_ idName: IdName,
+                speed: Int = 1_000_000) {
+        self.id = idName.value
         self.speed = speed
-        obj = SPIObject()
-        objectInit()
+
+        if let ptr = swifthal_spi_open(id, Int32(speed), nil, nil) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("SPI\(idName.value) initialization failed!")
+        }
     }
 
     deinit {
-        swiftHal_spiDeinit(&obj)
+        swifthal_spi_close(obj)
     }
 
     /**
@@ -58,7 +52,10 @@
      */
     public func setSpeed(_ speed: Int) {
         self.speed = speed
-        swiftHal_spiConfig(&obj)
+        
+        if swifthal_spi_config(obj, Int32(speed)) != 0 {
+            print("SPI\(id) setSpeed error!")
+        }
     }
 
     /**
@@ -70,11 +67,11 @@
     public func readByte() -> UInt8 {
         var data: [UInt8] = [0]
         
-        let ret = swiftHal_spiRead(&obj, &data, 1)
+        let ret = swifthal_spi_read(obj, &data, 1)
         if ret == 0 {
             return data[0]
         } else {
-            print("SPI readByte error!")
+            print("SPI\(id) readByte error!")
             return 0
         }
     }
@@ -88,11 +85,11 @@
     public func read(count: Int) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
-        let ret = swiftHal_spiRead(&obj, &data, Int32(count))
+        let ret = swifthal_spi_read(obj, &data, Int32(count))
         if ret == 0 {
             return data
         } else {
-            print("SPI read error!")
+            print("SPI\(id) read error!")
             return []
         }
     }
@@ -103,7 +100,9 @@
      */
     @inline(__always)
     public func write(_ byte: UInt8) {
-        swiftHal_spiWrite(&obj, [byte], 1)
+        if swifthal_spi_write(obj, [byte], 1) != 0 {
+            print("SPI\(id) write error!")
+        }
     }
 
     /**
@@ -111,20 +110,18 @@
      - Parameter data: A byte array to be sent to the slave device.
      */
     @inline(__always)
-    public func write(_ data: [UInt8]) {
-        swiftHal_spiWrite(&obj, data, Int32(data.count))
-    }
+    public func write(_ data: [UInt8], count: Int? = nil) {
+        let ret: Int32
 
+        if let length = count {
+            ret = swifthal_spi_write(obj, data, Int32(length))
+        } else {
+            ret = swifthal_spi_write(obj, data, Int32(data.count))
+        }
 
-    /**
-     Write raw data to the slave device.
-     - Parameter data: Raw data to be sent to the slave device.
-     */
-    @inline(__always)
-    public func write(_ data: UnsafeRawBufferPointer) {
-        guard data.baseAddress != nil else { return }
-        let ptr = data.bindMemory(to: UInt8.self)
-        swiftHal_spiWrite(&obj, ptr.baseAddress!, Int32(ptr.count))
+        if ret != 0 {
+            print("SPI\(id) write error!")
+        }
     }
 }
 

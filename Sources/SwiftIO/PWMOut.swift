@@ -19,28 +19,25 @@ while true {
 ````
 */
 public final class PWMOut {
-    private var obj: PWMOutObject
+    private let id: Int32 
+    private let obj: UnsafeRawPointer
+    private var info = swift_pwm_info_t()
 
-    private let id: IdName
-
-    private func objectInit() {
-        obj.idNumber = id.number
-        swiftHal_PWMOutInit(&obj)
-    }
-
+    private var period: Int32 = 0
+    private var pulse: Int32 = 0
     /**
      The max frequency of PWM output.
      */
 
     public var maxFrequency: Int {
-        Int(obj.info.maxFrequency)
+        Int(info.max_frequency)
     }
 
     /**
      The min frequency of PWM output.
      */
     public var minFrequency: Int {
-        Int(obj.info.minFrequency)
+        Int(info.min_frequency)
     }
 
     /**
@@ -61,20 +58,23 @@ public final class PWMOut {
      let pin = PWMOut(Id.PWM0A, frequency: 2000, dutycycle: 0.5)
      ````
      */
-    public init(_ id: IdName,
+    public init(_ idName: IdName,
                 frequency: Int = 1000,
                 dutycycle: Float = 0.0) {
 
-        self.id = id
+        self.id = idName.value
 
-        obj = PWMOutObject()
-        objectInit()
+        if let ptr = swifthal_pwm_open(id) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("PWM\(idName.value) initialization failed!")
+        }
 
         set(frequency: frequency, dutycycle: dutycycle)
     }
 
     deinit {
-        swiftHal_PWMOutDeinit(&obj)
+        swifthal_pwm_close(obj)
     }
 
     /**
@@ -88,7 +88,10 @@ public final class PWMOut {
             return
         }
 
-        swiftHal_PWMOutSetFrequency(&obj, Int32(frequency), dutycycle)
+        period = 1_000_000 / Int32(frequency)
+        pulse = Int32(Float(period) * dutycycle)
+
+        swifthal_pwm_set(obj, period, pulse)
     }
 
 
@@ -98,7 +101,10 @@ public final class PWMOut {
      - Parameter pulse: The pulse width in the PWM period. This time can't be longer than the period.
      */
     public func set(period: Int, pulse: Int) {
-        swiftHal_PWMOutSetUsec(&obj, Int32(period), Int32(pulse))
+        self.period = Int32(period)
+        self.pulse = Int32(pulse)
+
+        swifthal_pwm_set(obj, self.period, self.pulse)
     }
 
 
@@ -112,21 +118,23 @@ public final class PWMOut {
             print("Dutycycle must fit in [0.0, 1.0]!")
             return
         }
-        swiftHal_PWMOutSetDutycycle(&obj, dutycycle);
+
+        pulse = Int32(Float(period) * dutycycle)
+        swifthal_pwm_set(obj, period, pulse)
     }
     
     /**
      Stop the PWM output.
      */
     public func suspend() {
-        swiftHal_PWMOutSuspend(&obj)
+        swifthal_pwm_suspend(obj)
     }
 
     /**
      Continue the PWM output.
      */
     public func resume() {
-        swiftHal_PWMOutResume(&obj)
+        swifthal_pwm_resume(obj)
     }
 }
 

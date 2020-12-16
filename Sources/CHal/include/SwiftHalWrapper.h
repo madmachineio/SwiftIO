@@ -1,9 +1,62 @@
-
-
 typedef struct {
 	void *classPtr;
 	void (*callback)(void *);
 } CallbackWrapper;
+
+
+
+
+
+
+
+
+
+
+#define SWIFT_NO_WAIT   0
+#define SWIFT_FOREVER (-1)
+
+/**
+ * @brief Put the current thread to sleep.
+ *
+ * @param ms Desired duration of sleep in ms.
+ */
+void swifthal_ms_sleep(int ms);
+
+/**
+ * @brief Cause the current thread to busy wait.
+ *
+ * @param us Desired duration of wait in us.
+ */
+void swifthal_us_wait(unsigned int us);
+
+/**
+ * @brief Get system uptime.
+ *
+ * @return Current uptime in milliseconds.
+ */
+long long swifthal_uptime_get(void);
+
+/**
+ * @brief Read the hardware clock.
+ *
+ * @return Current hardware clock up-counter (in cycles).
+ */
+unsigned int swifthal_hwcycle_get(void);
+
+/**
+ * @brief Convert hardware cycles to nanoseconds
+ *
+ * @param cycles hardware cycle number
+ * @return nanoseconds
+ */
+unsigned int swifthal_hwcycle_to_ns(unsigned int cycles);
+
+
+
+
+
+
+
 
 
 /**
@@ -57,6 +110,8 @@ int swifthal_adc_read(const void *adc);
  * @retval Negative errno code if failure.
  */
 int swifthal_adc_info_get(const void *adc, swift_adc_info_t *info);
+
+
 
 
 
@@ -158,53 +213,156 @@ int swifthal_i2c_write_read(const void *i2c, unsigned char addr,
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-#define SWIFT_NO_WAIT   0
-#define SWIFT_FOREVER (-1)
+/**
+ * @brief Open a spi
+ *
+ * @param id SPI ID
+ * @param speed	SPI communication speed
+ * @param w_notify  Write async notify
+ * @param r_notify  Read async notify
+ * @return SPI handle, NULL is fail
+ */
+void *swifthal_spi_open(int id,
+			int speed,
+			void (*w_notify)(void *),
+			void (*r_notify)(void *));
 
 /**
- * @brief Put the current thread to sleep.
+ * @brief Close spi
  *
- * @param ms Desired duration of sleep in ms.
+ * @param spi SPI handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
  */
-void swifthal_ms_sleep(int ms);
+int swifthal_spi_close(const void *spi);
 
 /**
- * @brief Cause the current thread to busy wait.
+ * @brief Config spi speed
  *
- * @param us Desired duration of wait in us.
+ * @param spi SPI Handle
+ * @param speed SPI speed
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
  */
-void swifthal_us_wait(unsigned int us);
+int swifthal_spi_config(const void *spi, int speed);
 
 /**
- * @brief Get system uptime.
+ * @brief Send given number of bytes from buffer through SPI.
  *
- * @return Current uptime in milliseconds.
+ * @param spi SPI Handle
+ * @param buf Pointer to transmit buffer.
+ * @param length Length of transmit buffer.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
  */
-long long swifthal_uptime_get(void);
+int swifthal_spi_write(const void *spi, const unsigned char *buf, int length);
 
 /**
- * @brief Read the hardware clock.
+ * @brief Recvice given number of bytes to buffer through SPI.
  *
- * @return Current hardware clock up-counter (in cycles).
+ * @param uart SPI Handle
+ * @param buf Pointer to revice buffer.
+ * @param length Length of recvice buffer.
+ *
+ * @retval Positive indicates the number of bytes actually read.
+ * @retval Negative errno code if failure.
  */
-unsigned int swifthal_hwcycle_get(void);
+int swifthal_spi_read(const void *spi, unsigned char *buf, int length);
 
 /**
- * @brief Convert hardware cycles to nanoseconds
+ * @brief Asynchronous send given number of bytes from buffer through SPI.
  *
- * @param cycles hardware cycle number
- * @return nanoseconds
+ * @param spi SPI Handle
+ * @param buf Pointer to transmit buffer.
+ * @param length Length of transmit buffer.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
  */
-unsigned int swifthal_hwcycle_to_ns(unsigned int cycles);
+int swifthal_spi_async_write(const void *spi, const unsigned char *buf, int length);
+
+/**
+ * @brief Asynchronous revice given number of bytes from buffer through SPI.
+ *
+ * @param spi SPI Handle
+ * @param buf Pointer to revice buffer.
+ * @param length Length of revice buffer.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_spi_async_read(const void *spi, unsigned char *buf, int length);
+
+
+
+
+
+
+
+
+
+/**
+ * @brief Structure to receive pwm information
+ *
+ * @param max_frequency max pwm frequency
+ * @param min_frequency min pwm frequency
+ */
+struct swift_pwm_info {
+	int max_frequency;
+	int min_frequency;
+};
+
+typedef struct swift_pwm_info swift_pwm_info_t;
+
+/**
+ * @brief Open a pwm
+ *
+ * @param id PWM id
+ * @return PWM handle, NULL is fail
+ */
+void *swifthal_pwm_open(int id);
+
+/**
+ * @brief Close pwm
+ *
+ * @param pwm PWM handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_pwm_close(const void *pwm);
+
+/**
+ * @brief Set pwm paramater
+ *
+ * @param pwm PWM handle
+ * @param period PWM period
+ * @param pulse PWM high level pulse width
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_pwm_set(const void *pwm, int period, int pulse);
+
+/**
+ * @brief Suspend pwm output
+ *
+ * @param pwm PWM handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_pwm_suspend(const void *pwm);
+
+/**
+ * @brief Resume pwm output
+ *
+ * @param pwm PWM handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_pwm_resume(const void *pwm);

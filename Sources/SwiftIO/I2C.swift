@@ -124,9 +124,7 @@
      */
     @inline(__always)
     public func write(_ byte: UInt8, to address: UInt8) {
-        let data: [UInt8] = [byte]
-
-        if swifthal_i2c_write(obj, address, data, 1) != 0 {
+        if swifthal_i2c_write(obj, address, [byte], 1) != 0 {
             print("I2C\(id) write error!")
         }
     }
@@ -137,8 +135,16 @@
      - Parameter address : The address of the slave device the board will communicate with.
      */
     @inline(__always)
-    public func write(_ data: [UInt8], to address: UInt8) {
-        if swifthal_i2c_write(obj, address, data, Int32(data.count)) != 0 {
+    public func write(_ data: [UInt8], count: Int? = nil, to address: UInt8) {
+        let ret: Int32
+
+        if let length = count {
+            ret = swifthal_i2c_write(obj, address, data, Int32(length))
+        } else {
+            ret = swifthal_i2c_write(obj, address, data, Int32(data.count))
+        }
+
+        if ret != 0 {
             print("I2C\(id) write error!")
         }
     }
@@ -148,11 +154,10 @@
 
 
     @inline(__always)
-    public func writeRead(_ data: UInt8, readCount: Int, address: UInt8) -> [UInt8] {
-        let sendData = [UInt8](repeating: data, count: 1)
+    public func writeRead(_ byte: UInt8, readCount: Int, address: UInt8) -> [UInt8] {
         var receivedData = [UInt8](repeating: 0, count: readCount)
 
-        let ret = swifthal_i2c_write_read(obj, address, sendData, 1, &receivedData, Int32(readCount))
+        let ret = swifthal_i2c_write_read(obj, address, [byte], 1, &receivedData, Int32(readCount))
         if ret == 0 {
             return receivedData
         } else {
