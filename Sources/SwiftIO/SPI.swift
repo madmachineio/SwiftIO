@@ -46,10 +46,10 @@
         return speed
     }
 
-    /**
+    /** TODO
      Set the speed of SPI communication.
      - Parameter speed: The clock speed used to control the data transmission.
-     */
+     
     public func setSpeed(_ speed: Int) {
         self.speed = speed
         
@@ -57,6 +57,7 @@
             print("SPI\(id) setSpeed error!")
         }
     }
+    */
 
     /**
      Read a byte of data from the slave device.

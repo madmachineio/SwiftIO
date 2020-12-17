@@ -366,3 +366,198 @@ int swifthal_pwm_suspend(const void *pwm);
  * @retval Negative errno code if failure.
  */
 int swifthal_pwm_resume(const void *pwm);
+
+/**
+ * @brief Get pwm infomation
+ *
+ * @param pwm PWM handle
+ * @param info pwm information, use @ref swift_pwm_info
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_pwm_info_get(const void *pwm, swift_pwm_info_t *info);
+
+
+
+
+
+
+
+
+
+/**
+ * @brief Timer trigger type
+ */
+enum swift_timer_type {
+	/** Only trigger once */
+	SWIFT_TIMER_TYPE_ONESHOT,
+	/** Periodic trigger */
+	SWIFT_TIMER_TYPE_PERIOD,
+};
+
+typedef enum swift_timer_type swift_timer_type_t;
+
+/**
+ * @brief Open a timer
+ *
+ * @return void*	Timer handle,NULL if not found or cannot be used.
+ */
+void *swifthal_timer_open();
+
+/**
+ * @brief Close a timer
+ *
+ * @param timer Timer handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_timer_close(const void *timer);
+
+/**
+ * @brief Start timer
+ *
+ * @param timer Timer handle
+ * @param type		Trigger type of timer.
+ * @param period	Timer period.
+ * 
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_timer_start(const void *timer, swift_timer_type_t type, int period);
+
+/**
+ * @brief Stop timer
+ *
+ * @param timer Timer handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_timer_stop(const void *timer);
+
+/**
+ * @brief Add callback for timer expire
+ *
+ * @param timer		Timer handle
+ * @param param		callback param
+ * @param callback	Function to invoke each time the timer expires.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_timer_add_callback(const void *timer, void *param, void (*callback)(void *));
+
+/**
+ * @brief Read timer status.
+ *
+ * This routine reads the timer's status, which indicates the number of times
+ * it has expired since its status was last read.
+ *
+ * Calling this routine resets the timer's status to zero.
+ *
+ * @param timer Timer handle
+ *
+ * @return Timer status.
+ */
+unsigned int swifthal_timer_status_get(const void *timer);
+
+
+
+
+
+
+
+
+
+/** @brief counter work mode. */
+enum swift_counter_mode {
+	SWIFT_COUNTER_RISING_EDGE       = 1,
+	SWIFT_COUNTER_BOTH_EDGE         = 2,
+};
+
+typedef enum swift_counter_mode swift_counter_mode_t;
+
+/**
+ * @brief Structure to receive adc information
+ *
+ * @param max_count_value adc refer volage
+ */
+struct swift_counter_info {
+	int max_count_value;
+};
+
+typedef struct swift_counter_info swift_counter_info_t;
+
+/**
+ * @brief Open counter
+ *
+ * @param id Counter id
+ * @param mode Count mode
+ * - SWIFT_COUNTER_RISING_EDGE = Count rising edges
+ * - SWIFT_COUNTER_BOTH_EDGE = Count rising and falling edges
+ * @return Counter handle
+ */
+void *swifthal_counter_open(int id);
+
+/**
+ * @brief Close counter
+ *
+ * @param counter Counter handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_close(const void *counter);
+
+/**
+ * @brief Read count result
+ *
+ * @param counter Counter Handle
+ *
+ * @retval Positive indicates the count result.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_read(const void *counter);
+
+/**
+ * @brief Start count
+ *
+ * @param counter Counter handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_start(const void *counter, swift_counter_mode_t mode);
+
+/**
+ * @brief Stop count
+ *
+ * @param counter Counter handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_stop(const void *counter);
+
+/**
+ * @brief Reset count result to 0
+ *
+ * @param counter Counter handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_clear(const void *counter);
+
+/**
+ * @brief Get counter infomation
+ *
+ * @param counter counter handle
+ * @param info conter information, use @ref swift_counter_info
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_info_get(const void *counter, swift_counter_info_t *info);

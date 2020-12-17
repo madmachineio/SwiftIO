@@ -69,6 +69,7 @@ public final class PWMOut {
         } else {
             fatalError("PWM\(idName.value) initialization failed!")
         }
+        swifthal_pwm_info_get(obj, &info)
 
         set(frequency: frequency, dutycycle: dutycycle)
     }
@@ -83,14 +84,14 @@ public final class PWMOut {
      - Parameter dutycycle: The duration of high output in the time period from 0.0 to 1.0.
      */
     public func set(frequency: Int, dutycycle: Float) {
-        guard frequency >= 0 && dutycycle >= 0 && dutycycle <= 1.0 else {
+        guard frequency >= minFrequency && frequency <= maxFrequency && dutycycle >= 0 && dutycycle <= 1.0 else {
             print("Frequency must be non-negative and dutycycle must fit in [0.0, 1.0]!")
             return
         }
 
         period = 1_000_000 / Int32(frequency)
         pulse = Int32(Float(period) * dutycycle)
-
+        
         swifthal_pwm_set(obj, period, pulse)
     }
 

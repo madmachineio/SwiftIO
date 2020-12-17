@@ -1,5 +1,5 @@
 @inline(__always)
-func getClassPtr<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
+func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
     return UnsafeMutableRawPointer(Unmanaged.passUnretained(obj).toOpaque())
 }
 

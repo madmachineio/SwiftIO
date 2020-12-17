@@ -48,24 +48,27 @@ while true {
  ````
 */
 public final class Counter {
-    private var obj: CounterObject
-    private let id: IdName
+    private let id: Int32
+    private let obj: UnsafeRawPointer
+    private var info = swift_counter_info_t()
+    private var modeRawValue: swift_counter_mode_t
+
     private var mode: Mode {
-        willSet {
-            obj.mode = newValue.rawValue
+        didSet {
+            switch mode {
+                case .rising:
+                modeRawValue = SWIFT_COUNTER_RISING_EDGE
+                case .bothEdge:
+                modeRawValue = SWIFT_COUNTER_BOTH_EDGE
+            }
         }
     }
     
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.mode = mode.rawValue
-        swiftHal_CounterInit(&obj)
-    }
     /**
      The maximum count value.
      */
     public var maxCountValue: Int {
-        Int(obj.info.maxCountValue)
+        Int(info.max_count_value)
     }
     /**
      Initialize the counter.
@@ -82,18 +85,30 @@ public final class Counter {
 
      ````
      */
-    public init(_ id: IdName, mode: Mode = .rising, start: Bool = true) {
-        self.id = id
+    public init(_ idName: IdName, mode: Mode = .rising, start: Bool = true) {
+        id = idName.value
         self.mode = mode
-        obj = CounterObject()
-        objectInit()
+        switch mode {
+            case .rising:
+            modeRawValue = SWIFT_COUNTER_RISING_EDGE
+            case .bothEdge:
+            modeRawValue = SWIFT_COUNTER_BOTH_EDGE
+        }
+        
+        if let ptr = swifthal_counter_open(id) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("Counter\(idName.value) initialization failed!")
+        }
+
+        swifthal_counter_info_get(obj, &info)
         if start {
             self.start()
         }
     }
 
     deinit {
-        swiftHal_CounterDeinit(&obj)
+        swifthal_counter_close(obj)
     }
     /**
      Change the mode to decide whether it detects the rising edge or both rising and falling edges.
@@ -102,7 +117,7 @@ public final class Counter {
      */
     public func setMode(_ mode: Mode) {
         self.mode = mode
-        swiftHal_CounterStart(&obj)
+        swifthal_counter_start(obj, modeRawValue)
     }
     /**
      Read the number of edges that has been detected.
@@ -110,29 +125,33 @@ public final class Counter {
      - Returns: Return the number of edges. 
      */
     @inline(__always)
-    public func read() -> Int {
-        return Int(swiftHal_CounterRead(&obj))
+    public func read(clear: Bool = true) -> Int {
+        let value = Int(swifthal_counter_read(obj))
+        if clear {
+            swifthal_counter_clear(obj)
+        }
+        return value
     }
     /**
      Start the counter to measure the value.
      */
     @inline(__always)
     public func start() {
-        swiftHal_CounterStart(&obj)
+        swifthal_counter_start(obj, modeRawValue)
     }
     /**
      Stop the counter.
      */
     @inline(__always)
     public func stop() {
-        swiftHal_CounterStop(&obj)
+        swifthal_counter_stop(obj)
     }
     /**
      Clear the value of counter, it will set the value to 0.
      */
     @inline(__always)
     public func clear() {
-        swiftHal_CounterClear(&obj)
+        swifthal_counter_clear(obj)
     }
 }
 
@@ -142,7 +161,7 @@ extension Counter {
      The Mode enumerate is to decide whether the count detects the rising edge or both rising and falling edges.
      
      */
-    public enum Mode: UInt8 {
-        case rising = 1, bothEdge
+    public enum Mode {
+        case rising, bothEdge
     }
 }

@@ -39,40 +39,45 @@
  ````
 */
 public final class Timer {
-    private var obj: TimerObject
+    private var obj: UnsafeRawPointer
     private var callback: (()->Void)?
+    private var modeRawValue: swift_timer_type_t
 
     private var mode: Mode {
-        willSet {
-            obj.timerType = newValue.rawValue
+        didSet {
+            switch mode {
+                case .period:
+                modeRawValue = SWIFT_TIMER_TYPE_PERIOD
+                case .oneShot:
+                modeRawValue = SWIFT_TIMER_TYPE_ONESHOT
+            }
         }
     }
 
-    private var period: Int {
-        willSet {
-            obj.period = Int32(newValue)
-        }
-    }
-
-    private func objectInit() {
-        obj.timerType = mode.rawValue
-        obj.period = Int32(period)
-        swiftHal_timerInit(&obj)
-    }
+    private var period: Int32
 
     /**
      Intialize a timer.
      */
     public init() {
         self.mode = .period
-        self.period = 0
+        self.period = 1000
+        switch mode {
+            case .period:
+            modeRawValue = SWIFT_TIMER_TYPE_PERIOD
+            case .oneShot:
+            modeRawValue = SWIFT_TIMER_TYPE_ONESHOT
+        }
 
-        obj = TimerObject()
-        objectInit()
+        if let ptr = swifthal_timer_open() {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("Timer initialization failed!")
+        }
     }
 
     deinit {
-        swiftHal_timerDeinit(&obj)
+        swifthal_timer_close(obj)
     }
 
     /**
@@ -89,17 +94,17 @@ public final class Timer {
                             _ callback: @escaping ()->Void) {
         let initalSet = self.callback == nil ? true : false
 
-        self.period = period
+        self.period = Int32(period)
         self.mode = mode
         self.callback = callback
-        swiftHal_timerAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
+        swifthal_timer_add_callback(obj, getClassPointer(self)) { (ptr)->Void in
             let mySelf = Unmanaged<Timer>.fromOpaque(ptr!).takeUnretainedValue()
             mySelf.callback!()
         }
         if start {
-            swiftHal_timerStart(&obj)
+            swifthal_timer_start(obj, modeRawValue, self.period)
         } else if initalSet == false {
-            swiftHal_timerStop(&obj)
+            swifthal_timer_stop(obj)
         }
     }
 
@@ -107,21 +112,21 @@ public final class Timer {
      Start the timer.
      */
     public func start() {
-        swiftHal_timerStart(&obj)
+        swifthal_timer_start(obj, modeRawValue, self.period)
     }
 
     /**
      Stop the timer.
      */
     public func stop() {
-        swiftHal_timerStop(&obj)
+        swifthal_timer_stop(obj)
     }
 
     /**
      Clear the timer. The timer will be reset to inital value.
      */
     public func clear() {
-        swiftHal_timerCount(&obj)
+        swifthal_timer_status_get(obj)
     }
 
 }
@@ -131,7 +136,7 @@ extension Timer {
     /**
      There are two timer modes: if set to `oneShot`, the interrupt happens only once; if set to `period`, the interrupt happens continuously.
      */
-    public enum Mode: UInt8 {
+    public enum Mode {
         case oneShot, period
     }
 }
