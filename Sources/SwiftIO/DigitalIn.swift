@@ -19,36 +19,40 @@
  ````
  */
 public final class DigitalIn {
-		
-    private var obj: DigitalIOObject
+    private let id: Int32 
+    private var obj: UnsafeRawPointer 
 
-    private let id: IdName
+    private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
+    private var modeRawValue: swift_gpio_mode_t
+    private var interruptModeRawValue: swift_gpio_int_mode_t
+
     private var mode: Mode {
-        willSet {
-            obj.inputMode = newValue.rawValue
+        didSet {
+            switch mode {
+                case .pullDown:
+                modeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
+                case .pullUp:
+                modeRawValue = SWIFT_GPIO_MODE_PULL_UP
+                case .pullNone:
+                modeRawValue = SWIFT_GPIO_MODE_PULL_NONE
+            }
         }
     }
     private var interruptMode: InterruptMode {
-        willSet {
-            obj.interruptMode = newValue.rawValue
+        didSet {
+            switch interruptMode {
+                case .rising:
+                interruptModeRawValue = SWIFT_GPIO_INT_MODE_RISING_EDGE
+                case .falling:
+                interruptModeRawValue = SWIFT_GPIO_INT_MODE_FALLING_EDGE
+                case .bothEdge:
+                interruptModeRawValue = SWIFT_GPIO_INT_MODE_BOTH_EDGE
+            }
         }
     }
-    private var interruptState: InterruptState {
-        willSet {
-            obj.interruptState = newValue.rawValue
-        }
-    }
-    private var callback: (()->Void)?
+    private var interruptState: InterruptState = .disable
 
-    
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.direction = Direction.input.rawValue
-        obj.inputMode = mode.rawValue
-        obj.interruptMode = interruptMode.rawValue
-        obj.interruptState = interruptState.rawValue
-        swiftHal_gpioInit(&obj)
-    }
+    private var callback: (()->Void)?
 
     /**
      Initialize a DigitalIn to a specified pin.
@@ -66,21 +70,40 @@ public final class DigitalIn {
      let pin = DigitalIn(Id.D0, mode: .pullDown)
      ````
      */
-	public init(_ id: IdName,
+	public init(_ idName: IdName,
                 mode: Mode = .pullDown) {
-        self.id = id
+        self.id = idName.value
         self.mode = mode
+        switch mode {
+            case .pullDown:
+            modeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
+            case .pullUp:
+            modeRawValue = SWIFT_GPIO_MODE_PULL_UP
+            case .pullNone:
+            modeRawValue = SWIFT_GPIO_MODE_PULL_NONE
+        }
         self.interruptMode = .rising
-        self.interruptState = .disable
-        obj = DigitalIOObject()
-        objectInit()
+        switch interruptMode {
+            case .rising:
+            interruptModeRawValue = SWIFT_GPIO_INT_MODE_RISING_EDGE
+            case .falling:
+            interruptModeRawValue = SWIFT_GPIO_INT_MODE_FALLING_EDGE
+            case .bothEdge:
+            interruptModeRawValue = SWIFT_GPIO_INT_MODE_BOTH_EDGE
+        }
+
+        if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("DigitalIn\(idName.value) initialization failed!")
+        }
 	}
 
     deinit {
         if callback != nil {
             removeInterrupt()
         }
-        swiftHal_gpioDeinit(&obj)
+        swifthal_gpio_close(obj)
     }
 
     /**
@@ -99,7 +122,7 @@ public final class DigitalIn {
      */
 	public func setMode(_ mode: Mode) {
 		self.mode = mode
-		swiftHal_gpioConfig(&obj)
+		swifthal_gpio_config(obj, direction, modeRawValue)
 	}
 
 
@@ -112,7 +135,7 @@ public final class DigitalIn {
      */
     @inline(__always)
 	public func read() -> Bool {
-		return swiftHal_gpioRead(&obj) == 1 ? true : false
+		return swifthal_gpio_get(obj) == 1 ? true : false
 	}
 
     /**
@@ -125,13 +148,23 @@ public final class DigitalIn {
      */    
     public func setInterrupt(_ mode: InterruptMode, enable: Bool = true, callback: @escaping ()->Void) {
         interruptMode = mode
+
+        if self.callback != nil {
+            removeInterrupt()
+        }
+
         self.callback = callback
-        interruptState = enable ? .enable : .disable
-        swiftHal_gpioAddSwiftMember(&obj, getClassPtr(self)) {(ptr)->Void in
+        swifthal_gpio_interrupt_config(obj, interruptModeRawValue)
+        swifthal_gpio_interrupt_callback_install(obj, getClassPointer(self)) { (ptr)->Void in
             let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
             mySelf.callback!()
         }
-        swiftHal_gpioAddCallback(&obj)
+
+        if enable {
+            enableInterrupt()
+        } else {
+            disableInterrupt()
+        }
     }
 
     /**
@@ -139,8 +172,12 @@ public final class DigitalIn {
     
      */
     public func enableInterrupt() {
-        interruptState = .enable
-        swiftHal_gpioEnableCallback(&obj)
+        if callback != nil {
+            interruptState = .enable
+            swifthal_gpio_interrupt_enable(obj)
+        } else {
+            print("DigitalIn \(id) han't set an interrupt!")
+        }
     }
 
     /**
@@ -149,7 +186,7 @@ public final class DigitalIn {
      */
     public func disableInterrupt() {
         interruptState = .disable
-        swiftHal_gpioDisableCallback(&obj)
+        swifthal_gpio_interrupt_disable(obj)
     }
 
     /**
@@ -167,7 +204,8 @@ public final class DigitalIn {
      */
     public func removeInterrupt() {
         interruptState = .disable
-        swiftHal_gpioRemoveCallback(&obj)
+        swifthal_gpio_interrupt_disable(obj)
+        swifthal_gpio_interrupt_callback_uninstall(obj)
         callback = nil
     }
 
@@ -177,29 +215,27 @@ public final class DigitalIn {
 
 
 extension DigitalIn {
-    typealias Direction = DigitalOut.Direction
-
     /**
      The digital input modes can change the default state (high, low or floating) of a pin by using the pull resistors. 
      - Attention: The pins D26 to D37 are connected separately to an external 10kΩ resistor on the board. So even if they are changed to pullUp, the output voltage of these pins is still low.
      */
-    public enum Mode: UInt8 {
-        case pullDown = 1, pullUp, pullNone
+    public enum Mode {
+        case pullDown, pullUp, pullNone
     }
 
     /**
      The interrupt mode determines the edge to raise the interrupt: rising, falling or both edges. A rising edge is the transition of a digital input signal from high to low and a falling edge is from low to high.
 
      */
-    public enum InterruptMode: UInt8 {
-        case rising = 1, falling, bothEdge
+    public enum InterruptMode {
+        case rising, falling, bothEdge
     }
 
     /**
      The interrupt state determines whether the interrupt will be enabled and occur.
 
      */
-    public enum InterruptState: UInt8 {
+    public enum InterruptState {
         case disable, enable
     }
 }

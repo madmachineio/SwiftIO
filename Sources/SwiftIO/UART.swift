@@ -4,44 +4,50 @@ UART is a two-wire serial communication protocol used to communicate with serial
 
 */
 public final class UART {
+    private let id: Int32
+    private var obj: UnsafeRawPointer
 
-    private var obj: UARTObject
+    private var config = swift_uart_cfg_t()
 
-    private let id: IdName
     private var baudRate: Int {
-        willSet {
-            obj.baudRate = Int32(newValue)
+        didSet {
+            config.baudrate = Int32(baudRate)
         }
     }
     private var dataBits: DataBits {
-        willSet {
-            obj.dataBits = newValue.rawValue
+        didSet {
+            switch dataBits {
+                case .eightBits:
+                config.data_bits = SWIFT_UART_DATA_BITS_8
+            }
         }
     }
     private var parity: Parity {
-        willSet {
-            obj.parity = newValue.rawValue
+        didSet {
+            switch parity {
+                case .none:
+                config.parity = SWIFT_UART_PARITY_NONE
+                case .odd:
+                config.parity = SWIFT_UART_PARITY_ODD
+                case .even:
+                config.parity = SWIFT_UART_PARITY_EVEN
+            }
         }
     }
     private var stopBits: StopBits {
-        willSet {
-            obj.stopBits = newValue.rawValue
+        didSet {
+            switch stopBits {
+                case .oneBit:
+                config.stop_bits = SWIFT_UART_STOP_BITS_1
+                case .twoBits:
+                config.stop_bits = SWIFT_UART_STOP_BITS_2
+            }
         }
     }
-    private var readBufferLength: BufferLength {
-        willSet {
-            obj.readBufferLength = Int32(newValue.rawValue)
+    private var readBufferLength: Int {
+        didSet {
+            config.read_buf_len = Int32(readBufferLength)
         }
-    }
-
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.baudRate = Int32(baudRate)
-        obj.dataBits = dataBits.rawValue
-        obj.parity = parity.rawValue
-        obj.stopBits = stopBits.rawValue
-        obj.readBufferLength = Int32(readBufferLength.rawValue)
-        swiftHal_uartInit(&obj)
     }
 
     /**
@@ -59,25 +65,52 @@ public final class UART {
      let uart = UART(Id.UART0)
      ````
      */
-    public init(_ id: IdName,
+    public init(_ idName: IdName,
                 baudRate: Int = 115200,
                 dataBits: DataBits = .eightBits,
                 parity: Parity = .none,
                 stopBits: StopBits = .oneBit,
-                readBufferLength: BufferLength = .small) {
-        self.id = id
+                readBufferLength: Int = 64) {
+        self.id = idName.value
         self.baudRate = baudRate
         self.dataBits = dataBits
         self.parity = parity
         self.stopBits = stopBits
         self.readBufferLength = readBufferLength
-        obj = UARTObject()
-        objectInit()
+
+        config.baudrate = Int32(baudRate)
+        switch dataBits {
+            case .eightBits:
+            config.data_bits = SWIFT_UART_DATA_BITS_8
+        }
+        switch parity {
+            case .none:
+            config.parity = SWIFT_UART_PARITY_NONE
+            case .odd:
+            config.parity = SWIFT_UART_PARITY_ODD
+            case .even:
+            config.parity = SWIFT_UART_PARITY_EVEN
+        }
+        switch stopBits {
+            case .oneBit:
+            config.stop_bits = SWIFT_UART_STOP_BITS_1
+            case .twoBits:
+            config.stop_bits = SWIFT_UART_STOP_BITS_2
+        }
+        config.read_buf_len = Int32(readBufferLength)
+
+        if let ptr = swifthal_uart_open(id, &config) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("UART\(idName.value) initialization failed!")
+        }
+
     }
 
     deinit {
-        swiftHal_uartDeinit(&obj)
+        swifthal_uart_close(obj)
     }
+
 
     /**
      Set the baud rate for communication. It should be set ahead of time to ensure the same baud rate between two devices.
@@ -85,15 +118,15 @@ public final class UART {
 
      */
     public func setBaudrate(_ baudRate: Int) {
-        obj.baudRate = Int32(baudRate)
-        swiftHal_uartConfig(&obj)
+        config.baudrate = Int32(baudRate)
+        swifthal_uart_baudrate_set(obj, config.baudrate)
     }
 
     /**
      Clear all bytes from the buffer to store the incoming data.
      */
     public func clearBuffer() {
-        swiftHal_uartClearBuffer(&obj)
+        swifthal_uart_buffer_clear(obj)
     }
 
     /**
@@ -101,7 +134,7 @@ public final class UART {
      - Returns: The number of bytes received in the buffer.
      */
     public func checkBufferReceived() -> Int {
-        return Int(swiftHal_uartCount(&obj))
+        return Int(swifthal_uart_remainder_get(obj))
     }
 
     /**
@@ -111,7 +144,7 @@ public final class UART {
      */
     @inline(__always)
     public func write(_ byte: UInt8) {
-        swiftHal_uartWriteChar(&obj, byte)
+        swifthal_uart_char_put(obj, byte)
     }
 
     /**
@@ -120,8 +153,12 @@ public final class UART {
 
      */
     @inline(__always)
-    public func write(_ data: [UInt8]) {
-        swiftHal_uartWrite(&obj, data, Int32(data.count))
+    public func write(_ data: [UInt8], count: Int? = nil) {
+        if let length = count {
+            swifthal_uart_write(obj, data, Int32(length))
+        } else {
+            swifthal_uart_write(obj, data, Int32(data.count))
+        }
     }
 
     /**
@@ -132,7 +169,7 @@ public final class UART {
     @inline(__always)
     public func write(_ string: String) {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
-        swiftHal_uartWrite(&obj, data, Int32(data.count))
+        swifthal_uart_write(obj, data, Int32(data.count))
     }
 
     /**
@@ -147,8 +184,10 @@ public final class UART {
 
      */
     @inline(__always)
-    public func readByte(timeout: Int = -1) -> UInt8 {
-        return swiftHal_uartReadChar(&obj, Int32(timeout))
+    public func readByte(timeout: Int = Int(SWIFT_FOREVER)) -> UInt8 {
+        var byte = UInt8()
+        swifthal_uart_char_get(obj, &byte, Int32(timeout))
+        return byte
     }
 
     /**
@@ -164,9 +203,9 @@ public final class UART {
 
      */
     @inline(__always)
-    public func read(count: Int, timeout: Int = -1) -> [UInt8] {
+    public func read(count: Int, timeout: Int = Int(SWIFT_FOREVER)) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
-        let received = Int(swiftHal_uartRead(&obj, &data, Int32(count), Int32(timeout)))
+        let received = Int(swifthal_uart_read(obj, &data, Int32(count), Int32(timeout)))
         return Array(data[0..<received])
     }
 
@@ -181,7 +220,7 @@ extension UART {
      The parity bit is used to ensure the data transmission according to the number of logical-high bits.
 
      */
-    public enum Parity: UInt8 {
+    public enum Parity {
         case none, odd, even
     }
 
@@ -189,7 +228,7 @@ extension UART {
      One or two stops bits are reserved to end the communication.
 
      */
-    public enum StopBits: UInt8 {
+    public enum StopBits {
         case oneBit, twoBits
     }
 
@@ -197,15 +236,8 @@ extension UART {
      This indicates the length of the data being transmitted.
 
      */
-    public enum DataBits: UInt8 {
+    public enum DataBits {
         case eightBits
     }
 
-    /**
-     This indicates the storage size of the serial buffer.
-
-     */
-    public enum BufferLength: Int32 {
-        case small = 64, medium = 256, large = 1024
-    }
 }

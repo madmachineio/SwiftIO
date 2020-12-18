@@ -199,3 +199,12 @@ int swiftHal_FsSync(const void* fp);
 //int swiftHal_FsCloseDir(void *dp);
 int swiftHal_FsStat(const char *path, DirEntry *entry);
 //int swiftHal_FsStatvfs(char *path, DirEntry *stat);
+
+
+
+
+
+
+
+
+

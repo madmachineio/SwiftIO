@@ -36,35 +36,34 @@
  ````
  */
 public final class DigitalOut {
+    private let id: Int32
+    private let obj: UnsafeRawPointer
 
-    private var obj: DigitalIOObject
+    private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
+    private var modeRawValue: swift_gpio_mode_t
 
-    private let id: IdName
+
     private var mode: Mode {
-        willSet {
-            obj.outputMode = newValue.rawValue
+        didSet {
+            switch mode {
+                case .pushPull:
+                modeRawValue = SWIFT_GPIO_MODE_PULL_UP
+                case .openDrain:
+                modeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
+            }
         }
     }
-
     /**
      The current state of the output value.
      Write to this property would change the output value.
      
      */
     private var value: Bool {
-        willSet {
-			swiftHal_gpioWrite(&obj, newValue ? 1 : 0)
+        didSet {
+			swifthal_gpio_set(obj, value ? 1 : 0)
 		}
 	}
 
-    private func objectInit() {
-        obj.idNumber = id.number
-        obj.direction = Direction.output.rawValue
-        obj.outputMode = mode.rawValue
-
-        swiftHal_gpioInit(&obj)
-		swiftHal_gpioWrite(&obj, value ? 1 : 0)
-    }
     
     /**
      Initialize a DigitalOut to a specific output pin.
@@ -89,18 +88,27 @@ public final class DigitalOut {
      let outputPin3 = DigitalOut(Id.D3, mode: .openDrain, value: true)
      ````
      */
-    public init(_ id: IdName,
+    public init(_ idName: IdName,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
-        self.id = id
-        self.mode = mode
+        self.id = idName.value
         self.value = value
-        obj = DigitalIOObject()
-        objectInit()
+        self.mode = mode
+        switch mode {
+            case .pushPull:
+            modeRawValue = SWIFT_GPIO_MODE_PULL_UP
+            case .openDrain:
+            modeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
+        }
+        if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("DigitalOut\(idName.value) initialization failed!")
+        }
     }
 
     deinit {
-        swiftHal_gpioDeinit(&obj)
+        swifthal_gpio_close(obj)
     }
 
     /**
@@ -127,7 +135,10 @@ public final class DigitalOut {
      */
     public func setMode(_ mode: Mode) {
         self.mode = mode
-        swiftHal_gpioConfig(&obj)
+
+        if swifthal_gpio_config(obj, direction, modeRawValue) != 0 {
+            print("DigitalOut\(id) setMode failed!")
+        }
 	}
 
 
@@ -168,18 +179,11 @@ public final class DigitalOut {
 
 extension DigitalOut {
     /**
-        **DO NOT USE**
-     */
-    enum Direction: UInt8 {
-        case output = 1, input
-    }
-
-    /**
      The Mode enumerate includes the available output modes. The default output mode in most cases is pushPull. The pushPull mode enables the digital pin to output high and low voltage levels while the open-drain output cannot truly output a high level.
      
      */
-    public enum Mode: UInt8 {
-        case pushPull = 1, openDrain
+    public enum Mode {
+        case pushPull, openDrain
     }
 }
 

@@ -561,3 +561,364 @@ int swifthal_counter_clear(const void *counter);
  * @retval Negative errno code if failure.
  */
 int swifthal_counter_info_get(const void *counter, swift_counter_info_t *info);
+
+
+
+
+
+
+
+
+
+/** @brief GPIO direction, Input or output. */
+enum swift_gpio_direction {
+	SWIFT_GPIO_DIRECTION_OUT,
+	SWIFT_GPIO_DIRECTION_IN,
+};
+
+typedef enum swift_gpio_direction swift_gpio_direction_t;
+
+/** @brief GPIO internal electrical connection. */
+enum swift_gpio_mode {
+	SWIFT_GPIO_MODE_PULL_UP,
+	SWIFT_GPIO_MODE_PULL_DOWN,
+	SWIFT_GPIO_MODE_PULL_NONE,
+	SWIFT_GPIO_MODE_OPEN_DRAIN,
+};
+
+typedef enum swift_gpio_mode swift_gpio_mode_t;
+
+/** @brief GPIO interrupt trigger mode. */
+enum swift_gpio_int_mode {
+	SWIFT_GPIO_INT_MODE_RISING_EDGE,
+	SWIFT_GPIO_INT_MODE_FALLING_EDGE,
+	SWIFT_GPIO_INT_MODE_BOTH_EDGE,
+	SWIFT_GPIO_INT_MODE_HIGH_LEVEL,
+	SWIFT_GPIO_INT_MODE_LOW_LEVEL,
+};
+
+typedef enum swift_gpio_int_mode swift_gpio_int_mode_t;
+
+/**
+ * @brief Open gpio
+ *
+ * @param id GPIO id
+ * @param direction GPIO direction, use @ref swift_gpio_direction
+ * - SWIFT_GPIO_DIRECTION_OUT = GPIO be used to output
+ * - SWIFT_GPIO_DIRECTION_IN = GPIO be used to input
+ * @param io_mode GPIO internal electrical connection, use @ref swift_gpio_mode
+ * - SWIFT_GPIO_MODE_PULL_UP = pull up, for input and output
+ * - SWIFT_GPIO_MODE_PULL_DOWN = pull down, only for input
+ * - SWIFT_GPIO_MODE_PULL_NONE = pull none, only for input
+ * - SWIFT_GPIO_MODE_OPEN_DRAIN = open drain, only for output
+ *
+ * @return GPIO handle, NULL is fail
+ */
+void *swifthal_gpio_open(int id,
+			 swift_gpio_direction_t direction,
+			 swift_gpio_mode_t io_mode);
+
+/**
+ * @brief Close gpio
+ *
+ * @param gpio GPIO handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_close(const void *gpio);
+
+/**
+ * @brief Configure opened GPIO, change direction and mode
+ *
+ * @param gpio GPIO handle
+ * @param direction GPIO direction, use @ref swift_gpio_direction
+ * - SWIFT_GPIO_DIRECTION_OUT = GPIO be used to output
+ * - SWIFT_GPIO_DIRECTION_IN = GPIO be used to input
+ * @param io_mode GPIO internal electrical connection, use @ref swift_gpio_mode
+ * - SWIFT_GPIO_MODE_PULL_UP = pull up, for input and output
+ * - SWIFT_GPIO_MODE_PULL_DOWN = pull down, only for input
+ * - SWIFT_GPIO_MODE_PULL_NONE = pull none, only for input
+ * - SWIFT_GPIO_MODE_OPEN_DRAIN = open drain, only for output
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_config(const void *gpio,
+			 swift_gpio_direction_t direction,
+			 swift_gpio_mode_t io_mode);
+
+/**
+ * @brief Set output GPIO level
+ *
+ * @param gpio GPIO handle
+ * @param level gpio level
+ * - 0 = low level
+ * - 1 = hight level
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_set(const void *gpio, int level);
+
+/**
+ * @brief Get input GPIO level
+ *
+ * @param gpio GPIO handle
+ *
+ * @retval 0 low level
+ * @retval 1 high level
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_get(const void *gpio);
+
+/**
+ * @brief Config input GPIO interrupt
+ *
+ * @param gpio GPIO handle
+ * @param int_mode interrput trigger mode
+ * - SWIFT_GPIO_INT_MODE_RISING_EDGE = rising edge trigger interrupt
+ * - SWIFT_GPIO_INT_MODE_FALLING_EDGE = falling edge trigger interrupt
+ * - SWIFT_GPIO_INT_MODE_BOTH_EDGE = rising or falling edge trigger interrupt
+ * - SWIFT_GPIO_INT_MODE_HIGH_LEVEL = high level trigger interrupt
+ * - SWIFT_GPIO_INT_MODE_LOW_LEVEL = low level trigger interrupt
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_interrupt_config(const void *gpio, swift_gpio_int_mode_t int_mode);
+
+/**
+ * @brief The installed callback will be called when the interrupt is generated
+ *
+ * @param gpio GPIO handle
+ * @param callback interrupt callback
+ * @param param callback paramater
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_interrupt_callback_install(const void *gpio, void *param, void (*callback)(void *));
+
+/**
+ * @brief Uninstall interrupt callback
+ *
+ * @param gpio GPIO handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_interrupt_callback_uninstall(const void *gpio);
+
+/**
+ * @brief Enable GPIO interrupt
+ *
+ * @param gpio GPIO handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_interrupt_enable(const void *gpio);
+
+/**
+ * @brief Disable GPIO interrupt
+ *
+ * @param gpio GPIO handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_gpio_interrupt_disable(const void *gpio);
+
+
+
+
+
+
+
+
+
+/** @brief Parity modes */
+enum swift_uart_parity {
+	SWIFT_UART_PARITY_NONE,
+	SWIFT_UART_PARITY_ODD,
+	SWIFT_UART_PARITY_EVEN,
+};
+
+typedef enum swift_uart_parity swift_uart_parity_t;
+
+/** @brief Number of stop bits. */
+enum swift_uart_stop_bits {
+	SWIFT_UART_STOP_BITS_1,
+	SWIFT_UART_STOP_BITS_2,
+};
+
+typedef enum swift_uart_stop_bits swift_uart_stop_bits_t;
+
+/** @brief Number of data bits. */
+enum swift_uart_data_bits {
+	SWIFT_UART_DATA_BITS_8,
+};
+
+typedef enum swift_uart_data_bits swift_uart_data_bits_t;
+
+
+/**
+ * @brief UART controller configuration structure
+ *
+ * @param baudrate  Baudrate setting in bps
+ * @param parity    Parity bit, use @ref swift_uart_parity
+ * @param stop_bits Stop bits, use @ref swift_uart_stop_bits
+ * @param data_bits Data bits, use @ref swift_uart_data_bits
+ * @param read_buf_len uart read buffer size
+ */
+struct swift_uart_cfg {
+	int baudrate;
+	swift_uart_parity_t parity;
+	swift_uart_stop_bits_t stop_bits;
+	swift_uart_data_bits_t data_bits;
+	int read_buf_len;
+};
+
+typedef struct swift_uart_cfg swift_uart_cfg_t;
+
+/**
+ * @brief Open a UART
+ *
+ * @param id		Uart ID, use @ref swift_uart_id
+ * @param cfg		Uart config, use @ref swift_uart_cfg
+ *
+ * @return void*	Uart handle,NULL if not found or cannot be used.
+ */
+void *swifthal_uart_open(int id, const swift_uart_cfg_t *cfg);
+
+/**
+ * @brief Close a Uart
+ *
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_close(const void *uart);
+
+/**
+ * @brief Set uart baudrate
+ *
+ * @param uart 		Uart handle
+ * @param baudrate 	Uart baudrate setting in bps
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_baudrate_set(const void *uart, int baudrate);
+
+/**
+ * @brief Set uart parity
+ *
+ * @param uart 		Uart handle
+ * @param parity 	Parity bit, use @ref swift_uart_parity
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_parity_set(const void *uart, swift_uart_parity_t parity);
+
+/**
+ * @brief Set uart stop bits
+ *
+ * @param uart 		Uart handle
+ * @param stop_bits	Stop bits, use @ref swift_uart_stop_bits
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_stop_bits_set(const void *uart, swift_uart_stop_bits_t stop_bits);
+
+/**
+ * @brief Set uart data bits
+ *
+ * @param uart 		Uart handle
+ * @param data_bits 	Data bits, use @ref swift_uart_data_bits
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_swift_uart_data_bits_set(const void *uart, swift_uart_stop_bits_t data_bits);
+
+/**
+ * @brief Get uart config information
+ *
+ * @param uart	Uart handle
+ * @param cfg	Uart config, use @ref swift_uart_cfg
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_config_get(const void *uart, swift_uart_cfg_t *cfg);
+
+/**
+ * @brief Send one character through UART.
+ *
+ * @param uart	Uart handle
+ * @param c	Character to transmit
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_char_put(const void *uart, unsigned char c);
+
+/**
+ * @brief Receive on character to buffer through UART.
+ *
+ * @param uart 		UART handle
+ * @param c 		Pointer to receive buffer
+ * @param timeout	Timeout in milliseconds.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_char_get(const void *uart, unsigned char *c, int timeout);
+
+/**
+ * @brief Send given number of bytes from buffer through UART.
+ *
+ * @param uart Uart Handle
+ * @param buf Pointer to transmit buffer.
+ * @param length Length of transmit buffer.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_write(const void *uart, const unsigned char *buf, int length);
+
+/**
+ * @brief Recvice given number of bytes to buffer through UART.
+ *
+ * @param uart Uart Handle
+ * @param buf Pointer to revice buffer.
+ * @param length Length of recvice buffer.
+ * @param timeout Timeout in milliseconds.
+ *
+ * @retval Positive indicates the number of bytes actually read.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_read(const void *uart, unsigned char *buf, int length, int timeout);
+
+/**
+ * @brief Get data amount in read buffer
+ *
+ * @param uart Uart handle
+ *
+ * @return data amount
+ */
+int swifthal_uart_remainder_get(const void *uart);
+
+/**
+ * @brief Clear read buffer of UART
+ *
+ * @param uart Uart handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_uart_buffer_clear(const void *uart);
