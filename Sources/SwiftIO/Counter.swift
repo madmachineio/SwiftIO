@@ -49,7 +49,7 @@ while true {
 */
 public final class Counter {
     private let id: Int32
-    private let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
     private var info = swift_counter_info_t()
     private var modeRawValue: swift_counter_mode_t
 
@@ -96,7 +96,7 @@ public final class Counter {
         }
         
         if let ptr = swifthal_counter_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("Counter\(idName.value) initialization failed!")
         }

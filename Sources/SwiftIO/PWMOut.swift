@@ -20,7 +20,7 @@ while true {
 */
 public final class PWMOut {
     private let id: Int32 
-    private let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
     private var info = swift_pwm_info_t()
 
     private var period: Int32 = 0
@@ -65,7 +65,7 @@ public final class PWMOut {
         self.id = idName.value
 
         if let ptr = swifthal_pwm_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("PWM\(idName.value) initialization failed!")
         }

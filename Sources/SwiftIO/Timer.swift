@@ -39,7 +39,7 @@
  ````
 */
 public final class Timer {
-    private var obj: UnsafeRawPointer
+    private var obj: UnsafeMutableRawPointer
     private var callback: (()->Void)?
     private var modeRawValue: swift_timer_type_t
 
@@ -70,7 +70,7 @@ public final class Timer {
         }
 
         if let ptr = swifthal_timer_open() {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("Timer initialization failed!")
         }

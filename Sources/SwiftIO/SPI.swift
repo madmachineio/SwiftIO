@@ -6,7 +6,7 @@
  public final class SPI {
 
     private let id: Int32
-    private let obj: UnsafeRawPointer 
+    private let obj: UnsafeMutableRawPointer 
 
     private var speed: Int
 
@@ -27,7 +27,7 @@
         self.speed = speed
 
         if let ptr = swifthal_spi_open(id, Int32(speed), nil, nil) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("SPI\(idName.value) initialization failed!")
         }

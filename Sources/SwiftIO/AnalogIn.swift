@@ -21,7 +21,7 @@
  */
 public final class AnalogIn {
     private let id: Int32
-    private let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
     private var info = swift_adc_info_t()
 
     /**
@@ -54,7 +54,7 @@ public final class AnalogIn {
     public init(_ idName: IdName) {
         id = idName.value
         if let ptr = swifthal_adc_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("Initialize AnalogIn A\(idName.value) failed!")
         }

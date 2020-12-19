@@ -37,7 +37,7 @@
  */
 public final class DigitalOut {
     private let id: Int32
-    private let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
     private var modeRawValue: swift_gpio_mode_t
@@ -101,7 +101,7 @@ public final class DigitalOut {
             modeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
         }
         if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("DigitalOut\(idName.value) initialization failed!")
         }

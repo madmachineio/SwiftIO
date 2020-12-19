@@ -20,7 +20,7 @@
  */
 public final class DigitalIn {
     private let id: Int32 
-    private var obj: UnsafeRawPointer 
+    private var obj: UnsafeMutableRawPointer 
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
     private var modeRawValue: swift_gpio_mode_t
@@ -93,7 +93,7 @@ public final class DigitalIn {
         }
 
         if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("DigitalIn\(idName.value) initialization failed!")
         }

@@ -10,7 +10,7 @@
  */
  public final class I2C {
     private let id: Int32
-    private let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
     private var speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
     
     private var speed: Speed {
@@ -44,7 +44,7 @@
         self.speed = speed
 
         if let ptr = swifthal_i2c_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = UnsafeMutableRawPointer(ptr)
             if swifthal_i2c_config(obj, speedRawValue) != 0 {
                 print("I2C\(id) config failed!")
             }

@@ -1,16 +1,3 @@
-typedef struct {
-	void *classPtr;
-	void (*callback)(void *);
-} CallbackWrapper;
-
-
-
-
-
-
-
-
-
 
 #define SWIFT_NO_WAIT   0
 #define SWIFT_FOREVER (-1)
@@ -88,7 +75,7 @@ void *swifthal_adc_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_close(const void *adc);
+int swifthal_adc_close(void *adc);
 
 /**
  * @brief Read adc value
@@ -98,7 +85,7 @@ int swifthal_adc_close(const void *adc);
  * @retval Positive indicates the adc value.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_read(const void *adc);
+int swifthal_adc_read(void *adc);
 
 /**
  * @brief Get adc infomation
@@ -109,7 +96,7 @@ int swifthal_adc_read(const void *adc);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_info_get(const void *adc, swift_adc_info_t *info);
+int swifthal_adc_info_get(void *adc, swift_adc_info_t *info);
 
 
 
@@ -140,7 +127,7 @@ void *swifthal_i2c_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_close(const void *i2c);
+int swifthal_i2c_close(void *i2c);
 
 /**
  * @brief Config i2c speed
@@ -154,7 +141,7 @@ int swifthal_i2c_close(const void *i2c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_config(const void *i2c, unsigned int speed);
+int swifthal_i2c_config(void *i2c, unsigned int speed);
 
 /**
  * @brief Write a set amount of data to an I2C device.
@@ -169,7 +156,7 @@ int swifthal_i2c_config(const void *i2c, unsigned int speed);
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_write(const void *i2c, unsigned char address, const unsigned char *buf, int length);
+int swifthal_i2c_write(void *i2c, unsigned char address, const unsigned char *buf, int length);
 
 /**
  * @brief Read a set amount of data from an I2C device.
@@ -184,7 +171,7 @@ int swifthal_i2c_write(const void *i2c, unsigned char address, const unsigned ch
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_read(const void *i2c, unsigned char address, unsigned char *buf, int length);
+int swifthal_i2c_read(void *i2c, unsigned char address, unsigned char *buf, int length);
 
 /**
  * @brief Write then read data from an I2C device.
@@ -203,7 +190,7 @@ int swifthal_i2c_read(const void *i2c, unsigned char address, unsigned char *buf
  * @retval 0 if successful
  * @retval negative on error.
  */
-int swifthal_i2c_write_read(const void *i2c, unsigned char addr,
+int swifthal_i2c_write_read(void *i2c, unsigned char addr,
 			    const void *write_buf, int num_write,
 			    void *read_buf, int num_read);
 
@@ -235,7 +222,7 @@ void *swifthal_spi_open(int id,
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_close(const void *spi);
+int swifthal_spi_close(void *spi);
 
 /**
  * @brief Config spi speed
@@ -246,7 +233,7 @@ int swifthal_spi_close(const void *spi);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_config(const void *spi, int speed);
+int swifthal_spi_config(void *spi, int speed);
 
 /**
  * @brief Send given number of bytes from buffer through SPI.
@@ -258,7 +245,7 @@ int swifthal_spi_config(const void *spi, int speed);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_write(const void *spi, const unsigned char *buf, int length);
+int swifthal_spi_write(void *spi, const unsigned char *buf, int length);
 
 /**
  * @brief Recvice given number of bytes to buffer through SPI.
@@ -270,7 +257,7 @@ int swifthal_spi_write(const void *spi, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_read(const void *spi, unsigned char *buf, int length);
+int swifthal_spi_read(void *spi, unsigned char *buf, int length);
 
 /**
  * @brief Asynchronous send given number of bytes from buffer through SPI.
@@ -282,7 +269,7 @@ int swifthal_spi_read(const void *spi, unsigned char *buf, int length);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_async_write(const void *spi, const unsigned char *buf, int length);
+int swifthal_spi_async_write(void *spi, const unsigned char *buf, int length);
 
 /**
  * @brief Asynchronous revice given number of bytes from buffer through SPI.
@@ -294,7 +281,7 @@ int swifthal_spi_async_write(const void *spi, const unsigned char *buf, int leng
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_async_read(const void *spi, unsigned char *buf, int length);
+int swifthal_spi_async_read(void *spi, unsigned char *buf, int length);
 
 
 
@@ -333,7 +320,7 @@ void *swifthal_pwm_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_close(const void *pwm);
+int swifthal_pwm_close(void *pwm);
 
 /**
  * @brief Set pwm paramater
@@ -345,7 +332,7 @@ int swifthal_pwm_close(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_set(const void *pwm, int period, int pulse);
+int swifthal_pwm_set(void *pwm, int period, int pulse);
 
 /**
  * @brief Suspend pwm output
@@ -355,7 +342,7 @@ int swifthal_pwm_set(const void *pwm, int period, int pulse);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_suspend(const void *pwm);
+int swifthal_pwm_suspend(void *pwm);
 
 /**
  * @brief Resume pwm output
@@ -365,7 +352,7 @@ int swifthal_pwm_suspend(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_resume(const void *pwm);
+int swifthal_pwm_resume(void *pwm);
 
 /**
  * @brief Get pwm infomation
@@ -376,7 +363,7 @@ int swifthal_pwm_resume(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_info_get(const void *pwm, swift_pwm_info_t *info);
+int swifthal_pwm_info_get(void *pwm, swift_pwm_info_t *info);
 
 
 
@@ -413,7 +400,7 @@ void *swifthal_timer_open();
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_close(const void *timer);
+int swifthal_timer_close(void *timer);
 
 /**
  * @brief Start timer
@@ -425,7 +412,7 @@ int swifthal_timer_close(const void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_start(const void *timer, swift_timer_type_t type, int period);
+int swifthal_timer_start(void *timer, swift_timer_type_t type, int period);
 
 /**
  * @brief Stop timer
@@ -435,7 +422,7 @@ int swifthal_timer_start(const void *timer, swift_timer_type_t type, int period)
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_stop(const void *timer);
+int swifthal_timer_stop(void *timer);
 
 /**
  * @brief Add callback for timer expire
@@ -447,7 +434,7 @@ int swifthal_timer_stop(const void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_add_callback(const void *timer, void *param, void (*callback)(void *));
+int swifthal_timer_add_callback(void *timer, void *param, void (*callback)(void *));
 
 /**
  * @brief Read timer status.
@@ -461,7 +448,7 @@ int swifthal_timer_add_callback(const void *timer, void *param, void (*callback)
  *
  * @return Timer status.
  */
-unsigned int swifthal_timer_status_get(const void *timer);
+unsigned int swifthal_timer_status_get(void *timer);
 
 
 
@@ -509,7 +496,7 @@ void *swifthal_counter_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_close(const void *counter);
+int swifthal_counter_close(void *counter);
 
 /**
  * @brief Read count result
@@ -519,7 +506,7 @@ int swifthal_counter_close(const void *counter);
  * @retval Positive indicates the count result.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_read(const void *counter);
+int swifthal_counter_read(void *counter);
 
 /**
  * @brief Start count
@@ -529,7 +516,7 @@ int swifthal_counter_read(const void *counter);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_start(const void *counter, swift_counter_mode_t mode);
+int swifthal_counter_start(void *counter, swift_counter_mode_t mode);
 
 /**
  * @brief Stop count
@@ -539,7 +526,7 @@ int swifthal_counter_start(const void *counter, swift_counter_mode_t mode);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_stop(const void *counter);
+int swifthal_counter_stop(void *counter);
 
 /**
  * @brief Reset count result to 0
@@ -549,7 +536,7 @@ int swifthal_counter_stop(const void *counter);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_clear(const void *counter);
+int swifthal_counter_clear(void *counter);
 
 /**
  * @brief Get counter infomation
@@ -560,7 +547,7 @@ int swifthal_counter_clear(const void *counter);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_info_get(const void *counter, swift_counter_info_t *info);
+int swifthal_counter_info_get(void *counter, swift_counter_info_t *info);
 
 
 
@@ -626,7 +613,7 @@ void *swifthal_gpio_open(int id,
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_close(const void *gpio);
+int swifthal_gpio_close(void *gpio);
 
 /**
  * @brief Configure opened GPIO, change direction and mode
@@ -644,7 +631,7 @@ int swifthal_gpio_close(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_config(const void *gpio,
+int swifthal_gpio_config(void *gpio,
 			 swift_gpio_direction_t direction,
 			 swift_gpio_mode_t io_mode);
 
@@ -659,7 +646,7 @@ int swifthal_gpio_config(const void *gpio,
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_set(const void *gpio, int level);
+int swifthal_gpio_set(void *gpio, int level);
 
 /**
  * @brief Get input GPIO level
@@ -670,7 +657,7 @@ int swifthal_gpio_set(const void *gpio, int level);
  * @retval 1 high level
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_get(const void *gpio);
+int swifthal_gpio_get(void *gpio);
 
 /**
  * @brief Config input GPIO interrupt
@@ -686,7 +673,7 @@ int swifthal_gpio_get(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_config(const void *gpio, swift_gpio_int_mode_t int_mode);
+int swifthal_gpio_interrupt_config(void *gpio, swift_gpio_int_mode_t int_mode);
 
 /**
  * @brief The installed callback will be called when the interrupt is generated
@@ -698,7 +685,7 @@ int swifthal_gpio_interrupt_config(const void *gpio, swift_gpio_int_mode_t int_m
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_callback_install(const void *gpio, void *param, void (*callback)(void *));
+int swifthal_gpio_interrupt_callback_install(void *gpio, void *param, void (*callback)(void *));
 
 /**
  * @brief Uninstall interrupt callback
@@ -708,7 +695,7 @@ int swifthal_gpio_interrupt_callback_install(const void *gpio, void *param, void
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_callback_uninstall(const void *gpio);
+int swifthal_gpio_interrupt_callback_uninstall(void *gpio);
 
 /**
  * @brief Enable GPIO interrupt
@@ -718,7 +705,7 @@ int swifthal_gpio_interrupt_callback_uninstall(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_enable(const void *gpio);
+int swifthal_gpio_interrupt_enable(void *gpio);
 
 /**
  * @brief Disable GPIO interrupt
@@ -728,7 +715,7 @@ int swifthal_gpio_interrupt_enable(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_disable(const void *gpio);
+int swifthal_gpio_interrupt_disable(void *gpio);
 
 
 
@@ -799,7 +786,7 @@ void *swifthal_uart_open(int id, const swift_uart_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_close(const void *uart);
+int swifthal_uart_close(void *uart);
 
 /**
  * @brief Set uart baudrate
@@ -810,7 +797,7 @@ int swifthal_uart_close(const void *uart);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_baudrate_set(const void *uart, int baudrate);
+int swifthal_uart_baudrate_set(void *uart, int baudrate);
 
 /**
  * @brief Set uart parity
@@ -821,7 +808,7 @@ int swifthal_uart_baudrate_set(const void *uart, int baudrate);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_parity_set(const void *uart, swift_uart_parity_t parity);
+int swifthal_uart_parity_set(void *uart, swift_uart_parity_t parity);
 
 /**
  * @brief Set uart stop bits
@@ -832,7 +819,7 @@ int swifthal_uart_parity_set(const void *uart, swift_uart_parity_t parity);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_stop_bits_set(const void *uart, swift_uart_stop_bits_t stop_bits);
+int swifthal_uart_stop_bits_set(void *uart, swift_uart_stop_bits_t stop_bits);
 
 /**
  * @brief Set uart data bits
@@ -843,7 +830,7 @@ int swifthal_uart_stop_bits_set(const void *uart, swift_uart_stop_bits_t stop_bi
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_swift_uart_data_bits_set(const void *uart, swift_uart_stop_bits_t data_bits);
+int swifthal_swift_uart_data_bits_set(void *uart, swift_uart_stop_bits_t data_bits);
 
 /**
  * @brief Get uart config information
@@ -854,7 +841,7 @@ int swifthal_swift_uart_data_bits_set(const void *uart, swift_uart_stop_bits_t d
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_config_get(const void *uart, swift_uart_cfg_t *cfg);
+int swifthal_uart_config_get(void *uart, swift_uart_cfg_t *cfg);
 
 /**
  * @brief Send one character through UART.
@@ -865,7 +852,7 @@ int swifthal_uart_config_get(const void *uart, swift_uart_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_put(const void *uart, unsigned char c);
+int swifthal_uart_char_put(void *uart, unsigned char c);
 
 /**
  * @brief Receive on character to buffer through UART.
@@ -877,7 +864,7 @@ int swifthal_uart_char_put(const void *uart, unsigned char c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_get(const void *uart, unsigned char *c, int timeout);
+int swifthal_uart_char_get(void *uart, unsigned char *c, int timeout);
 
 /**
  * @brief Send given number of bytes from buffer through UART.
@@ -889,7 +876,7 @@ int swifthal_uart_char_get(const void *uart, unsigned char *c, int timeout);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_write(const void *uart, const unsigned char *buf, int length);
+int swifthal_uart_write(void *uart, const unsigned char *buf, int length);
 
 /**
  * @brief Recvice given number of bytes to buffer through UART.
@@ -902,7 +889,7 @@ int swifthal_uart_write(const void *uart, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_read(const void *uart, unsigned char *buf, int length, int timeout);
+int swifthal_uart_read(void *uart, unsigned char *buf, int length, int timeout);
 
 /**
  * @brief Get data amount in read buffer
@@ -911,7 +898,7 @@ int swifthal_uart_read(const void *uart, unsigned char *buf, int length, int tim
  *
  * @return data amount
  */
-int swifthal_uart_remainder_get(const void *uart);
+int swifthal_uart_remainder_get(void *uart);
 
 /**
  * @brief Clear read buffer of UART
@@ -921,4 +908,280 @@ int swifthal_uart_remainder_get(const void *uart);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_buffer_clear(const void *uart);
+int swifthal_uart_buffer_clear(void *uart);
+
+
+
+
+
+
+
+
+
+#define SWIFT_FS_O_READ       0x01
+#define SWIFT_FS_O_WRITE      0x02
+#define SWIFT_FS_O_RDWR       (SWIFT_FS_O_READ | SWIFT_FS_O_WRITE)
+#define SWIFT_FS_O_MODE_MASK  0x03
+
+#define SWIFT_FS_O_CREATE     0x10
+#define SWIFT_FS_O_APPEND     0x20
+#define SWIFT_FS_O_FLAGS_MASK 0x30
+
+#define SWIFT_FS_O_MASK       (SWIFT_FS_O_MODE_MASK | SWIFT_FS_O_FLAGS_MASK)
+
+#define SWIFT_FS_SEEK_SET 0
+#define SWIFT_FS_SEEK_CUR 1
+#define SWIFT_FS_SEEK_END 2
+
+enum swift_fs_dir_entry_type {
+	SWIFT_FS_DIR_ENTRY_FILE = 0,
+	SWIFT_FS_DIR_ENTRY_DIR
+};
+
+typedef enum swift_fs_dir_entry_type swift_fs_dir_entry_type_t;
+
+/**
+ * @brief Structure to receive file or directory information
+ *
+ * @param type Whether file or directory, use @ref swift_fs_dir_entry_type
+ * @param name Name of directory or file
+ * @param size Size of file. 0 if directory
+ */
+struct swift_fs_dirent {
+	swift_fs_dir_entry_type_t type;
+	char name[256];
+	unsigned int size;
+};
+
+typedef struct swift_fs_dirent swift_fs_dirent_t;
+
+/**
+ * @brief Structure to receive volume statistics
+ *
+ *
+ * @param f_bsize Optimal transfer block size
+ * @param f_frsize Allocation unit size
+ * @param f_blocks Size of FS in f_frsize units
+ * @param f_bfree Number of free blocks
+ */
+struct swift_fs_statvfs {
+	unsigned long f_bsize;
+	unsigned long f_frsize;
+	unsigned long f_blocks;
+	unsigned long f_bfree;
+};
+
+typedef struct swift_fs_statvfs swift_fs_statvfs_t;
+
+/**
+ * @brief Get fs mount point
+ *
+ * @return Mount point string
+ */
+char *swifthal_mount_point_get(void);
+
+/**
+ * @brief File open
+ *
+ * Opens or creates, if does not exist, file depending on flags provided
+ * and associates a stream with it.
+ *
+ * @param path The path with name of file to open
+ * @param flags The mode flags
+ *
+ * @p flags can be empty, or combination of one or more of following flags:
+ *   SWIFT_FS_O_READ    open for read
+ *   SWIFT_FS_O_WRITE   open for write
+ *   SWIFT_FS_O_RDWR    open for read/write (<tt>FS_O_READ | FS_O_WRITE</tt>)
+ *   SWIFT_FS_O_CREATE  create file if it does not exist
+ *   SWIFT_FS_O_APPEND  move to end of file before each write
+ *
+ * @retval File handle, NULL is fail
+ */
+void *swifthal_fs_open(const char *path, unsigned char flags);
+
+/**
+ * @brief Close file
+ *
+ * @param fp	File handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_close(void *fp);
+
+/**
+ * @brief Deletes the specified file or directory
+ *
+ * @param path Path to the file or directory to delete
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_remove(const char *path);
+
+/**
+ * @brief File or directory rename
+ *
+ * @param from The source path.
+ * @param to The destination path.
+ *
+ * @retval 0 Success;
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_rename(const char *from, char *to);
+
+/**
+ * @brief File write
+
+ *
+ * @param fp File handle
+ * @param buf Pointer to the data buffer
+ * @param size Number of bytes to be write
+ *
+ * @return Number of bytes written. On success, it will be equal to the number
+ * of bytes requested to be written. Any other value, indicates an error. Will
+ * return -ERRNO code on error.
+ */
+int swifthal_fs_write(void *fp, const void *buf, unsigned int size);
+
+/**
+ * @brief File read
+ *
+ * Reads items of data of size bytes long.
+ *
+ * @param fp File handle
+ * @param buf Pointer to the data buffer
+ * @param size Number of bytes to be read
+ *
+ * @return Number of bytes read. On success, it will be equal to number of
+ * items requested to be read. Returns less than number of bytes
+ * requested if there are not enough bytes available in file. Will return
+ * -ERRNO code on error.
+ */
+int swifthal_fs_read(void *fp, void *buf, unsigned int size);
+
+/**
+ * @brief File seek
+ *
+ * @param fp File handle
+ * @param offset Relative location to move the file pointer to
+ * @param whence Relative location from where offset is to be calculated.
+ * - SWIFT_FS_SEEK_SET = from beginning of file
+ * - SWIFT_FS_SEEK_CUR = from current position,
+ * - SWIFT_FS_SEEK_END = from end of file.
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error.
+ */
+int swifthal_fs_seek(void *fp, int offset, int whence);
+
+/**
+ * @brief Get current file position.
+ *
+ * @param fp File handle
+ *
+ * @retval position Current position in file
+ * Current revision does not validate the file object.
+ */
+int swifthal_fs_tell(void *fp);
+
+/**
+ * @brief Change the size of an open file
+ *
+ * @note In the case of expansion, if the volume got full during the
+ * expansion process, the function will expand to the maximum possible length
+ * and returns success. Caller should check if the expanded size matches the
+ * requested length.
+ *
+ * @param fp File handle
+ * @param length New size of the file in bytes
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_truncate(void *fp, unsigned int length);
+
+/**
+ * @brief Flushes any cached write of an open file
+ *
+ * @param fp File handle
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_sync(void *fp);
+
+/**
+ * @brief Directory create
+ *
+ * @param path Path to the directory to create
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_mkdir(const char *path);
+
+/**
+ * @brief Directory open
+ *
+ * @param path Path to the directory to open
+ *
+ * @retval Directory handle, NULL is fail
+ */
+void *swifthal_fs_opendir(const char *path);
+
+/**
+ * @brief Directory read entry
+ *
+ * Reads directory entries of a open directory.
+ *
+ * @note: Most existing underlying file systems do not generate POSIX
+ * special directory entries "." or "..".  For consistency the
+ * abstraction layer will remove these from lower layer results so
+ * higher layers see consistent results.
+ *
+ * @param dp Pointer to the directory object
+ * @param entry Pointer to @ref swift_fs_dirent structure to read the entry into
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ * @return In end-of-dir condition, this will return 0 and set
+ * entry->name[0] = 0
+ */
+int swifthal_fs_readdir(void *dp, swift_fs_dirent_t *entry);
+
+/**
+ * @brief Directory close
+ *
+ * @param dp Pointer to the directory object
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_closedir(void *dp);
+
+/**
+ * @brief File or directory status
+ *
+ * @param path Path to the file or directory
+ * @param entry Pointer to @ref swift_fs_dirent structure to fill if file or directory
+ * exists.
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_stat(const char *path, swift_fs_dirent_t *entry);
+
+/**
+ * @brief Retrieves statistics of the file system volume
+ *
+ * Returns the total and available space in the file system volume.
+ *
+ * @param path Path to the mounted directory
+ * @param stat Pointer to @ref swift_fs_statvfs structure to receive the fs statistics
+ *
+ * @retval 0 Success
+ * @retval -ERRNO errno code if error
+ */
+int swifthal_fs_statfs(const char *path, swift_fs_statvfs_t *stat);
