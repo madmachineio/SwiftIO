@@ -1,3 +1,5 @@
+import CSwiftIO
+
 @inline(__always)
 func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
     return UnsafeMutableRawPointer(Unmanaged.passUnretained(obj).toOpaque())

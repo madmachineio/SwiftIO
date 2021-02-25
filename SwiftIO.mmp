@@ -1,7 +1,0 @@
-# This is a MadMachine project file generated automatically.
-
-board = "SwiftIOBoard"
-type = "library"
-dependencies = [
-]
-header = "./Sources/CHal/include/SwiftHalWrapper.h"

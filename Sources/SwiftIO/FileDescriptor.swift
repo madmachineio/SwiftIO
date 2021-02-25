@@ -1,3 +1,5 @@
+import CSwiftIO
+
 /**
 The FileDescriptor struct is used to perform low-level file operations.
 
