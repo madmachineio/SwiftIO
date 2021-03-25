@@ -10,6 +10,9 @@ let package = Package(
         .library(
             name: "SwiftIO",
             targets: ["SwiftIO"]),
+        .library(
+            name: "CSwiftIO",
+            targets: ["CSwiftIO"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
