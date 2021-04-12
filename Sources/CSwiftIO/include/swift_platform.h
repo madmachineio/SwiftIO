@@ -52,7 +52,6 @@ unsigned int swifthal_hwcycle_to_ns(unsigned int cycles);
  * @param buf destination buffer to fill with random data.
  * @param length size of the destination buffer.
  */
-// Move to Swift runtime
-// void swiftHal_randomGet(unsigned char *buf, int length);
+void swiftHal_randomGet(unsigned char *buf, int length);
 
 #endif /*_SWIFT_PLATFORM_H_*/

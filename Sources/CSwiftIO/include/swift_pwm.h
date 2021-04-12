@@ -7,25 +7,6 @@
 #ifndef _SWIFT_PWM_H_
 #define _SWIFT_PWM_H_
 
-/** @brief pwm id number. */
-enum swift_pwm_id {
-	SWIFT_PWM_ID_0,
-	SWIFT_PWM_ID_1,
-	SWIFT_PWM_ID_2,
-	SWIFT_PWM_ID_3,
-	SWIFT_PWM_ID_4,
-	SWIFT_PWM_ID_5,
-	SWIFT_PWM_ID_6,
-	SWIFT_PWM_ID_7,
-	SWIFT_PWM_ID_8,
-	SWIFT_PWM_ID_9,
-	SWIFT_PWM_ID_10,
-	SWIFT_PWM_ID_11,
-	SWIFT_PWM_ID_12,
-	SWIFT_PWM_ID_13,
-	SWIFT_PWM_ID_NUM,
-};
-
 /**
  * @brief Structure to receive pwm information
  *
@@ -99,5 +80,14 @@ int swifthal_pwm_resume(void *pwm);
  * @retval Negative errno code if failure.
  */
 int swifthal_pwm_info_get(void *pwm, swift_pwm_info_t *info);
+
+/**
+ * @brief Get PWM support device number
+ *
+ * The maximum number of devices, the id of swifthal_pwm_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_uart_dev_number_get(void);
 
 #endif /*_SWIFT_PWM_H_*/

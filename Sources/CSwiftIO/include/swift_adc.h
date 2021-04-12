@@ -8,23 +8,6 @@
 #ifndef _SWIFT_ADC_H_
 #define _SWIFT_ADC_H_
 
-/** @brief adc id number. */
-enum swift_adc_id {
-	SWIFT_ADC_ID_0,
-	SWIFT_ADC_ID_1,
-	SWIFT_ADC_ID_2,
-	SWIFT_ADC_ID_3,
-	SWIFT_ADC_ID_4,
-	SWIFT_ADC_ID_5,
-	SWIFT_ADC_ID_6,
-	SWIFT_ADC_ID_7,
-	SWIFT_ADC_ID_8,
-	SWIFT_ADC_ID_9,
-	SWIFT_ADC_ID_10,
-	SWIFT_ADC_ID_11,
-	SWIFT_ADC_ID_NUM,
-};
-
 /**
  * @brief Structure to receive adc information
  *
@@ -76,5 +59,14 @@ int swifthal_adc_read(void *adc);
  * @retval Negative errno code if failure.
  */
 int swifthal_adc_info_get(void *adc, swift_adc_info_t *info);
+
+/**
+ * @brief Get ADC support device number
+ *
+ * The maximum number of devices, the id of swifthal_adc_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_adc_dev_number_get(void);
 
 #endif /*_SWIFT_ADC_H_*/

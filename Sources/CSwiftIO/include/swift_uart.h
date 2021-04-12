@@ -7,15 +7,6 @@
 #ifndef _SWIFT_UART_H_
 #define _SWIFT_UART_H_
 
-/** @brief uart id number. */
-enum swift_uart_id {
-	SWIFT_UART_ID_0,
-	SWIFT_UART_ID_1,
-	SWIFT_UART_ID_2,
-	SWIFT_UART_ID_3,
-	SWIFT_UART_ID_NUM,
-};
-
 /** @brief Parity modes */
 enum swift_uart_parity {
 	SWIFT_UART_PARITY_NONE,
@@ -201,5 +192,13 @@ int swifthal_uart_remainder_get(void *uart);
  */
 int swifthal_uart_buffer_clear(void *uart);
 
+/**
+ * @brief Get UART support device number
+ *
+ * The maximum number of devices, the id of swifthal_uart_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_uart_dev_number_get(void);
 
 #endif /*_SWIFT_UART_H_*/

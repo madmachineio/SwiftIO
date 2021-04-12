@@ -7,15 +7,6 @@
 #ifndef _SWIFT_COUNTER_H_
 #define _SWIFT_COUNTER_H_
 
-/** @brief counter id number. */
-enum swift_counter_id {
-	SWIFT_COUNTER_ID_0,
-	SWIFT_COUNTER_ID_1,
-	SWIFT_COUNTER_ID_2,
-	SWIFT_COUNTER_ID_3,
-	SWIFT_COUNTER_ID_NUM,
-};
-
 /** @brief counter work mode. */
 enum swift_counter_mode {
 	SWIFT_COUNTER_RISING_EDGE       = 1,
@@ -39,7 +30,7 @@ typedef struct swift_counter_info swift_counter_info_t;
  * @brief Open counter
  *
  * @param id Counter id
- * 
+ *
  * @return Counter handle
  */
 void *swifthal_counter_open(int id);
@@ -107,5 +98,14 @@ int swifthal_counter_clear(void *counter);
  * @retval Negative errno code if failure.
  */
 int swifthal_counter_info_get(void *counter, swift_counter_info_t *info);
+
+/**
+ * @brief Get COUNTER support device number
+ *
+ * The maximum number of devices, the id of swifthal_counter_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_counter_dev_number_get(void);
 
 #endif /*_SWIFT_COUNTER_H_*/

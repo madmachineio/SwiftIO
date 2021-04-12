@@ -11,13 +11,6 @@
 #define SWIFT_I2C_SPEED_FAST (400 * 1000)
 #define SWIFT_I2C_SPEED_FAST_PLUS (1000 * 1000)
 
-/** @brief I2C id number. */
-enum swift_i2c_id {
-	SWIFT_I2C_ID_0,
-	SWIFT_I2C_ID_1,
-	SWIFT_I2C_ID_NUM
-};
-
 /**
  * @brief Open a i2c
  *
@@ -100,6 +93,15 @@ int swifthal_i2c_read(void *i2c, unsigned char address, unsigned char *buf, int 
 int swifthal_i2c_write_read(void *i2c, unsigned char addr,
 			    const void *write_buf, int num_write,
 			    void *read_buf, int num_read);
+
+/**
+ * @brief Get I2C support device number
+ *
+ * The maximum number of devices, the id of swifthal_i2c_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_i2c_dev_number_get(void);
 
 #endif /* _SWIFT_I2C_H_ */
 

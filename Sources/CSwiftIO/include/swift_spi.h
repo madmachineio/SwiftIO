@@ -7,13 +7,6 @@
 #ifndef _SWIFT_SPI_H_
 #define _SWIFT_SPI_H_
 
-/** @brief spi id number. */
-enum swift_spi_id {
-	SWIFT_SPI_ID_0,
-	SWIFT_SPI_ID_1,
-	SWIFT_SPI_ID_NUM,
-};
-
 /**
  * @brief Open a spi
  *
@@ -97,7 +90,14 @@ int swifthal_spi_async_write(void *spi, const unsigned char *buf, int length);
  */
 int swifthal_spi_async_read(void *spi, unsigned char *buf, int length);
 
-
+/**
+ * @brief Get SPI support device number
+ *
+ * The maximum number of devices, the id of swifthal_spi_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_spi_dev_number_get(void);
 
 
 #endif /* _SWIFT_SPI_H_ */

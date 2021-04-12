@@ -10,11 +10,13 @@ import CSwiftIO
     private let obj: UnsafeMutableRawPointer 
 
     private var speed: Int
+    private var csPin: DigitalOut?
 
     /**
      Initialize a specified interface for SPI communication as a master device.
      - Parameter id: **REQUIRED** The name of the SPI interface.
      - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
+     - Parameter csPin: **OPTIONAL** If the csPin is nil, you have to control it manually through any DigitalOut pin.
      
      ### Usage Example ###
      ````
@@ -23,12 +25,17 @@ import CSwiftIO
      ````
      */
     public init(_ idName: IdName,
-                speed: Int = 1_000_000) {
+                speed: Int = 1_000_000,
+                csPin: DigitalOut? = nil) {
         self.id = idName.value
         self.speed = speed
+        self.csPin = csPin
 
         if let ptr = swifthal_spi_open(id, Int32(speed), nil, nil) {
             obj = UnsafeMutableRawPointer(ptr)
+            if let cs = csPin {
+                cs.setMode(.pushPull)
+            }
         } else {
             fatalError("SPI\(idName.value) initialization failed!")
         }
@@ -36,6 +43,20 @@ import CSwiftIO
 
     deinit {
         swifthal_spi_close(obj)
+    }
+
+    @inline(__always)
+    func csEnable() {
+        if let cs = csPin {
+            cs.write(false)
+        }
+    }
+
+    @inline(__always)
+    func csDisable() {
+        if let cs = csPin {
+            cs.write(true)
+        }
     }
 
     /**
@@ -47,18 +68,19 @@ import CSwiftIO
         return speed
     }
 
-    /** TODO
+    /** 
      Set the speed of SPI communication.
      - Parameter speed: The clock speed used to control the data transmission.
      
+     */
     public func setSpeed(_ speed: Int) {
-        self.speed = speed
-        
         if swifthal_spi_config(obj, Int32(speed)) != 0 {
             print("SPI\(id) setSpeed error!")
+        } else {
+            self.speed = speed
         }
     }
-    */
+    
 
     /**
      Read a byte of data from the slave device.
@@ -68,8 +90,11 @@ import CSwiftIO
     @inline(__always)
     public func readByte() -> UInt8 {
         var data: [UInt8] = [0]
-        
+
+        csEnable()
         let ret = swifthal_spi_read(obj, &data, 1)
+        csDisable()
+       
         if ret == 0 {
             return data[0]
         } else {
@@ -87,7 +112,10 @@ import CSwiftIO
     public func read(count: Int) -> [UInt8] {
         var data = [UInt8](repeating: 0, count: count)
 
+        csEnable()
         let ret = swifthal_spi_read(obj, &data, Int32(count))
+        csDisable()
+
         if ret == 0 {
             return data
         } else {
@@ -102,7 +130,11 @@ import CSwiftIO
      */
     @inline(__always)
     public func write(_ byte: UInt8) {
-        if swifthal_spi_write(obj, [byte], 1) != 0 {
+        csEnable()
+        let ret = swifthal_spi_write(obj, [byte], 1)
+        csDisable()
+
+        if ret != 0 {
             print("SPI\(id) write error!")
         }
     }
@@ -116,9 +148,13 @@ import CSwiftIO
         let ret: Int32
 
         if let length = count {
+            csEnable()
             ret = swifthal_spi_write(obj, data, Int32(length))
+            csDisable()
         } else {
+            csEnable()
             ret = swifthal_spi_write(obj, data, Int32(data.count))
+            csDisable()
         }
 
         if ret != 0 {

@@ -42,7 +42,7 @@ int swifthal_timer_close(void *timer);
  * @param timer Timer handle
  * @param type		Trigger type of timer.
  * @param period	Timer period.
- * 
+ *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */

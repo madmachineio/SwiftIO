@@ -7,14 +7,6 @@
 #ifndef _SWIFT_I2S_H_
 #define _SWIFT_I2S_H_
 
-/** @brief I2S id number. */
-enum swift_i2s_id {
-	SWIFT_I2S_ID_0,
-	SWIFT_I2S_ID_1,
-	SWIFT_I2S_ID_2,
-	SWIFT_I2S_ID_NUM,
-};
-
 /** @brief I2S work mode. */
 enum swift_i2s_mode {
 	SWIFT_I2S_MODE_PHILIPS,
@@ -125,6 +117,15 @@ int swifthal_i2s_write(void *i2s, const char *buf, int length, int timeout);
  * @retval Negative errno code if failure.
  */
 int swifthal_i2s_write_terminate(void *i2s);
+
+/**
+ * @brief Get I2S support device number
+ *
+ * The maximum number of devices, the id of swifthal_i2s_open must be less than this value
+ *
+ * @return max device number
+ */
+int swifthal_i2s_dev_number_get(void);
 
 #endif /* _SWIFT_I2S_H_ */
 
