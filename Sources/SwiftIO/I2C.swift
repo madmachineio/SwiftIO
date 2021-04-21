@@ -15,8 +15,8 @@ import CSwiftIO
     private var speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
     
     private var speed: Speed {
-        didSet {
-            switch speed {
+        willSet {
+            switch newValue {
                 case .standard:
                 speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
                 case .fast:

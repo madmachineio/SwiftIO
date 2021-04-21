@@ -55,8 +55,8 @@ public final class Counter {
     private var modeRawValue: swift_counter_mode_t
 
     private var mode: Mode {
-        didSet {
-            switch mode {
+        willSet {
+            switch newValue {
                 case .rising:
                 modeRawValue = SWIFT_COUNTER_RISING_EDGE
                 case .bothEdge:

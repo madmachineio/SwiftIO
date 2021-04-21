@@ -45,8 +45,8 @@ public final class Timer {
     private var modeRawValue: swift_timer_type_t
 
     private var mode: Mode {
-        didSet {
-            switch mode {
+        willSet {
+            switch newValue {
                 case .period:
                 modeRawValue = SWIFT_TIMER_TYPE_PERIOD
                 case .oneShot:

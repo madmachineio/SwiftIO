@@ -11,21 +11,21 @@ public final class UART {
     private var config = swift_uart_cfg_t()
 
     private var baudRate: Int {
-        didSet {
+        willSet {
             config.baudrate = Int32(baudRate)
         }
     }
     private var dataBits: DataBits {
-        didSet {
-            switch dataBits {
+        willSet {
+            switch newValue {
                 case .eightBits:
                 config.data_bits = SWIFT_UART_DATA_BITS_8
             }
         }
     }
     private var parity: Parity {
-        didSet {
-            switch parity {
+        willSet {
+            switch newValue {
                 case .none:
                 config.parity = SWIFT_UART_PARITY_NONE
                 case .odd:
@@ -36,8 +36,8 @@ public final class UART {
         }
     }
     private var stopBits: StopBits {
-        didSet {
-            switch stopBits {
+        willSet {
+            switch newValue {
                 case .oneBit:
                 config.stop_bits = SWIFT_UART_STOP_BITS_1
                 case .twoBits:
@@ -46,7 +46,7 @@ public final class UART {
         }
     }
     private var readBufferLength: Int {
-        didSet {
+        willSet {
             config.read_buf_len = Int32(readBufferLength)
         }
     }

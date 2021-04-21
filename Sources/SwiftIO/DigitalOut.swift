@@ -45,8 +45,8 @@ public final class DigitalOut {
 
 
     private var mode: Mode {
-        didSet {
-            switch mode {
+        willSet {
+            switch newValue {
                 case .pushPull:
                 modeRawValue = SWIFT_GPIO_MODE_PULL_UP
                 case .openDrain:
@@ -60,7 +60,7 @@ public final class DigitalOut {
      
      */
     private var value: Bool {
-        didSet {
+        willSet {
 			swifthal_gpio_set(obj, value ? 1 : 0)
 		}
 	}
@@ -153,7 +153,25 @@ public final class DigitalOut {
 	public func write(_ value: Bool) {
         self.value = value
 	}
-    
+
+    /**
+     Set the output value to true.
+     
+     */
+    @inline(__always)
+    public func high() {
+        value = true
+    }
+
+    /**
+     Set the output value to false.
+     
+     */
+    @inline(__always)
+    public func low() {
+        value = false
+    }
+
     /**
      Reverse the current output value of the specific pin.
      

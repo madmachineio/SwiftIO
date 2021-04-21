@@ -28,8 +28,8 @@ public final class DigitalIn {
     private var interruptModeRawValue: swift_gpio_int_mode_t
 
     private var mode: Mode {
-        didSet {
-            switch mode {
+        willSet {
+            switch newValue {
                 case .pullDown:
                 modeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
                 case .pullUp:
@@ -40,8 +40,8 @@ public final class DigitalIn {
         }
     }
     private var interruptMode: InterruptMode {
-        didSet {
-            switch interruptMode {
+        willSet {
+            switch newValue {
                 case .rising:
                 interruptModeRawValue = SWIFT_GPIO_INT_MODE_RISING_EDGE
                 case .falling:
