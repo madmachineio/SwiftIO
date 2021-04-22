@@ -178,7 +178,8 @@ public final class DigitalOut {
      */
     @inline(__always)
     public func toggle() {
-        value = value ? false : true
+        //value = value ? false : true
+        value.toggle()
     }
 
     /**
