@@ -61,7 +61,7 @@ public final class DigitalOut {
      */
     private var value: Bool {
         willSet {
-			swifthal_gpio_set(obj, value ? 1 : 0)
+			swifthal_gpio_set(obj, newValue ? 1 : 0)
 		}
 	}
 

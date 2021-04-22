@@ -12,7 +12,7 @@ public final class UART {
 
     private var baudRate: Int {
         willSet {
-            config.baudrate = Int32(baudRate)
+            config.baudrate = Int32(newValue)
         }
     }
     private var dataBits: DataBits {
@@ -47,7 +47,7 @@ public final class UART {
     }
     private var readBufferLength: Int {
         willSet {
-            config.read_buf_len = Int32(readBufferLength)
+            config.read_buf_len = Int32(newValue)
         }
     }
 
