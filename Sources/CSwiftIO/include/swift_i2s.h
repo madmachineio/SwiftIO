@@ -47,11 +47,15 @@ typedef struct swift_i2s_cfg swift_i2s_cfg_t;
  * @brief Open a i2s
  *
  * @param id		I2S ID, use @ref swift_i2s_id
- * @param cfg		I2S config, use @ref swift_i2s_cfg
+ * @param tx_cfg	I2S send config, use @ref swift_i2s_cfg
+ * @param rx_cfg	I2S received config, use @ref swift_i2s_cfg
  *
  * @return I2S handle
  */
-void *swifthal_i2s_open(int id, const swift_i2s_cfg_t *cfg);
+void *swifthal_i2s_open(int id,
+			const swift_i2s_cfg_t *tx_cfg,
+			const swift_i2s_cfg_t *rx_cfg);
+
 
 /**
  * @brief Close i2s
@@ -71,29 +75,47 @@ int swifthal_i2s_close(void *i2s);
  * @retval Positive indicates the size of free space for writing.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_available_get(void *i2s);
+int swifthal_i2s_tx_available_get(void *i2s);
+
+
+/**
+ * @brief Get size of remainder data for reading
+ *
+ * @param i2s I2S handle
+ *
+ * @retval Positive indicates the size of remainder data for reading.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_i2s_rx_available_get(void *i2s);
+
 
 /**
  * @brief Set i2s config information
  *
  * @param i2s I2S handle
- * @param cfg I2S config, use @ref swift_i2s_cfg
+ * @param tx_cfg	I2S send config, use @ref swift_i2s_cfg
+ * @param rx_cfg	I2S received config, use @ref swift_i2s_cfg
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_config_set(void *i2s, const swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_set(void *i2s,
+			    const swift_i2s_cfg_t *tx_cfg,
+			    const swift_i2s_cfg_t *rx_cfg);
 
 /**
  * @brief Get i2s config information
  *
  * @param i2s I2S handle
- * @param cfg I2S config, use @ref swift_i2s_cfg
+ * @param tx_cfg	I2S send config, use @ref swift_i2s_cfg
+ * @param rx_cfg	I2S received config, use @ref swift_i2s_cfg
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_config_get(void *i2s, swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_get(void *i2s,
+			    swift_i2s_cfg_t *tx_cfg,
+			    swift_i2s_cfg_t *rx_cfg);
 
 /**
  * @brief Send given number of bytes from buffer through I2S.
@@ -117,6 +139,20 @@ int swifthal_i2s_write(void *i2s, const char *buf, int length, int timeout);
  * @retval Negative errno code if failure.
  */
 int swifthal_i2s_write_terminate(void *i2s);
+
+/**
+ * @brief Receive given number of bytes from buffer through I2S.
+ *
+ * @param i2s I2S handle
+ * @param buf buf Pointer to transmit buffer.
+ * @param length Length of transmit buffer.
+ * @param timeout Timeout in milliseconds.
+ *
+ * @retval Positive indicates the number of bytes actually read.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_i2s_read(void *i2s, char *buf, int length, int timeout);
+
 
 /**
  * @brief Get I2S support device number

@@ -88,6 +88,6 @@ int swifthal_pwm_info_get(void *pwm, swift_pwm_info_t *info);
  *
  * @return max device number
  */
-int swifthal_uart_dev_number_get(void);
+int swifthal_pwm_dev_number_get(void);
 
 #endif /*_SWIFT_PWM_H_*/
