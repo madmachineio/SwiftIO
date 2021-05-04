@@ -2,7 +2,7 @@
 
 [![alt Discord](https://img.shields.io/discord/592743353049808899 "Discord")](https://madmachine.io/discord)
 
-![SwiftIO pinout](https://github.com/madmachineio/SwiftIO/raw/master/images/swiftio_pinout.png)
+![SwiftIO pinout](./images/swiftio_pinout.png)
 
 A Swift framework for microcontrollers. The SwiftIO board provides a good way to learn Swift code. Write your code in the IDE, download to your board, and you'll get the results in real time if you've had the circuit connected.
 
