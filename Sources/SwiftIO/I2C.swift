@@ -12,7 +12,7 @@ import CSwiftIO
  public final class I2C {
     private let id: Int32
     private let obj: UnsafeMutableRawPointer
-    private var speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
+    private var speedRawValue: UInt32
     
     private var speed: Speed {
         willSet {
@@ -44,6 +44,14 @@ import CSwiftIO
         self.id = idName.value
         self.speed = speed
 
+        switch speed {
+            case .standard:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
+            case .fast:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST)
+            case .fastPlus:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
+        }
         if let ptr = swifthal_i2c_open(id) {
             obj = UnsafeMutableRawPointer(ptr)
             if swifthal_i2c_config(obj, speedRawValue) != 0 {
