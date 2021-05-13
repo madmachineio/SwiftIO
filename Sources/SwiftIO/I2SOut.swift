@@ -20,7 +20,7 @@ import CSwiftIO
         }
     }
 
-    private var channel: Channel {
+    private var sampleChannel: SampleChannel {
         willSet {
             switch newValue {
                 case .stereo:
@@ -71,21 +71,21 @@ import CSwiftIO
     ]
 
     public init(_ idName: IdName,
-                sampleBits: Int = 16,
-                sampleRate: Int = 24_000,
-                channel: Channel = .monoLeft,
+                rate: Int = 24_000,
+                bits: Int = 16,
+                channel: SampleChannel = .monoLeft,
                 mode: Mode = .philips) {
-        guard supportedSampleBits.contains(sampleBits) else {
-            fatalError("The specified sampleBits \(sampleBits) is not supported!")
+        guard supportedSampleRate.contains(rate) else {
+            fatalError("The specified sampleRate \(rate) is not supported!")
         }
-        guard supportedSampleBits.contains(sampleRate) else {
-            fatalError("The specified sampleRate \(sampleRate) is not supported!")
+        guard supportedSampleBits.contains(bits) else {
+            fatalError("The specified sampleBits \(bits) is not supported!")
         }
         self.id = idName.value
-        self.channel = channel
         self.mode = mode
-        config.sample_bits = Int32(sampleBits)
-        config.sample_rate = Int32(sampleRate)
+        self.sampleChannel = channel
+        config.sample_bits = Int32(bits)
+        config.sample_rate = Int32(rate)
         switch channel {
             case .stereo:
             config.channel_type = SWIFT_I2S_CHAN_STEREO
@@ -114,6 +114,23 @@ import CSwiftIO
         swifthal_i2s_close(obj)
     }
 
+    public func setSampleProperty(rate: Int, bits: Int, channel: SampleChannel) {
+        guard supportedSampleRate.contains(rate) else {
+            fatalError("The specified sampleRate \(rate) is not supported!")
+        }
+        guard supportedSampleBits.contains(bits) else {
+            fatalError("The specified sampleBits \(bits) is not supported!")
+        }
+
+        self.sampleBits = bits
+        self.sampleRate = rate
+        self.sampleChannel = channel
+
+        if swifthal_i2s_config_set(obj, &config, nil) != 0 {
+            print("I2SOut\(id) configeration failed!")
+        }
+    }
+
 
 
 
@@ -126,7 +143,7 @@ extension I2SOut {
         case leftJustified
     }
 
-    public enum Channel {
+    public enum SampleChannel {
         case stereo
         case monoRight
         case monoLeft
