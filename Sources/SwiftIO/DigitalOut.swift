@@ -103,6 +103,7 @@ public final class DigitalOut {
         }
         if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
             obj = UnsafeMutableRawPointer(ptr)
+            swifthal_gpio_set(obj, value ? 1 : 0)
         } else {
             fatalError("DigitalOut\(idName.value) initialization failed!")
         }
