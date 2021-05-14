@@ -128,7 +128,7 @@ int swifthal_i2s_config_get(void *i2s,
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_write(void *i2s, const char *buf, int length, int timeout);
+int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length, int timeout);
 
 /**
  * @brief Terminate current transmit and clear the data waiting to be transferred.
@@ -151,7 +151,7 @@ int swifthal_i2s_write_terminate(void *i2s);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_read(void *i2s, char *buf, int length, int timeout);
+int swifthal_i2s_read(void *i2s, unsigned char *buf, int length, int timeout);
 
 
 /**

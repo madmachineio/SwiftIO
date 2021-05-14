@@ -131,7 +131,13 @@ import CSwiftIO
         }
     }
 
-
+    public func write(_ sample: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) {
+        if let count = count {
+            swifthal_i2s_write(obj, sample.baseAddress!, Int32(count), -1)
+        } else {
+            swifthal_i2s_write(obj, sample.baseAddress!, Int32(sample.count), -1)
+        }
+    }
 
 
 }
