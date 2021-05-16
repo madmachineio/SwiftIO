@@ -155,10 +155,17 @@ public final class UART {
      */
     @inline(__always)
     public func write(_ data: [UInt8], count: Int? = nil) {
-        if let length = count {
-            swifthal_uart_write(obj, data, Int32(length))
+        let ret, length: Int32
+
+        if let count = count {
+            length = Int32(min(count, data.count))
         } else {
-            swifthal_uart_write(obj, data, Int32(data.count))
+            length = Int32(data.count)
+        }
+
+        ret = swifthal_uart_write(obj, data, length)
+        if ret != 0 {
+            print("UART\(id) write error!")
         }
     }
 
@@ -170,7 +177,12 @@ public final class UART {
     @inline(__always)
     public func write(_ string: String) {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
-        swifthal_uart_write(obj, data, Int32(data.count))
+
+        let ret = swifthal_uart_write(obj, data, Int32(data.count))
+
+        if ret != 0 {
+            print("UART\(id) write error!")
+        }
     }
 
     /**
@@ -179,15 +191,23 @@ public final class UART {
      -1 is set to wait until receiving the required data. 
      0 is set to end up the read immediately no matter whether the data is received or not. 
      A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
-     - Parameter timeout: The max time for data reception.
+     - Parameter timeout: The max time(in milliseconds) for data reception.
 
      - Returns: One 8-bit binary data read from the device.
 
      */
     @inline(__always)
-    public func readByte(timeout: Int = Int(SWIFT_FOREVER)) -> UInt8 {
+    public func readByte(timeout: Int? = nil) -> UInt8 {
+        let timeoutValue: Int32
+
+        if let timeout = timeout {
+            timeoutValue = Int32(timeout)
+        } else {
+            timeoutValue = Int32(SWIFT_FOREVER)
+        }
+
         var byte = UInt8()
-        swifthal_uart_char_get(obj, &byte, Int32(timeout))
+        swifthal_uart_char_get(obj, &byte, timeoutValue)
         return byte
     }
 
@@ -197,16 +217,24 @@ public final class UART {
      -1 is set to wait until receiving the required data. 
      0 is set to end up the read immediately no matter whether the data is received or not. 
      A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
-     - Parameter timeout: The max time for data reception.
+     - Parameter timeout: The max time(in milliseconds) for data reception.
      - Parameter count: The number of bytes to read.
 
      - Returns: A byte array read from the device.
 
      */
     @inline(__always)
-    public func read(count: Int, timeout: Int = Int(SWIFT_FOREVER)) -> [UInt8] {
+    public func read(count: Int, timeout: Int? = nil) -> [UInt8] {
+        let timeoutValue: Int32
+
+        if let timeout = timeout {
+            timeoutValue = Int32(timeout)
+        } else {
+            timeoutValue = Int32(SWIFT_FOREVER)
+        }
+
         var data = [UInt8](repeating: 0, count: count)
-        let received = Int(swifthal_uart_read(obj, &data, Int32(count), Int32(timeout)))
+        let received = Int(swifthal_uart_read(obj, &data, Int32(count), timeoutValue))
         return Array(data[0..<received])
     }
 

@@ -145,20 +145,20 @@ import CSwiftIO
      */
     @inline(__always)
     public func write(_ data: [UInt8], count: Int? = nil, to address: UInt8) {
-        let ret: Int32
+        let ret, length: Int32
 
-        if let length = count {
-            ret = swifthal_i2c_write(obj, address, data, Int32(length))
+        if let count = count {
+            length = Int32(min(count, data.count))
         } else {
-            ret = swifthal_i2c_write(obj, address, data, Int32(data.count))
+            length = Int32(data.count)
         }
+
+        ret = swifthal_i2c_write(obj, address, data, length)
 
         if ret != 0 {
             print("I2C\(id) write error!")
         }
     }
-
-
 
 
 

@@ -71,7 +71,7 @@ import CSwiftIO
     ]
 
     public init(_ idName: IdName,
-                rate: Int = 24_000,
+                rate: Int = 16_000,
                 bits: Int = 16,
                 channel: SampleChannel = .monoLeft,
                 mode: Mode = .philips) {
@@ -131,14 +131,27 @@ import CSwiftIO
         }
     }
 
-    public func write(_ sample: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) {
+    public func write(_ sample: [UInt8], count: Int? = nil, timeout: Int? = nil) {
+        let length, timeoutValue: Int32
+
         if let count = count {
-            swifthal_i2s_write(obj, sample.baseAddress!, Int32(count), -1)
+            length = Int32(min(count, sample.count))
         } else {
-            swifthal_i2s_write(obj, sample.baseAddress!, Int32(sample.count), -1)
+            length = Int32(sample.count)
+        }
+
+        if let timeout = timeout {
+            timeoutValue = Int32(timeout)
+        } else {
+            timeoutValue = Int32(SWIFT_FOREVER)
+        }
+        
+        let ret = swifthal_i2s_write(obj, sample, length, timeoutValue)
+
+        if ret != 0 {
+            print("I2SOut\(id) write error!")
         }
     }
-
 
 }
 
