@@ -93,15 +93,15 @@ import CSwiftIO
      - Returns: One 8-bit binary number receiving from the slave device.
      */
     @inline(__always)
-    public func readByte(from address: UInt8) -> UInt8 {
-        var data: [UInt8] = [0]
+    public func readByte(from address: UInt8) -> UInt8? {
+        var byte: UInt8 = 0
         
-        let ret = swifthal_i2c_read(obj, address, &data, 1)
+        let ret = swifthal_i2c_read(obj, address, &byte, 1)
         if ret == 0 {
-            return data[0]
+            return byte
         } else {
             print("I2C\(id) readByte error!")
-            return 0
+            return nil
         }
     }
 

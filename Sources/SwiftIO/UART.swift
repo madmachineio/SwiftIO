@@ -197,7 +197,7 @@ public final class UART {
 
      */
     @inline(__always)
-    public func readByte(timeout: Int? = nil) -> UInt8 {
+    public func readByte(timeout: Int? = nil) -> UInt8? {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -206,9 +206,14 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        var byte = UInt8()
-        swifthal_uart_char_get(obj, &byte, timeoutValue)
-        return byte
+        var byte: UInt8 = 0
+        let ret = swifthal_uart_char_get(obj, &byte, timeoutValue)
+        if ret == 0 {
+            return byte
+        } else {
+            print("UART\(id) readByte error!")
+            return nil
+        }
     }
 
     /**
