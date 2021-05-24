@@ -1,7 +1,7 @@
 import CSwiftIO
 
 
- public final class I2SOut {
+ public final class I2SIn {
     private let id: Int32
     private let obj: UnsafeMutableRawPointer
 
@@ -109,16 +109,16 @@ import CSwiftIO
         } else if let ptr = swifthal_i2s_open(id) {
             obj = UnsafeMutableRawPointer(ptr)
         } else {
-            fatalError("I2SOut\(idName.value) initialization failed!")
+            fatalError("I2SIn\(idName.value) initialization failed!")
         }
 
-        swifthal_i2s_tx_config_set(obj, &config)
-        swifthal_i2s_tx_status_set(obj, 1)
+        swifthal_i2s_rx_config_set(obj, &config)
+        swifthal_i2s_rx_status_set(obj, 1)
     }
 
     deinit {
-        swifthal_i2s_tx_status_set(obj, 0)
-        if swifthal_i2s_rx_status_get(obj) == 0 {
+        swifthal_i2s_rx_status_set(obj, 0)
+        if swifthal_i2s_tx_status_get(obj) == 0 {
             swifthal_i2s_close(obj)
         }
     }
@@ -136,11 +136,11 @@ import CSwiftIO
         self.sampleChannel = channel
 
         if swifthal_i2s_tx_config_set(obj, &config) != 0 {
-            print("I2SOut\(id) configeration failed!")
+            print("I2SIn\(id) configeration failed!")
         }
     }
 
-    public func write(_ sample: [UInt8], count: Int? = nil, timeout: Int? = nil) {
+    public func read(_ sample: inout [UInt8], count: Int? = nil, timeout: Int? = nil) {
         let length, timeoutValue: Int32
 
         if let count = count {
@@ -155,16 +155,16 @@ import CSwiftIO
             timeoutValue = Int32(SWIFT_FOREVER)
         }
         
-        let ret = swifthal_i2s_write(obj, sample, length, timeoutValue)
+        let ret = swifthal_i2s_read(obj, &sample, length, timeoutValue)
 
-        if ret != 0 {
-            print("I2SOut\(id) write error!")
+        if ret != length {
+            print("I2SIn\(id) read error!")
         }
     }
 
 }
 
-extension I2SOut {
+extension I2SIn {
     public enum Mode {
         case philips
         case rightJustified
