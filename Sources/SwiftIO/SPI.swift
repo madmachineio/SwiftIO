@@ -146,16 +146,21 @@ import CSwiftIO
     @inline(__always)
     public func write(_ data: [UInt8], count: Int? = nil) {
         let ret: Int32
+        let byteCount: Int
 
-        if let length = count {
-            csEnable()
-            ret = swifthal_spi_write(obj, data, Int32(length))
-            csDisable()
+        if let count = count {
+            byteCount = min(data.count, count)
         } else {
-            csEnable()
-            ret = swifthal_spi_write(obj, data, Int32(data.count))
-            csDisable()
+            byteCount = data.count
         }
+
+        if byteCount <= 0 {
+            return
+        }
+
+        csEnable()
+        ret = swifthal_spi_write(obj, data, Int32(byteCount))
+        csDisable()
 
         if ret != 0 {
             print("SPI\(id) write error!")

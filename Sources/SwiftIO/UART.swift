@@ -155,11 +155,19 @@ public final class UART {
      */
     @inline(__always)
     public func write(_ data: [UInt8], count: Int? = nil) {
-        if let length = count {
-            swifthal_uart_write(obj, data, Int32(length))
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(data.count, count)
         } else {
-            swifthal_uart_write(obj, data, Int32(data.count))
+            byteCount = data.count
         }
+
+        if byteCount <= 0 {
+            return
+        }
+        
+        swifthal_uart_write(obj, data, Int32(byteCount))
     }
 
     /**
