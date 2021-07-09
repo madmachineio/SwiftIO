@@ -12,7 +12,7 @@ import CSwiftIO
  public final class I2C {
     private let id: Int32
     private let obj: UnsafeMutableRawPointer
-    private var speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
+    private var speedRawValue: UInt32
     
     private var speed: Speed {
         willSet {
@@ -44,6 +44,14 @@ import CSwiftIO
         self.id = idName.value
         self.speed = speed
 
+        switch speed {
+            case .standard:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_STANDARD)
+            case .fast:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST)
+            case .fastPlus:
+            speedRawValue = UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
+        }
         if let ptr = swifthal_i2c_open(id) {
             obj = UnsafeMutableRawPointer(ptr)
             if swifthal_i2c_config(obj, speedRawValue) != 0 {
@@ -85,15 +93,15 @@ import CSwiftIO
      - Returns: One 8-bit binary number receiving from the slave device.
      */
     @inline(__always)
-    public func readByte(from address: UInt8) -> UInt8 {
-        var data: [UInt8] = [0]
+    public func readByte(from address: UInt8) -> UInt8? {
+        var byte: UInt8 = 0
         
-        let ret = swifthal_i2c_read(obj, address, &data, 1)
+        let ret = swifthal_i2c_read(obj, address, &byte, 1)
         if ret == 0 {
-            return data[0]
+            return byte
         } else {
             print("I2C\(id) readByte error!")
-            return 0
+            return nil
         }
     }
 
@@ -155,8 +163,6 @@ import CSwiftIO
             print("I2C\(id) write error!")
         }
     }
-
-
 
 
 

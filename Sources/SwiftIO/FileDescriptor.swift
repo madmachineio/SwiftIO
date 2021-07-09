@@ -84,7 +84,10 @@ public struct FileDescriptor {
 
     /**
      Reads bytes at the current file offset into a buffer
-     - Parameter buffer: **REQUIRED** Te region of memory to read into.
+     - Parameter buffer: **REQUIRED** The region of memory to read into.
+     - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The bytes successfully read.
      */
     public func read(into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) -> Int {
         let length: Int
@@ -102,6 +105,9 @@ public struct FileDescriptor {
      Reads bytes at the specified offset into a buffer.
      - Parameter offset: **REQUIRED** The file offset where reading begins.
      - Parameter buffer: **REQUIRED** Te region of memory to read into.
+     - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The bytes successfully read.
      */
     public func read(fromAbsoluteOffest offset: Int, into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) -> Int {
         let length: Int
@@ -116,6 +122,53 @@ public struct FileDescriptor {
     }
 
     /**
+     Reads bytes at the current file offset into a buffer
+     - Parameter buffer: **REQUIRED** Te region of memory to read into.
+     - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The bytes successfully read.
+     */
+    public func read(into buffer: inout [UInt8], count: Int? = nil) -> Int {
+        let length: Int
+
+        if let count = count {
+            length = min(count, buffer.count)
+        } else {
+            length = buffer.count
+        }
+
+        var ret: Int = 0
+        buffer.withUnsafeMutableBytes { bufferPointer in
+            ret = Int(swifthal_fs_read(filePointer, bufferPointer.baseAddress, UInt32(length)))
+        }
+        return ret
+    }
+
+    /**
+     Reads bytes at the specified offset into a buffer.
+     - Parameter offset: **REQUIRED** The file offset where reading begins.
+     - Parameter buffer: **REQUIRED** Te region of memory to read into.
+     - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The bytes successfully read.
+     */
+    public func read(fromAbsoluteOffest offset: Int, into buffer: inout [UInt8], count: Int? = nil) -> Int {
+        let length: Int
+
+        if let count = count {
+            length = min(count, buffer.count)
+        } else {
+            length = buffer.count
+        }
+        swifthal_fs_seek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
+        var ret: Int = 0
+        buffer.withUnsafeMutableBytes { bufferPointer in
+            ret = Int(swifthal_fs_read(filePointer, bufferPointer.baseAddress, UInt32(length)))
+        }
+        return ret
+    }
+
+    /**
      Reposition the offset for the given file descriptor.
      - Parameter offset: **REQUIRED** The new offset for the file descriptor.
      - Parameter whence: **OPTIONAL** The origin of the new offset.
@@ -125,8 +178,22 @@ public struct FileDescriptor {
     }
 
     /**
+     Writes the contents of a string at the current file offset.
+      - Parameter string: **REQUIRED** The string being written.
+     */
+    public func write(_ string: String) {
+        let data = string.utf8CString
+        let size = UInt32(data.count - 1) 
+
+        _ = data.withUnsafeBytes { dataPointer in
+            swifthal_fs_write(filePointer, dataPointer.baseAddress, size)
+        }
+    }
+
+    /**
      Writes the contents of a buffer at the current file offset.
       - Parameter buffer: **REQUIRED** The region of memory that contains the data being written.
+      - Parameter count: **OPTIONAL** The bytes you want to read.
      */
     public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) {
         let length: Int
@@ -140,22 +207,10 @@ public struct FileDescriptor {
     }
 
     /**
-     Writes the contents of a string at the current file offset.
-      - Parameter string: **REQUIRED** The string being written.
-     */
-    public func write(_ string: String) {
-        let data = string.utf8CString
-        let size = UInt32(data.count - 1) 
-
-        _ = data.withUnsafeBytes { dataPointer in
-            swifthal_fs_write(filePointer, dataPointer.baseAddress!, size)
-        }
-    }
-
-    /**
      Writes the contents of a buffer at the specified offset.
       - Parameter offset: **REQUIRED** The file offset where writing begins.
       - Parameter buffer: **REQUIRED** Te region of memory that contains the data being written.
+      - Parameter count: **OPTIONAL** The bytes you want to read.
      */
     public func write(toAbsoluteOffset offset: Int, _ buffer: UnsafeRawBufferPointer, count: Int? = nil) {
         let length: Int
@@ -168,7 +223,45 @@ public struct FileDescriptor {
         swifthal_fs_seek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
         swifthal_fs_write(filePointer, buffer.baseAddress!, UInt32(length))
     }
-    
+
+    /**
+     Writes the contents of a buffer at the current file offset.
+      - Parameter buffer: **REQUIRED** The region of memory that contains the data being written.
+      - Parameter count: **OPTIONAL** The bytes you want to read.
+     */
+    public func write(_ buffer: [UInt8], count: Int? = nil) {
+        let length: Int
+
+        if let count = count {
+            length = min(count, buffer.count)
+        } else {
+            length = buffer.count
+        }
+        _ = buffer.withUnsafeBytes { bufferPointer in
+            swifthal_fs_write(filePointer, bufferPointer.baseAddress, UInt32(length))
+        }
+    }
+
+    /**
+     Writes the contents of a buffer at the specified offset.
+      - Parameter offset: **REQUIRED** The file offset where writing begins.
+      - Parameter buffer: **REQUIRED** Te region of memory that contains the data being written.
+      - Parameter count: **OPTIONAL** The bytes you want to read.
+     */
+    public func write(toAbsoluteOffset offset: Int, _ buffer: [UInt8], count: Int? = nil) {
+        let length: Int
+
+        if let count = count {
+            length = min(count, buffer.count)
+        } else {
+            length = buffer.count
+        }
+        swifthal_fs_seek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
+        _ = buffer.withUnsafeBytes { bufferPointer in
+            swifthal_fs_write(filePointer, bufferPointer.baseAddress, UInt32(length))
+        }
+    }
+
     /**
      Flushes any cached write of an open file.
      - Attention:
