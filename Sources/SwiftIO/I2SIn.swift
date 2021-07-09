@@ -140,7 +140,7 @@ import CSwiftIO
         }
     }
 
-    public func read(_ sample: inout [UInt8], count: Int? = nil, timeout: Int? = nil) {
+    public func read(to sample: inout [UInt8], count: Int? = nil, timeout: Int? = nil) {
         let length, timeoutValue: Int32
 
         if let count = count {
@@ -162,6 +162,27 @@ import CSwiftIO
         }
     }
 
+    public func read(count: Int = 0, timeout: Int? = nil) -> [UInt8] {
+        var data = [UInt8](repeating: 0, count: count)
+
+        let length, timeoutValue: Int32
+
+        length = Int32(count)
+
+        if let timeout = timeout {
+            timeoutValue = Int32(timeout)
+        } else {
+            timeoutValue = Int32(SWIFT_FOREVER)
+        }
+
+        let ret = swifthal_i2s_read(obj, &data, length, timeoutValue)
+
+        if ret != length {
+            print("I2SIn\(id) read error!")
+        }
+
+        return data
+    }
 }
 
 extension I2SIn {
