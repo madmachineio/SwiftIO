@@ -177,11 +177,12 @@ import CSwiftIO
 
         let ret = swifthal_i2s_read(obj, &data, length, timeoutValue)
 
-        if ret != length {
+        if ret == length {
+            return data
+        } else {
             print("I2SIn\(id) read error!")
+            return []
         }
-
-        return data
     }
 }
 
