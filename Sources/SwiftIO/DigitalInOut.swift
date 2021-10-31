@@ -1,6 +1,5 @@
 import CSwiftIO
 
-
 public final class DigitalInOut {
     private let id: Int32
     private let obj: UnsafeMutableRawPointer
