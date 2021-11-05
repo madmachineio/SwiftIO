@@ -15,8 +15,10 @@ import CSwiftIO
     /**
      Initialize a specified interface for SPI communication as a master device.
      - Parameter id: **REQUIRED** The name of the SPI interface.
-     - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
-     - Parameter csPin: **OPTIONAL** If the csPin is nil, you have to control it manually through any DigitalOut pin.
+     - Parameter speed: **OPTIONAL** The clock speed used to control the data
+        transmission.
+     - Parameter csPin: **OPTIONAL** If the csPin is nil, you have to control
+        it manually through any DigitalOut pin.
      
      ### Usage Example ###
      ````
@@ -24,9 +26,11 @@ import CSwiftIO
      let spi = SPI(Id.SPI0)
      ````
      */
-    public init(_ idName: IdName,
-                speed: Int = 1_000_000,
-                csPin: DigitalOut? = nil) {
+    public init(
+        _ idName: IdName,
+        speed: Int = 1_000_000,
+        csPin: DigitalOut? = nil
+    ) {
         self.id = idName.value
         self.speed = speed
         self.csPin = csPin

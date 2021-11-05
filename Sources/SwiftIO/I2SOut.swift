@@ -70,11 +70,13 @@ import CSwiftIO
         384_000
     ]
 
-    public init(_ idName: IdName,
-                rate: Int = 16_000,
-                bits: Int = 16,
-                channel: SampleChannel = .monoLeft,
-                mode: Mode = .philips) {
+    public init(
+        _ idName: IdName,
+        rate: Int = 16_000,
+        bits: Int = 16,
+        channel: SampleChannel = .monoLeft,
+        mode: Mode = .philips
+    ) {
         guard supportedSampleRate.contains(rate) else {
             fatalError("The specified sampleRate \(rate) is not supported!")
         }
@@ -123,7 +125,9 @@ import CSwiftIO
         }
     }
 
-    public func setSampleProperty(rate: Int, bits: Int, channel: SampleChannel) {
+    public func setSampleProperty(
+        rate: Int, bits: Int, channel: SampleChannel
+    ) {
         guard supportedSampleRate.contains(rate) else {
             fatalError("The specified sampleRate \(rate) is not supported!")
         }
@@ -140,7 +144,11 @@ import CSwiftIO
         }
     }
 
-    public func write(_ sample: [UInt8], count: Int? = nil, timeout: Int? = nil) {
+    public func write(
+        _ sample: [UInt8],
+        count: Int? = nil,
+        timeout: Int? = nil
+    ) {
         let length, timeoutValue: Int32
 
         if let count = count {

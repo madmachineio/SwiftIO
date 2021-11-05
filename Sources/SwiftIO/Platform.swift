@@ -6,7 +6,9 @@ func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
 }
 
 /**
-When you invoke the wait function, the CPU keeps on working and checking if the time set (in microsecond）is up. In addition, this function is more accurate than the sleep function.
+When you invoke the wait function, the CPU keeps on working and checking
+ if the time set (in microsecond）is up. In addition, this function is more
+ accurate than the sleep function.
 */
 @inline(__always)
 public func wait(us: Int) {
@@ -14,7 +16,8 @@ public func wait(us: Int) {
 }
 
 /**
- The sleep function will suspend the processor's work in a given time period (in millisecond).
+ The sleep function will suspend the processor's work in a given time period
+ (in millisecond).
  */
 @inline(__always)
 public func sleep(ms: Int) {
@@ -33,7 +36,8 @@ public func getPowerUpMilliseconds() -> Int64 {
 /**
 Get the current clock cycle of the low level 32bit timer.
  - Attention:
-    This value is got from a 32bit register driven by the CPU frequency, it would overflow every a few seconds.
+    This value is got from a 32bit register driven by the CPU frequency,
+    it would overflow every a few seconds.
     This function is only used to measure very short time duration with `cyclesToNanoseconds(start: UInt, stop: UInt)`.
 
  - Returns: The current clock cycle in UInt.
@@ -44,7 +48,8 @@ public func getClockCycle() -> UInt {
 }
 
 /**
-Convert the clock cycle into nanoseconds. This function is usually used together with `getClockCycle()`.
+Convert the clock cycle into nanoseconds. This function is usually used
+together with `getClockCycle()`.
  - Parameter start: The start cycle get by `getClockCycle()`.
  - Parameter stop: The stop cycle get by `getClockCycle()`.
  - Returns: The duration in nanoseconds.

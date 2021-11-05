@@ -1,12 +1,16 @@
 import CSwiftIO
 
 /**
- I2C (I square C) is a two wire protocol to communicate between different devices. The I2C class allows some operations through I2C protocol, including reading messages from a device and writing messages to a device.
+ I2C (I square C) is a two wire protocol to communicate between different
+ devices. The I2C class allows some operations through I2C protocol, including
+ reading messages from a device and writing messages to a device.
  Currently the I2C ports support only master mode.
  
  - Note:
- Different I2C devices have different attributes. Please reference the device manual before using the functions below.
- This class allows the reading and writing of a byte `UInt8` or an array of bytes `[UInt8]`.
+ Different I2C devices have different attributes. Please reference the device
+ manual before using the functions below.
+ This class allows the reading and writing of a byte `UInt8` or an array of
+ bytes `[UInt8]`.
 
  */
  public final class I2C {
@@ -31,7 +35,8 @@ import CSwiftIO
     /**
      Initialize a specific I2C interface as a master device.
      - Parameter idName: **REQUIRED** The name of the I2C interface.
-     - Parameter speed: **OPTIONAL** The clock speed used to control the data transmission.
+     - Parameter speed: **OPTIONAL** The clock speed used to control the data
+        transmission.
      
      ### Usage Example ###
      ````
@@ -88,7 +93,8 @@ import CSwiftIO
 
     /**
      Read one byte from a specified slave device with the given address.
-     - Parameter address: The address of the slave device the board will communicate with.
+     - Parameter address: The address of the slave device the board will
+        communicate with.
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
@@ -108,7 +114,8 @@ import CSwiftIO
     /**
      Read an array of data from a specified slave device with the given address.
      - Parameter count : The number of bytes to read.
-     - Parameter address : The address of the slave device the board will communicate with.
+     - Parameter address : The address of the slave device the board will
+        communicate with.
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
@@ -129,7 +136,8 @@ import CSwiftIO
     /**
      Write a byte of data to a specified slave device with the given address.
      - Parameter byte : One 8-bit binary number to be sent to the slave device.
-     - Parameter address : The address of the slave device the board will communicate with.
+     - Parameter address : The address of the slave device the board will
+        communicate with.
      */
     @inline(__always)
     public func write(_ byte: UInt8, to address: UInt8) {
@@ -141,7 +149,8 @@ import CSwiftIO
     /**
      Write an array of data to a specified slave device with the given address.
      - Parameter data : A byte array to be sent to the slave device.
-     - Parameter address : The address of the slave device the board will communicate with.
+     - Parameter address : The address of the slave device the board will
+        communicate with.
      */
     @inline(__always)
     public func write(_ data: [UInt8], count: Int? = nil, to address: UInt8) {
@@ -167,10 +176,13 @@ import CSwiftIO
 
 
     @inline(__always)
-    public func writeRead(_ byte: UInt8, readCount: Int, address: UInt8) -> [UInt8] {
+    public func writeRead(
+        _ byte: UInt8, readCount: Int, address: UInt8
+    ) -> [UInt8] {
         var receivedData = [UInt8](repeating: 0, count: readCount)
 
-        let ret = swifthal_i2c_write_read(obj, address, [byte], 1, &receivedData, Int32(readCount))
+        let ret = swifthal_i2c_write_read(obj, address, [byte], 1,
+                                          &receivedData, Int32(readCount))
         if ret == 0 {
             return receivedData
         } else {
@@ -180,15 +192,19 @@ import CSwiftIO
     }
 
     /**
-     Write an array of bytes to the slave device with the given address and then read the bytes sent from the device.
+     Write an array of bytes to the slave device with the given address
+     and then read the bytes sent from the device.
      - Parameter data : A byte array to be sent to the slave device.
      - Parameter readCount : The number of bytes to read.
-     - Parameter address : The address of the slave device the board will communicate with.
+     - Parameter address : The address of the slave device the board will
+        communicate with.
      
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
     @inline(__always)
-    public func writeRead(_ data: [UInt8], readCount: Int, address: UInt8) -> [UInt8] {
+    public func writeRead(
+        _ data: [UInt8], readCount: Int, address: UInt8
+    ) -> [UInt8] {
         var receivedData = [UInt8](repeating:0, count: readCount)
 
         let ret = swifthal_i2c_write_read(obj, address, data, Int32(data.count), &receivedData, Int32(readCount))
