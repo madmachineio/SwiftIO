@@ -157,7 +157,7 @@ public final class DigitalOut {
      Set the output value of the specific pin: true for high voltage and false
      for low voltage.
 
-     - Parameter value : The output value: `true`or `false`.
+     - Parameter value : The output value: `true` or `false`.
      */
     @inline(__always)
 	public func write(_ value: Bool) {
