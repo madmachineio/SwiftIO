@@ -1,7 +1,22 @@
+//=== UART.swift ----------------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
-UART is a two-wire serial communication protocol used to communicate with serial devices. The devices must agree on a common transmisson rate before communication.
+UART is a two-wire serial communication protocol used to communicate with
+ serial devices. The devices must agree on a common transmisson rate before
+ communication.
 
 */
 public final class UART {
@@ -54,11 +69,15 @@ public final class UART {
     /**
      Initialize an interface for UART communication.
      - Parameter id: **REQUIRED** The name of the UART interface.
-     - Parameter baudRate: **OPTIONAL**The communication speed. The default baud rate is 115200.
+     - Parameter baudRate: **OPTIONAL**The communication speed.
+        The default baud rate is 115200.
      - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
-     - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy of the data transmission.
-     - Parameter stopBits: **OPTIONAL**The bits reserved to stop the communication.
-     - Parameter readBufferLength: **OPTIONAL**The length of the serial buffer to store the data.
+     - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy
+        of the data transmission.
+     - Parameter stopBits: **OPTIONAL**The bits reserved to stop the
+        communication.
+     - Parameter readBufferLength: **OPTIONAL**The length of the serial
+        buffer to store the data.
      
      ### Usage Example ###
      ````
@@ -66,12 +85,14 @@ public final class UART {
      let uart = UART(Id.UART0)
      ````
      */
-    public init(_ idName: IdName,
-                baudRate: Int = 115200,
-                dataBits: DataBits = .eightBits,
-                parity: Parity = .none,
-                stopBits: StopBits = .oneBit,
-                readBufferLength: Int = 64) {
+    public init(
+        _ idName: IdName,
+        baudRate: Int = 115200,
+        dataBits: DataBits = .eightBits,
+        parity: Parity = .none,
+        stopBits: StopBits = .oneBit,
+        readBufferLength: Int = 64
+    ) {
         self.id = idName.value
         self.baudRate = baudRate
         self.dataBits = dataBits
@@ -114,7 +135,8 @@ public final class UART {
 
 
     /**
-     Set the baud rate for communication. It should be set ahead of time to ensure the same baud rate between two devices.
+     Set the baud rate for communication. It should be set ahead of time
+     to ensure the same baud rate between two devices.
      - Parameter baudRate: The communication speed.
 
      */
@@ -149,7 +171,8 @@ public final class UART {
     }
 
     /**
-     Write a series of bytes to the external device through the serial connection.
+     Write a series of bytes to the external device through the
+     serial connection.
      - Parameter data: A byte array to be sent to the device.
 
      */
@@ -190,11 +213,15 @@ public final class UART {
     }
 
     /**
-     Read a byte of data receiving from the external device. The maximum time for data reception is decided by the timeout value. If the data is received before the time set, the read process will end up automatically. 
+     Read a byte of data receiving from the external device. The maximum time
+     for data reception is decided by the timeout value. If the data is
+     received before the time set, the read process will end up automatically.
      
      -1 is set to wait until receiving the required data. 
-     0 is set to end up the read immediately no matter whether the data is received or not. 
-     A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
+     0 is set to end up the read immediately no matter whether the data is
+     received or not.
+     A value greater than 0 is set to wait for a certain period
+     (in milliseconds) and then end up the read.
      - Parameter timeout: The max time(in milliseconds) for data reception.
 
      - Returns: One 8-bit binary data read from the device.
@@ -221,11 +248,15 @@ public final class UART {
     }
 
     /**
-     Read a series of bytes receiving from the external device.The maximum time for data reception is decided by the timeout value. If the data is received before the time set, the read process will end up automatically. 
+     Read a series of bytes receiving from the external device.The maximum
+     time for data reception is decided by the timeout value. If the data is
+     received before the time set, the read process will end up automatically.
      
      -1 is set to wait until receiving the required data. 
-     0 is set to end up the read immediately no matter whether the data is received or not. 
-     A value greater than 0 is set to wait for a certain period (in milliseconds) and then end up the read.
+     0 is set to end up the read immediately no matter whether the data is
+     received or not.
+     A value greater than 0 is set to wait for a certain period
+     (in milliseconds) and then end up the read.
      - Parameter timeout: The max time(in milliseconds) for data reception.
      - Parameter count: The number of bytes to read.
 
@@ -243,7 +274,8 @@ public final class UART {
         }
 
         var data = [UInt8](repeating: 0, count: count)
-        let received = Int(swifthal_uart_read(obj, &data, Int32(count), timeoutValue))
+        let received = Int(swifthal_uart_read(
+            obj, &data, Int32(count), timeoutValue))
         return Array(data[0..<received])
     }
 
@@ -255,7 +287,8 @@ public final class UART {
 
 extension UART {
     /**
-     The parity bit is used to ensure the data transmission according to the number of logical-high bits.
+     The parity bit is used to ensure the data transmission according
+     to the number of logical-high bits.
 
      */
     public enum Parity {

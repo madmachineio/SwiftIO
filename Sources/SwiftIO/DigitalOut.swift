@@ -1,9 +1,26 @@
+//=== DigitalOut.swift ----------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
- The DigitalOut class is used to set a High or Low voltage output to a digital output pin. An initiation is required before using the member functions of this class.
+ The DigitalOut class is used to set a High or Low voltage output to a digital
+ output pin. An initiation is required before using the member functions of
+ this class.
 
- - Attention: The driving capability of the digital output pins is not very strong. It is meant to be a **SIGNAL** output and is not capable of driving a device requires large current.
+ - Attention: The driving capability of the digital output pins is not very
+ strong. It is meant to be a **SIGNAL** output and is not capable of driving
+ a device requires large current.
  
  
  ### Example: Reverse the output value on a digital output pin
@@ -69,14 +86,18 @@ public final class DigitalOut {
     /**
      Initialize a DigitalOut to a specific output pin.
      
-     - Parameter id: **REQUIRED** The name of output pin. Reference the Id enumerate.
-     - Parameter mode: **OPTIONAL** The output mode of the pin. `.pushPull` by default.
-     - Parameter value: **OPTIONAL** The output value after initiation. `false` by default.
+     - Parameter id: **REQUIRED** The name of output pin.
+        See Id for the specific board in MadBoards library for reference.
+     - Parameter mode: **OPTIONAL** The output mode of the pin.
+        `.pushPull` by default.
+     - Parameter value: **OPTIONAL** The output value after initiation.
+        `false` by default.
 
 
      #### Usage Example
      ````
-     // The most simple way of initiating a pin D0, with all other parameters set to default.
+     // The most simple way of initiating a pin D0, with all other parameters
+     set to default.
      let outputPin0 = DigitalOut(Id.D0)
      ​
      // Initialize the pin D1 with the output mode openDrain.
@@ -146,9 +167,10 @@ public final class DigitalOut {
 
 
     /**
-     Set the output value of the specific pin: true for high voltage and false for low voltage.
+     Set the output value of the specific pin: true for high voltage and false
+     for low voltage.
 
-     - Parameter value : The output value: `true`or `false`.
+     - Parameter value : The output value: `true` or `false`.
      */
     @inline(__always)
 	public func write(_ value: Bool) {
@@ -188,8 +210,11 @@ public final class DigitalOut {
      
      - Returns: `true` or `false` of the logic value.
      - Attention:
-        The return value of this function **has nothing to do with the actual output** of the pin.
-        For example, a pin is set to `true` but it is short to ground. The actual pin voltage would be low. This function will still return `true` despite of the actual low output, since this pin is set to HIGH.
+        The return value of this function **has nothing to do with the actual
+        output** of the pin.
+        For example, a pin is set to `true` but it is short to ground.
+        The actual pin voltage would be low. This function will still return
+        `true` despite of the actual low output, since this pin is set to HIGH.
      */
     public func getValue() -> Bool {
         return value
@@ -200,7 +225,10 @@ public final class DigitalOut {
 
 extension DigitalOut {
     /**
-     The Mode enumerate includes the available output modes. The default output mode in most cases is pushPull. The pushPull mode enables the digital pin to output high and low voltage levels while the open-drain output cannot truly output a high level.
+     The Mode enumerate includes the available output modes. The default output
+     mode in most cases is pushPull. The pushPull mode enables the digital pin
+     to output high and low voltage levels while the open-drain output cannot
+     truly output a high level.
      
      */
     public enum Mode {

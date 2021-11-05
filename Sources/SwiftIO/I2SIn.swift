@@ -1,3 +1,16 @@
+//=== I2SIn.swift ---------------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 
@@ -70,11 +83,13 @@ import CSwiftIO
         384_000
     ]
 
-    public init(_ idName: IdName,
-                rate: Int = 16_000,
-                bits: Int = 16,
-                channel: SampleChannel = .monoLeft,
-                mode: Mode = .philips) {
+    public init(
+        _ idName: IdName,
+        rate: Int = 16_000,
+        bits: Int = 16,
+        channel: SampleChannel = .monoLeft,
+        mode: Mode = .philips
+    ) {
         guard supportedSampleRate.contains(rate) else {
             fatalError("The specified sampleRate \(rate) is not supported!")
         }
@@ -123,7 +138,10 @@ import CSwiftIO
         }
     }
 
-    public func setSampleProperty(rate: Int, bits: Int, channel: SampleChannel) {
+    public func setSampleProperty(
+        rate: Int, bits: Int,
+        channel: SampleChannel
+    ) {
         guard supportedSampleRate.contains(rate) else {
             fatalError("The specified sampleRate \(rate) is not supported!")
         }
@@ -140,7 +158,11 @@ import CSwiftIO
         }
     }
 
-    public func read(to sample: inout [UInt8], count: Int? = nil, timeout: Int? = nil) {
+    public func read(
+        to sample: inout [UInt8],
+        count: Int? = nil,
+        timeout: Int? = nil
+    ) {
         let length, timeoutValue: Int32
 
         if let count = count {

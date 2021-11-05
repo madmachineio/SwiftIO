@@ -1,9 +1,25 @@
+//=== Counter.swift -------------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
-The counter class can be used to count the external signal and measure the number of the pulse. It can detect the rising edge or both edges.
+The counter class can be used to count the external signal and measure the
+ number of the pulse. It can detect the rising edge or both edges.
  
-- Attention: The maximum count value depends on the lowlevel hardware. For example, SwiftIO Board’s counter is 16bit, so the max count value is 65535. If the counter reaches the value, it will overflow and start from 0 again.
+- Attention: The maximum count value depends on the lowlevel hardware.
+ For example, SwiftIO Board’s counter is 16bit, so the max count value is 65535.
+ If the counter reaches the value, it will overflow and start from 0 again.
  
 ### Example: Read the count value every 10ms
 
@@ -74,8 +90,10 @@ public final class Counter {
     /**
      Initialize the counter.
      
-     - Parameter id: **REQUIRED** The id of the counter. See the Id enumeration for reference.
-     - Parameter mode: **OPTIONAL** The edge of the external signal to detect, rising edge or both edges.
+     - Parameter id: **REQUIRED** The id of the counter. See the Id enumeration
+        for reference.
+     - Parameter mode: **OPTIONAL** The edge of the external signal to detect,
+        rising edge or both edges.
      - Parameter start: **OPTIONAL** Whether or not to start the counter after initialization.
      
      ### Usage Example ###
@@ -112,9 +130,11 @@ public final class Counter {
         swifthal_counter_close(obj)
     }
     /**
-     Change the mode to decide whether it detects the rising edge or both rising and falling edges.
+     Change the mode to decide whether it detects the rising edge or both
+     rising and falling edges.
      
-     - Parameter mode : The edge of the external signal to detect, rising edge or both edges.
+     - Parameter mode : The edge of the external signal to detect, rising edge
+        or both edges.
      */
     public func setMode(_ mode: Mode) {
         self.mode = mode
@@ -159,7 +179,8 @@ public final class Counter {
 
 extension Counter {
     /**
-     The Mode enumerate is to decide whether the count detects the rising edge or both rising and falling edges.
+     The Mode enumerate is to decide whether the count detects the rising edge
+     or both rising and falling edges.
      
      */
     public enum Mode {

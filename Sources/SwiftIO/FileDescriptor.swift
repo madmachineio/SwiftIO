@@ -1,3 +1,16 @@
+//=== FileDescriptor.swift ------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
@@ -89,7 +102,8 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
-    public func read(into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) -> Int {
+    public func read(into buffer: UnsafeMutableRawBufferPointer,
+                     count: Int? = nil) -> Int {
         let length: Int
 
         if let count = count {
@@ -98,7 +112,8 @@ public struct FileDescriptor {
             length = buffer.count
         }
 
-        return Int(swifthal_fs_read(filePointer, buffer.baseAddress!, UInt32(length)))
+        return Int(swifthal_fs_read(filePointer, buffer.baseAddress!,
+                                    UInt32(length)))
     }
 
     /**
@@ -118,7 +133,8 @@ public struct FileDescriptor {
             length = buffer.count
         }
         swifthal_fs_seek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
-        return Int(swifthal_fs_read(filePointer, buffer.baseAddress!, UInt32(length)))
+        return Int(swifthal_fs_read(filePointer, buffer.baseAddress!,
+                                    UInt32(length)))
     }
 
     /**
@@ -152,7 +168,8 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
-    public func read(fromAbsoluteOffest offset: Int, into buffer: inout [UInt8], count: Int? = nil) -> Int {
+    public func read(fromAbsoluteOffest offset: Int,
+                     into buffer: inout [UInt8], count: Int? = nil) -> Int {
         let length: Int
 
         if let count = count {
@@ -192,7 +209,8 @@ public struct FileDescriptor {
 
     /**
      Writes the contents of a buffer at the current file offset.
-      - Parameter buffer: **REQUIRED** The region of memory that contains the data being written.
+      - Parameter buffer: **REQUIRED** The region of memory that contains the
+        data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
     public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) {
@@ -209,10 +227,12 @@ public struct FileDescriptor {
     /**
      Writes the contents of a buffer at the specified offset.
       - Parameter offset: **REQUIRED** The file offset where writing begins.
-      - Parameter buffer: **REQUIRED** Te region of memory that contains the data being written.
+      - Parameter buffer: **REQUIRED** Te region of memory that contains the
+        data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
-    public func write(toAbsoluteOffset offset: Int, _ buffer: UnsafeRawBufferPointer, count: Int? = nil) {
+    public func write(toAbsoluteOffset offset: Int,
+                      _ buffer: UnsafeRawBufferPointer, count: Int? = nil) {
         let length: Int
 
         if let count = count {
@@ -226,7 +246,8 @@ public struct FileDescriptor {
 
     /**
      Writes the contents of a buffer at the current file offset.
-      - Parameter buffer: **REQUIRED** The region of memory that contains the data being written.
+      - Parameter buffer: **REQUIRED** The region of memory that contains the
+        data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
     public func write(_ buffer: [UInt8], count: Int? = nil) {
@@ -238,17 +259,20 @@ public struct FileDescriptor {
             length = buffer.count
         }
         _ = buffer.withUnsafeBytes { bufferPointer in
-            swifthal_fs_write(filePointer, bufferPointer.baseAddress, UInt32(length))
+            swifthal_fs_write(filePointer, bufferPointer.baseAddress,
+                              UInt32(length))
         }
     }
 
     /**
      Writes the contents of a buffer at the specified offset.
       - Parameter offset: **REQUIRED** The file offset where writing begins.
-      - Parameter buffer: **REQUIRED** Te region of memory that contains the data being written.
+      - Parameter buffer: **REQUIRED** Te region of memory that contains the
+        data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
-    public func write(toAbsoluteOffset offset: Int, _ buffer: [UInt8], count: Int? = nil) {
+    public func write(toAbsoluteOffset offset: Int,
+                      _ buffer: [UInt8], count: Int? = nil) {
         let length: Int
 
         if let count = count {
@@ -258,14 +282,19 @@ public struct FileDescriptor {
         }
         swifthal_fs_seek(filePointer, Int32(offset), SeekOrigin.start.rawValue)
         _ = buffer.withUnsafeBytes { bufferPointer in
-            swifthal_fs_write(filePointer, bufferPointer.baseAddress, UInt32(length))
+            swifthal_fs_write(filePointer, bufferPointer.baseAddress,
+                              UInt32(length))
         }
     }
 
     /**
      Flushes any cached write of an open file.
      - Attention:
-     This method  can be used to flush the cache of an open file. This can be called to ensure data gets written to the storage media immediately. This may be done to avoid data loss if power is removed unexpectedly. Note that closing a file will cause caches to be flushed correctly so it need not be called if the file is being closed.
+     This method can be used to flush the cache of an open file. This can be
+     called to ensure data gets written to the storage media immediately.
+     This may be done to avoid data loss if power is removed unexpectedly.
+     Note that closing a file will cause caches to be flushed correctly
+     so it needs not be called if the file is being closed.
      */
     public func sync() {
         swifthal_fs_sync(filePointer)
@@ -287,7 +316,8 @@ struct FilePath {
 
     /**
      Creates a file path from a string.
-      - Parameter string: **REQUIRED** A string whose ASCII contents to use as the contents of the path.
+      - Parameter string: **REQUIRED** A string whose ASCII contents to use
+        as the contents of the path.
      */
     init(_ string: String) {
         description = string
@@ -305,9 +335,12 @@ extension FileDescriptor {
 
     public init(rawValue: UInt8) { self.rawValue = rawValue }
 
-    public static var readOnly: AccessMode { AccessMode(rawValue: UInt8(SWIFT_FS_O_READ)) }
-    public static var writeOnly: AccessMode { AccessMode(rawValue: UInt8(SWIFT_FS_O_WRITE)) }
-    public static var readWrite: AccessMode { AccessMode(rawValue: UInt8(SWIFT_FS_O_RDWR)) }
+    public static var readOnly: AccessMode {
+        AccessMode(rawValue: UInt8(SWIFT_FS_O_READ)) }
+    public static var writeOnly: AccessMode {
+        AccessMode(rawValue: UInt8(SWIFT_FS_O_WRITE)) }
+    public static var readWrite: AccessMode {
+        AccessMode(rawValue: UInt8(SWIFT_FS_O_RDWR)) }
 
   }
 
@@ -330,8 +363,11 @@ extension FileDescriptor {
 
         public init(rawValue: Int32) { self.rawValue = rawValue }
 
-        public static var start: SeekOrigin { SeekOrigin(rawValue: SWIFT_FS_SEEK_SET)}
-        public static var current: SeekOrigin { SeekOrigin(rawValue: SWIFT_FS_SEEK_CUR)}
-        public static var end: SeekOrigin { SeekOrigin(rawValue: SWIFT_FS_SEEK_END)}
+        public static var start: SeekOrigin {
+            SeekOrigin(rawValue: SWIFT_FS_SEEK_SET)}
+        public static var current: SeekOrigin {
+            SeekOrigin(rawValue: SWIFT_FS_SEEK_CUR)}
+        public static var end: SeekOrigin {
+            SeekOrigin(rawValue: SWIFT_FS_SEEK_END)}
     }
 }

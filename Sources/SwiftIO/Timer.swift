@@ -1,3 +1,16 @@
+//=== Timer.swift ---------------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
@@ -82,23 +95,30 @@ public final class Timer {
     }
 
     /**
-     Execute a designated task  at a scheduled time interval. The task should be executed in a very short time, usually in nanoseconds.
+     Execute a designated task  at a scheduled time interval. The task
+     should be executed in a very short time, usually in nanoseconds.
      - Parameter ms: **REQUIRED** The time period set for the interrupt.
-     - Parameter mode: **OPTIONAL** The times that the interrupt will occur: once or continuous.
-     - Parameter start: **OPTIONAL** By default, the interrupt will start directly to work.
+     - Parameter mode: **OPTIONAL** The times that the interrupt will occur:
+        once or continuous.
+     - Parameter start: **OPTIONAL** By default, the interrupt will start
+        directly to work.
      - Parameter callback: **REQUIRED** A void function without a return value.
      
      */
-    public func setInterrupt(ms period: Int,
-                            mode: Mode = .period,
-                            start: Bool = true,
-                            _ callback: @escaping ()->Void) {
+    public func setInterrupt(
+        ms period: Int,
+        mode: Mode = .period,
+        start: Bool = true,
+        _ callback: @escaping ()->Void
+    ) {
         let initalSet = self.callback == nil ? true : false
 
         self.period = Int32(period)
         self.mode = mode
         self.callback = callback
-        swifthal_timer_add_callback(obj, getClassPointer(self)) { (ptr)->Void in
+        swifthal_timer_add_callback(
+            obj, getClassPointer(self)
+        ) { (ptr)->Void in
             let mySelf = Unmanaged<Timer>.fromOpaque(ptr!).takeUnretainedValue()
             mySelf.callback!()
         }
@@ -135,7 +155,8 @@ public final class Timer {
 
 extension Timer {
     /**
-     There are two timer modes: if set to `oneShot`, the interrupt happens only once; if set to `period`, the interrupt happens continuously.
+     There are two timer modes: if set to `oneShot`, the interrupt happens
+     only once; if set to `period`, the interrupt happens continuously.
      */
     public enum Mode {
         case oneShot, period

@@ -1,17 +1,31 @@
+//=== AnalogIn.swift ------------------------------------------------------===//
+//
+// Copyright (c) MadMachine Limited
+// Licensed under MIT License
+//
+// Authors: Andy Liu
+// Created: 05/09/2021
+// Updated: 11/05/2021
+//
+// See https://madmachine.io for more information
+//
+//===----------------------------------------------------------------------===//
+
 import CSwiftIO
 
 /**
- The AnalogIn class is used to read the external voltage applied to an analog input pin.
+ The AnalogIn class is used to read the external voltage applied to an analog
+ input pin.
  
  ### Example: Read and print the analog input value on a analog pin
  
  ````
  import SwiftIO
  
- //Initialize an AnalogIn to analog pin A0.
+ // Initialize an AnalogIn to analog pin A0.
  let pin = AnalogIn(Id.A0)
  
- //Read and print the analog input value every 1 second.
+ // Read and print the analog input value every 1 second.
  while true {
      var value = pin.readVoltage()
      print("The analog input volatge is \(value)")
@@ -26,7 +40,9 @@ public final class AnalogIn {
     private var info = swift_adc_info_t()
 
     /**
-     The max raw value of the ADC. Different ADC has different resolutions. The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is 4095.
+     The max raw value of the ADC. Different ADC has different resolutions.
+     The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is
+     4095.
 
      */
     public var maxRawValue: Int {
@@ -44,7 +60,8 @@ public final class AnalogIn {
     /**
      Initialize an AnalogIn to a specified pin.
      
-     - Parameter idName: **REQUIRED** The AnalogIn Id name on the board. See Id for reference.
+     - Parameter idName: **REQUIRED** The AnalogIn Id name of the board.
+        See Id for the specific board in MadBoards library for reference.
      
      ### Usage Example ###
      ````
