@@ -19,7 +19,7 @@ public final class DigitalInOut {
         } 
     }
 
-    private var outputMode: OutputMode {
+    private var outputMode: DigitalOut.Mode {
         willSet {
             switch newValue {
                 case .pushPull:
@@ -30,7 +30,7 @@ public final class DigitalInOut {
         }
     }
 
-    private var inputMode: InputMode {
+    private var inputMode: DigitalIn.Mode {
         willSet {
             switch newValue {
                 case .pullDown:
@@ -45,8 +45,8 @@ public final class DigitalInOut {
 
     public init(_ idName: IdName,
                 direction: Direction = .output,
-                outputMode: OutputMode = .pushPull,
-                inputMode: InputMode = .pullUp,
+                outputMode: DigitalOut.Mode = .pushPull,
+                inputMode: DigitalIn.Mode = .pullUp,
                 outputValue: Bool = false) {
         
         self.id = idName.value
@@ -98,26 +98,35 @@ public final class DigitalInOut {
         return direction
     }
 
-    public func getOutputMode() -> OutputMode {
+    public func getOutputMode() -> DigitalOut.Mode {
         return outputMode
     }
 
-    public func getInputMode() -> InputMode {
+    public func getInputMode() -> DigitalIn.Mode {
         return inputMode
     }
 
-    public func setToOutput(_ mode: OutputMode) {
+    public func setToOutput(_ mode: DigitalOut.Mode? = nil, value: Bool? = nil) {
         direction = .output
-        outputMode = mode
+
+        if let mode = mode {
+            outputMode = mode
+        }
 
         if swifthal_gpio_config(obj, directionRawValue, outputModeRawValue) != 0 {
             print("DigitalInOut\(id) setOutputMode failed!")
         }
+        
+        if let value = value {
+            swifthal_gpio_set(obj, value ? 1 : 0)
+        }
 	}
 
-    public func setToInput(_ mode: InputMode) {
+    public func setToInput(_ mode: DigitalIn.Mode? = nil) {
         direction = .input
-        inputMode = mode
+        if let mode = mode {
+            inputMode = mode
+        }
 
         if swifthal_gpio_config(obj, directionRawValue, inputModeRawValue) != 0 {
             print("DigitalInOut\(id) setInputMode failed!")
@@ -133,12 +142,10 @@ public final class DigitalInOut {
         swifthal_gpio_set(obj, value ? 1 : 0)
 	}
 
-
     @inline(__always)
     public func high() {
         write(true)
     }
-
 
     @inline(__always)
     public func low() {
@@ -159,14 +166,6 @@ public final class DigitalInOut {
 extension DigitalInOut {
     public enum Direction {
         case output, input
-    }
-
-    public enum OutputMode {
-        case pushPull, openDrain
-    }
-
-    public enum InputMode {
-        case pullDown, pullUp, pullNone
     }
 }
 
