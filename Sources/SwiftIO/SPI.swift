@@ -183,5 +183,33 @@ import CSwiftIO
             print("SPI\(id) write error!")
         }
     }
+
+    /**
+     Write an buffer of data to the slave device.
+     - Parameter data: A UInt8 buffer to be sent to the slave device.
+     */
+    @inline(__always)
+    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) {
+        let ret: Int32
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(data.count, count)
+        } else {
+            byteCount = data.count
+        }
+
+        if byteCount <= 0 {
+            return
+        }
+
+        csEnable()
+        ret = swifthal_spi_write(obj, data.baseAddress, Int32(byteCount))
+        csDisable()
+
+        if ret != 0 {
+            print("SPI\(id) write error!")
+        }
+    }
 }
 
