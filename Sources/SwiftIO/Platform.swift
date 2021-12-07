@@ -12,10 +12,49 @@
 //===----------------------------------------------------------------------===//
 
 import CSwiftIO
+import CNewlib
 
 @inline(__always)
-func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeMutableRawPointer {
-    return UnsafeMutableRawPointer(Unmanaged.passUnretained(obj).toOpaque())
+internal func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeRawPointer {
+    return UnsafeRawPointer(Unmanaged.passUnretained(obj).toOpaque())
+}
+
+internal func system_strerror(_ __errnum: Int32) -> UnsafeMutablePointer<Int8>! {
+  strerror(__errnum)
+}
+
+internal func checkResult(_ errno: Int32, type: String, function: String) {
+    guard errno < 0 else { return }
+
+    let errno = -errno
+
+    let err: String
+    if let ptr = system_strerror(errno) {
+        err = String(cString: ptr)
+    } else {
+        err = "unknown error"
+    }
+
+    print("warning: \(type) \(function): \(err)")
+}
+
+
+internal func valueOrErrno<D>(
+    _ data: D, _ e: CInt
+) -> Result<D, Errno> {
+  e < 0 ? .failure(Errno(e)) : .success(data)
+}
+
+internal func nothingOrErrno(
+    _ e: CInt
+) -> Result<(), Errno> {
+  valueOrErrno(0, e).map { _ in () }
+}
+
+internal func checkReturnValue(_ obj: Any, _ result: Result<Any, Errno>) {
+    if case .failure(let err) = result {
+        print("error in \(obj): " + String(describing: err))
+    }
 }
 
 /**

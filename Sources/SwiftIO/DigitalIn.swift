@@ -38,31 +38,20 @@ public final class DigitalIn {
     private var obj: UnsafeMutableRawPointer 
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
-    private var modeRawValue: swift_gpio_mode_t
-    private var interruptModeRawValue: swift_gpio_int_mode_t
 
+    private var modeRawValue: swift_gpio_mode_t
     private var mode: Mode {
         willSet {
-            switch newValue {
-                case .pullDown:
-                modeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
-                case .pullUp:
-                modeRawValue = SWIFT_GPIO_MODE_PULL_UP
-                case .pullNone:
-                modeRawValue = SWIFT_GPIO_MODE_PULL_NONE
-            }
+            modeRawValue = DigitalIn.getModeRawValue(newValue)
         }
     }
+
+    private var interruptModeRawValue: swift_gpio_int_mode_t
     private var interruptMode: InterruptMode {
         willSet {
-            switch newValue {
-                case .rising:
-                interruptModeRawValue = SWIFT_GPIO_INT_MODE_RISING_EDGE
-                case .falling:
-                interruptModeRawValue = SWIFT_GPIO_INT_MODE_FALLING_EDGE
-                case .bothEdge:
-                interruptModeRawValue = SWIFT_GPIO_INT_MODE_BOTH_EDGE
-            }
+            interruptModeRawValue = DigitalIn.getInterruptModeRawValue(
+                newValue
+            )
         }
     }
     private var interruptState: InterruptState = .disable
@@ -91,29 +80,16 @@ public final class DigitalIn {
                 mode: Mode = .pullDown) {
         self.id = idName.value
         self.mode = mode
-        switch mode {
-            case .pullDown:
-            modeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
-            case .pullUp:
-            modeRawValue = SWIFT_GPIO_MODE_PULL_UP
-            case .pullNone:
-            modeRawValue = SWIFT_GPIO_MODE_PULL_NONE
-        }
-        self.interruptMode = .rising
-        switch interruptMode {
-            case .rising:
-            interruptModeRawValue = SWIFT_GPIO_INT_MODE_RISING_EDGE
-            case .falling:
-            interruptModeRawValue = SWIFT_GPIO_INT_MODE_FALLING_EDGE
-            case .bothEdge:
-            interruptModeRawValue = SWIFT_GPIO_INT_MODE_BOTH_EDGE
-        }
+        self.modeRawValue = DigitalIn.getModeRawValue(mode)
+        self.interruptMode = .falling
+        self.interruptModeRawValue = DigitalIn.getInterruptModeRawValue(
+            .falling
+        )
 
-        if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
-            obj = UnsafeMutableRawPointer(ptr)
-        } else {
-            fatalError("DigitalIn\(idName.value) initialization failed!")
+        guard let ptr = swifthal_gpio_open(id, direction, modeRawValue) else {
+            fatalError("DigitalIn \(idName.value) init failed")
         }
+        obj = UnsafeMutableRawPointer(ptr)
 	}
 
     deinit {
@@ -137,9 +113,21 @@ public final class DigitalIn {
      
      - Parameter mode : The input mode.
      */
-	public func setMode(_ mode: Mode) {
+    @discardableResult
+	public func setMode(_ mode: Mode) -> Result<(), Errno> {
+        let oldMode = self.mode
 		self.mode = mode
-		swifthal_gpio_config(obj, direction, modeRawValue)
+
+        let result = nothingOrErrno(
+		    swifthal_gpio_config(obj, direction, modeRawValue)
+        )
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            self.mode = oldMode
+        }
+
+        return result
 	}
 
 
@@ -169,50 +157,87 @@ public final class DigitalIn {
      - Parameter mode : The interrupt mode to detect rising or falling edge.
      - Parameter enable : Whether to enable the interrupt.
      - Parameter callback : A void function without a return value.
-     */    
-    public func setInterrupt(_ mode: InterruptMode, enable: Bool = true,
-                             callback: @escaping ()->Void) {
+     */
+    @discardableResult
+    public func setInterrupt(
+        _ mode: InterruptMode,
+        enable: Bool = true,
+        callback: @escaping ()->Void
+    ) -> Result<(), Errno> {
+        let oldInterruptMode = interruptMode
         interruptMode = mode
 
         if self.callback != nil {
             removeInterrupt()
         }
-
         self.callback = callback
-        swifthal_gpio_interrupt_config(obj, interruptModeRawValue)
-        swifthal_gpio_interrupt_callback_install(obj, getClassPointer(self))
-        { (ptr)->Void in
-            let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
-            mySelf.callback!()
+
+        var result = nothingOrErrno(
+            swifthal_gpio_interrupt_config(obj, interruptModeRawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            interruptMode = oldInterruptMode
+            return result
+        }
+
+        result = nothingOrErrno(
+            swifthal_gpio_interrupt_callback_install(
+                obj, getClassPointer(self)
+            ) { (ptr)->Void in
+                let mySelf = Unmanaged<DigitalIn>.fromOpaque(ptr!).takeUnretainedValue()
+                mySelf.callback!()
+            }
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return result
         }
 
         if enable {
-            enableInterrupt()
-        } else {
-            disableInterrupt()
+            result = enableInterrupt()
+            if case .failure(let err) = result {
+                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            }
         }
+
+        return result
     }
 
     /**
      Trigger the interrupt after detecting the edge.
     
      */
-    public func enableInterrupt() {
-        if callback != nil {
-            interruptState = .enable
-            swifthal_gpio_interrupt_enable(obj)
-        } else {
-            print("DigitalIn \(id) han't set an interrupt!")
+    @discardableResult
+    public func enableInterrupt() -> Result<(), Errno> {
+        guard callback != nil else {
+            let err = Errno.resourceBusy
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return .failure(err)
         }
+
+        let result = nothingOrErrno(
+            swifthal_gpio_interrupt_enable(obj)
+        )
+        if case .success = result {
+            interruptState = .enable
+        }
+        return result
     }
 
     /**
      Disable the interrupt until the interrupt state is changed.
     
      */
-    public func disableInterrupt() {
-        interruptState = .disable
-        swifthal_gpio_interrupt_disable(obj)
+    @discardableResult
+    public func disableInterrupt() -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_gpio_interrupt_disable(obj)
+        )
+        if case .success = result {
+            interruptState = .disable
+        }
+        return result
     }
 
     /**
@@ -228,17 +253,19 @@ public final class DigitalIn {
      Remove the interrupt.
     
      */
-    public func removeInterrupt() {
-        interruptState = .disable
-        swifthal_gpio_interrupt_disable(obj)
-        swifthal_gpio_interrupt_callback_uninstall(obj)
+    @discardableResult
+    public func removeInterrupt() -> Result<(), Errno> {
+        if interruptState != .disable {
+            disableInterrupt()
+        }
+
+        let result = nothingOrErrno(
+            swifthal_gpio_interrupt_callback_uninstall(obj)
+        )
         callback = nil
+        return result
     }
-
 }
-
-
-
 
 extension DigitalIn {
     /**
@@ -252,6 +279,17 @@ extension DigitalIn {
         case pullDown, pullUp, pullNone
     }
 
+    private static func getModeRawValue(_ mode: Mode) -> swift_gpio_mode_t {
+        switch mode {
+            case .pullDown:
+            return SWIFT_GPIO_MODE_PULL_DOWN
+            case .pullUp:
+            return SWIFT_GPIO_MODE_PULL_UP
+            case .pullNone:
+            return SWIFT_GPIO_MODE_PULL_NONE
+        }
+    }
+
     /**
      The interrupt mode determines the edge to raise the interrupt: rising,
      falling or both edges. A rising edge is the transition of a digital input
@@ -260,6 +298,19 @@ extension DigitalIn {
      */
     public enum InterruptMode {
         case rising, falling, bothEdge
+    }
+
+    private static func getInterruptModeRawValue(
+        _ mode: InterruptMode
+    ) -> swift_gpio_int_mode_t {
+        switch mode {
+            case .rising:
+            return SWIFT_GPIO_INT_MODE_RISING_EDGE
+            case .falling:
+            return SWIFT_GPIO_INT_MODE_FALLING_EDGE
+            case .bothEdge:
+            return SWIFT_GPIO_INT_MODE_BOTH_EDGE
+        }
     }
 
     /**

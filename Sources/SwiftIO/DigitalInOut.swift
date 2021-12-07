@@ -114,7 +114,7 @@ public final class DigitalInOut {
                 swifthal_gpio_set(obj, outputValue ? 1 : 0)
             }
         } else {
-            fatalError("DigitalInOut\(idName.value) initialization failed!")
+            fatalError("DigitalInOut \(idName.value) init failed")
         }
     }
 
@@ -147,35 +147,52 @@ public final class DigitalInOut {
     ///     set it, it remains the same as the mode after initialization.
     ///   - value: The output value: true or false. If you don't set it,
     ///     it remains the same as the value after initialization.
-    public func setToOutput(_ mode: DigitalOut.Mode? = nil, value: Bool? = nil) {
+    @discardableResult
+    public func setToOutput(_ mode: DigitalOut.Mode? = nil, value: Bool? = nil) -> Result<(), Errno> {
         direction = .output
+        let oldOutputMode = outputMode
 
         if let mode = mode {
             outputMode = mode
         }
 
-        if swifthal_gpio_config(obj, directionRawValue, outputModeRawValue) != 0 {
-            print("DigitalInOut\(id) setOutputMode failed!")
+        let result = nothingOrErrno(
+            swifthal_gpio_config(obj, directionRawValue, outputModeRawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            outputMode = oldOutputMode
         }
         
         if let value = value {
             swifthal_gpio_set(obj, value ? 1 : 0)
         }
+
+        return result
 	}
 
     /// Set the pin to read digital input.
     /// - Parameter mode: The input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     ///  If you don't set it, it remains the same as the mode after
     ///  initialization.
-    public func setToInput(_ mode: DigitalIn.Mode? = nil) {
+    @discardableResult
+    public func setToInput(_ mode: DigitalIn.Mode? = nil) -> Result<(), Errno> {
         direction = .input
+        let oldInputMode = inputMode
+
         if let mode = mode {
             inputMode = mode
         }
 
-        if swifthal_gpio_config(obj, directionRawValue, inputModeRawValue) != 0 {
-            print("DigitalInOut\(id) setInputMode failed!")
+        let result = nothingOrErrno(
+            swifthal_gpio_config(obj, directionRawValue, inputModeRawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            inputMode = oldInputMode
         }
+
+        return result
 	}
 
     /// Set the output value of the specific pin: true for high voltage and
@@ -183,11 +200,11 @@ public final class DigitalInOut {
     /// - Parameter value: The output value: `true` or `false`.
     @inline(__always)
 	public func write(_ value: Bool) {
-        if direction == .input {
-            direction = .output
-            swifthal_gpio_config(obj, directionRawValue, outputModeRawValue)
+        if direction == .output {
+            swifthal_gpio_set(obj, value ? 1 : 0)
+        } else {
+            setToOutput(value: value)
         }
-        swifthal_gpio_set(obj, value ? 1 : 0)
 	}
 
     /// Set the output value to true.
@@ -207,8 +224,7 @@ public final class DigitalInOut {
     @inline(__always)
 	public func read() -> Bool {
         if direction == .output {
-            direction = .input
-            swifthal_gpio_config(obj, directionRawValue, inputModeRawValue)
+            setToInput()
         }
 		return swifthal_gpio_get(obj) == 1 ? true : false
 	}

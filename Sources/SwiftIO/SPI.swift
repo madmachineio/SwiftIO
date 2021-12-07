@@ -41,7 +41,7 @@ import CSwiftIO
      */
     public init(
         _ idName: IdName,
-        speed: Int = 1_000_000,
+        speed: Int = 5_000_000,
         csPin: DigitalOut? = nil
     ) {
         self.id = idName.value
@@ -52,6 +52,7 @@ import CSwiftIO
             obj = UnsafeMutableRawPointer(ptr)
             if let cs = csPin {
                 cs.setMode(.pushPull)
+                cs.write(true)
             }
         } else {
             fatalError("SPI\(idName.value) initialization failed!")

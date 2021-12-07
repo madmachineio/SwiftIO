@@ -74,7 +74,7 @@ public final class AnalogIn {
         if let ptr = swifthal_adc_open(id) {
             obj = UnsafeMutableRawPointer(ptr)
         } else {
-            fatalError("Initialize AnalogIn A\(idName.value) failed!")
+            fatalError("AnalogIn \(idName.value) init failed")
         }
         swifthal_adc_info_get(obj, &info)
     }
