@@ -98,7 +98,6 @@ public final class AnalogIn {
      
      - Returns: A percentage of the reference voltage in the range of 0.0 to 1.0.
      */
-    @inline(__always)
     public func readPercent() -> Float {
         let rawValue = Float(swifthal_adc_read(obj))
         return rawValue / Float(maxRawValue)
@@ -109,7 +108,6 @@ public final class AnalogIn {
      
      - Returns: A float value in the range of 0.0 to the reference voltage.
      */
-    @inline(__always)
     public func readVoltage() -> Float {
         let rawValue = Float(swifthal_adc_read(obj))
         return refVoltage * rawValue / Float(maxRawValue)

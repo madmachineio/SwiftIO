@@ -55,7 +55,7 @@ import CSwiftIO
                 cs.write(true)
             }
         } else {
-            fatalError("SPI\(idName.value) initialization failed!")
+            fatalError("SPI \(idName.value) init failed!")
         }
     }
 

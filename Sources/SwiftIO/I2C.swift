@@ -130,6 +130,31 @@ import CSwiftIO
      */
     @discardableResult
     public func read(
+        into byte: inout UInt8,
+        from address: UInt8
+    ) -> Result<(), Errno> {
+
+        let result = nothingOrErrno(
+            swifthal_i2c_read(obj, address, &byte, 1)
+        )
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+    /**
+     Read an array of data from a specified slave device with the given address.
+     - Parameter count : The number of bytes to read.
+     - Parameter address : The address of the slave device the board will
+        communicate with.
+     
+     - Returns: An array of 8-bit binary numbers receiving from the slave device.
+     */
+    @discardableResult
+    public func read(
         into data: inout [UInt8],
         count: Int? = nil,
         from address: UInt8

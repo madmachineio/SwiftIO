@@ -142,7 +142,16 @@ public final class DigitalIn {
      */
     @inline(__always)
 	public func read() -> Bool {
-		return swifthal_gpio_get(obj) == 1 ? true : false
+        let result = valueOrErrno(
+            swifthal_gpio_get(obj)
+        )
+        switch result {
+        case .success(let value):
+            return value == 1
+        case .failure(let err):
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return false
+        }
 	}
 
     /**

@@ -85,4 +85,6 @@ int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)
 unsigned int swifthal_timer_status_get(void *timer);
 
 
+
+
 #endif  /*_SWIFT_TIMER_H_*/
