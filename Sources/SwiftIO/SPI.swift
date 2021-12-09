@@ -5,7 +5,7 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
+// Updated: 12/09/2021
 //
 // See https://madmachine.io for more information
 //
@@ -22,7 +22,8 @@ import CSwiftIO
     private let id: Int32
     private let obj: UnsafeMutableRawPointer 
 
-    private var speed: Int
+    private var speed: Int32
+    private var operation: Operation
     private var csPin: DigitalOut?
 
     /**
@@ -42,18 +43,29 @@ import CSwiftIO
     public init(
         _ idName: IdName,
         speed: Int = 5_000_000,
-        csPin: DigitalOut? = nil
+        csPin: DigitalOut? = nil,
+        CPOL: Bool = false,
+        CPHA: Bool = false
     ) {
         self.id = idName.value
-        self.speed = speed
+        self.speed = Int32(speed)
         self.csPin = csPin
+        self.operation = .eightBits
 
-        if let ptr = swifthal_spi_open(id, Int32(speed), nil, nil) {
-            obj = UnsafeMutableRawPointer(ptr)
+        if CPOL {
+            operation.insert(.CPOL)
+        }
+
+        if CPHA {
+            operation.insert(.CPHA)
+        }
+
+        if let ptr = swifthal_spi_open(id, self.speed, operation.rawValue, nil, nil) {
             if let cs = csPin {
                 cs.setMode(.pushPull)
                 cs.write(true)
             }
+            obj = UnsafeMutableRawPointer(ptr)
         } else {
             fatalError("SPI \(idName.value) init failed!")
         }
@@ -83,7 +95,7 @@ import CSwiftIO
      - Returns: The current clock speed.
      */
     public func getSpeed() -> Int {
-        return speed
+        return Int(speed)
     }
 
     /** 
@@ -91,33 +103,69 @@ import CSwiftIO
      - Parameter speed: The clock speed used to control the data transmission.
      
      */
-    public func setSpeed(_ speed: Int) {
-        if swifthal_spi_config(obj, Int32(speed)) != 0 {
-            print("SPI\(id) setSpeed error!")
+    @discardableResult
+    public func setSpeed(_ speed: Int) -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_spi_config(obj, Int32(speed), operation.rawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         } else {
-            self.speed = speed
+            self.speed = Int32(speed)
         }
+
+        return result
     }
     
+    public func setMode(CPOL: Bool, CPHA: Bool) -> Result<(), Errno> {
+        var newOperation: Operation = .eightBits
+
+        if CPOL {
+            newOperation.insert(.CPOL)
+        }
+        if CPHA {
+            newOperation.insert(.CPHA)
+        }
+
+        let result = nothingOrErrno(
+            swifthal_spi_config(obj, speed, newOperation.rawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        } else {
+            operation = newOperation
+        }
+
+        return result
+    }
+
+    public func getMode() -> (CPOL: Bool, CPHA: Bool) {
+        let cpol = operation.contains(.CPOL)
+        let cpha = operation.contains(.CPHA)
+
+        return (cpol, cpha)
+    }
 
     /**
      Read a byte of data from the slave device.
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
-    @inline(__always)
-    public func readByte() -> UInt8? {
+    public func readByte() -> Result<UInt8, Errno> {
         var byte: UInt8 = 0
 
         csEnable()
-        let ret = swifthal_spi_read(obj, &byte, 1)
+        let result = nothingOrErrno(
+            swifthal_spi_read(obj, &byte, 1)
+        )
         csDisable()
        
-        if ret == 0 {
-            return byte
-        } else {
-            print("SPI\(id) readByte error!")
-            return nil
+        switch result {
+            case .success:
+                return .success(byte)
+            case .failure(let err):
+                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+                return .failure(err)
         }
     }
 
@@ -126,44 +174,78 @@ import CSwiftIO
      - Parameter count: The number of bytes receiving from the slave device.
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
-    @inline(__always)
-    public func read(count: Int) -> [UInt8] {
-        var data = [UInt8](repeating: 0, count: count)
+    @discardableResult
+    public func read(into data: inout [UInt8], count: Int? = nil) -> Result<(), Errno> {
+
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(count, data.count)
+        } else {
+            byteCount = data.count
+        }
 
         csEnable()
-        let ret = swifthal_spi_read(obj, &data, Int32(count))
+        let result = nothingOrErrno(
+            swifthal_spi_read(obj, &data, Int32(byteCount))
+        )
         csDisable()
 
-        if ret == 0 {
-            return data
-        } else {
-            print("SPI\(id) read error!")
-            return []
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+
+        return result
+    }
+
+    @discardableResult
+    public func read(into data: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(count, data.count)
+        } else {
+            byteCount = data.count
+        }
+
+        csEnable()
+        let result = nothingOrErrno(
+            swifthal_spi_read(obj, data.baseAddress, Int32(byteCount))
+        )
+        csDisable()
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
     }
 
     /**
      Write a byte of data to the slave device.
      - Parameter byte: One 8-bit binary number to be sent to the slave device.
      */
-    @inline(__always)
-    public func write(_ byte: UInt8) {
+    @discardableResult
+    public func write(_ byte: UInt8) -> Result<(), Errno> {
+        var byte = byte
         csEnable()
-        let ret = swifthal_spi_write(obj, [byte], 1)
+        let result = nothingOrErrno(
+            swifthal_spi_write(obj, &byte, 1)
+        )
         csDisable()
-
-        if ret != 0 {
-            print("SPI\(id) write error!")
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+        return result
     }
 
     /**
      Write an array of data to the slave device.
      - Parameter data: A byte array to be sent to the slave device.
      */
-    @inline(__always)
-    public func write(_ data: [UInt8], count: Int? = nil) {
-        let ret: Int32
+    @discardableResult
+    public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
         let byteCount: Int
 
         if let count = count {
@@ -172,26 +254,25 @@ import CSwiftIO
             byteCount = data.count
         }
 
-        if byteCount <= 0 {
-            return
-        }
-
         csEnable()
-        ret = swifthal_spi_write(obj, data, Int32(byteCount))
+        let result = nothingOrErrno(
+            swifthal_spi_write(obj, data, Int32(byteCount))
+        )
         csDisable()
 
-        if ret != 0 {
-            print("SPI\(id) write error!")
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+
+        return result
     }
 
     /**
      Write an buffer of data to the slave device.
      - Parameter data: A UInt8 buffer to be sent to the slave device.
      */
-    @inline(__always)
-    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) {
-        let ret: Int32
+    @discardableResult
+    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
         let byteCount: Int
 
         if let count = count {
@@ -200,17 +281,27 @@ import CSwiftIO
             byteCount = data.count
         }
 
-        if byteCount <= 0 {
-            return
-        }
-
         csEnable()
-        ret = swifthal_spi_write(obj, data.baseAddress, Int32(byteCount))
+        let result = nothingOrErrno(
+            swifthal_spi_write(obj, data.baseAddress, Int32(byteCount))
+        )
         csDisable()
 
-        if ret != 0 {
-            print("SPI\(id) write error!")
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+
+        return result
     }
 }
 
+
+extension SPI {
+    private struct Operation: OptionSet {
+        let rawValue: UInt16
+
+        static let CPOL         = Operation(rawValue: UInt16(SWIFT_SPI_MODE_CPOL))
+        static let CPHA         = Operation(rawValue: UInt16(SWIFT_SPI_MODE_CPHA))
+        static let eightBits    = Operation(rawValue: 8 << 5)
+    }
+}

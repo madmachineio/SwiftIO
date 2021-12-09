@@ -7,6 +7,10 @@
 #ifndef _SWIFT_SPI_H_
 #define _SWIFT_SPI_H_
 
+#define SWIFT_SPI_MODE_CPOL             (1 << 1)
+#define SWIFT_SPI_MODE_CPHA             (1 << 2)
+
+
 /**
  * @brief Open a spi
  *
@@ -18,6 +22,7 @@
  */
 void *swifthal_spi_open(int id,
 			int speed,
+			unsigned short operation,
 			void (*w_notify)(void *),
 			void (*r_notify)(void *));
 
@@ -40,7 +45,7 @@ int swifthal_spi_close(void *spi);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_config(void *spi, int speed);
+int swifthal_spi_config(void *spi, int speed, unsigned short operation);
 
 /**
  * @brief Send given number of bytes from buffer through SPI.
