@@ -9,6 +9,9 @@
 
 #define SWIFT_SPI_MODE_CPOL             (1 << 1)
 #define SWIFT_SPI_MODE_CPHA             (1 << 2)
+#define SWIFT_SPI_MODE_LOOP             (1 << 3)
+#define SWIFT_SPI_TRANSFER_MSB  		(0)
+#define SWIFT_SPI_TRANSFER_LSB  		(1 << 4)
 
 
 /**
@@ -16,6 +19,7 @@
  *
  * @param id SPI ID
  * @param speed	SPI communication speed
+ * @param operation SPI communication mode
  * @param w_notify  Write async notify
  * @param r_notify  Read async notify
  * @return SPI handle, NULL is fail
@@ -41,6 +45,7 @@ int swifthal_spi_close(void *spi);
  *
  * @param spi SPI Handle
  * @param speed SPI speed
+ * @param operation SPI communication mode
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
@@ -106,4 +111,3 @@ int swifthal_spi_dev_number_get(void);
 
 
 #endif /* _SWIFT_SPI_H_ */
-
