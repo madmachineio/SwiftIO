@@ -90,7 +90,17 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readRawValue() -> Int {
-        return Int(swifthal_adc_read(obj))
+        var sample: UInt16 = 0
+
+        let result = nothingOrErrno(
+            swifthal_adc_read(obj, &sample)
+        )
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return Int(sample)
     }
 
     /**

@@ -23,43 +23,32 @@ public final class UART {
     private let id: Int32
     private var obj: UnsafeMutableRawPointer
 
-    private var config = swift_uart_cfg_t()
+    private var config: swift_uart_cfg_t
 
     private var baudRate: Int {
         willSet {
             config.baudrate = Int32(newValue)
         }
     }
-    private var dataBits: DataBits {
-        willSet {
-            switch newValue {
-                case .eightBits:
-                config.data_bits = SWIFT_UART_DATA_BITS_8
-            }
-        }
-    }
+
     private var parity: Parity {
         willSet {
-            switch newValue {
-                case .none:
-                config.parity = SWIFT_UART_PARITY_NONE
-                case .odd:
-                config.parity = SWIFT_UART_PARITY_ODD
-                case .even:
-                config.parity = SWIFT_UART_PARITY_EVEN
-            }
+            config.parity = UART.getParityRawValue(newValue)
         }
     }
+
     private var stopBits: StopBits {
         willSet {
-            switch newValue {
-                case .oneBit:
-                config.stop_bits = SWIFT_UART_STOP_BITS_1
-                case .twoBits:
-                config.stop_bits = SWIFT_UART_STOP_BITS_2
-            }
+            config.stop_bits = UART.getStopBitsRawValue(newValue)
         }
     }
+
+    private var dataBits: DataBits {
+        willSet {
+            config.data_bits = UART.getDataBitsRawValue(newValue)
+        }
+    }
+
     private var readBufferLength: Int {
         willSet {
             config.read_buf_len = Int32(newValue)
@@ -71,11 +60,11 @@ public final class UART {
      - Parameter id: **REQUIRED** The name of the UART interface.
      - Parameter baudRate: **OPTIONAL**The communication speed.
         The default baud rate is 115200.
-     - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
      - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy
         of the data transmission.
      - Parameter stopBits: **OPTIONAL**The bits reserved to stop the
         communication.
+     - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
      - Parameter readBufferLength: **OPTIONAL**The length of the serial
         buffer to store the data.
      
@@ -88,43 +77,29 @@ public final class UART {
     public init(
         _ idName: IdName,
         baudRate: Int = 115200,
-        dataBits: DataBits = .eightBits,
         parity: Parity = .none,
         stopBits: StopBits = .oneBit,
+        dataBits: DataBits = .eightBits,
         readBufferLength: Int = 64
     ) {
         self.id = idName.value
         self.baudRate = baudRate
-        self.dataBits = dataBits
         self.parity = parity
         self.stopBits = stopBits
+        self.dataBits = dataBits
         self.readBufferLength = readBufferLength
 
+        config = swift_uart_cfg_t()
         config.baudrate = Int32(baudRate)
-        switch dataBits {
-            case .eightBits:
-            config.data_bits = SWIFT_UART_DATA_BITS_8
-        }
-        switch parity {
-            case .none:
-            config.parity = SWIFT_UART_PARITY_NONE
-            case .odd:
-            config.parity = SWIFT_UART_PARITY_ODD
-            case .even:
-            config.parity = SWIFT_UART_PARITY_EVEN
-        }
-        switch stopBits {
-            case .oneBit:
-            config.stop_bits = SWIFT_UART_STOP_BITS_1
-            case .twoBits:
-            config.stop_bits = SWIFT_UART_STOP_BITS_2
-        }
+        config.parity = UART.getParityRawValue(parity)
+        config.stop_bits = UART.getStopBitsRawValue(stopBits)
+        config.data_bits = UART.getDataBitsRawValue(dataBits)
         config.read_buf_len = Int32(readBufferLength)
 
         if let ptr = swifthal_uart_open(id, &config) {
             obj = UnsafeMutableRawPointer(ptr)
         } else {
-            fatalError("UART\(idName.value) initialization failed!")
+            fatalError("UART \(idName.value) init failed")
         }
 
     }
@@ -140,16 +115,41 @@ public final class UART {
      - Parameter baudRate: The communication speed.
 
      */
-    public func setBaudrate(_ baudRate: Int) {
-        config.baudrate = Int32(baudRate)
-        swifthal_uart_baudrate_set(obj, config.baudrate)
+    @discardableResult
+    public func setBaudRate(_ baudRate: Int) -> Result<(), Errno> {
+        let oldBaudRate = self.baudRate
+        self.baudRate = baudRate
+
+        let result = nothingOrErrno(
+            swifthal_uart_baudrate_set(obj, config.baudrate)
+        )
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            self.baudRate = oldBaudRate
+        }
+
+        return result
+    }
+
+    public func getBaudRate() -> Int {
+        return baudRate
     }
 
     /**
      Clear all bytes from the buffer to store the incoming data.
      */
-    public func clearBuffer() {
-        swifthal_uart_buffer_clear(obj)
+    @discardableResult
+    public func clearBuffer() -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_uart_buffer_clear(obj)
+        )
+        
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
     }
 
     /**
@@ -165,9 +165,15 @@ public final class UART {
      - Parameter byte: One 8-bit binary data to be sent to the device.
 
      */
-    @inline(__always)
-    public func write(_ byte: UInt8) {
-        swifthal_uart_char_put(obj, byte)
+    @discardableResult
+    public func write(_ byte: UInt8) -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_uart_char_put(obj, byte)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+        return result
     }
 
     /**
@@ -176,8 +182,8 @@ public final class UART {
      - Parameter data: A byte array to be sent to the device.
 
      */
-    @inline(__always)
-    public func write(_ data: [UInt8], count: Int? = nil) {
+    @discardableResult
+    public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
         let byteCount: Int
 
         if let count = count {
@@ -185,15 +191,33 @@ public final class UART {
         } else {
             byteCount = data.count
         }
+        
+        let result = nothingOrErrno(
+            swifthal_uart_write(obj, data, Int32(byteCount))
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+        return result
+    }
 
-        if byteCount <= 0 {
-            return
+    @discardableResult
+    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(data.count, count)
+        } else {
+            byteCount = data.count
         }
         
-        let ret = swifthal_uart_write(obj, data, Int32(byteCount))
-        if ret != 0 {
-          print("UART\(id) write error!")
+        let result = nothingOrErrno(
+            swifthal_uart_write(obj, data.baseAddress, Int32(byteCount))
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+        return result
     }
 
     /**
@@ -201,15 +225,17 @@ public final class UART {
      - Parameter string: A string to be sent to the device.
 
      */
-    @inline(__always)
-    public func write(_ string: String) {
+    @discardableResult
+    public func write(_ string: String) -> Result<(), Errno> {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
 
-        let ret = swifthal_uart_write(obj, data, Int32(data.count))
-
-        if ret != 0 {
-            print("UART\(id) write error!")
+        let result = nothingOrErrno(
+            swifthal_uart_write(obj, data, Int32(data.count))
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+        return result
     }
 
     /**
@@ -227,8 +253,7 @@ public final class UART {
      - Returns: One 8-bit binary data read from the device.
 
      */
-    @inline(__always)
-    public func readByte(timeout: Int? = nil) -> UInt8? {
+    public func readByte(timeout: Int? = nil) -> Result<UInt8, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -238,12 +263,15 @@ public final class UART {
         }
 
         var byte: UInt8 = 0
-        let ret = swifthal_uart_char_get(obj, &byte, timeoutValue)
-        if ret == 0 {
-            return byte
-        } else {
-            print("UART\(id) readByte error!")
-            return nil
+        let result = nothingOrErrno(
+            swifthal_uart_char_get(obj, &byte, timeoutValue)
+        )
+        switch result {
+            case .success:
+                return .success(byte)
+            case .failure(let err):
+                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+                return .failure(err)
         }
     }
 
@@ -263,8 +291,8 @@ public final class UART {
      - Returns: A byte array read from the device.
 
      */
-    @inline(__always)
-    public func read(count: Int, timeout: Int? = nil) -> [UInt8] {
+    @discardableResult
+    public func read(into data: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -273,10 +301,49 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        var data = [UInt8](repeating: 0, count: count)
-        let received = Int(swifthal_uart_read(
-            obj, &data, Int32(count), timeoutValue))
-        return Array(data[0..<received])
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(count, data.count)
+        } else {
+            byteCount = data.count
+        }
+
+        let result = valueOrErrno(
+            swifthal_uart_read(obj, &data, Int32(byteCount), timeoutValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+        return result
+    }
+
+
+    @discardableResult
+    public func read(into data: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+        let timeoutValue: Int32
+
+        if let timeout = timeout {
+            timeoutValue = Int32(timeout)
+        } else {
+            timeoutValue = Int32(SWIFT_FOREVER)
+        }
+
+        let byteCount: Int
+
+        if let count = count {
+            byteCount = min(count, data.count)
+        } else {
+            byteCount = data.count
+        }
+
+        let result = valueOrErrno(
+            swifthal_uart_read(obj, data.baseAddress, Int32(byteCount), timeoutValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+        return result
     }
 
 
@@ -295,6 +362,17 @@ extension UART {
         case none, odd, even
     }
 
+    private static func getParityRawValue(_ parity: Parity) -> swift_uart_parity_t {
+        switch parity {
+            case .none:
+            return SWIFT_UART_PARITY_NONE
+            case .odd:
+            return SWIFT_UART_PARITY_ODD
+            case .even:
+            return SWIFT_UART_PARITY_EVEN
+        }
+    }
+
     /**
      One or two stops bits are reserved to end the communication.
 
@@ -303,12 +381,28 @@ extension UART {
         case oneBit, twoBits
     }
 
+    private static func getStopBitsRawValue(_ stopBits: StopBits) -> swift_uart_stop_bits_t {
+        switch stopBits {
+            case .oneBit:
+            return SWIFT_UART_STOP_BITS_1
+            case .twoBits:
+            return SWIFT_UART_STOP_BITS_2
+        }
+    }
+
     /**
      This indicates the length of the data being transmitted.
 
      */
     public enum DataBits {
         case eightBits
+    }
+
+    private static func getDataBitsRawValue(_ dataBits: DataBits) -> swift_uart_data_bits_t {
+        switch dataBits {
+            case .eightBits:
+            return SWIFT_UART_DATA_BITS_8
+        }
     }
 
 }

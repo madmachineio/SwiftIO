@@ -169,6 +169,21 @@ import CSwiftIO
         }
     }
 
+    @discardableResult
+    public func read(into data: inout UInt8) -> Result<(), Errno> {
+        csEnable()
+        let result = nothingOrErrno(
+            swifthal_spi_read(obj, &data, 1)
+        )
+        csDisable()
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
     /**
      Read an array of data from the slave device.
      - Parameter count: The number of bytes receiving from the slave device.

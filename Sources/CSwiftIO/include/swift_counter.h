@@ -11,12 +11,10 @@
  * @brief Open counter
  *
  * @param id Counter id
- * @param id Counter interrupt callback: param1-ticks, param2-user_data
- * @param id Counter interrupt callback user data
  *
  * @return Counter handle
  */
-void *swifthal_counter_open(int id, void *user_data, void (*callback)(unsigned int, void *));
+void *swifthal_counter_open(int id);
 
 /**
  * @brief Close counter
@@ -37,6 +35,17 @@ int swifthal_counter_close(void *counter);
  * @retval Negative errno code if failure.
  */
 unsigned int swifthal_counter_read(void *counter);
+
+/**
+ * @brief Set callback to a counter
+ *
+ * @param counter Counter Handle
+ * @param callback Counter interrupt callback user data
+ * @param user_data Counter interrupt callback: param1-ticks, param2-user_data
+ *
+ * @return Negative errno code if failure.
+ */
+int swifthal_counter_add_callback(void *counter, const void *user_data, void (*callback)(unsigned int, void *));
 
 /**
  * @brief Function to get counter frequency.
@@ -68,7 +77,39 @@ unsigned long long int swifthal_counter_ticks_to_us(void *counter, unsigned int 
  */
 unsigned int swifthal_counter_us_to_ticks(void *counter, unsigned long long int us);
 
+/**
+ * @brief Function to retrieve maximum top value that can be set.
+ *
+ * @param counter Counter Handle
+ *
+ * @return Max top value.
+ */
+unsigned int swifthal_counter_get_max_top_value(void *counter);
 
+/**
+ * @brief Set a single shot alarm.
+ *
+ * After expiration alarm can be set again, disabling is not needed.
+ * When alarm expiration handler is called, channel is considered available and
+ * can be set again in that context.
+ *
+ * @param counter Counter handle
+ * @param ticks  Ticks.
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_set_channel_alarm(void *counter, unsigned int ticks);
+
+/**
+ * @brief Cancel an alarm.
+ *
+ * @param counter Counter handle
+ *
+ * @retval 0 If successful.
+ * @retval Negative errno code if failure.
+ */
+int swifthal_counter_cancel_channel_alarm(void *counter);
 
 /**
  * @brief Start count from 0 tick
@@ -78,12 +119,11 @@ unsigned int swifthal_counter_us_to_ticks(void *counter, unsigned long long int 
  * counting until swifthal_counter_stop is called
  *
  * @param counter Counter handle
- * @param ticks  Ticks.
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_start(void *counter, unsigned int ticks);
+int swifthal_counter_start(void *counter);
 
 /**
  * @brief Stop count
