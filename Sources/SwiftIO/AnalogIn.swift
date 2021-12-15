@@ -74,7 +74,7 @@ public final class AnalogIn {
         if let ptr = swifthal_adc_open(id) {
             obj = UnsafeMutableRawPointer(ptr)
         } else {
-            fatalError("Initialize AnalogIn A\(idName.value) failed!")
+            fatalError("AnalogIn \(idName.value) init failed")
         }
         swifthal_adc_info_get(obj, &info)
     }
@@ -90,7 +90,17 @@ public final class AnalogIn {
      */
     @inline(__always)
     public func readRawValue() -> Int {
-        return Int(swifthal_adc_read(obj))
+        var sample: UInt16 = 0
+
+        let result = nothingOrErrno(
+            swifthal_adc_read(obj, &sample)
+        )
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return Int(sample)
     }
 
     /**
@@ -98,9 +108,8 @@ public final class AnalogIn {
      
      - Returns: A percentage of the reference voltage in the range of 0.0 to 1.0.
      */
-    @inline(__always)
     public func readPercent() -> Float {
-        let rawValue = Float(swifthal_adc_read(obj))
+        let rawValue = Float(readRawValue())
         return rawValue / Float(maxRawValue)
     }
 
@@ -109,9 +118,8 @@ public final class AnalogIn {
      
      - Returns: A float value in the range of 0.0 to the reference voltage.
      */
-    @inline(__always)
     public func readVoltage() -> Float {
-        let rawValue = Float(swifthal_adc_read(obj))
+        let rawValue = Float(readRawValue())
         return refVoltage * rawValue / Float(maxRawValue)
     }
 }

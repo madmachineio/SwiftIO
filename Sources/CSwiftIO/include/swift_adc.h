@@ -43,11 +43,12 @@ int swifthal_adc_close(void *adc);
  * @brief Read adc value
  *
  * @param adc ADC handle
+ * @param sampla_buffer Pointer to storage for read data
  *
  * @retval Positive indicates the adc value.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_read(void *adc);
+int swifthal_adc_read(void *adc, unsigned short *sample_buffer);
 
 /**
  * @brief Get adc infomation

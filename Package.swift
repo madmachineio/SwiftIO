@@ -19,9 +19,12 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "SwiftIO",
-            dependencies: ["CSwiftIO"]),
+            dependencies: ["CSwiftIO", "CNewlib"]),
         .target(
             name: "CSwiftIO",
+            dependencies: []),
+        .target(
+            name: "CNewlib",
             dependencies: []),
     ]
 )

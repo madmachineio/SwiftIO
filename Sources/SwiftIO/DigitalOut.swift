@@ -58,19 +58,14 @@ public final class DigitalOut {
     private let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
+
     private var modeRawValue: swift_gpio_mode_t
-
-
     private var mode: Mode {
         willSet {
-            switch newValue {
-                case .pushPull:
-                modeRawValue = SWIFT_GPIO_MODE_PULL_UP
-                case .openDrain:
-                modeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
-            }
+            modeRawValue = DigitalOut.getModeRawvalue(newValue)
         }
     }
+
     /**
      The current state of the output value.
      Write to this property would change the output value.
@@ -82,7 +77,7 @@ public final class DigitalOut {
 		}
 	}
 
-    
+
     /**
      Initialize a DigitalOut to a specific output pin.
      
@@ -116,18 +111,14 @@ public final class DigitalOut {
         self.id = idName.value
         self.value = value
         self.mode = mode
-        switch mode {
-            case .pushPull:
-            modeRawValue = SWIFT_GPIO_MODE_PULL_UP
-            case .openDrain:
-            modeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
+        self.modeRawValue = DigitalOut.getModeRawvalue(mode)
+
+        guard let ptr = swifthal_gpio_open(id, direction, modeRawValue) else {
+            fatalError("DigitalOut \(idName.value) init failed")
         }
-        if let ptr = swifthal_gpio_open(id, direction, modeRawValue) {
-            obj = UnsafeMutableRawPointer(ptr)
-            swifthal_gpio_set(obj, value ? 1 : 0)
-        } else {
-            fatalError("DigitalOut\(idName.value) initialization failed!")
-        }
+            
+        obj = UnsafeMutableRawPointer(ptr)
+        swifthal_gpio_set(obj, value ? 1 : 0)
     }
 
     deinit {
@@ -156,14 +147,20 @@ public final class DigitalOut {
      
      - Parameter mode : The output mode: `.pushPull` or `.openDrain`.
      */
-    public func setMode(_ mode: Mode) {
+    @discardableResult
+    public func setMode(_ mode: Mode) -> Result<(), Errno> {
+        let oldMode = self.mode
         self.mode = mode
-
-        if swifthal_gpio_config(obj, direction, modeRawValue) != 0 {
-            print("DigitalOut\(id) setMode failed!")
+        let result = nothingOrErrno(
+		    swifthal_gpio_config(obj, direction, modeRawValue)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            self.mode = oldMode
         }
-	}
 
+        return result
+	}
 
 
     /**
@@ -201,7 +198,6 @@ public final class DigitalOut {
      */
     @inline(__always)
     public func toggle() {
-        //value = value ? false : true
         value.toggle()
     }
 
@@ -233,6 +229,15 @@ extension DigitalOut {
      */
     public enum Mode {
         case pushPull, openDrain
+    }
+
+    private static func getModeRawvalue(_ mode: Mode) -> swift_gpio_mode_t {
+        switch mode {
+            case .pushPull:
+            return SWIFT_GPIO_MODE_PULL_UP
+            case .openDrain:
+            return SWIFT_GPIO_MODE_OPEN_DRAIN
+        }
     }
 }
 
