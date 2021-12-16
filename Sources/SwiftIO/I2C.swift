@@ -225,7 +225,47 @@ import CSwiftIO
         return result
     }
 
+    @discardableResult
+    public func writeRead(
+        _ byte: UInt8,
+        into buffer: inout UInt8,
+        address: UInt8
+    ) -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_i2c_write_read(obj,
+                                    address,
+                                    [byte],
+                                    1,
+                                    &buffer,
+                                    1)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
 
+        return result
+    }
+
+    @discardableResult
+    public func writeRead(
+        _ data: [UInt8],
+        into buffer: inout UInt8,
+        address: UInt8
+    ) -> Result<(), Errno> {
+        let result = nothingOrErrno(
+            swifthal_i2c_write_read(obj,
+                                    address,
+                                    data,
+                                    Int32(data.count),
+                                    &buffer,
+                                    1)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
 
     @discardableResult
     public func writeRead(
