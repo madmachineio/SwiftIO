@@ -231,9 +231,16 @@ import CSwiftIO
     public func writeRead(
         _ byte: UInt8, 
         into buffer: inout [UInt8],
-        readCount: Int,
+        readCount: Int? = nil,
         address: UInt8
     ) -> Result<(), Errno> {
+        let byteCount: Int
+
+        if let count = readCount {
+            byteCount = min(count, buffer.count)
+        } else {
+            byteCount = buffer.count
+        }
 
         let result = nothingOrErrno(
             swifthal_i2c_write_read(obj,
@@ -241,7 +248,7 @@ import CSwiftIO
                                     [byte],
                                     1,
                                     &buffer,
-                                    Int32(readCount))
+                                    Int32(byteCount))
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -264,17 +271,23 @@ import CSwiftIO
     public func writeRead(
         _ data: [UInt8],
         into buffer: inout [UInt8],
-        readCount: Int,
+        readCount: Int? = nil,
         address: UInt8
     ) -> Result<(), Errno> {
+        let byteCount: Int
 
+        if let count = readCount {
+            byteCount = min(count, buffer.count)
+        } else {
+            byteCount = buffer.count
+        }
         let result = nothingOrErrno(
             swifthal_i2c_write_read(obj,
                                     address,
                                     data,
                                     Int32(data.count),
                                     &buffer,
-                                    Int32(readCount))
+                                    Int32(byteCount))
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
