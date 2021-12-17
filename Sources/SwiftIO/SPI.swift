@@ -24,7 +24,8 @@ import CSwiftIO
 
     private var speed: Int32
     private var operation: Operation
-    private var csPin: DigitalOut?
+
+    public private(set) var csPin: DigitalOut?
 
     /**
      Initialize a specified interface for SPI communication as a master device.
@@ -77,16 +78,12 @@ import CSwiftIO
 
     @inline(__always)
     func csEnable() {
-        if let cs = csPin {
-            cs.write(false)
-        }
+        csPin?.write(false)
     }
 
     @inline(__always)
     func csDisable() {
-        if let cs = csPin {
-            cs.write(true)
-        }
+        csPin?.write(true)
     }
 
     /**
