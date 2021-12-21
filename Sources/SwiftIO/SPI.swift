@@ -73,6 +73,10 @@ import CSwiftIO
         } else {
             fatalError("SPI \(idName.value) init failed!")
         }
+
+        // spi config will be sync in first read/write
+        var tempValue: UInt8 = 0xFF
+        swifthal_spi_write(obj, &tempValue, 1)
     }
 
     deinit {
@@ -112,6 +116,9 @@ import CSwiftIO
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         } else {
             self.speed = Int32(speed)
+            // spi config will be sync in first read/write
+            var tempValue: UInt8 = 0xFF
+            swifthal_spi_write(obj, &tempValue, 1)
         }
 
         return result
@@ -134,6 +141,9 @@ import CSwiftIO
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         } else {
             operation = newOperation
+            // spi config will be sync in first read/write
+            var tempValue: UInt8 = 0xFF
+            swifthal_spi_write(obj, &tempValue, 1)
         }
 
         return result
@@ -308,6 +318,51 @@ import CSwiftIO
 
         return result
     }
+
+
+    @discardableResult
+    public func transceive(_ data: [UInt8], writeCount: Int? = nil, into readBuffer: inout [UInt8], readCount: Int? = nil) -> Result<(), Errno> {
+        let _writeCount, _readCount: Int
+
+        if let count = writeCount {
+            _writeCount = min(data.count, count)
+        } else {
+            _writeCount = data.count
+        }
+
+        if let count = readCount {
+            _readCount = min(readBuffer.count, count)
+        } else {
+            _readCount = readBuffer.count
+        }
+
+        csEnable()
+        var result = nothingOrErrno(
+            swifthal_spi_write(obj, data, Int32(_writeCount))
+        )
+        result = nothingOrErrno(
+            swifthal_spi_read(obj, &readBuffer, Int32(_readCount))
+        )
+        csDisable()
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+    @discardableResult
+    public func transceive(_ byte: UInt8, into readBuffer: inout [UInt8], readCount: Int? = nil) -> Result<(), Errno> {
+
+        let result = transceive([byte], into: &readBuffer, readCount: readCount)
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
 }
 
 
