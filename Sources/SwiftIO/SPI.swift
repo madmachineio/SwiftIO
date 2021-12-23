@@ -49,7 +49,9 @@ import CSwiftIO
         speed: Int = 5_000_000,
         csPin: DigitalOut? = nil,
         CPOL: Bool = false,
-        CPHA: Bool = false
+        CPHA: Bool = false,
+        bitOrder: BitOrder = .MSB
+
     ) {
         self.id = idName.value
         self.speed = Int32(speed)
@@ -62,6 +64,15 @@ import CSwiftIO
 
         if CPHA {
             operation.insert(.CPHA)
+        }
+
+        switch bitOrder {
+        case .MSB:
+            // MSB bit equal zero 
+            // operation.insert(.MSB)
+            break
+        case .LSB:
+            operation.insert(.LSB)
         }
 
         if let ptr = swifthal_spi_open(id, self.speed, operation.rawValue, nil, nil) {
@@ -117,7 +128,7 @@ import CSwiftIO
         return result
     }
     
-    public func setMode(CPOL: Bool, CPHA: Bool) -> Result<(), Errno> {
+    public func setMode(CPOL: Bool, CPHA: Bool, bitOrder: BitOrder? = nil) -> Result<(), Errno> {
         var newOperation: Operation = .eightBits
 
         if CPOL {
@@ -125,6 +136,25 @@ import CSwiftIO
         }
         if CPHA {
             newOperation.insert(.CPHA)
+        }
+
+        if let bitOrder = bitOrder {
+            switch bitOrder {
+            case .MSB:
+                // MSB bit equal zero 
+                // newOperation.insert(.MSB)
+                break
+            case .LSB:
+                newOperation.insert(.LSB)
+            }
+        } else {
+            // MSB bit equal zero 
+            // if operation.contains(.MSB) {
+            //     newOperation.insert(.MSB)
+            // }
+            if operation.contains(.LSB) {
+                newOperation.insert(.LSB)
+            }
         }
 
         let result = nothingOrErrno(
@@ -139,11 +169,18 @@ import CSwiftIO
         return result
     }
 
-    public func getMode() -> (CPOL: Bool, CPHA: Bool) {
+    public func getMode() -> (CPOL: Bool, CPHA: Bool, bitOrder: BitOrder) {
         let cpol = operation.contains(.CPOL)
         let cpha = operation.contains(.CPHA)
+        let bitOrder: BitOrder
+        // Never reverse the sequence!!!
+        if operation.contains(.LSB) {
+            bitOrder = .LSB
+        } else {
+            bitOrder = .MSB
+        }
 
-        return (cpol, cpha)
+        return (cpol, cpha, bitOrder)
     }
 
     /**
@@ -151,7 +188,7 @@ import CSwiftIO
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
-    public func readByte() -> Result<UInt8, Errno> {
+    public func readByte() -> UInt8? {
         var byte: UInt8 = 0
 
         csEnable()
@@ -161,19 +198,19 @@ import CSwiftIO
         csDisable()
        
         switch result {
-            case .success:
-                return .success(byte)
-            case .failure(let err):
-                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-                return .failure(err)
+        case .success:
+            return byte
+        case .failure(let err):
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return nil
         }
     }
 
     @discardableResult
-    public func read(into data: inout UInt8) -> Result<(), Errno> {
+    public func read(into byte: inout UInt8) -> Result<(), Errno> {
         csEnable()
         let result = nothingOrErrno(
-            swifthal_spi_read(obj, &data, 1)
+            swifthal_spi_read(obj, &byte, 1)
         )
         csDisable()
 
@@ -190,19 +227,19 @@ import CSwiftIO
      - Returns: An array of 8-bit binary numbers receiving from the slave device.
      */
     @discardableResult
-    public func read(into data: inout [UInt8], count: Int? = nil) -> Result<(), Errno> {
+    public func read(into buffer: inout [UInt8], count: Int? = nil) -> Result<(), Errno> {
 
         let byteCount: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            byteCount = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            byteCount = buffer.count
         }
 
         csEnable()
         let result = nothingOrErrno(
-            swifthal_spi_read(obj, &data, Int32(byteCount))
+            swifthal_spi_read(obj, &buffer, Int32(byteCount))
         )
         csDisable()
 
@@ -214,19 +251,19 @@ import CSwiftIO
     }
 
     @discardableResult
-    public func read(into data: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
 
         let byteCount: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            byteCount = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            byteCount = buffer.count
         }
 
         csEnable()
         let result = nothingOrErrno(
-            swifthal_spi_read(obj, data.baseAddress, Int32(byteCount))
+            swifthal_spi_read(obj, buffer.baseAddress, Int32(byteCount))
         )
         csDisable()
 
@@ -312,11 +349,19 @@ import CSwiftIO
 
 
 extension SPI {
+    public enum BitOrder {
+        case MSB
+        case LSB
+    }
+
     private struct Operation: OptionSet {
         let rawValue: UInt16
 
         static let CPOL         = Operation(rawValue: UInt16(SWIFT_SPI_MODE_CPOL))
         static let CPHA         = Operation(rawValue: UInt16(SWIFT_SPI_MODE_CPHA))
+        static let MSB          = Operation(rawValue: UInt16(SWIFT_SPI_TRANSFER_MSB))
+        static let LSB          = Operation(rawValue: UInt16(SWIFT_SPI_TRANSFER_LSB))
+
         static let eightBits    = Operation(rawValue: 8 << 5)
     }
 }

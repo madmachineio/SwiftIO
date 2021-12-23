@@ -104,7 +104,7 @@ import CSwiftIO
      
      - Returns: One 8-bit binary number receiving from the slave device.
      */
-    public func readByte(from address: UInt8) -> Result<UInt8, Errno> {
+    public func readByte(from address: UInt8) -> UInt8? {
         var byte: UInt8 = 0
         
         let result = nothingOrErrno(
@@ -112,11 +112,11 @@ import CSwiftIO
         )
 
         switch result {
-            case .success:
-                return .success(byte)
-            case .failure(let err):
-                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-                return .failure(err)
+        case .success:
+            return byte
+        case .failure(let err):
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return nil
         }
     }
 
@@ -155,7 +155,7 @@ import CSwiftIO
      */
     @discardableResult
     public func read(
-        into data: inout [UInt8],
+        into buffer: inout [UInt8],
         count: Int? = nil,
         from address: UInt8
     ) -> Result<(), Errno> {
@@ -163,13 +163,13 @@ import CSwiftIO
         let byteCount: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            byteCount = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            byteCount = buffer.count
         }
 
         let result = nothingOrErrno(
-            swifthal_i2c_read(obj, address, &data, Int32(byteCount))
+            swifthal_i2c_read(obj, address, &buffer, Int32(byteCount))
         )
 
         if case .failure(let err) = result {

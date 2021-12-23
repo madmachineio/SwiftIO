@@ -62,7 +62,7 @@ public final class DigitalOut {
     private var modeRawValue: swift_gpio_mode_t
     private var mode: Mode {
         willSet {
-            modeRawValue = DigitalOut.getModeRawvalue(newValue)
+            modeRawValue = DigitalOut.getModeRawValue(newValue)
         }
     }
 
@@ -111,7 +111,7 @@ public final class DigitalOut {
         self.id = idName.value
         self.value = value
         self.mode = mode
-        self.modeRawValue = DigitalOut.getModeRawvalue(mode)
+        self.modeRawValue = DigitalOut.getModeRawValue(mode)
 
         guard let ptr = swifthal_gpio_open(id, direction, modeRawValue) else {
             fatalError("DigitalOut \(idName.value) init failed")
@@ -231,7 +231,7 @@ extension DigitalOut {
         case pushPull, openDrain
     }
 
-    private static func getModeRawvalue(_ mode: Mode) -> swift_gpio_mode_t {
+    internal static func getModeRawValue(_ mode: Mode) -> swift_gpio_mode_t {
         switch mode {
             case .pushPull:
             return SWIFT_GPIO_MODE_PULL_UP

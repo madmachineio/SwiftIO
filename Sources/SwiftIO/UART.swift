@@ -253,7 +253,7 @@ public final class UART {
      - Returns: One 8-bit binary data read from the device.
 
      */
-    public func readByte(timeout: Int? = nil) -> Result<UInt8, Errno> {
+    public func readByte(timeout: Int? = nil) -> UInt8? {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -268,10 +268,10 @@ public final class UART {
         )
         switch result {
             case .success:
-                return .success(byte)
+                return byte
             case .failure(let err):
                 print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-                return .failure(err)
+                return nil
         }
     }
 
@@ -292,7 +292,7 @@ public final class UART {
 
      */
     @discardableResult
-    public func read(into data: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+    public func read(into buffer: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -304,13 +304,13 @@ public final class UART {
         let byteCount: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            byteCount = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            byteCount = buffer.count
         }
 
         let result = valueOrErrno(
-            swifthal_uart_read(obj, &data, Int32(byteCount), timeoutValue)
+            swifthal_uart_read(obj, &buffer, Int32(byteCount), timeoutValue)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -320,7 +320,7 @@ public final class UART {
 
 
     @discardableResult
-    public func read(into data: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -332,13 +332,13 @@ public final class UART {
         let byteCount: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            byteCount = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            byteCount = buffer.count
         }
 
         let result = valueOrErrno(
-            swifthal_uart_read(obj, data.baseAddress, Int32(byteCount), timeoutValue)
+            swifthal_uart_read(obj, buffer.baseAddress, Int32(byteCount), timeoutValue)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -364,11 +364,11 @@ extension UART {
 
     private static func getParityRawValue(_ parity: Parity) -> swift_uart_parity_t {
         switch parity {
-            case .none:
+        case .none:
             return SWIFT_UART_PARITY_NONE
-            case .odd:
+        case .odd:
             return SWIFT_UART_PARITY_ODD
-            case .even:
+        case .even:
             return SWIFT_UART_PARITY_EVEN
         }
     }
@@ -383,9 +383,9 @@ extension UART {
 
     private static func getStopBitsRawValue(_ stopBits: StopBits) -> swift_uart_stop_bits_t {
         switch stopBits {
-            case .oneBit:
+        case .oneBit:
             return SWIFT_UART_STOP_BITS_1
-            case .twoBits:
+        case .twoBits:
             return SWIFT_UART_STOP_BITS_2
         }
     }
@@ -400,7 +400,7 @@ extension UART {
 
     private static func getDataBitsRawValue(_ dataBits: DataBits) -> swift_uart_data_bits_t {
         switch dataBits {
-            case .eightBits:
+        case .eightBits:
             return SWIFT_UART_DATA_BITS_8
         }
     }
