@@ -1,5 +1,6 @@
 # SwiftIO
 
+![build](https://github.com/madmachineio/SwiftIO/actions/workflows/build.yml/badge.svg)
 [![Discord](https://img.shields.io/discord/592743353049808899?&logo=Discord&colorB=7289da)](https://madmachine.io/discord)
 [![twitter](https://img.shields.io/twitter/follow/madmachineio?label=%40madmachineio&style=social)](https://twitter.com/madmachineio)
 
@@ -40,5 +41,5 @@ Before starting to write your project, you can download and run the example code
 
 Please choose the version according to your operating system and install the IDE following the instructions below.
 
-* [Download](https://www.madmachine.io/downloads)- three versions of installation packages: Mac, Windows, Linux 
-* [Installation instruction](https://www.madmachine.io/blog/categories/swiftio) - step-by-step instruction to help you install the IDE
+* [Download](https://docs.madmachine.io/overview/software/madmachine-ide)
+* [Installation instruction](https://docs.madmachine.io/overview/run-your-first-project) - step-by-step instruction to help you install the SDK

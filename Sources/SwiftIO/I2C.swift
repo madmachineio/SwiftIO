@@ -98,29 +98,6 @@ import CSwiftIO
     }
 
     /**
-     Read one byte from a specified slave device with the given address.
-     - Parameter address: The address of the slave device the board will
-        communicate with.
-     
-     - Returns: One 8-bit binary number receiving from the slave device.
-     */
-    public func readByte(from address: UInt8) -> Result<UInt8, Errno> {
-        var byte: UInt8 = 0
-        
-        let result = nothingOrErrno(
-            swifthal_i2c_read(obj, address, &byte, 1)
-        )
-
-        switch result {
-            case .success:
-                return .success(byte)
-            case .failure(let err):
-                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-                return .failure(err)
-        }
-    }
-
-    /**
      Read an array of data from a specified slave device with the given address.
      - Parameter count : The number of bytes to read.
      - Parameter address : The address of the slave device the board will
@@ -155,21 +132,21 @@ import CSwiftIO
      */
     @discardableResult
     public func read(
-        into data: inout [UInt8],
+        into buffer: inout [UInt8],
         count: Int? = nil,
         from address: UInt8
     ) -> Result<(), Errno> {
 
-        let byteCount: Int
+        let readLength: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            readLength = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            readLength = buffer.count
         }
 
         let result = nothingOrErrno(
-            swifthal_i2c_read(obj, address, &data, Int32(byteCount))
+            swifthal_i2c_read(obj, address, &buffer, Int32(readLength))
         )
 
         if case .failure(let err) = result {
@@ -206,16 +183,16 @@ import CSwiftIO
      */
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil, to address: UInt8) -> Result<(), Errno> {
-        let byteCount: Int
+        let writeLength: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            writeLength = min(count, data.count)
         } else {
-            byteCount = data.count
+            writeLength = data.count
         }
 
         let result = nothingOrErrno(
-            swifthal_i2c_write(obj, address, data, Int32(byteCount))
+            swifthal_i2c_write(obj, address, data, Int32(writeLength))
         )
 
         if case .failure(let err) = result {
@@ -248,54 +225,23 @@ import CSwiftIO
 
     @discardableResult
     public func writeRead(
-        _ data: [UInt8],
-        into buffer: inout UInt8,
-        address: UInt8
-    ) -> Result<(), Errno> {
-        let result = nothingOrErrno(
-            swifthal_i2c_write_read(obj,
-                                    address,
-                                    data,
-                                    Int32(data.count),
-                                    &buffer,
-                                    1)
-        )
-        if case .failure(let err) = result {
-            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        }
-
-        return result
-    }
-
-    @discardableResult
-    public func writeRead(
         _ byte: UInt8, 
         into buffer: inout [UInt8],
         readCount: Int? = nil,
         address: UInt8
     ) -> Result<(), Errno> {
-        let byteCount: Int
 
-        if let count = readCount {
-            byteCount = min(count, buffer.count)
-        } else {
-            byteCount = buffer.count
-        }
-
-        let result = nothingOrErrno(
-            swifthal_i2c_write_read(obj,
-                                    address,
-                                    [byte],
-                                    1,
-                                    &buffer,
-                                    Int32(byteCount))
-        )
+        let result = _writeRead([byte],
+                                into: &buffer,
+                                readCount: readCount,
+                                address: address)
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
 
         return result
     }
+
 
     /**
      Write an array of bytes to the slave device with the given address
@@ -310,28 +256,52 @@ import CSwiftIO
     @discardableResult
     public func writeRead(
         _ data: [UInt8],
+        writeCount: Int? = nil,
         into buffer: inout [UInt8],
         readCount: Int? = nil,
         address: UInt8
     ) -> Result<(), Errno> {
-        let byteCount: Int
+        let result = _writeRead(data,
+                                writeCount: writeCount,
+                                into: &buffer,
+                                readCount: readCount,
+                                address: address)
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+    @inline(__always)
+    private func _writeRead(
+        _ data: [UInt8],
+        writeCount: Int? = nil,
+        into buffer: inout [UInt8],
+        readCount: Int? = nil,
+        address: UInt8
+    ) -> Result<(), Errno> {
+        let writeLength, readLength: Int
+
+        if let count = writeCount {
+            writeLength = min(count, data.count)
+        } else {
+            writeLength = data.count
+        }
 
         if let count = readCount {
-            byteCount = min(count, buffer.count)
+            readLength = min(count, buffer.count)
         } else {
-            byteCount = buffer.count
+            readLength = buffer.count
         }
         let result = nothingOrErrno(
             swifthal_i2c_write_read(obj,
                                     address,
                                     data,
-                                    Int32(data.count),
+                                    Int32(writeLength),
                                     &buffer,
-                                    Int32(byteCount))
+                                    Int32(readLength))
         )
-        if case .failure(let err) = result {
-            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        }
 
         return result
     }

@@ -288,7 +288,7 @@ extension DigitalIn {
         case pullDown, pullUp, pullNone
     }
 
-    private static func getModeRawValue(_ mode: Mode) -> swift_gpio_mode_t {
+    internal static func getModeRawValue(_ mode: Mode) -> swift_gpio_mode_t {
         switch mode {
             case .pullDown:
             return SWIFT_GPIO_MODE_PULL_DOWN
@@ -313,11 +313,11 @@ extension DigitalIn {
         _ mode: InterruptMode
     ) -> swift_gpio_int_mode_t {
         switch mode {
-            case .rising:
+        case .rising:
             return SWIFT_GPIO_INT_MODE_RISING_EDGE
-            case .falling:
+        case .falling:
             return SWIFT_GPIO_INT_MODE_FALLING_EDGE
-            case .bothEdge:
+        case .bothEdge:
             return SWIFT_GPIO_INT_MODE_BOTH_EDGE
         }
     }

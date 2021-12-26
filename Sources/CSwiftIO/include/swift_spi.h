@@ -10,8 +10,8 @@
 #define SWIFT_SPI_MODE_CPOL             (1 << 1)
 #define SWIFT_SPI_MODE_CPHA             (1 << 2)
 #define SWIFT_SPI_MODE_LOOP             (1 << 3)
-#define SWIFT_SPI_TRANSFER_MSB  		(0)
-#define SWIFT_SPI_TRANSFER_LSB  		(1 << 4)
+#define SWIFT_SPI_TRANSFER_MSB                  (0)
+#define SWIFT_SPI_TRANSFER_LSB                  (1 << 4)
 
 
 /**
@@ -75,6 +75,24 @@ int swifthal_spi_write(void *spi, const unsigned char *buf, int length);
  * @retval Negative errno code if failure.
  */
 int swifthal_spi_read(void *spi, unsigned char *buf, int length);
+
+
+/**
+ * @brief Recvice & Send given number of bytes to buffer through SPI.
+ *
+ * @param uart SPI Handle
+ * @param w_buf Pointer to send buffer.
+ * @param length Length of send buffer.
+ * @param r_buf Pointer to revice buffer.
+ * @param length Length of recvice buffer.
+ *
+ * @retval Positive indicates the number of bytes actually read.
+ * @retval Negative errno code if failure.
+ */
+
+int swifthal_spi_transceive(void *spi,
+			    const unsigned char *w_buf, int w_length,
+			    unsigned char *r_buf, int r_length);
 
 /**
  * @brief Asynchronous send given number of bytes from buffer through SPI.

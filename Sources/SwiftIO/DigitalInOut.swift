@@ -27,36 +27,19 @@ public final class DigitalInOut {
 
     private var direction: Direction {
         willSet {
-            switch newValue {
-                case .output:
-                directionRawValue = SWIFT_GPIO_DIRECTION_OUT
-                case .input:
-                directionRawValue = SWIFT_GPIO_DIRECTION_IN
-            }
+            directionRawValue = DigitalInOut.getDirectionRawValue(newValue)
         } 
     }
 
     private var outputMode: DigitalOut.Mode {
         willSet {
-            switch newValue {
-                case .pushPull:
-                outputModeRawValue = SWIFT_GPIO_MODE_PULL_UP
-                case .openDrain:
-                outputModeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
-            }
+            outputModeRawValue = DigitalOut.getModeRawValue(newValue)
         }
     }
 
     private var inputMode: DigitalIn.Mode {
         willSet {
-            switch newValue {
-                case .pullDown:
-                inputModeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
-                case .pullUp:
-                inputModeRawValue = SWIFT_GPIO_MODE_PULL_UP
-                case .pullNone:
-                inputModeRawValue = SWIFT_GPIO_MODE_PULL_NONE
-            }
+            inputModeRawValue = DigitalIn.getModeRawValue(newValue)
         }
     }
 
@@ -83,28 +66,15 @@ public final class DigitalInOut {
         self.outputMode = outputMode
         self.inputMode = inputMode
 
-        switch outputMode {
-            case .pushPull:
-            outputModeRawValue = SWIFT_GPIO_MODE_PULL_UP
-            case .openDrain:
-            outputModeRawValue = SWIFT_GPIO_MODE_OPEN_DRAIN
-        }
-        switch inputMode {
-            case .pullDown:
-            inputModeRawValue = SWIFT_GPIO_MODE_PULL_DOWN
-            case .pullUp:
-            inputModeRawValue = SWIFT_GPIO_MODE_PULL_UP
-            case .pullNone:
-            inputModeRawValue = SWIFT_GPIO_MODE_PULL_NONE
-        }
+        outputModeRawValue = DigitalOut.getModeRawValue(outputMode)
+        inputModeRawValue = DigitalIn.getModeRawValue(inputMode)
+        directionRawValue = DigitalInOut.getDirectionRawValue(direction)
 
         let modeRawValue: swift_gpio_mode_t
         switch direction {
             case .output:
-            directionRawValue = SWIFT_GPIO_DIRECTION_OUT
             modeRawValue = outputModeRawValue
             case .input:
-            directionRawValue = SWIFT_GPIO_DIRECTION_IN
             modeRawValue = inputModeRawValue
         }
     
@@ -236,6 +206,15 @@ extension DigitalInOut {
     /// It can serve as input or output.
     public enum Direction {
         case output, input
+    }
+
+    private static func getDirectionRawValue(_ dir: Direction) -> swift_gpio_direction_t {
+        switch dir {
+        case .output:
+            return SWIFT_GPIO_DIRECTION_OUT
+        case .input:
+            return SWIFT_GPIO_DIRECTION_IN
+        }
     }
 }
 

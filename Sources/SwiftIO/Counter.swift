@@ -51,12 +51,12 @@ public final class Counter {
 
     public func setInterrupt(
         start: Bool = true,
-        _ callback: @escaping (UInt32)->Void
+        _ callback: @escaping (UInt32) -> Void
     ) {
         swifthal_counter_stop(obj)
 
         self.callback = callback
-        swifthal_counter_add_callback(obj, getClassPointer(self)) { (ticks, ptr)->Void in
+        swifthal_counter_add_callback(obj, getClassPointer(self)) { (ticks, ptr) -> Void in
             let mySelf = Unmanaged<Counter>.fromOpaque(ptr!).takeUnretainedValue()
             if mySelf.mode == .period {
                 swifthal_counter_stop(mySelf.obj)

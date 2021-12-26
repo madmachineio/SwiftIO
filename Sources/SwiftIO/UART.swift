@@ -184,16 +184,16 @@ public final class UART {
      */
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
-        let byteCount: Int
+        let writeLength: Int
 
         if let count = count {
-            byteCount = min(data.count, count)
+            writeLength = min(data.count, count)
         } else {
-            byteCount = data.count
+            writeLength = data.count
         }
         
         let result = nothingOrErrno(
-            swifthal_uart_write(obj, data, Int32(byteCount))
+            swifthal_uart_write(obj, data, Int32(writeLength))
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -203,16 +203,16 @@ public final class UART {
 
     @discardableResult
     public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
-        let byteCount: Int
+        let writeLength: Int
 
         if let count = count {
-            byteCount = min(data.count, count)
+            writeLength = min(data.count, count)
         } else {
-            byteCount = data.count
+            writeLength = data.count
         }
         
         let result = nothingOrErrno(
-            swifthal_uart_write(obj, data.baseAddress, Int32(byteCount))
+            swifthal_uart_write(obj, data.baseAddress, Int32(writeLength))
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -253,7 +253,8 @@ public final class UART {
      - Returns: One 8-bit binary data read from the device.
 
      */
-    public func readByte(timeout: Int? = nil) -> Result<UInt8, Errno> {
+    @discardableResult
+    public func read(into buffer: inout UInt8, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -262,17 +263,13 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        var byte: UInt8 = 0
-        let result = nothingOrErrno(
-            swifthal_uart_char_get(obj, &byte, timeoutValue)
+        let result = valueOrErrno(
+            swifthal_uart_read(obj, &buffer, 1, timeoutValue)
         )
-        switch result {
-            case .success:
-                return .success(byte)
-            case .failure(let err):
-                print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-                return .failure(err)
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
+        return result
     }
 
     /**
@@ -292,7 +289,7 @@ public final class UART {
 
      */
     @discardableResult
-    public func read(into data: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+    public func read(into buffer: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -301,16 +298,16 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        let byteCount: Int
+        let readLength: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            readLength = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            readLength = buffer.count
         }
 
         let result = valueOrErrno(
-            swifthal_uart_read(obj, &data, Int32(byteCount), timeoutValue)
+            swifthal_uart_read(obj, &buffer, Int32(readLength), timeoutValue)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -320,7 +317,7 @@ public final class UART {
 
 
     @discardableResult
-    public func read(into data: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
 
         if let timeout = timeout {
@@ -329,16 +326,16 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        let byteCount: Int
+        let readLength: Int
 
         if let count = count {
-            byteCount = min(count, data.count)
+            readLength = min(count, buffer.count)
         } else {
-            byteCount = data.count
+            readLength = buffer.count
         }
 
         let result = valueOrErrno(
-            swifthal_uart_read(obj, data.baseAddress, Int32(byteCount), timeoutValue)
+            swifthal_uart_read(obj, buffer.baseAddress, Int32(readLength), timeoutValue)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -364,11 +361,11 @@ extension UART {
 
     private static func getParityRawValue(_ parity: Parity) -> swift_uart_parity_t {
         switch parity {
-            case .none:
+        case .none:
             return SWIFT_UART_PARITY_NONE
-            case .odd:
+        case .odd:
             return SWIFT_UART_PARITY_ODD
-            case .even:
+        case .even:
             return SWIFT_UART_PARITY_EVEN
         }
     }
@@ -383,9 +380,9 @@ extension UART {
 
     private static func getStopBitsRawValue(_ stopBits: StopBits) -> swift_uart_stop_bits_t {
         switch stopBits {
-            case .oneBit:
+        case .oneBit:
             return SWIFT_UART_STOP_BITS_1
-            case .twoBits:
+        case .twoBits:
             return SWIFT_UART_STOP_BITS_2
         }
     }
@@ -400,7 +397,7 @@ extension UART {
 
     private static func getDataBitsRawValue(_ dataBits: DataBits) -> swift_uart_data_bits_t {
         switch dataBits {
-            case .eightBits:
+        case .eightBits:
             return SWIFT_UART_DATA_BITS_8
         }
     }
