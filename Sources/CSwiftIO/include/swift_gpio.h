@@ -135,7 +135,7 @@ int swifthal_gpio_interrupt_config(void *gpio, swift_gpio_int_mode_t int_mode);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_callback_install(void *gpio, const void *param, void (*callback)(void *));
+int swifthal_gpio_interrupt_callback_install(void *gpio, const void *param, void (*callback)(const void *));
 
 /**
  * @brief Uninstall interrupt callback

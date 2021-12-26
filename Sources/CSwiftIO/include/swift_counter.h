@@ -45,7 +45,7 @@ unsigned int swifthal_counter_read(void *counter);
  *
  * @return Negative errno code if failure.
  */
-int swifthal_counter_add_callback(void *counter, const void *user_data, void (*callback)(unsigned int, void *));
+int swifthal_counter_add_callback(void *counter, const void *user_data, void (*callback)(unsigned int, const void *));
 
 /**
  * @brief Function to get counter frequency.

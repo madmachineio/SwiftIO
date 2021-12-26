@@ -68,7 +68,7 @@ int swifthal_timer_stop(void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)(void *));
+int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)(const void *));
 
 /**
  * @brief Read timer status.
