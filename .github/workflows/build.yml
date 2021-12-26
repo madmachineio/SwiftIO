@@ -16,8 +16,8 @@ on:
 
 env:
   SDK_VERSION: '0.6.0'
-  LINUX_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.2/mm-sdk-0.6.0-alpha.2-ubuntu18.04-x64.tar.bz2'
-  MACOS_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.2/mm-sdk-0.6.0-alpha.2-macOS-x64.zip'
+  LINUX_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.3/mm-sdk-0.6.0-alpha.3-ubuntu18.04-x64.tar.bz2'
+  MACOS_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.3/mm-sdk-0.6.0-alpha.3-macOS-x64.zip'
 
 jobs:
   build_default:
