@@ -84,6 +84,9 @@ import CSwiftIO
         } else {
             fatalError("SPI \(idName.value) init failed!")
         }
+
+        var syncByte: UInt8 = 0
+        swifthal_spi_read(obj, &syncByte, 1)
     }
 
     deinit {
@@ -123,6 +126,8 @@ import CSwiftIO
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         } else {
             self.speed = Int32(speed)
+            var syncByte: UInt8 = 0
+            swifthal_spi_read(obj, &syncByte, 1)
         }
 
         return result
@@ -168,6 +173,8 @@ import CSwiftIO
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         } else {
             operation = newOperation
+            var syncByte: UInt8 = 0
+            swifthal_spi_read(obj, &syncByte, 1)
         }
 
         return result
