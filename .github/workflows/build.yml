@@ -15,9 +15,9 @@ on:
     - cron: '1 0 * * 4'
 
 env:
-  SDK_VERSION: '0.6.0'
-  LINUX_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.3/mm-sdk-0.6.0-alpha.3-ubuntu18.04-x64.tar.bz2'
-  MACOS_SDK: 'https://github.com/madmachineio/mm-sdk/releases/download/0.6.0-alpha.3/mm-sdk-0.6.0-alpha.3-macOS-x64.zip'
+   SDK_VERSION: ${{ secrets.CI_SDK_VERSION }}
+   LINUX_SDK: ${{ secrets.CI_LINUX_SDK }}
+   MACOS_SDK: ${{ secrets.CI_MACOS_SDK }}
 
 jobs:
   build_default:
@@ -77,10 +77,12 @@ jobs:
           cd $GITHUB_WORKSPACE
           rm -rf .build
           rm -rf Package.resolved
-          ~/mm-sdk/usr/mm/mm build
-          echo "::set-output name=EXAMPLES::$(find . -maxdepth 1 -name "Examples")"
+          if [ -f "Package.swift" ]; then
+            ~/mm-sdk/usr/mm/mm build
+          fi
           rm -rf .build
           rm -rf Package.resolved
+          echo "::set-output name=EXAMPLES::$(find . -maxdepth 1 -name "Examples")"
 
       - name: Build default examples
         if: ${{ steps.build-project.outputs.EXAMPLES != '' }}
@@ -109,7 +111,9 @@ jobs:
           cd $GITHUB_WORKSPACE
           rm -rf .build
           rm -rf Package.resolved
-          ~/mm-sdk/usr/mm/mm cibuild
+          if [ -f "Package.swift" ]; then
+            ~/mm-sdk/usr/mm/mm cibuild
+          fi
           rm -rf .build
           rm -rf Package.resolved
 
