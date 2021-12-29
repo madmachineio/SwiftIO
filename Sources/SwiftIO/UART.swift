@@ -184,17 +184,14 @@ public final class UART {
      */
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
-        let writeLength: Int
+        var writeLength = 0
+        var result = validateLength(data, count: count, length: &writeLength)
 
-        if let count = count {
-            writeLength = min(data.count, count)
-        } else {
-            writeLength = data.count
+        if case .success = result {
+            result = nothingOrErrno(
+                swifthal_uart_write(obj, data, Int32(writeLength))
+            )
         }
-        
-        let result = nothingOrErrno(
-            swifthal_uart_write(obj, data, Int32(writeLength))
-        )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
@@ -203,17 +200,14 @@ public final class UART {
 
     @discardableResult
     public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
-        let writeLength: Int
+        var writeLength = 0
+        var result = validateLength(data, count: count, length: &writeLength)
 
-        if let count = count {
-            writeLength = min(data.count, count)
-        } else {
-            writeLength = data.count
+        if case .success = result {
+            result = nothingOrErrno(
+                swifthal_uart_write(obj, data.baseAddress, Int32(writeLength))
+            )
         }
-        
-        let result = nothingOrErrno(
-            swifthal_uart_write(obj, data.baseAddress, Int32(writeLength))
-        )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
@@ -291,6 +285,7 @@ public final class UART {
     @discardableResult
     public func read(into buffer: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
+        let result: Result<Int, Errno>
 
         if let timeout = timeout {
             timeoutValue = Int32(timeout)
@@ -298,17 +293,17 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        let readLength: Int
+        var readLength = 0
+        let validateRet = validateLength(buffer, count: count, length: &readLength)
 
-        if let count = count {
-            readLength = min(count, buffer.count)
+        if case .failure(let err) = validateRet {
+            result = .failure(err)
         } else {
-            readLength = buffer.count
+            result = valueOrErrno(
+                swifthal_uart_read(obj, &buffer, Int32(readLength), timeoutValue)
+            )
         }
 
-        let result = valueOrErrno(
-            swifthal_uart_read(obj, &buffer, Int32(readLength), timeoutValue)
-        )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
@@ -319,6 +314,7 @@ public final class UART {
     @discardableResult
     public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
+        let result: Result<Int, Errno>
 
         if let timeout = timeout {
             timeoutValue = Int32(timeout)
@@ -326,17 +322,16 @@ public final class UART {
             timeoutValue = Int32(SWIFT_FOREVER)
         }
 
-        let readLength: Int
+        var readLength = 0
+        let validateRet = validateLength(buffer, count: count, length: &readLength)
 
-        if let count = count {
-            readLength = min(count, buffer.count)
+        if case .failure(let err) = validateRet {
+            result = .failure(err)
         } else {
-            readLength = buffer.count
+            result = valueOrErrno(
+                swifthal_uart_read(obj, buffer.baseAddress, Int32(readLength), timeoutValue)
+            )
         }
-
-        let result = valueOrErrno(
-            swifthal_uart_read(obj, buffer.baseAddress, Int32(readLength), timeoutValue)
-        )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
