@@ -150,14 +150,14 @@ import CSwiftIO
         if let bitOrder = bitOrder {
             switch bitOrder {
             case .MSB:
-                // MSB bit equal zero 
+                // MSB bit equal zero, insert operation has no effect
                 // newOperation.insert(.MSB)
                 break
             case .LSB:
                 newOperation.insert(.LSB)
             }
         } else {
-            // MSB bit equal zero 
+            // MSB bit equal zero, insert operation has no effect
             // if operation.contains(.MSB) {
             //     newOperation.insert(.MSB)
             // }
@@ -216,20 +216,16 @@ import CSwiftIO
      */
     @discardableResult
     public func read(into buffer: inout [UInt8], count: Int? = nil) -> Result<(), Errno> {
+        var readLength = 0
+        var result = validateLength(buffer, count: count, length: &readLength)
 
-        let readLength: Int
-
-        if let count = count {
-            readLength = min(count, buffer.count)
-        } else {
-            readLength = buffer.count
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_read(obj, &buffer, Int32(readLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_read(obj, &buffer, Int32(readLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -240,20 +236,16 @@ import CSwiftIO
 
     @discardableResult
     public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+        var readLength = 0
+        var result = validateLength(buffer, count: count, length: &readLength)
 
-        let readLength: Int
-
-        if let count = count {
-            readLength = min(count, buffer.count)
-        } else {
-            readLength = buffer.count
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_read(obj, buffer.baseAddress, Int32(readLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_read(obj, buffer.baseAddress, Int32(readLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -287,19 +279,16 @@ import CSwiftIO
      */
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
-        let writeLength: Int
+        var writeLength = 0
+        var result = validateLength(data, count: count, length: &writeLength)
 
-        if let count = count {
-            writeLength = min(data.count, count)
-        } else {
-            writeLength = data.count
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_write(obj, data, Int32(writeLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_write(obj, data, Int32(writeLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -314,19 +303,16 @@ import CSwiftIO
      */
     @discardableResult
     public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
-        let writeLength: Int
+        var writeLength = 0
+        var result = validateLength(data, count: count, length: &writeLength)
 
-        if let count = count {
-            writeLength = min(data.count, count)
-        } else {
-            writeLength = data.count
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_write(obj, data.baseAddress, Int32(writeLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_write(obj, data.baseAddress, Int32(writeLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -337,19 +323,17 @@ import CSwiftIO
 
     public func transceive(_ byte: UInt8, into buffer: inout [UInt8], readCount: Int? = nil) -> Result<(), Errno> {
         var byte = byte
-        let readLength: Int
+        var readLength = 0
 
-        if let count = readCount {
-            readLength = min(buffer.count, count)
-        } else {
-            readLength = buffer.count
+        var result = validateLength(buffer, count: readCount, length: &readLength)
+
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_transceive(obj, &byte, 1, &buffer, Int32(readLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_transceive(obj, &byte, 1, &buffer, Int32(readLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -365,25 +349,21 @@ import CSwiftIO
             into buffer: inout [UInt8],
             readCount: Int? = nil
         ) -> Result<(), Errno> {
-        let writeLength, readLength: Int
+        var writeLength = 0, readLength = 0
 
-        if let count = writeCount {
-            writeLength = min(count, data.count)
-        } else {
-            writeLength = data.count
+        var result = validateLength(data, count: writeCount, length: &writeLength)
+
+        if case .success = result {
+            result = validateLength(buffer, count: readCount, length: &readLength)
         }
 
-        if let count = readCount {
-            readLength = min(count, buffer.count)
-        } else {
-            readLength = buffer.count
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                swifthal_spi_transceive(obj, data, Int32(writeLength), &buffer, Int32(readLength))
+            )
+            csDisable()
         }
-
-        csEnable()
-        let result = nothingOrErrno(
-            swifthal_spi_transceive(obj, data, Int32(writeLength), &buffer, Int32(readLength))
-        )
-        csDisable()
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))

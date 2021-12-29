@@ -43,3 +43,52 @@ internal func nothingOrErrno(
 ) -> Result<(), Errno> {
   valueOrErrno(ret).map { _ in () }
 }
+
+
+@inline(__always)
+internal func validateLength(_ array: [UInt8], count: Int?, length: inout Int) -> Result<(), Errno> {
+    if let count = count {
+        if count > array.count || count < 0 {
+            return .failure(Errno.invalidArgument)
+        } else {
+            length = count
+        }
+    } else {
+        length = array.count
+    }
+
+    return .success(())
+}
+
+
+@inline(__always)
+internal func validateLength(_ buffer: UnsafeMutableBufferPointer<UInt8>, count: Int?, length: inout Int) -> Result<(), Errno> {
+    if let count = count {
+        if count > buffer.count || count < 0 {
+            return .failure(Errno.invalidArgument)
+        } else {
+            length = count
+        }
+    } else {
+        length = buffer.count
+    }
+
+    return .success(())
+}
+
+
+
+@inline(__always)
+internal func validateLength(_ buffer: UnsafeBufferPointer<UInt8>, count: Int?, length: inout Int) -> Result<(), Errno> {
+    if let count = count {
+        if count > buffer.count || count < 0 {
+            return .failure(Errno.invalidArgument)
+        } else {
+            length = count
+        }
+    } else {
+        length = buffer.count
+    }
+
+    return .success(())
+}
