@@ -11,7 +11,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CSwiftIO
 
 /**
  I2C (I square C) is a two wire protocol to communicate between different
@@ -28,15 +27,20 @@ import CSwiftIO
  */
  public final class I2C {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
 
-    private var speedRawValue: UInt32
-    private var speed: Speed {
+    private var speed: Speed
+
+    public var expectResult: Result<(), Errno> = .success(())
+    public var expectSpeed: Speed = .standard
+    public var expectRead: [UInt8] = [] {
         willSet {
-            speedRawValue = I2C.getSpeedRawValue(newValue)
+            readIndex = 0
         }
     }
+    public var readIndex = 0
 
+
+    public var writed: [UInt8] = []
 
     /**
      Initialize a specific I2C interface as a master device.
@@ -54,19 +58,9 @@ import CSwiftIO
                 speed: Speed = .standard) {
         self.id = idName.value
         self.speed = speed
-        self.speedRawValue = I2C.getSpeedRawValue(speed)
-
-        guard let ptr = swifthal_i2c_open(id) else {
-            fatalError("I2C\(idName.value) init failed")
-        }
-        obj = UnsafeMutableRawPointer(ptr)
-        if swifthal_i2c_config(obj, speedRawValue) != 0 {
-            fatalError("I2C\(idName.value) init config failed")
-        }
     }
 
     deinit {
-        swifthal_i2c_close(obj)
     }
 
     /**
@@ -86,9 +80,7 @@ import CSwiftIO
         let oldSpeed = self.speed
         self.speed = speed
 
-        let result = nothingOrErrno(
-            swifthal_i2c_config(obj, speedRawValue)
-        )
+        let result = expectResult
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
             self.speed = oldSpeed
@@ -111,9 +103,9 @@ import CSwiftIO
         from address: UInt8
     ) -> Result<(), Errno> {
 
-        let result = nothingOrErrno(
-            swifthal_i2c_read(obj, address, &byte, 1)
-        )
+        let result = expectResult
+        byte = expectRead[readIndex]
+        readIndex += 1
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -140,9 +132,11 @@ import CSwiftIO
         var result = validateLength(buffer, count: count, length: &readLength)
 
         if case .success = result {
-            result = nothingOrErrno(
-                swifthal_i2c_read(obj, address, &buffer, Int32(readLength))
-            )
+            result = expectResult
+            for i in 0..<readLength {
+                buffer[i] = expectRead[readIndex]
+                readIndex += 1
+            }
         }
 
         if case .failure(let err) = result {
@@ -160,10 +154,9 @@ import CSwiftIO
      */
     @discardableResult
     public func write(_ byte: UInt8, to address: UInt8) -> Result<(), Errno> {
-        var byte = byte
-        let result = nothingOrErrno(
-            swifthal_i2c_write(obj, address, &byte, 1)
-        )
+        let result = expectResult
+        writed.append(byte)
+
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
@@ -182,9 +175,12 @@ import CSwiftIO
         var result = validateLength(data, count: count, length: &writeLength)
 
         if case .success = result {
-            result = nothingOrErrno(
-                swifthal_i2c_write(obj, address, data, Int32(writeLength))
-            )
+            result = expectResult
+            var writeData = [UInt8](repeating: 0, count: writeLength)
+            for i in 0..<writeLength {
+                writeData[i] = data[i]
+            }
+            writed += writeData
         }
 
         if case .failure(let err) = result {
@@ -200,14 +196,12 @@ import CSwiftIO
         into buffer: inout UInt8,
         address: UInt8
     ) -> Result<(), Errno> {
-        let result = nothingOrErrno(
-            swifthal_i2c_write_read(obj,
-                                    address,
-                                    [byte],
-                                    1,
-                                    &buffer,
-                                    1)
-        )
+        let result = expectResult
+
+        writed.append(byte)
+        buffer = expectRead[readIndex]
+        readIndex += 1
+
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
@@ -225,15 +219,13 @@ import CSwiftIO
         var readLength = 0
         var result = validateLength(buffer, count: readCount, length: &readLength)
 
-        if case .success = result {
-            result = nothingOrErrno(
-                swifthal_i2c_write_read(obj,
-                                        address,
-                                        [byte],
-                                        1,
-                                        &buffer,
-                                        Int32(readLength))
-            )
+        if case .success = expectResult {
+            result = expectResult
+            writed.append(byte)
+            for i in 0..<readLength {
+                buffer[i] = expectRead[readIndex]
+                readIndex += 1
+            } 
         }
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -270,14 +262,17 @@ import CSwiftIO
         }
 
         if case .success = result {
-            result = nothingOrErrno(
-                swifthal_i2c_write_read(obj,
-                                        address,
-                                        data,
-                                        Int32(writeLength),
-                                        &buffer,
-                                        Int32(readLength))
-            )
+            result = expectResult
+            var writeData = [UInt8](repeating: 0, count: writeLength)
+            for i in 0..<writeLength {
+                writeData[i] = data[i]
+            }
+            writed += writeData
+
+            for i in 0..<readLength {
+                buffer[i] = expectRead[readIndex]
+                readIndex += 1
+            } 
         }
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -295,16 +290,5 @@ extension I2C {
         case standard
         case fast
         case fastPlus
-    }
-
-    private static func getSpeedRawValue(_ speed: Speed) -> UInt32 {
-        switch speed {
-            case .standard:
-            return UInt32(SWIFT_I2C_SPEED_STANDARD)
-            case .fast:
-            return UInt32(SWIFT_I2C_SPEED_FAST)
-            case .fastPlus:
-            return UInt32(SWIFT_I2C_SPEED_FAST_PLUS)
-        }
     }
 }

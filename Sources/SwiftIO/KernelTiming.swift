@@ -11,7 +11,6 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CSwiftIO
 
 
 /**
@@ -21,7 +20,6 @@ When you invoke the wait function, the CPU keeps on working and checking
 */
 @inline(__always)
 public func wait(us: Int) {
-    swifthal_us_wait(UInt32(us))
 }
 
 /**
@@ -30,7 +28,6 @@ public func wait(us: Int) {
  */
 @inline(__always)
 public func sleep(ms: Int) {
-    swifthal_ms_sleep(Int32(ms))
 }
 
 /**
@@ -38,7 +35,7 @@ Get the elapsed time in millisecond since the board powered up.
 - Returns: The elapsed time since system power up in millisecond.
 */
 public func getSystemUptimeInMilliseconds() -> Int64 {
-    return swifthal_uptime_get()
+    return 0
 }
 
 /**
@@ -52,7 +49,7 @@ Get the current clock cycle of the low level 32bit timer.
 */
 @inline(__always)
 public func getClockCycle() -> UInt {
-    return UInt(swifthal_hwcycle_get())
+    return 0
 }
 
 /**
@@ -63,7 +60,5 @@ together with `getClockCycle()`.
  - Returns: The duration in nanoseconds.
 */
 public func cyclesToNanoseconds(start: UInt, stop: UInt) -> Int64 {
-    let cycles = stop >= start ? stop - start : UInt.max - start + stop + 1
-
-    return Int64(swifthal_hwcycle_to_ns(UInt32(cycles)))
+    return Int64(0)
 }
