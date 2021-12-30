@@ -27,11 +27,14 @@
  */
  public final class I2C {
     private let id: Int32
-
     private var speed: Speed
 
-    public var expectResult: Result<(), Errno> = .success(())
+    
+
+    public let alwaysSuccess: Result<(), Errno> = .success(())
+
     public var expectSpeed: Speed = .standard
+
     public var expectRead: [UInt8] = [] {
         willSet {
             readIndex = 0
@@ -39,8 +42,7 @@
     }
     public var readIndex = 0
 
-
-    public var writed: [UInt8] = []
+    public var written: [UInt8] = []
 
     /**
      Initialize a specific I2C interface as a master device.
@@ -80,7 +82,7 @@
         let oldSpeed = self.speed
         self.speed = speed
 
-        let result = expectResult
+        let result = alwaysSuccess
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
             self.speed = oldSpeed
@@ -103,7 +105,7 @@
         from address: UInt8
     ) -> Result<(), Errno> {
 
-        let result = expectResult
+        let result = alwaysSuccess
         byte = expectRead[readIndex]
         readIndex += 1
 
@@ -129,10 +131,9 @@
         from address: UInt8
     ) -> Result<(), Errno> {
         var readLength = 0
-        var result = validateLength(buffer, count: count, length: &readLength)
+        let result = validateLength(buffer, count: count, length: &readLength)
 
         if case .success = result {
-            result = expectResult
             for i in 0..<readLength {
                 buffer[i] = expectRead[readIndex]
                 readIndex += 1
@@ -154,8 +155,8 @@
      */
     @discardableResult
     public func write(_ byte: UInt8, to address: UInt8) -> Result<(), Errno> {
-        let result = expectResult
-        writed.append(byte)
+        let result = alwaysSuccess
+        written.append(byte)
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -172,15 +173,14 @@
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil, to address: UInt8) -> Result<(), Errno> {
         var writeLength = 0
-        var result = validateLength(data, count: count, length: &writeLength)
+        let result = validateLength(data, count: count, length: &writeLength)
 
         if case .success = result {
-            result = expectResult
             var writeData = [UInt8](repeating: 0, count: writeLength)
             for i in 0..<writeLength {
                 writeData[i] = data[i]
             }
-            writed += writeData
+            written += writeData
         }
 
         if case .failure(let err) = result {
@@ -196,9 +196,9 @@
         into buffer: inout UInt8,
         address: UInt8
     ) -> Result<(), Errno> {
-        let result = expectResult
+        let result = alwaysSuccess
 
-        writed.append(byte)
+        written.append(byte)
         buffer = expectRead[readIndex]
         readIndex += 1
 
@@ -217,11 +217,10 @@
         address: UInt8
     ) -> Result<(), Errno> {
         var readLength = 0
-        var result = validateLength(buffer, count: readCount, length: &readLength)
+        let result = validateLength(buffer, count: readCount, length: &readLength)
 
-        if case .success = expectResult {
-            result = expectResult
-            writed.append(byte)
+        if case .success = result {
+            written.append(byte)
             for i in 0..<readLength {
                 buffer[i] = expectRead[readIndex]
                 readIndex += 1
@@ -262,12 +261,11 @@
         }
 
         if case .success = result {
-            result = expectResult
             var writeData = [UInt8](repeating: 0, count: writeLength)
             for i in 0..<writeLength {
                 writeData[i] = data[i]
             }
-            writed += writeData
+            written += writeData
 
             for i in 0..<readLength {
                 buffer[i] = expectRead[readIndex]
