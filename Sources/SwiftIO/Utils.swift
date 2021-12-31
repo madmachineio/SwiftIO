@@ -110,11 +110,11 @@ public extension FixedWidthInteger {
         switch endian {
             case .big:
                 for i in 0..<bytes {
-                    result[i] = UInt8(truncatingIfNeeded: self >> (i * 8))
+                    result[bytes - 1 - i] = UInt8(truncatingIfNeeded: self >> (i * 8))
                 }
             case .little:
                 for i in 0..<bytes {
-                    result[bytes - 1 - i] = UInt8(truncatingIfNeeded: self >> (i * 8))
+                    result[i] = UInt8(truncatingIfNeeded: self >> (i * 8))
                 }
         }
         
