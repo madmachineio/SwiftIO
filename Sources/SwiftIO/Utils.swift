@@ -91,3 +91,64 @@ internal func validateLength(_ buffer: UnsafeBufferPointer<UInt8>, count: Int?, 
 
     return .success(())
 }
+
+
+
+
+
+public enum Endian {
+    case big
+    case little
+}
+
+
+public extension FixedWidthInteger {
+    public func getBytes(endian: Endian = .big) -> [UInt8] {
+        let bytes = self.bitWidth / 8
+        var result = [UInt8](repeating: 0, count: bytes)
+
+        switch endian {
+            case .big:
+                for i in 0..<bytes {
+                    result[i] = UInt8(truncatingIfNeeded: self >> (i * 8))
+                }
+            case .little:
+                for i in 0..<bytes {
+                    result[bytes - 1 - i] = UInt8(truncatingIfNeeded: self >> (i * 8))
+                }
+        }
+        
+        return result
+    }
+}
+
+
+public extension Array where Element == UInt8 {
+    public func getUInt16(from index: Int = 0, endian: Endian = .big) -> UInt16 {
+        let msb, lsb: UInt16
+        
+        switch endian {
+            case .big:
+                msb = UInt16(self[index]) << 8
+                lsb = UInt16(self[index + 1])
+            case .little:
+                msb = UInt16(self[index + 1]) << 8
+                lsb = UInt16(self[index])
+        }
+        return (msb | lsb)
+    }
+    
+    public func getInt16(from index: Int = 0, endian: Endian = .big) -> Int16 {
+        let msb, lsb: Int16
+        
+        switch endian {
+            case .big:
+                msb = Int16(self[index]) << 8
+                lsb = Int16(self[index + 1])
+            case .little:
+                msb = Int16(self[index + 1]) << 8
+                lsb = Int16(self[index])
+        }
+        return (msb | lsb)
+    }
+}
