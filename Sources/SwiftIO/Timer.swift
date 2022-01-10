@@ -53,7 +53,8 @@ import CSwiftIO
  ````
 */
 public final class Timer {
-    private var obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
+
     private var modeRawValue: swift_timer_type_t
 
     private var mode: Mode {

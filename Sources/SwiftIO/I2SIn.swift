@@ -16,7 +16,7 @@ import CSwiftIO
 
  public final class I2SIn {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var config = swift_i2s_cfg_t()
 

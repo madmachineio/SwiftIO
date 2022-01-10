@@ -19,7 +19,7 @@ import CSwiftIO
 /// to use it as an input or output pin.
 public final class DigitalInOut {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var directionRawValue: swift_gpio_direction_t
     private var outputModeRawValue: swift_gpio_mode_t

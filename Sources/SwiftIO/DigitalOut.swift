@@ -55,7 +55,7 @@ import CSwiftIO
  */
 public final class DigitalOut {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
 

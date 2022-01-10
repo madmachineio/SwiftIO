@@ -36,7 +36,8 @@ while true {
 */
 public final class PWMOut {
     private let id: Int32 
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
+
     private let info: swift_pwm_info_t
 
     private var period: Int32 = 0

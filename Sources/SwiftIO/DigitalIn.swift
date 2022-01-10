@@ -35,7 +35,7 @@ import CSwiftIO
  */
 public final class DigitalIn {
     private let id: Int32 
-    private var obj: UnsafeMutableRawPointer 
+    public let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
 
