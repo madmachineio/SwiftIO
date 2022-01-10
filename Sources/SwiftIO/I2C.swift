@@ -28,7 +28,7 @@ import CSwiftIO
  */
  public final class I2C {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var speedRawValue: UInt32
     private var speed: Speed {

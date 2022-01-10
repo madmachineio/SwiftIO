@@ -16,7 +16,7 @@ import CSwiftIO
 
 public final class Counter {
     private let id: Int32
-    private let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var mode: Mode
     private var periodTicks: UInt32
