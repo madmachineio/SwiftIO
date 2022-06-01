@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -17,6 +16,57 @@ import CSwiftIO
 UART is a two-wire serial communication protocol used to communicate with
  serial devices. The devices must agree on a common transmisson rate before
  communication.
+
+ ### Initialize a UART port
+
+ To initialize a UART pin, you can simply specify the id. The other parameters
+ have their default value to set the UART communication.
+
+ ```swift
+ // Initialize a UART interface UART0.
+ let uart = UART(Id.UART0)
+ ```
+ Each UART port needs a TX (transmitter) and a RX (receiver) line. UART0 refers
+ to the pins TX0 and RX0 on your board. The TX0 line should connects to the RX of the
+ external device and RX0 to TX of the device.
+
+ ### Read or write data
+
+ To write data to a UART device,
+
+ ```swift
+ // Write a UInt8 to the external device.
+ let data: UInt8 = ...
+ uart.write(byte)
+ ```
+ To read data from a UART device,
+
+ ```swift
+ // Read a byte from the external device and store it.
+ var byte: UInt8 = 0
+ uart.read(into: &byte)
+ ```
+
+ ### Read or write data and handle error
+
+ In fact, the communication may fail due to all kinds of reason and thus you may
+ get wrong data. Besides, the time may not be enough to receive data and thus
+ you don't get all needed data. So the methods involving reading or writing data
+ will return the results in `Result` type. You can know how the communication goes
+ and provide other solutions in advance if something happens unexpectedly.
+
+ ```swift
+ let result = uart.read(into: &byte)
+ switch result {
+ case .success(let count):
+     // Know if you have received enough data.
+     ...
+ case .failure(let error):
+     // If an error happens, execute the specified task.
+     ...
+ }
+ ```
+
 
 */
 public final class UART {
@@ -56,10 +106,11 @@ public final class UART {
     }
 
     /**
-     Initialize an interface for UART communication.
-     - Parameter id: **REQUIRED** The name of the UART interface.
+     Initializes an interface for UART communication.
+     - Parameter idName: **REQUIRED** The name of UART pin. See Id for the board in
+     [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
      - Parameter baudRate: **OPTIONAL**The communication speed.
-        The default baud rate is 115200.
+     The default baud rate is 115200.
      - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy
         of the data transmission.
      - Parameter stopBits: **OPTIONAL**The bits reserved to stop the
@@ -67,12 +118,6 @@ public final class UART {
      - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
      - Parameter readBufferLength: **OPTIONAL**The length of the serial
         buffer to store the data.
-     
-     ### Usage Example ###
-     ````
-     // Initialize a UART interface UART0.
-     let uart = UART(Id.UART0)
-     ````
      */
     public init(
         _ idName: IdName,
@@ -109,12 +154,11 @@ public final class UART {
     }
 
 
-    /**
-     Set the baud rate for communication. It should be set ahead of time
-     to ensure the same baud rate between two devices.
-     - Parameter baudRate: The communication speed.
-
-     */
+    /// Sets the baud rate for communication. It should be set ahead of time
+    /// to ensure the same baud rate between devices.
+    /// - Parameter baudRate: The communication speed.
+    /// - Returns: Whether the configuration succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func setBaudRate(_ baudRate: Int) -> Result<(), Errno> {
         let oldBaudRate = self.baudRate
@@ -132,13 +176,16 @@ public final class UART {
         return result
     }
 
+
+    /// Gets the current baud rate for serial communication.
+    /// - Returns: The communication speed.
     public func getBaudRate() -> Int {
         return baudRate
     }
 
-    /**
-     Clear all bytes from the buffer to store the incoming data.
-     */
+    /// Clears all bytes from the buffer to store the incoming data.
+    /// - Returns: Whether the configuration succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func clearBuffer() -> Result<(), Errno> {
         let result = nothingOrErrno(
@@ -153,18 +200,18 @@ public final class UART {
     }
 
     /**
-     Return the number of received data from the serial buffer.
+     Returns the number of received data from the serial buffer.
      - Returns: The number of bytes received in the buffer.
      */
     public func checkBufferReceived() -> Int {
         return Int(swifthal_uart_remainder_get(obj))
     }
 
-    /**
-     Write a byte of data to the external device through the serial connection.
-     - Parameter byte: One 8-bit binary data to be sent to the device.
 
-     */
+    /// Writes a byte to the external device through the serial connection.
+    /// - Parameter byte: A UInt8 to be sent to the device.
+    /// - Returns: Whether the communication succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func write(_ byte: UInt8) -> Result<(), Errno> {
         let result = nothingOrErrno(
@@ -176,12 +223,13 @@ public final class UART {
         return result
     }
 
-    /**
-     Write a series of bytes to the external device through the
-     serial connection.
-     - Parameter data: A byte array to be sent to the device.
-
-     */
+    /// Writes a series of bytes to the external device through the serial connection.
+    /// - Parameters:
+    ///   - data: An array of UInt8 to be sent to the device.
+    ///   - count: The number of bytes in `data` to be sent. Make sure it doesn't
+    ///   exceed the length of the `data`. If it’s nil, all data will be sent.
+    /// - Returns: Whether the communication succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func write(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0
@@ -198,6 +246,13 @@ public final class UART {
         return result
     }
 
+    /// Writes buffer pointer of the data in the underlying storage to the external device.
+    /// - Parameters:
+    ///   - data: A UInt8 buffer pointer for the data to be sent to the device.
+    ///   - count: The number of bytes in `data` to be sent. Make sure it doesn't
+    ///   exceed the length of the `data`. If it’s nil, all will be sent.
+    /// - Returns: Whether the communication succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0
@@ -214,11 +269,11 @@ public final class UART {
         return result
     }
 
-    /**
-     Write a string to the external device through the serial connection.
-     - Parameter string: A string to be sent to the device.
 
-     */
+    /// Writes a string to the external device through the serial connection.
+    /// - Parameter string: A string to be sent to the device.
+    /// - Returns: Whether the communication succeeds. If not, it returns the
+    /// specific error.
     @discardableResult
     public func write(_ string: String) -> Result<(), Errno> {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
@@ -232,21 +287,33 @@ public final class UART {
         return result
     }
 
-    /**
-     Read a byte of data receiving from the external device. The maximum time
-     for data reception is decided by the timeout value. If the data is
-     received before the time set, the read process will end up automatically.
-     
-     -1 is set to wait until receiving the required data. 
-     0 is set to end up the read immediately no matter whether the data is
-     received or not.
-     A value greater than 0 is set to wait for a certain period
-     (in milliseconds) and then end up the read.
-     - Parameter timeout: The max time(in milliseconds) for data reception.
-
-     - Returns: One 8-bit binary data read from the device.
-
-     */
+    /// Reads a byte from the external device.
+    ///
+    /// The parameter `timeout` sets the maximum time for data reception.
+    /// If the reception is fulfilled before the time limit, the read process will
+    /// end up automatically. If the time is too short, you may not get all data.
+    ///
+    /// The **timeout** value can be:
+    /// - -1: wait until all required data are received.
+    /// - 0: stop the data reception immediately no matter whether all data are
+    /// received or not.
+    /// - A positive integer: wait for a specified period (in milliseconds),
+    /// then stop reading data when time is up, even if not all needed data are got.
+    ///
+    /// The returned **result** indicates how the communication goes:
+    /// - For success case: it returns an integer telling the expected data count
+    /// and the actual received data count.
+    ///     * 0 means all needed data are received, that's to say, the reading is
+    ///     fulfilled.
+    ///     * 1 means you still needs a byte, that means the time is not enough,
+    ///     so you haven't got the byte from the sensor.
+    /// - For failure case: it returns the error that happens during communication.
+    ///
+    /// - Parameters:
+    ///   - buffer: A UInt8 to store the received byte.
+    ///   - timeout: The max time limit (in milliseconds) for data reception.
+    /// - Returns: The number of data that is still needed or an error for the
+    /// failure case.
     @discardableResult
     public func read(into buffer: inout UInt8, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
@@ -266,22 +333,36 @@ public final class UART {
         return result
     }
 
-    /**
-     Read a series of bytes receiving from the external device.The maximum
-     time for data reception is decided by the timeout value. If the data is
-     received before the time set, the read process will end up automatically.
-     
-     -1 is set to wait until receiving the required data. 
-     0 is set to end up the read immediately no matter whether the data is
-     received or not.
-     A value greater than 0 is set to wait for a certain period
-     (in milliseconds) and then end up the read.
-     - Parameter timeout: The max time(in milliseconds) for data reception.
-     - Parameter count: The number of bytes to read.
-
-     - Returns: A byte array read from the device.
-
-     */
+    /// Reads a specified amount of bytes from the external device.
+    ///
+    /// The parameter `timeout` sets the maximum time for data reception.
+    /// If the reception is fulfilled before the time limit, the read process will
+    /// end up automatically. If the time is too short, you may not get all data.
+    ///
+    /// The **timeout** value can be:
+    /// - -1: wait until all required data are received.
+    /// - 0: stop the data reception immediately no matter whether all data are
+    /// received or not.
+    /// - A positive integer: wait for a specified period (in milliseconds),
+    /// then stop reading data when time is up, even if not all needed data are got.
+    ///
+    /// The returned **result** indicates how the communication goes:
+    /// - For success case: it returns an integer telling the expected data count
+    /// and the actual received data count.
+    ///     * 0 means all needed data are received, that's to say, the reading is
+    ///     fulfilled.
+    ///     * A positive integer means you still needs some data. For example, you
+    ///     want 4 and the result returns 2, so the time is not enough, you have
+    ///     got 2 bytes and still need next 2 bytes.
+    /// - For failure case: it returns the error that happens during communication.
+    ///
+    /// - Parameters:
+    ///   - buffer: A UInt8 array to store the received bytes.
+    ///   - count: The number of bytes to read. Make sure it doesn't exceed the
+    ///   length of the buffer. If it’s nil, it equals the length of the buffer.
+    ///   - timeout: The max time limit (in milliseconds) for data reception.
+    /// - Returns: The number of data that is still needed or an error for the
+    /// failure case.
     @discardableResult
     public func read(into buffer: inout [UInt8], count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
@@ -310,7 +391,39 @@ public final class UART {
         return result
     }
 
-
+    /// Reads a specified amount of bytes from the external device into the buffer
+    /// pointer.
+    ///
+    /// The parameter `timeout` sets the maximum time for data reception.
+    /// If the reception is fulfilled before the time limit, the read process will
+    /// end up automatically. If the time is too short, you may not get all data.
+    ///
+    /// The **timeout** value can be:
+    /// - -1: wait until all required data are received.
+    /// - 0: stop the data reception immediately no matter whether all data are
+    /// received or not.
+    /// - A positive integer: wait for a specified period (in milliseconds),
+    /// then stop reading data when time is up, even if not all needed data are got.
+    ///
+    /// The returned **result** indicates how the communication goes:
+    /// - For success case: it returns an integer telling the expected data count
+    /// and the actual received data count.
+    ///     * 0 means all needed data are received, that's to say, the reading is
+    ///     fulfilled.
+    ///     * A positive integer means you still needs some data. For example, you
+    ///     want 4 and the result returns 2, so the time is not enough, you have
+    ///     got 2 bytes and still need next 2 bytes.
+    /// - For failure case: it returns the error that happens during communication.
+    ///
+    /// - Parameters:
+    ///   - buffer: A UInt8 buffer pointer to store the received data in a region
+    ///   of storage.
+    ///   - count: The count of bytes to read from the device. Make sure it doesn't
+    ///   exceed the length of the buffer. If it’s nil, it equals the length of
+    ///   the buffer.
+    ///   - timeout: The max time limit (in milliseconds) for data reception.
+    /// - Returns: The number of data that is still needed or an error for the
+    /// failure case.
     @discardableResult
     public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
@@ -346,8 +459,9 @@ public final class UART {
 
 extension UART {
     /**
-     The parity bit is used to ensure the data transmission according
-     to the number of logical-high bits.
+     The parity bit used to verify if data has changed during transmission. It
+     counts the number of logical-high bits and see if it equals an odd or even
+     number.
 
      */
     public enum Parity {
@@ -383,10 +497,11 @@ extension UART {
     }
 
     /**
-     This indicates the length of the data being transmitted.
+     The length of the data being transmitted.
 
      */
     public enum DataBits {
+        /// Data is sent in byte.
         case eightBits
     }
 

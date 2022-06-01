@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -13,7 +12,29 @@
 
 import CSwiftIO
 
-
+/// The I2SOut class is used to send out audio data to external audio devices.
+///
+/// I2S is a serial protocol to transmit audio data between devices. I2S needs
+/// three wires for communication:
+/// - SCK (Serial clock): or Bit Clock (BCLK), it carries the clock signal.
+/// - FS (Frame Sync): or Word Select (WS), it tells that the audio data is for
+/// the right or left channel.
+/// - SD (Serial data): it is used to transfer audio data.
+///
+/// The I2SOut class is used to send audio data to other audio devices, like speakers.
+/// So the data line carries the audio data send to external devices. For data input,
+/// you can use ``I2SIn`` instead.
+///
+/// You can initialize an I2SOut instance using the default setting as below:
+///
+/// ```swift
+/// let i2s = I2SOut(Id.I2SOut0)
+/// ```
+/// The I2SOut0 corresponds the pins BCLK0, SYNC0 and TX0 on your board.
+///
+/// During initialization, you should match the sample rate, sample bits and
+/// channel settings with the audio info. The clock frequency equals
+/// _Sample Rate x Bits per channel x Number of channels_.
  public final class I2SOut {
     private let id: Int32
     public let obj: UnsafeMutableRawPointer

@@ -15,22 +15,39 @@ import CSwiftIO
 /**
  The AnalogIn class is used to read the external voltage applied to an analog
  input pin.
+
+ You could regard an analog pin as a multimeter to measure the input value on 
+ that pin.
+
+ At first, you need to initialize a pin as an AnalogIn pin. A pin on board may
+ be multifunctional (digital input/output, analog...), plus many pins can be
+ used as analog input pins. So you should specify a pin and its function.
+ - `AnalogIn` tells the pin's usage.
+ - `Id.A0` defines which pin is used. You may refer to the board's pinout
+ which shows all pins and their corresponding functions in a diagram.
+
+ ```swift
+ let pin = AnalogIn(Id.A0)
+ ```
  
- ### Example: Read and print the analog input value on a analog pin
+ ### Example: Read and print the analog input value
  
- ````
+ ```swift
+ // Import the SwiftIO to use the related board functions.
  import SwiftIO
+ // Import the MadBoard to decide which pin is used for the specific function.
+ import MadBoard
  
  // Initialize an AnalogIn to analog pin A0.
  let pin = AnalogIn(Id.A0)
  
- // Read and print the analog input value every 1 second.
+ // Read and print the analog input value every second.
  while true {
      var value = pin.readVoltage()
      print("The analog input volatge is \(value)")
      sleep(ms: 1000)
  }
- ````
+ ```
  
  */
 public final class AnalogIn {
@@ -58,16 +75,18 @@ public final class AnalogIn {
     }
 
     /**
-     Initialize an AnalogIn to a specified pin.
+     Initializes a specified pin as AnalogIn.
      
-     - Parameter idName: **REQUIRED** The AnalogIn Id name of the board.
-        See Id for the specific board in MadBoards library for reference.
+     - Parameter idName: **REQUIRED** The name of analog pin. See Id for the board in
+    [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
      
-     ### Usage Example ###
-     ````
+     To initialize an analog pin, only the pin name is required. Take pin A0 for
+     example, the prefix A tells the function of the pin. The number 0 locates the
+     pin. 
+     ```swift
      // Initialize an analog pin A0.
      let pin = AnalogIn(Id.A0)
-     ````
+     ```
      */
     public init(_ idName: IdName) {
         id = idName.value
@@ -84,9 +103,9 @@ public final class AnalogIn {
     }
 
     /**
-     Read the current raw value from the specified analog pin.
+     Reads the raw value of the input from the specified analog pin.
      
-     - Returns: An integer in the range of 0 to max resolution.
+     - Returns: A raw value in the range of 0 to max resolution.
      */
     @inline(__always)
     public func readRawValue() -> Int {
@@ -104,9 +123,9 @@ public final class AnalogIn {
     }
 
     /**
-     Read the input voltage in percentage from a specified analog pin.
+     Gets the percentage of current input and max value from a specified analog pin.
      
-     - Returns: A percentage of the reference voltage in the range of 0.0 to 1.0.
+     - Returns: A percentage of voltage in the range of 0.0 to 1.0.
      */
     public func readPercent() -> Float {
         let rawValue = Float(readRawValue())
@@ -114,7 +133,7 @@ public final class AnalogIn {
     }
 
     /**
-     Read the input voltage from a specified analog pin.
+     Reads the input voltage from a specified analog pin.
      
      - Returns: A float value in the range of 0.0 to the reference voltage.
      */

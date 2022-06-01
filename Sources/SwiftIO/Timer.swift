@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -14,43 +13,63 @@
 import CSwiftIO
 
 /**
- The Timer class is used to set the occasion to raise the interrupt.
+ The Timer class can measure the time passed. If the time limit is reached, it
+ can execute a specified task.
+
+ A timer must be initialize at first. It can be one shot or periodic. And you can
+ set the period of the timer.
+
+ ```swift
+ /// Create a periodic timer whose period is 2000s.
+ let timer = Timer(period: 2000)
+ ```
+
+ The timer can be really useful to carry out an operation after a speicified time
+ using ``setInterrupt(start:_:)``. Here'a an example:
 
 
  ### Example: Reverse the output value on a digital output pin
 
- ````
+ ```swift
+ // Import the SwiftIO to use the related board functions.
  import SwiftIO
+ // Import the MadBoard to decide which pin is used for the specific function.
+ import MadBoard
 
+ // Initialize a timer with a default period 1000ms.
  let timer = Timer()
+ // Initialize the onboard green LED.
  let led = DigitalOut(Id.GREEN)
 
- // The setInterrupt function can be written as following:
+ // The setInterrupt function can be written as follow:
  func toggleLed() {
     led.toggle()
  }
- timer.setInterrupt(ms: 1000, toggleLed)
+ timer.setInterrupt(toggleLed)
 
  while true {
+    sleep(ms: 1000)
  }
- ````
+ ```
 
  **or**
 
- ````
+ ```swift
  import SwiftIO
+ import MadBoard
 
  let timer = Timer()
  let led = DigitalOut(Id.GREEN)
 
- // Set interrupt with a closure
- timer.setInterrupt(ms: 1000) {
+ // Set interrupt with a closure.
+ timer.setInterrupt() {
     led.toggle()
  }
 
  while true {
+    sleep(ms: 1000)
  }
- ````
+ ```
 */
 public final class Timer {
     public let obj: UnsafeMutableRawPointer
@@ -65,9 +84,12 @@ public final class Timer {
     private var period: Int32
     private var callback: (()->Void)?
 
-    /**
-     Intialize a timer.
-     */
+
+    /// Initializes a timer.
+    /// - Parameters:
+    ///   - mode: **OPTIONAL** Whether the timer is periodic or just run once,
+    ///   `.period` by default.
+    ///   - period: **OPTIONAL** The timer interval in millisecond, 1000 by default.
     public init(mode: Mode = .period, period: Int = 1000) {
         self.mode = mode
         self.modeRawValue = Timer.getModeRawvalue(mode)
@@ -85,17 +107,17 @@ public final class Timer {
         swifthal_timer_close(obj)
     }
 
-    /**
-     Execute a designated task  at a scheduled time interval. The task
-     should be executed in a very short time, usually in nanoseconds.
-     - Parameter ms: **REQUIRED** The time period set for the interrupt.
-     - Parameter mode: **OPTIONAL** The times that the interrupt will occur:
-        once or continuous.
-     - Parameter start: **OPTIONAL** By default, the interrupt will start
-        directly to work.
-     - Parameter callback: **REQUIRED** A void function without a return value.
-     
-     */
+    /// Executes a designated task at a scheduled time interval.
+    ///
+    /// > Important: The task for the interrupt should be executed in a very short
+    /// time, usually in nanoseconds, like changing a number or a boolean value.
+    /// Besides, changing digital output runs extremely quickly, so it also works.
+    /// However, printing a value usually takes several milliseconds and should
+    /// be avoided.
+    /// - Parameters:
+    ///   - start: Whether to start the timer once it's set, true by default.
+    ///   - callback: A task to execute once the time is up. It should be a void
+    ///   function without a return value.
     public func setInterrupt(
         start: Bool = true,
         _ callback: @escaping ()->Void
@@ -113,9 +135,12 @@ public final class Timer {
         }
     }
 
-    /**
-     Start the timer. The timer's status will be reset to zero.
-     */
+    /// Starts the timer and reset its status to zero.
+    /// - Parameters:
+    ///   - mode: The mode of the timer. If it's nil, it adopts the mode set
+    ///   when initializing the timer.
+    ///   - period: The period of the timer in millisecond. If it's nil, it equals
+    ///   the period set when initializing the timer.
     public func start(mode: Mode? = nil, period: Int? = nil) {
         if let mode = mode {
             self.mode = mode
@@ -127,20 +152,22 @@ public final class Timer {
     }
 
     /**
-     Stop the timer.
+     Stops the timer.
      */
     public func stop() {
         swifthal_timer_stop(obj)
     }
 
-    /**
-     Get the timer's status. The timer status will be reset to zero.
-     */
+    /// Gets the timer's status which indicates how many times the timer has expired
+    /// since it was last read. It will reset the status to zero.
+    ///
+    /// - Returns: The number that the timer has expired.
     public func getStatus() -> Int {
         return Int(swifthal_timer_status_get(obj))
     }
 
-    // TODO
+
+    /// TODO
     public func getRemaining() -> UInt32 {
         //return swifthal_timer_remaining_get(obj)
         return 0
@@ -151,8 +178,8 @@ public final class Timer {
 
 extension Timer {
     /**
-     There are two timer modes: if set to `oneShot`, the interrupt happens
-     only once; if set to `period`, the interrupt happens continuously.
+     There are two timer modes: `oneShot` means the timer works only once;
+     `period` means the timer works periodically.
      */
     public enum Mode {
         case oneShot, period

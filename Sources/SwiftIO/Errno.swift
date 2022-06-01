@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 11/22/2021
-// Updated: 11/22/2021
 //
 // See https://madmachine.io for more information
 //
@@ -13,6 +12,7 @@
 
 import CNewlib
 
+/// The Errno struct lists all the possible errors.
 public struct Errno: RawRepresentable, Error {
 
   /// The raw C error number.
