@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -13,10 +12,60 @@
 
 import CSwiftIO
 
+/**
+ The DigitalInOut class allows you to set both input and output for a digital pin.
 
-/// The digital pin can be used to output voltages and read input levels.
-/// If a pin is initialized as `DigitalInOut`, you can change its direction
-/// to use it as an input or output pin.
+ The digital pins on your board can be used to output signals or read input levels.
+ The class ``DigitalOut`` and ``DigitalIn`` give you access to one of the usages
+ separately. If a pin is initialized as `DigitalInOut`, you can change its direction
+ to use it as an input or output pin.
+
+ ```swift
+ // Initialize a DigitalInOut pin. At first, it works as an input pin.
+ let pin = DigitalInOut(Id.D0, direction: .input)
+ ```
+
+ As for the specific usage like reading values or setting output, it is the same
+ as those of `DigitalOut` and `DigitalIn`.
+
+ ```swift
+ // Read input value.
+ let value = pin.read()
+ print(value)
+
+ // Change the pin to output pin and set output to high.
+ pin.setToOutput()
+ pin.high()
+ ```
+
+ For example, for the sensor DHT22, the pin sends out a signal to the sensor,
+ then wait for the signal from the sensor. In this case, you can set the pin as
+ DigitalInOut and switch the pin between output and input for measurement.
+
+ ### Example: Set input and output on a digital pin.
+
+ ```swift
+ // Import the SwiftIO to use the related board functions.
+ import SwiftIO
+ // Import the MadBoard to decide which pin is used for the specific function.
+ import MadBoard
+
+ // Initialize a DigitalInOut to the digital pin D0.
+ let pin = DigitalInOut(Id.D0)
+
+ while true {
+    // Set the pin to output. The output value is false.
+     pin.setToOutput(value: false)
+     sleep(ms: 18)
+
+    // Set the pin to input to read incoming signals.
+     pin.setToInput()
+     while pin.read() != false {
+        ...
+     }
+ }
+ ```
+ */
 public final class DigitalInOut {
     private let id: Int32
     public let obj: UnsafeMutableRawPointer
@@ -43,15 +92,27 @@ public final class DigitalInOut {
         }
     }
 
-    /// Initialize a digital pin as input or output pin.
+    /// Initializes a digital pin as input or output pin.
+    ///
+    /// The statement below shows how to initialize a pin as digital output at
+    /// first, as the default setting for a pin is output.
+    ///
+    /// ```swift
+    ///  let pin = DigitalInOut(Id.D0)
+    /// ```
+    ///
+    /// If you want an input instead, you can define the direction:
+    /// ```swift
+    ///  let pin = DigitalInOut(Id.D0, direction: input)
+    /// ```
     /// - Parameters:
-    ///   - idName: **REQUIRED** The Digital id on the board.
-    ///     See Id for the specific board in MadBoards library for reference.
+    ///   - idName: **REQUIRED** The name of digital pin. See Id for the board in
+    ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
     ///   - direction: **OPTIONAL** Whether the pin serves as input or output.
     ///   - outputMode: **OPTIONAL** The output mode of the pin.
     ///     `.pushPull` by default.
     ///   - inputMode: **OPTIONAL** The input mode. `.pullUp` by default.
-    ///   - outputValue: **OPTIONAL** The output value after initiation.
+    ///   - outputValue: **OPTIONAL** The output value after initialization.
     ///     `false` by default.
     public init(
         _ idName: IdName,
@@ -93,30 +154,32 @@ public final class DigitalInOut {
         swifthal_gpio_close(obj)
     }
 
-    /// Know if the pin is used for input or output.
-    /// - Returns: Input or output.
+    /// Knows if the pin is used for input or output.
+    /// - Returns: The pin's function: `input` or `output`.
     public func getDirection() -> Direction {
         return direction
     }
 
-    /// Get the current output mode on a specified pin.
+    /// Gets the current output mode on a specified pin.
     /// - Returns: The current mode: `.pushPull` or `.openDrain`.
     public func getOutputMode() -> DigitalOut.Mode {
         return outputMode
     }
 
-    /// Get the current input mode on a specified pin.
+    /// Gets the current input mode on a specified pin.
     /// - Returns: The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     public func getInputMode() -> DigitalIn.Mode {
         return inputMode
     }
 
-    /// Set the pin to output digital signal.
+    /// Sets the pin to output digital signal.
     /// - Parameters:
     ///   - mode: The output mode: `.pushPull` or `.openDrain`. If you don't
     ///     set it, it remains the same as the mode after initialization.
     ///   - value: The output value: true or false. If you don't set it,
     ///     it remains the same as the value after initialization.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func setToOutput(_ mode: DigitalOut.Mode? = nil, value: Bool? = nil) -> Result<(), Errno> {
         direction = .output
@@ -141,10 +204,12 @@ public final class DigitalInOut {
         return result
 	}
 
-    /// Set the pin to read digital input.
+    /// Sets the pin to read digital input.
     /// - Parameter mode: The input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     ///  If you don't set it, it remains the same as the mode after
     ///  initialization.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func setToInput(_ mode: DigitalIn.Mode? = nil) -> Result<(), Errno> {
         direction = .input
@@ -165,8 +230,11 @@ public final class DigitalInOut {
         return result
 	}
 
-    /// Set the output value of the specific pin: true for high voltage and
+    /// Sets the output value of the specific pin: true for high voltage and
     /// false for low voltage.
+    ///
+    /// > Note: If the pin is used as input before, it will be automatically set
+    /// to output.
     /// - Parameter value: The output value: `true` or `false`.
     @inline(__always)
 	public func write(_ value: Bool) {
@@ -177,19 +245,23 @@ public final class DigitalInOut {
         }
 	}
 
-    /// Set the output value to true.
+    /// Sets the output value to true.
+    /// > Note: If the pin is used as input before, it will be automatically set
+    /// to output.
     @inline(__always)
     public func high() {
         write(true)
     }
 
-    /// Set the output value to false.
+    /// Sets the output value to false.
+    /// > Note: If the pin is used as input before, it will be automatically set
+    /// to output.
     @inline(__always)
     public func low() {
         write(false)
     }
 
-    /// Read the value from the pin.
+    /// Reads the value from the pin.
     /// - Returns: `true` or `false` of the logic value.
     @inline(__always)
 	public func read() -> Bool {
@@ -202,8 +274,7 @@ public final class DigitalInOut {
 
 
 extension DigitalInOut {
-    /// It decides the functionalities of the specified digital pin.
-    /// It can serve as input or output.
+    /// The functions of the specified digital pin: input or output.
     public enum Direction {
         case output, input
     }

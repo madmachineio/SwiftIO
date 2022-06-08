@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -16,22 +15,38 @@ import CSwiftIO
 /**
  The DigitalIn class is intended to detect the state of a digital input pin.
  The input value is either true(1) or false(0).
- 
+
+ You need to initialize a pin before reading input. A pin on board may be
+ multifunctional (digital input/output, analog...), plus many pins can be used
+ as digital input pins. So you should specify a pin and its function.
+
+ - `DigitalIn` specifies the pin's usage.
+ - `Id.D0` defines which pin is used. You may refer to the board's pinout
+ which shows all pins and their corresponding functions in a diagram.
+
+ ```swift
+ let pin = DigitalIn(Id.D0)
+ ```
+
+
  ### Example: Read and print the input value on a digital input pin.
  
- ````
+ ```swift
+ // Import the SwiftIO to use the related board functions.
  import SwiftIO
+ // Import the MadBoard to decide which pin is used for the specific function.
+ import MadBoard
  
- //Initialize a DigitalIn to the digital pin D0.
+ // Initialize a DigitalIn to the digital pin D0.
  let pin = DigitalIn(Id.D0)
  
- //Read and print the input value every 1 second.
+ // Read and print the input value every 1 second.
  while true {
      var value = pin.read()
      print("The input value is \(value)")
      sleep(ms: 1000)
  }
- ````
+ ```
  */
 public final class DigitalIn {
     private let id: Int32 
@@ -58,24 +73,33 @@ public final class DigitalIn {
 
     private var callback: (()->Void)?
 
-    /**
-     Initialize a DigitalIn to a specified pin.
-     
-     - parameter id: **REQUIRED** The Digital id on the board.
-        See Id for the specific board in MadBoards library for reference.
-     - parameter mode: **OPTIONAL** The input mode. `.pullDown` by default.
-     
-     
-     ### Usage Example ###
-     ````
-     // The most simple way of initiating a pin D0, with all other parameters
-     set to default.
-     let pin = DigitalIn(Id.D0)
-     
-     // Initialize the pin D0 with the pulldown mode.
-     let pin = DigitalIn(Id.D0, mode: .pullDown)
-     ````
-     */
+    /// Initializes a DigitalIn to a specified pin.
+    ///
+    /// The id of the pin is required to initialize a digital input pin. It can be
+    /// any pin with that function, D0, D1, D2... The prefix D means Digital.
+    /// If you connect a device to the pin D10, you should initialize the pin
+    /// using `Id.D10`.
+    ///
+    /// All ids for different boards are in the
+    /// [MadBoards](https://github.com/madmachineio/MadBoards) library.
+    /// Take pin 0 for example, the pin is ready to read input after
+    /// initialization:
+    ///
+    /// ```swift
+    /// // The simplest way to initialize a pin D0, with other parameters set to default.
+    /// let pin = DigitalIn(Id.D0)
+    /// ```
+    /// If the pin needs a pull-up resistor, you can initialize the pin as below:
+    ///
+    /// ```swift
+    /// // Initialize the pin D0 in pullUp mode.
+    /// let pin = DigitalIn(Id.D0, mode: .pullUp)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - idName: **REQUIRED** The name of input pin. See Id for the board in
+    ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
+    ///   - mode: **OPTIONAL** The input mode, `.pullDown` by default.
 	public init(_ idName: IdName,
                 mode: Mode = .pullDown) {
         self.id = idName.value
@@ -100,7 +124,7 @@ public final class DigitalIn {
     }
 
     /**
-     Get the current input mode on a specified pin.
+     Gets the current input mode on a specified pin.
      
      - Returns: The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
      */
@@ -108,11 +132,10 @@ public final class DigitalIn {
         return mode
     }
 
-    /**
-     Set the input mode for a digital input pin.
-     
-     - Parameter mode : The input mode.
-     */
+    /// Sets the input mode for a digital input pin.
+    /// - Parameter mode: The input mode: `.pullUp`, `.pullDown` or `.pullNone`.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
 	public func setMode(_ mode: Mode) -> Result<(), Errno> {
         let oldMode = self.mode
@@ -132,10 +155,10 @@ public final class DigitalIn {
 
 
     /**
-     Read the value from a digital input pin.
+     Reads value from a digital input pin.
      
      - Attention: Dependind on the hardware, the internal pull resister may be
-     very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internel pad need
+     very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internal pad needs
      some time to charge or discharge through the pull resister!
      
      - Returns: `true` or `false` of the logic value.
@@ -155,17 +178,71 @@ public final class DigitalIn {
 	}
 
     /**
-     Add a callback function to a specified digital pin to set interrupt by
-     detcting the changes of the signal. Once the risng or falling edge is
-     detected, the processor will suspend the normal execution to execute the
-     designated task.
-     
-     The task should be able to finish in a very short time, usually in
-     nanoseconds. Then,  the processor will return back to where it stopped
-     and continue the previous operation.
+     Adds a callback function to a specified input pin. It sets interrupt by
+     detecting the changes of the signal.
+
+     Once the risng or falling edge is detected, the interrupt triggers.
+     The processor will suspend the normal execution to execute the designated
+     task, called ISR.
+     After that, it will return to where it stopped and continue the
+     previous operation.
+
+     - Important: The ISR should be able to finish in a very short time,
+     usually in nanoseconds, like changing a number or a boolean value.
+     Besides, changing digital output runs extremely quickly, so it also works.
+     However, printing a value usually takes several milliseconds and should be avoided.
+
+     ### Example: Toggle the LED once interrupt triggers
+
+     ```swift
+     // Import the SwiftIO to use the related board functions.
+     import SwiftIO
+     // Import the MadBoard to decide which pin is used for the specific function.
+     import MadBoard
+
+     // Initialize an input pin D0 and an output pin for the onboard LED.
+     let button = DigitalIn(Id.D0)
+     let led = DigitalOut(Id.BLUE)
+
+     // Define a new function used to toggle the LED.
+     func toggleLed() {
+         led.toggle()
+     }
+
+     // Set the interrupt to detect the rising edge.
+     // Once detected, the LED will change its state.
+     button.setInterrupt(.rising, callback: toggleLed)
+
+     // Sleep if the interrupt hasn't been triggered.
+     while true {
+         sleep(ms: 1000)
+     }
+     ```
+     **or**
+
+     ```swift
+     import SwiftIO
+     import MadBoard
+
+     let button = DigitalIn(Id.D0)
+     let led = DigitalOut(Id.BLUE)
+
+     button.setInterrupt(.rising) {
+         led.toggle()
+     }
+
+     while true {
+         sleep(ms: 1000)
+     }
+     ```
+
      - Parameter mode : The interrupt mode to detect rising or falling edge.
      - Parameter enable : Whether to enable the interrupt.
-     - Parameter callback : A void function without a return value.
+     - Parameter callback : The task to be executed when interrupt happens.
+     It should be a void function without a return value.
+     - Returns: Whether the configuration succeeds. If it fails, it returns
+     the specific error.
+
      */
     @discardableResult
     public func setInterrupt(
@@ -213,10 +290,9 @@ public final class DigitalIn {
         return result
     }
 
-    /**
-     Trigger the interrupt after detecting the edge.
-    
-     */
+    /// Enables the interrupt.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func enableInterrupt() -> Result<(), Errno> {
         guard callback != nil else {
@@ -234,10 +310,9 @@ public final class DigitalIn {
         return result
     }
 
-    /**
-     Disable the interrupt until the interrupt state is changed.
-    
-     */
+    /// Disables the interrupt until you enable it.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func disableInterrupt() -> Result<(), Errno> {
         let result = nothingOrErrno(
@@ -250,18 +325,16 @@ public final class DigitalIn {
     }
 
     /**
-     Check whether the interrupt is enabled.
-     
-     - Returns: The input mode: `.enable` or `.diable`.
+     Checks whether the interrupt is enabled.
+     - Returns: The interrupt state: `.enable` or `.disable`.
      */
     public func getInterruptState() -> InterruptState {
         return interruptState
     }
 
-    /**
-     Remove the interrupt.
-    
-     */
+    /// Removes the interrupt.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func removeInterrupt() -> Result<(), Errno> {
         if interruptState != .disable {
@@ -278,11 +351,22 @@ public final class DigitalIn {
 
 extension DigitalIn {
     /**
-     The digital input modes can change the default state (high, low or
-     floating) of a pin by using the pull resistors.
-     - Attention: The pins D26 to D37 are connected separately to an external
-     10kΩ resistor on the board. So even if they are changed to pullUp,
-     the output voltage of these pins is still low.
+     The digital input mode sets the pull resistors connected to a pin.
+
+     There are internal pull resistors for all digital input pins. You can set
+     the mode to decide how they are connected.
+     - pullUp: the internal pull-up resistor is set.
+     - pullDown: the internal pull-down resistor is set.
+     - pullNone: neither resistors is used for the pin.
+
+     It can change the default state (high, low or floating) of a pin by using the pull resistors.
+     For example, if a button is connected to an input pin and ground,
+     the mode should be `pullUp`. In this way, if the current can flow, the input
+     should be low, and if not, it reads high.
+
+     - Attention: The pins D26 to D37 on SwiftIO board are connected separately
+     to an external 10kΩ resistor on the board. So even if they are changed to
+     pullUp, the output voltage of these pins is still low.
      */
     public enum Mode {
         case pullDown, pullUp, pullNone
@@ -300,9 +384,12 @@ extension DigitalIn {
     }
 
     /**
-     The interrupt mode determines the edge to raise the interrupt: rising,
-     falling or both edges. A rising edge is the transition of a digital input
-     signal from high to low and a falling edge is from low to high.
+     The interrupt mode determines the event to raise an interrupt.
+
+     There are three options: rising, falling or both of them.
+     - A falling edge is the transition of a digital input signal from high to low.
+     - A rising edge is the transition of a digital input signal from low to high.
+     - Both edges means as long as the signal changes, an interrupt happens.
 
      */
     public enum InterruptMode {

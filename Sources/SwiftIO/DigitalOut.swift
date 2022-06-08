@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -14,44 +13,90 @@
 import CSwiftIO
 
 /**
- The DigitalOut class is used to set a High or Low voltage output to a digital
- output pin. An initiation is required before using the member functions of
- this class.
+ The DigitalOut class configures a specified pin as a digital output pin and
+ set its state (high or low output).
 
- - Attention: The driving capability of the digital output pins is not very
- strong. It is meant to be a **SIGNAL** output and is not capable of driving
- a device requires large current.
- 
+At first, you need to initialize a pin as a DigitalOut pin. A pin on board may
+ be multifunctional (digital input/output, analog...), plus many pins can be
+ used as digital output pins. So you should specify a pin and its function.
+ - `DigitalOut` tells the pin's usage.
+ - `Id.D0` defines which pin is used. You may refer to the board's pinout
+ which shows all pins and their corresponding functions in a diagram.
+
+ ```swift
+ let pin = DigitalOut(Id.D0)
+ ```
+
+ During initialization, you can also set the default output value for the pin.
+ By default, it outputs a low voltage. If you would like a high output, the statement
+ is:
+
+ ```swift
+ let pin = DigitalOut(Id.D0, value: true)
+ ```
+
+ > Important: The driving capability of the digital output pins is not very
+ strong. It is a **SIGNAL** output and is not capable of driving a device that
+ requires large current.
+
  
  ### Example: Reverse the output value on a digital output pin
 
- ````
+ ```swift
+ // Import the SwiftIO to use the related board functions.
  import SwiftIO
+ // Import the MadBoard to decide which pin is used for the specific function.
+ import MadBoard
  
- // Initiate a DigitalOut to Pin 0.
+ // Configure the pin 0 as a digital output pin. By default, the pin is set to low.
  let pin = DigitalOut(Id.D0)
  
  // Reverse the output value every 1 second.
+ // It means the pin is high for 1s, low for 1s...
  while true {
      pin.toggle()
      sleep(ms: 1000)
  }
- ````
+ ```
  **or**
- ````
+
+ ```swift
  import SwiftIO
+ import MadBoard
  
- // Initiate a DigitalOut to the onboard green LED.
+ // Set the onboard green LED as a digital output.
+ // Then you can change the output to turn on or off it.
+ // By default, it turns on due to a low output.
  let greenLED = DigitalOut(Id.GREEN)
- ​
- // Toggle the output of the pin every 1 second using another member function.
+
+ // Control the LED by switching between high and low output.
  while true {
+    // Set a high voltage to turn off the onboard LED.
      greenLED.write(true)
      sleep(ms: 1000)
+    // Set a low voltage to turn on the LED.
      greenLED.write(false)
      sleep(ms: 1000)
  }
- ````
+ ```
+ or
+
+ ```swift
+ import SwiftIO
+ import MadBoard
+
+ let greenLED = DigitalOut(Id.GREEN)
+
+ // Control the LED by switching between high and low output.
+ while true {
+    // A more intuitive way to set the pin to high.
+     greenLED.high()
+     sleep(ms: 1000)
+
+     greenLED.low()
+     sleep(ms: 1000)
+ }
+ ```
  */
 public final class DigitalOut {
     private let id: Int32
@@ -77,34 +122,40 @@ public final class DigitalOut {
 		}
 	}
 
-
-    /**
-     Initialize a DigitalOut to a specific output pin.
-     
-     - Parameter id: **REQUIRED** The name of output pin.
-        See Id for the specific board in MadBoards library for reference.
-     - Parameter mode: **OPTIONAL** The output mode of the pin.
-        `.pushPull` by default.
-     - Parameter value: **OPTIONAL** The output value after initiation.
-        `false` by default.
-
-
-     #### Usage Example
-     ````
-     // The most simple way of initiating a pin D0, with all other parameters
-     set to default.
-     let outputPin0 = DigitalOut(Id.D0)
-     ​
-     // Initialize the pin D1 with the output mode openDrain.
-     let outputPin1 = DigitalOut(Id.D1, mode: .openDrain)
-     ​
-     // Initialize the pin D2 with a High voltage output.
-     let outputPin2 = DigitalOut(Id.D2, value: true)
-     
-     // Initialize the pin D3 with the openDrain mode and a High voltage output.
-     let outputPin3 = DigitalOut(Id.D3, mode: .openDrain, value: true)
-     ````
-     */
+    /// Initializes a DigitalOut to a specific pin.
+    ///
+    /// The id of the pin is required to initialize a digital out pin. It can be
+    /// any pin with that function, D0, D1, D2... The prefix D means Digital.
+    /// If you connect a device to the pin D10, you should initialize the pin
+    /// using `Id.D10`.
+    ///
+    /// All ids for different boards are in the
+    /// [MadBoards](https://github.com/madmachineio/MadBoards) library.
+    /// Take pin 0 for example, the pin works as a DigitalOut pin after
+    /// initialization:
+    ///
+    /// ```swift
+    /// // The simplest way to initialize a pin, with other parameters set to default.
+    /// let outputPin0 = DigitalOut(Id.D0)
+    /// ```
+    /// There are two more optional parameters to configure the pin.
+    ///
+    /// ```swift
+    /// // Initialize the pin D1 with the output mode openDrain.
+    /// let outputPin1 = DigitalOut(Id.D1, mode: .openDrain)
+    ///
+    /// // Initialize the pin D2 with a High voltage output.
+    /// let outputPin2 = DigitalOut(Id.D2, value: true)
+    ///
+    /// // Initialize the pin D3 with the openDrain mode and a High voltage output.
+    /// let outputPin3 = DigitalOut(Id.D3, mode: .openDrain, value: true)
+    /// ```
+    ///
+    /// - Parameters:
+    ///   - idName: **REQUIRED** The name of output pin. See Id for the board in
+    ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
+    ///   - mode: **OPTIONAL** The output mode of the pin, `.pushPull` by default.
+    ///   - value: **OPTIONAL** The output value after initialization, `false` by default.
     public init(_ idName: IdName,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
@@ -125,28 +176,24 @@ public final class DigitalOut {
         swifthal_gpio_close(obj)
     }
 
-    /**
-     Return the current output mode in a format of DigitalOut.Mode enumerate.
-
-     - Returns: The current mode: `.pushPull` or `.openDrain`.
-     
-     #### Usage Example
-     ````
-     let pin = DigitalOut(Id.D0)
-     if pin.getMode() == .pushPull {
-        //do something
-     }
-     ````
-     */
+    /// Returns the current output mode in a format of ``Mode`` enum.
+    ///
+    /// Here is an example:
+    /// ```swift
+    /// let pin = DigitalOut(Id.D0)
+    /// if pin.getMode() == .pushPull {
+    ///    //do something
+    /// }
+    /// ```
+    /// - Returns: The output mode: `.pushPull` or `.openDrain`.
     public func getMode() -> Mode {
         return mode
     }
 
-    /**
-     Change the output mode.
-     
-     - Parameter mode : The output mode: `.pushPull` or `.openDrain`.
-     */
+    /// Sets the output mode.
+    /// - Parameter mode: The output mode: `.pushPull` or `.openDrain`.
+    /// - Returns: Whether the configuration succeeds. If it fails, it returns
+    /// the specific error.
     @discardableResult
     public func setMode(_ mode: Mode) -> Result<(), Errno> {
         let oldMode = self.mode
@@ -164,7 +211,7 @@ public final class DigitalOut {
 
 
     /**
-     Set the output value of the specific pin: true for high voltage and false
+     Sets the output value of the specific pin: true for high voltage and false
      for low voltage.
 
      - Parameter value : The output value: `true` or `false`.
@@ -175,7 +222,9 @@ public final class DigitalOut {
 	}
 
     /**
-     Set the output value to true.
+     Sets the output value to true.
+
+     `high()` and `write(true)` work the same way, and this is more straightforward.
      
      */
     @inline(__always)
@@ -184,8 +233,9 @@ public final class DigitalOut {
     }
 
     /**
-     Set the output value to false.
-     
+     Sets the output value to false.
+
+     `low()` and `write(false)` work the same way, and this is more straightforward.
      */
     @inline(__always)
     public func low() {
@@ -193,8 +243,11 @@ public final class DigitalOut {
     }
 
     /**
-     Reverse the current output value of the specific pin.
-     
+     Reverses the current output value of the specific pin.
+
+     It is really convenient if you don't care about the current output state.
+     The output switches between high and low automatically.
+
      */
     @inline(__always)
     public func toggle() {
@@ -202,15 +255,14 @@ public final class DigitalOut {
     }
 
     /**
-     Get the current output value in Boolean format.
+     Gets the current output value in Boolean format.
      
      - Returns: `true` or `false` of the logic value.
-     - Attention:
-        The return value of this function **has nothing to do with the actual
-        output** of the pin.
-        For example, a pin is set to `true` but it is short to ground.
-        The actual pin voltage would be low. This function will still return
-        `true` despite of the actual low output, since this pin is set to HIGH.
+
+     - Attention: The return value **has nothing to do with the actual electrical
+     state** of the pin. For example, a pin is set to `true` but it is short to ground.
+     The actual pin voltage would be low. However, this method will still return `true`
+     despite of the actual low output, since this pin is set to HIGH.
      */
     public func getValue() -> Bool {
         return value
@@ -221,12 +273,14 @@ public final class DigitalOut {
 
 extension DigitalOut {
     /**
-     The Mode enumerate includes the available output modes. The default output
-     mode in most cases is pushPull. The pushPull mode enables the digital pin
-     to output high and low voltage levels while the open-drain output cannot
-     truly output a high level.
+     The Mode enum includes the available output modes.
+
+     The output mode in most cases is pushPull. This mode enables the
+     digital pin to output high and low voltage levels, while the open-drain
+     output cannot truly output a high level.
      
      */
+    
     public enum Mode {
         case pushPull, openDrain
     }

@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -16,9 +15,9 @@ import CSwiftIO
 /**
 The FileDescriptor struct is used to perform low-level file operations.
 
-### Example: Open and read a ASCII file
+### Example: Open and read an ASCII file
 
-````
+```swift
 import SwiftIO
 
 // Open the file located in "/subDir/hello.txt"
@@ -38,7 +37,7 @@ for i in 0..<buffer.count {
 while true {
     sleep(ms: 1000)
 }
-````
+```
 
 */
 
@@ -96,7 +95,7 @@ public struct FileDescriptor {
     }
 
     /**
-     Reads bytes at the current file offset into a buffer
+     Reads bytes at the current file offset into a buffer.
      - Parameter buffer: **REQUIRED** The region of memory to read into.
      - Parameter count: **OPTIONAL** The bytes you want to read.
 
@@ -138,7 +137,7 @@ public struct FileDescriptor {
     }
 
     /**
-     Reads bytes at the current file offset into a buffer
+     Reads bytes at the current file offset into a buffer.
      - Parameter buffer: **REQUIRED** Te region of memory to read into.
      - Parameter count: **OPTIONAL** The bytes you want to read.
 
@@ -186,7 +185,7 @@ public struct FileDescriptor {
     }
 
     /**
-     Reposition the offset for the given file descriptor.
+     Repositions the offset for the given file descriptor.
      - Parameter offset: **REQUIRED** The new offset for the file descriptor.
      - Parameter whence: **OPTIONAL** The origin of the new offset.
      */

@@ -5,7 +5,6 @@
 //
 // Authors: Andy Liu
 // Created: 05/09/2021
-// Updated: 11/05/2021
 //
 // See https://madmachine.io for more information
 //
@@ -13,7 +12,29 @@
 
 import CSwiftIO
 
-
+/// The I2SIn class is used to receive audio data from external audio devices.
+///
+/// I2S is a serial protocol to transmit audio data between devices. It needs
+/// three wires for communication:
+/// - SCK (Serial clock): or Bit Clock (BCLK), it carries the clock signal.
+/// - FS (Frame Sync): or Word Select (WS), it tells that the audio data is for
+/// the right or left channel.
+/// - SD (Serial data): it is used to transfer audio data.
+///
+/// The I2SIn class allows to receive audio data from other audio devices,
+/// like microphone. Therefore, the data line carries the audio data from
+/// external devices to your board. For sending data, you need ``I2SOut`` instead.
+///
+/// You can initialize an I2SIn instance using the default setting as below:
+///
+/// ```swift
+/// let i2s = I2SOut(Id.I2SIn0)
+/// ```
+/// The I2SIn0 corresponds the pins BCLK0, SYNC0 and RX0 on your board.
+///
+/// During initialization, the sample rate, sample bits and audio channel should
+/// be set for the audio data. The clock frequency equals
+/// _Sample Rate x Bits per channel x Number of channels_.
  public final class I2SIn {
     private let id: Int32
     public let obj: UnsafeMutableRawPointer
