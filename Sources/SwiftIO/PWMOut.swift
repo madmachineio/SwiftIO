@@ -205,7 +205,6 @@ public final class PWMOut {
      - Parameter dutycycle: The duration of high output in the time period
         from 0.0 to 1.0.
      */
-    @inline(__always)
     public func setDutycycle(_ dutycycle: Float) {
         guard dutycycle >= 0 && dutycycle <= 1.0 else {
             print("Dutycycle must fit in [0.0, 1.0]!")

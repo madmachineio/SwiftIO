@@ -254,7 +254,7 @@ public final class UART {
     /// - Returns: Whether the communication succeeds. If not, it returns the
     /// specific error.
     @discardableResult
-    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func write(_ data: UnsafeRawBufferPointer, count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0
         var result = validateLength(data, count: count, length: &writeLength)
 
@@ -425,7 +425,7 @@ public final class UART {
     /// - Returns: The number of data that is still needed or an error for the
     /// failure case.
     @discardableResult
-    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
+    public func read(into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil, timeout: Int? = nil) -> Result<Int, Errno> {
         let timeoutValue: Int32
         let result: Result<Int, Errno>
 
