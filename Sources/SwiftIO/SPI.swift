@@ -233,7 +233,7 @@
     }
 
     @discardableResult
-    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func read(into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) -> Result<(), Errno> {
         var readLength = 0
         let result = validateLength(buffer, count: count, length: &readLength)
 
@@ -301,7 +301,7 @@
      - Parameter data: A UInt8 buffer to be sent to the slave device.
      */
     @discardableResult
-    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func write(_ data: UnsafeRawBufferPointer, count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0
         let result = validateLength(data, count: count, length: &writeLength)
 
