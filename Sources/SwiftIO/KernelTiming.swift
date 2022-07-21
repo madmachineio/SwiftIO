@@ -18,7 +18,7 @@ When you invoke the wait function, the CPU keeps on checking if the time
  (in microsecond）is up. In addition, this function is more accurate than
  ``sleep(ms:)`` function.
 */
-@inline(__always)
+@inlinable
 public func wait(us: Int) {
     swifthal_us_wait(UInt32(us))
 }
@@ -27,7 +27,7 @@ public func wait(us: Int) {
  Suspends the processor's work in a given time period
  (in millisecond).
  */
-@inline(__always)
+@inlinable
 public func sleep(ms: Int) {
     swifthal_ms_sleep(Int32(ms))
 }
@@ -36,6 +36,7 @@ public func sleep(ms: Int) {
 Gets the elapsed time in millisecond since the board powers up.
 - Returns: The elapsed time since system powers up in millisecond.
 */
+@inlinable
 public func getSystemUptimeInMilliseconds() -> Int64 {
     return swifthal_uptime_get()
 }
@@ -50,7 +51,7 @@ public func getSystemUptimeInMilliseconds() -> Int64 {
 
  - Returns: The current clock cycle in UInt.
  */
-@inline(__always)
+@inlinable
 public func getClockCycle() -> UInt {
     return UInt(swifthal_hwcycle_get())
 }

@@ -163,7 +163,7 @@ public final class DigitalIn {
      
      - Returns: `true` or `false` of the logic value.
      */
-    @inline(__always)
+    @inlinable
 	public func read() -> Bool {
         let result = valueOrErrno(
             swifthal_gpio_get(obj)

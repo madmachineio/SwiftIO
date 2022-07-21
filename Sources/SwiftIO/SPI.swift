@@ -141,7 +141,9 @@ import CSwiftIO
 
     private var speed: Int32
     private var operation: Operation
-    private var csPin: DigitalOut?
+
+    @usableFromInline
+    var csPin: DigitalOut?
 
 
      /// A boolean value that tells whether the cs pin is set (true) or not (false).
@@ -213,12 +215,12 @@ import CSwiftIO
         swifthal_spi_close(obj)
     }
 
-    @inline(__always)
+    @usableFromInline
     func csEnable() {
         csPin?.write(false)
     }
 
-    @inline(__always)
+    @usableFromInline
     func csDisable() {
         csPin?.write(true)
     }
@@ -237,21 +239,21 @@ import CSwiftIO
      /// - Parameter speed: The clock speed for the data transmission.
      /// - Returns: Whether the configuration succeeds. If not, it returns the
      /// specific error.
-     @discardableResult
-    public func setSpeed(_ speed: Int) -> Result<(), Errno> {
-        let result = nothingOrErrno(
-            swifthal_spi_config(obj, Int32(speed), operation.rawValue)
-        )
-        if case .failure(let err) = result {
-            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        } else {
-            self.speed = Int32(speed)
-            var syncByte: UInt8 = 0
-            swifthal_spi_read(obj, &syncByte, 1)
-        }
+    //  @discardableResult
+    // public func setSpeed(_ speed: Int) -> Result<(), Errno> {
+    //     let result = nothingOrErrno(
+    //         swifthal_spi_config(obj, Int32(speed), operation.rawValue)
+    //     )
+    //     if case .failure(let err) = result {
+    //         print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+    //     } else {
+    //         self.speed = Int32(speed)
+    //         var syncByte: UInt8 = 0
+    //         swifthal_spi_read(obj, &syncByte, 1)
+    //     }
 
-        return result
-    }
+    //     return result
+    // }
 
      /// Sets the SPI mode.
      /// - Parameters:
@@ -261,52 +263,52 @@ import CSwiftIO
      ///   - bitOrder: The bit order on data line.
      /// - Returns: Whether the configuration succeeds. If not, it returns the
      /// specific error.
-    public func setMode(
-        CPOL: Bool,
-        CPHA: Bool,
-        bitOrder: BitOrder? = nil
-    ) -> Result<(), Errno> {
-        var newOperation: Operation = .eightBits
+    // public func setMode(
+    //     CPOL: Bool,
+    //     CPHA: Bool,
+    //     bitOrder: BitOrder? = nil
+    // ) -> Result<(), Errno> {
+    //     var newOperation: Operation = .eightBits
 
-        if CPOL {
-            newOperation.insert(.CPOL)
-        }
-        if CPHA {
-            newOperation.insert(.CPHA)
-        }
+    //     if CPOL {
+    //         newOperation.insert(.CPOL)
+    //     }
+    //     if CPHA {
+    //         newOperation.insert(.CPHA)
+    //     }
 
-        if let bitOrder = bitOrder {
-            switch bitOrder {
-            case .MSB:
-                // MSB bit equal zero, insert operation has no effect
-                // newOperation.insert(.MSB)
-                break
-            case .LSB:
-                newOperation.insert(.LSB)
-            }
-        } else {
-            // MSB bit equal zero, insert operation has no effect
-            // if operation.contains(.MSB) {
-            //     newOperation.insert(.MSB)
-            // }
-            if operation.contains(.LSB) {
-                newOperation.insert(.LSB)
-            }
-        }
+    //     if let bitOrder = bitOrder {
+    //         switch bitOrder {
+    //         case .MSB:
+    //             // MSB bit equal zero, insert operation has no effect
+    //             // newOperation.insert(.MSB)
+    //             break
+    //         case .LSB:
+    //             newOperation.insert(.LSB)
+    //         }
+    //     } else {
+    //         // MSB bit equal zero, insert operation has no effect
+    //         // if operation.contains(.MSB) {
+    //         //     newOperation.insert(.MSB)
+    //         // }
+    //         if operation.contains(.LSB) {
+    //             newOperation.insert(.LSB)
+    //         }
+    //     }
 
-        let result = nothingOrErrno(
-            swifthal_spi_config(obj, speed, newOperation.rawValue)
-        )
-        if case .failure(let err) = result {
-            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        } else {
-            operation = newOperation
-            var syncByte: UInt8 = 0
-            swifthal_spi_read(obj, &syncByte, 1)
-        }
+    //     let result = nothingOrErrno(
+    //         swifthal_spi_config(obj, speed, newOperation.rawValue)
+    //     )
+    //     if case .failure(let err) = result {
+    //         print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+    //     } else {
+    //         operation = newOperation
+    //         var syncByte: UInt8 = 0
+    //         swifthal_spi_read(obj, &syncByte, 1)
+    //     }
 
-        return result
-    }
+    //     return result
+    // }
 
      /// Gets the SPI mode.
      /// - Returns: The CPOL, CPHA and bit order setting.
@@ -373,7 +375,7 @@ import CSwiftIO
 
      /// Reads the data from the slave device into the specified buffer pointer.
      /// - Parameters:
-     ///   - buffer: A UInt8 buffer pointer to store the received data in a
+     ///   - buffer: A Raw buffer pointer to store the received data in a
      ///   region of storage.
      ///   - count: The count of bytes to read from the device. Make sure it doesn’t
      ///   exceed the length of the `buffer`. If it's nil, it equals the length of
@@ -381,7 +383,7 @@ import CSwiftIO
      /// - Returns: Whether the communication succeeds. If not, it returns the
      /// specific error.
      @discardableResult
-    public func read(into buffer: UnsafeMutableBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func read(into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) -> Result<(), Errno> {
         var readLength = 0
         var result = validateLength(buffer, count: count, length: &readLength)
 
@@ -461,7 +463,7 @@ import CSwiftIO
      /// - Returns: Whether the communication succeeds. If not, it returns the
      /// specific error.
      @discardableResult
-    public func write(_ data: UnsafeBufferPointer<UInt8>, count: Int? = nil) -> Result<(), Errno> {
+    public func write(_ data: UnsafeRawBufferPointer, count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0
         var result = validateLength(data, count: count, length: &writeLength)
 

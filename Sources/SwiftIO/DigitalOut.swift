@@ -116,7 +116,8 @@ public final class DigitalOut {
      Write to this property would change the output value.
      
      */
-    private var value: Bool {
+    @usableFromInline
+    var value: Bool {
         willSet {
 			swifthal_gpio_set(obj, newValue ? 1 : 0)
 		}
@@ -216,7 +217,7 @@ public final class DigitalOut {
 
      - Parameter value : The output value: `true` or `false`.
      */
-    @inline(__always)
+    @inlinable
 	public func write(_ value: Bool) {
         self.value = value
 	}
@@ -227,7 +228,7 @@ public final class DigitalOut {
      `high()` and `write(true)` work the same way, and this is more straightforward.
      
      */
-    @inline(__always)
+    @inlinable
     public func high() {
         value = true
     }
@@ -237,7 +238,7 @@ public final class DigitalOut {
 
      `low()` and `write(false)` work the same way, and this is more straightforward.
      */
-    @inline(__always)
+    @inlinable
     public func low() {
         value = false
     }
@@ -249,7 +250,7 @@ public final class DigitalOut {
      The output switches between high and low automatically.
 
      */
-    @inline(__always)
+    @inlinable
     public func toggle() {
         value.toggle()
     }
@@ -264,6 +265,7 @@ public final class DigitalOut {
      The actual pin voltage would be low. However, this method will still return `true`
      despite of the actual low output, since this pin is set to HIGH.
      */
+    @inlinable
     public func getValue() -> Bool {
         return value
     }

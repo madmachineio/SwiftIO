@@ -74,7 +74,8 @@ public final class DigitalInOut {
     private var outputModeRawValue: swift_gpio_mode_t
     private var inputModeRawValue: swift_gpio_mode_t
 
-    private var direction: Direction {
+    @usableFromInline
+    var direction: Direction {
         willSet {
             directionRawValue = DigitalInOut.getDirectionRawValue(newValue)
         } 
@@ -236,7 +237,7 @@ public final class DigitalInOut {
     /// > Note: If the pin is used as input before, it will be automatically set
     /// to output.
     /// - Parameter value: The output value: `true` or `false`.
-    @inline(__always)
+    @inlinable
 	public func write(_ value: Bool) {
         if direction == .output {
             swifthal_gpio_set(obj, value ? 1 : 0)
@@ -248,7 +249,7 @@ public final class DigitalInOut {
     /// Sets the output value to true.
     /// > Note: If the pin is used as input before, it will be automatically set
     /// to output.
-    @inline(__always)
+    @inlinable
     public func high() {
         write(true)
     }
@@ -256,14 +257,14 @@ public final class DigitalInOut {
     /// Sets the output value to false.
     /// > Note: If the pin is used as input before, it will be automatically set
     /// to output.
-    @inline(__always)
+    @inlinable
     public func low() {
         write(false)
     }
 
     /// Reads the value from the pin.
     /// - Returns: `true` or `false` of the logic value.
-    @inline(__always)
+    @inlinable
 	public func read() -> Bool {
         if direction == .output {
             setToInput()
