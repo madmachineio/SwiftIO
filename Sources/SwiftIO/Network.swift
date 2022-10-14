@@ -22,12 +22,10 @@ import CSwiftIO
 
     var mac: [UInt8]
     var txHandler: InterFaceTxHandler?
-    public var rxBuffer: [UInt8]
 
     public init(rxBufferSize: Int = 4096) {
         mac = [UInt8](repeating: 0x00, count: 6)
         txHandler = nil
-        rxBuffer = [UInt8](repeating: 0x00, count: rxBufferSize)
     }
 
     deinit {
@@ -46,18 +44,40 @@ import CSwiftIO
         swift_eth_tx_register(self.txHandler!)
     }
 
-    public func ifReceive(into buffer: inout [UInt8], count: Int? = nil) {
-        var length: Int
-        if count != nil && count! < buffer.count {
-            length = count!
-        } else {
-            length = buffer.count
+    @discardableResult
+    public func ifReceive(into buffer: inout [UInt8], count: Int? = nil) -> Result<(), Errno> {
+        var length = 0
+        var result = validateLength(buffer, count: count, length: &length)
+
+        if case .success = result {
+            buffer.withUnsafeMutableBytes { pointer in
+                let ptr = pointer.baseAddress
+                result = nothingOrErrno(swift_eth_rx(ptr, UInt16(length)))
+            }
+        }
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
 
-        buffer.withUnsafeMutableBytes { pointer in
-            let ptr = pointer.baseAddress
-            swift_eth_rx(ptr, UInt16(length))
+        return result
+    }
+
+    @discardableResult
+    public func ifSend(_ data: [UInt8], count: Int? = nil) -> Result<(), Errno> {
+        var length = 0
+        var result = validateLength(data, count: count, length: &length)
+
+        if case .success = result {
+            data.withUnsafeBytes { pointer in
+                let ptr = pointer.baseAddress
+                result = nothingOrErrno(txHandler!(ptr, Int32(length)))
+            }
         }
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
     }
 
     public func ifUp() {
