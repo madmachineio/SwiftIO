@@ -40,7 +40,7 @@ import CSwiftIO
         self.mac = mac
         self.txHandler = tx
 
-        print("ifconfig mac = \(mac), txHandler = \(self.txHandler)")
+        print("ifconfig mac = \(mac), txHandler force unwrap = \(self.txHandler!)")
         swift_eth_setup_mac(self.mac)
         swift_eth_tx_register(self.txHandler!)
     }
