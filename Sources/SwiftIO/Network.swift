@@ -23,7 +23,7 @@ import CSwiftIO
     var mac: [UInt8]
     var txHandler: InterFaceTxHandler?
 
-    public init(rxBufferSize: Int = 4096) {
+    public init() {
         mac = [UInt8](repeating: 0x00, count: 6)
         txHandler = nil
     }
@@ -40,6 +40,7 @@ import CSwiftIO
         self.mac = mac
         self.txHandler = tx
 
+        print("ifconfig mac = \(mac), txHandler = \(self.txHandler)")
         swift_eth_setup_mac(self.mac)
         swift_eth_tx_register(self.txHandler!)
     }
