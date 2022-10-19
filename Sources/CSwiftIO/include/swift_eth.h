@@ -8,9 +8,9 @@
 
 int swift_eth_setup_mac(const unsigned char *mac);
 
-int swift_eth_tx_register(int (*send)(const void *, int));
+int swift_eth_tx_register(int (*send)(const unsigned char *, int));
 
-int swift_eth_rx(void *buffer, unsigned short len);
+int swift_eth_rx(unsigned char *, unsigned short len);
 
 int swift_eth_event_send(int event_id,
 			 void *event_data,
