@@ -74,20 +74,19 @@ public final class DigitalInOut {
     private var outputModeRawValue: swift_gpio_mode_t
     private var inputModeRawValue: swift_gpio_mode_t
 
-    @usableFromInline
-    var direction: Direction {
+    public private(set) var direction: Direction {
         willSet {
             directionRawValue = DigitalInOut.getDirectionRawValue(newValue)
         } 
     }
 
-    private var outputMode: DigitalOut.Mode {
+    public private(set) var outputMode: DigitalOut.Mode {
         willSet {
             outputModeRawValue = DigitalOut.getModeRawValue(newValue)
         }
     }
 
-    private var inputMode: DigitalIn.Mode {
+    public private(set) var inputMode: DigitalIn.Mode {
         willSet {
             inputModeRawValue = DigitalIn.getModeRawValue(newValue)
         }

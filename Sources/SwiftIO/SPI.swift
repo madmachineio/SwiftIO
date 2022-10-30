@@ -139,8 +139,28 @@ import CSwiftIO
     private let id: Int32
     public let obj: UnsafeMutableRawPointer
 
-    private var speed: Int32
     private var operation: Operation
+
+    public private(set) var speed: Int32
+    public var CPOL: Bool {
+        operation.contains(.CPOL)
+    }
+    public var CPHA: Bool {
+        operation.contains(.CPHA)
+    }
+    public var MSB: Bool {
+        operation.contains(.MSB)
+    }
+    public var LSB: Bool {
+        operation.contains(.LSB)
+    }
+    public var bitOrder: BitOrder {
+        if operation.contains(.MSB) {
+            return .MSB
+        } else {
+            return .LSB
+        }
+    }
 
     @usableFromInline
     var csPin: DigitalOut?
