@@ -1,4 +1,4 @@
-//=== InternetFace.swift --------------------------------------------------===//
+//=== Ethernet.swift --------------------------------------------------===//
 //
 // Copyright (c) MadMachine Limited
 // Licensed under MIT License
@@ -13,15 +13,34 @@
 import CSwiftIO
 
 
- public final class InternetFace {
+ public final class Ethernet {
 
-    public typealias InternetFaceTxHandler = @convention(c) (
+    public typealias EthernetTxHandler = @convention(c) (
         UnsafePointer<UInt8>?,
         Int32
     ) -> Int32
 
+    public typealias EthernetRxHandler = @convention(c) (
+        UnsafeMutablePointer<UInt8>?,
+        Int32
+    ) -> Int32
+
     var mac: [UInt8]
-    var txHandler: InternetFaceTxHandler!
+    var txHandler: EthernetTxHandler!
+    public static var rxHandler: EthernetRxHandler = { pointer, length in
+        return swift_eth_rx(pointer, UInt16(length))
+    }
+
+    public init(mac: [UInt8], txHandler: EthernetTxHandler) {
+        guard mac.count == 6 else {
+            fatalError("error: mac address must be 6 bytes")
+        }
+        self.mac = mac
+        self.txHandler = txHandler
+
+        swift_eth_setup_mac(self.mac)
+        swift_eth_tx_register(self.txHandler)
+    }
 
     public init() {
         mac = [UInt8](repeating: 0x00, count: 6)
@@ -33,7 +52,7 @@ import CSwiftIO
         swift_eth_event_send(ETH_EVENT_IFACE_DISCONNECTED, nil, 0, -1)
     }
 
-    public func config(mac: [UInt8], txHandler: InternetFaceTxHandler) {
+    public func setup(mac: [UInt8], txHandler: EthernetTxHandler) {
         guard mac.count == 6 else {
             fatalError("error: internet face mac address must be 6 bytes")
         }
