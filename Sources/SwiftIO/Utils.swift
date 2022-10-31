@@ -23,21 +23,21 @@ internal func system_strerror(_ __errnum: Int32) -> UnsafeMutablePointer<Int8>! 
 }
 
 @inlinable
-internal func valueOrErrno<D>(
+public func valueOrErrno<D>(
     _ data: D, _ ret: CInt
 ) -> Result<D, Errno> {
   ret < 0 ? .failure(Errno(ret)) : .success(data)
 }
 
 @inlinable
-internal func valueOrErrno(
+public func valueOrErrno(
     _ ret: CInt
 ) -> Result<Int, Errno> {
   ret < 0 ? .failure(Errno(ret)) : .success(Int(ret))
 }
 
 @inlinable
-internal func nothingOrErrno(
+public func nothingOrErrno(
     _ ret: CInt
 ) -> Result<(), Errno> {
   valueOrErrno(ret).map { _ in () }
