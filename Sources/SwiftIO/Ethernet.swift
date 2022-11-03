@@ -19,15 +19,15 @@ import CSwiftIO
         Int32
     ) -> Int32
 
-    typealias EthernetRxHandler = @convention(c) (
+    public typealias EthernetRxHandler = @convention(c) (
         UnsafeMutablePointer<UInt8>?,
-        UInt16
+        Int32
     ) -> Int32
 
     static var mac: [UInt8] = [UInt8](repeating: 0x00, count: 6)
     static var txHandler: EthernetTxHandler?
-    static let rxHandler: EthernetRxHandler = { pointer, length in
-        return swift_eth_rx(pointer, length)
+    static public let rxHandler: EthernetRxHandler = { pointer, length in
+        return swift_eth_rx(pointer, UInt16(length))
     }
 
     public static func setup(mac: [UInt8], txHandler: EthernetTxHandler) {
