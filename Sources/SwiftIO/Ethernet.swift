@@ -12,7 +12,6 @@
 
 import CSwiftIO
 
-
  public final class Ethernet {
 
     public typealias EthernetTxHandler = @convention(c) (
@@ -20,56 +19,37 @@ import CSwiftIO
         Int32
     ) -> Int32
 
-    public typealias EthernetRxHandler = @convention(c) (
+    typealias EthernetRxHandler = @convention(c) (
         UnsafeMutablePointer<UInt8>?,
-        Int32
+        UInt16
     ) -> Int32
 
-    var mac: [UInt8]
-    var txHandler: EthernetTxHandler!
-    public static var rxHandler: EthernetRxHandler = { pointer, length in
-        return swift_eth_rx(pointer, UInt16(length))
+    static var mac: [UInt8] = [UInt8](repeating: 0x00, count: 6)
+    static var txHandler: EthernetTxHandler?
+    static let rxHandler: EthernetRxHandler = { pointer, length in
+        return swift_eth_rx(pointer, length)
     }
 
-    public init(mac: [UInt8], txHandler: EthernetTxHandler) {
+    public static func setup(mac: [UInt8], txHandler: EthernetTxHandler) {
         guard mac.count == 6 else {
             fatalError("error: mac address must be 6 bytes")
         }
-        self.mac = mac
-        self.txHandler = txHandler
+        Ethernet.mac = mac
+        Ethernet.txHandler = txHandler
 
-        swift_eth_setup_mac(self.mac)
-        swift_eth_tx_register(self.txHandler)
+        swift_eth_setup_mac(Ethernet.mac)
+        swift_eth_tx_register(Ethernet.txHandler)
     }
 
-    public init() {
-        mac = [UInt8](repeating: 0x00, count: 6)
-        txHandler = nil
-    }
-
-    deinit {
-        swift_eth_tx_register(nil)
-        swift_eth_event_send(ETH_EVENT_IFACE_DISCONNECTED, nil, 0, -1)
-    }
-
-    public func setup(mac: [UInt8], txHandler: EthernetTxHandler) {
-        guard mac.count == 6 else {
-            fatalError("error: internet face mac address must be 6 bytes")
-        }
-        self.mac = mac
-        self.txHandler = txHandler
-
-        print("ifconfig mac = \(mac))")
-        swift_eth_setup_mac(self.mac)
-        swift_eth_tx_register(self.txHandler)
-    }
-
-    public func up() {
+    public static func up() {
         swift_eth_event_send(ETH_EVENT_IFACE_UP, nil, 0, -1)
         swift_eth_event_send(ETH_EVENT_IFACE_CONNECTED, nil, 0, -1)
     }
 
-    public func down() {
+    public static func down() {
+        swift_eth_tx_register(nil)
         swift_eth_event_send(ETH_EVENT_IFACE_DISCONNECTED, nil, 0, -1)
+        Ethernet.mac = [UInt8](repeating: 0x00, count: 6)
+        Ethernet.txHandler = nil
     }
  }
