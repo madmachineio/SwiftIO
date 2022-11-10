@@ -828,6 +828,17 @@ public struct Errno: RawRepresentable, Error {
   public static var notSupportedOnSocket: Errno { Errno(EOPNOTSUPP) }
 }
 
+// Constants defined in header but not man page
+/*System 0.0.1, @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)*/
+extension Errno {
+
+  /// Operation would block.
+  ///
+  /// The corresponding C error is `EWOULDBLOCK`.
+  @_alwaysEmitIntoClient
+  public static var wouldBlock: Errno { Errno(EWOULDBLOCK) }
+}
+
 
 extension Errno {
   @_alwaysEmitIntoClient
