@@ -4,7 +4,7 @@
 // Licensed under MIT License
 //
 // Authors: Andy Liu
-// Created: 10/13/2021
+// Created: 10/13/2022
 //
 // See https://madmachine.io for more information
 //
@@ -47,9 +47,10 @@ import CSwiftIO
     }
 
     public static func down() {
-        swift_eth_tx_register(nil)
         swift_eth_event_send(ETH_EVENT_IFACE_DISCONNECTED, nil, 0, -1)
+        swift_eth_event_send(ETH_EVENT_IFACE_DOWN, nil, 0, -1)
+        swift_eth_tx_register(nil)
         Ethernet.mac = [UInt8](repeating: 0x00, count: 6)
         Ethernet.txHandler = nil
     }
- }
+}

@@ -29,6 +29,8 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public init(_ raw: CInt) { self.init(rawValue: raw) }
 
+  @_alwaysEmitIntoClient
+  public init(_ raw: Int) { self.init(rawValue: CInt(raw)) }
   /// Success.
   ///
   /// The corresponding C result is 0.
