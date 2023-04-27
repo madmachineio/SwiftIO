@@ -4,7 +4,7 @@
 
 typedef void (*swifthal_task)(void *p1, void *p2, void *p3);
 
-void *swifthal_os_task_create(char *name,
+void *swifthal_os_task_create(const char *name,
 			      swifthal_task fn, void *p1, void *p2, void *p3,
 			      int prio,
 			      int stack_size);
