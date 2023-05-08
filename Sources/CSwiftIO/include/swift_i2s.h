@@ -17,28 +17,109 @@ enum swift_i2s_mode {
 
 typedef enum swift_i2s_mode swift_i2s_mode_t;
 
-/** @brief I2S output channel type. */
-enum swift_i2s_channel_type {
-	SWIFT_I2S_CHAN_STEREO,
-	SWIFT_I2S_CHAN_MONO_RIGHT,
-	SWIFT_I2S_CHAN_MONO_LEFT
+enum swift_i2s_dir {
+	/** Receive data */
+	SWIFT_I2S_DIR_RX,
+	/** Transmit data */
+	SWIFT_I2S_DIR_TX,
+	/** Both receive and transmit data */
+	SWIFT_I2S_DIR_BOTH,
+	SWIFT_I2S_DIR_NUM
 };
 
-typedef enum swift_i2s_channel_type swift_i2s_channel_type_t;
+typedef enum swift_i2s_dir swift_i2s_dir_t;
+
+enum i2s_trigger_cmd {
+	/** @brief Start the transmission / reception of data.
+	 *
+	 * If SWIFT_I2S_DIR_TX is set some data has to be queued for transmission by
+	 * the swift_i2s_write() function. This trigger can be used in READY state
+	 * only and changes the interface state to RUNNING.
+	 */
+	SWIFT_I2S_TRIGGER_START,
+	/** @brief Stop the transmission / reception of data.
+	 *
+	 * Stop the transmission / reception of data at the end of the current
+	 * memory block. This trigger can be used in RUNNING state only and at
+	 * first changes the interface state to STOPPING. When the current TX /
+	 * RX block is transmitted / received the state is changed to READY.
+	 * Subsequent START trigger will resume transmission / reception where
+	 * it stopped.
+	 */
+	SWIFT_I2S_TRIGGER_STOP,
+	/** @brief Empty the transmit queue.
+	 *
+	 * Send all data in the transmit queue and stop the transmission.
+	 * If the trigger is applied to the RX queue it has the same effect as
+	 * SWIFT_I2S_TRIGGER_STOP. This trigger can be used in RUNNING state only and
+	 * at first changes the interface state to STOPPING. When all TX blocks
+	 * are transmitted the state is changed to READY.
+	 */
+	SWIFT_I2S_TRIGGER_DRAIN,
+	/** @brief Discard the transmit / receive queue.
+	 *
+	 * Stop the transmission / reception immediately and discard the
+	 * contents of the respective queue. This trigger can be used in any
+	 * state other than NOT_READY and changes the interface state to READY.
+	 */
+	SWIFT_I2S_TRIGGER_DROP,
+	/** @brief Prepare the queues after underrun/overrun error has occurred.
+	 *
+	 * This trigger can be used in ERROR state only and changes the
+	 * interface state to READY.
+	 */
+	SWIFT_I2S_TRIGGER_PREPARE,
+};
+
+typedef enum i2s_trigger_cmd i2s_trigger_cmd_t;
+
+enum i2s_state {
+	SWIFT_I2S_STATE_NOT_READY,
+	/** The interface is ready to receive / transmit data. */
+	SWIFT_I2S_STATE_READY,
+	/** The interface is receiving / transmitting data. */
+	SWIFT_I2S_STATE_RUNNING,
+	/** The interface is draining its transmit queue. */
+	SWIFT_I2S_STATE_STOPPING,
+	/** TX buffer underrun or RX buffer overrun has occurred. */
+	SWIFT_I2S_STATE_ERROR,
+};
+
+typedef enum i2s_state i2s_state_t;
+
+#define SWIFT_I2S_DATA_ORDER_MSB        (0 << 3)
+#define SWIFT_I2S_DATA_ORDER_LSB        (1 << 3)
+#define SWIFT_I2S_BIT_CLK_INV           (1 << 4)
+#define SWIFT_I2S_FRAME_CLK_INV         (1 << 5)
+
+/** Run bit clock continuously */
+#define SWIFT_I2S_BIT_CLK_CONT          (0 << 0)
+/** Run bit clock when sending data only */
+#define SWIFT_I2S_BIT_CLK_GATED         (1 << 0)
+/** I2S driver is bit clock master */
+#define SWIFT_I2S_BIT_CLK_MASTER        (0 << 1)
+/** I2S driver is bit clock slave */
+#define SWIFT_I2S_BIT_CLK_SLAVE         (1 << 1)
+/** I2S driver is frame clock master */
+#define SWIFT_I2S_FRAME_CLK_MASTER      (0 << 2)
+/** I2S driver is frame clock slave */
+#define SWIFT_I2S_FRAME_CLK_SLAVE       (1 << 2)
 
 /**
- * @brief UART controller configuration structure
+ * @brief I2S controller configuration structure
  *
  * @param mode  I2s work mode, use @ref swift_i2s_mode
- * @param channel_type Output channel type, use @ref swift_i2s_channel_type
+ * @param channels Number of words per frame
  * @param sample_bits Bits per sample
  * @param sample_rate Sample rate
  */
 struct swift_i2s_cfg {
 	swift_i2s_mode_t mode;                          /*!< refer I2SMode */
-	swift_i2s_channel_type_t channel_type;          /*!< refer I2SChannel */
+	int options;                                    /*!< Options for I2S */
+	int channels;                                   /*!< Number of words per frame */
 	int sample_bits;                                /*!< 8,16,24,32 */
 	int sample_rate;                                /*!< 8K,11.025K,12K,16K,22.05K,24K,32K,44.1K,48K,96K,192K,384K */
+	int timeout;                                    /*!< Number of words per frame */
 };
 
 typedef struct swift_i2s_cfg swift_i2s_cfg_t;
@@ -90,23 +171,25 @@ int swifthal_i2s_close(void *i2s);
  * @brief Set i2s config information
  *
  * @param i2s I2S handle
+ * @param dir Stream direction: RX, TX, or both, use @ref swift_i2s_dir
  * @param tx_cfg	I2S send config, use @ref swift_i2s_cfg
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_tx_config_set(void *i2s, const swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_set(void *i2s, const swift_i2s_dir_t dir, const swift_i2s_cfg_t *cfg);
 
 /**
  * @brief Get i2s config information
  *
  * @param i2s I2S handle
+ * @param dir Stream direction: RX, TX, or both, use @ref swift_i2s_dir
  * @param tx_cfg	I2S send config, use @ref swift_i2s_cfg
  *
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_tx_config_get(void *i2s, swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_get(void *i2s, const swift_i2s_dir_t dir, swift_i2s_cfg_t *cfg);
 
 /**
  * @brief Set i2s send work status
@@ -117,7 +200,7 @@ int swifthal_i2s_tx_config_get(void *i2s, swift_i2s_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_tx_status_set(void *i2s, int enable);
+int swifthal_i2s_trigger(void *i2s, const swift_i2s_dir_t dir, const i2s_trigger_cmd_t cmd);
 
 /**
  * @brief Get i2s send work status
@@ -128,17 +211,8 @@ int swifthal_i2s_tx_status_set(void *i2s, int enable);
  * @retval Negative errno code if failure.
  */
 
-int swifthal_i2s_tx_status_get(void *i2s);
+int swifthal_i2s_status_get(void *i2s, const swift_i2s_dir_t dir);
 
-/**
- * @brief Get size of free space for writing
- *
- * @param i2s I2S handle
- *
- * @retval Positive indicates the size of free space for writing.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_tx_available_get(void *i2s);
 
 /**
  * @brief Send given number of bytes from buffer through I2S.
@@ -146,76 +220,11 @@ int swifthal_i2s_tx_available_get(void *i2s);
  * @param i2s I2S handle
  * @param buf buf Pointer to transmit buffer.
  * @param length Length of transmit buffer.
- * @param timeout Timeout in milliseconds.
  *
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length, int timeout);
-
-/**
- * @brief Terminate current transmit and clear the data waiting to be transferred.
- *
- * @param i2s I2S handle
- *
- * @retval 0 If successful.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_write_terminate(void *i2s);
-
-/**
- * @brief Set i2s config information
- *
- * @param i2s I2S handle
- * @param rx_cfg	I2S received config, use @ref swift_i2s_cfg
- *
- * @retval 0 If successful.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_rx_config_set(void *i2s, const swift_i2s_cfg_t *cfg);
-
-/**
- * @brief Get i2s config information
- *
- * @param i2s I2S handle
- * @param rx_cfg	I2S received config, use @ref swift_i2s_cfg
- *
- * @retval 0 If successful.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_rx_config_get(void *i2s, swift_i2s_cfg_t *cfg);
-
-/**
- * @brief Set i2s recevice work status
- *
- * @param i2s I2S handle
- * @param enable	1 I2S recevice enable, 0 I2S recevice disable
- *
- * @retval 0 If successful.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_rx_status_set(void *i2s, int enable);
-
-/**
- * @brief Get i2s recevice work status
- *
- * @param i2s I2S handle
- *
- * @retval 0 If disable, 1 If enable.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_rx_status_get(void *i2s);
-
-
-/**
- * @brief Get size of remainder data for reading
- *
- * @param i2s I2S handle
- *
- * @retval Positive indicates the size of remainder data for reading.
- * @retval Negative errno code if failure.
- */
-int swifthal_i2s_rx_available_get(void *i2s);
+int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length);
 
 /**
  * @brief Receive given number of bytes from buffer through I2S.
@@ -228,7 +237,7 @@ int swifthal_i2s_rx_available_get(void *i2s);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_read(void *i2s, unsigned char *buf, int length, int timeout);
+int swifthal_i2s_read(void *i2s, unsigned char *buf, int length);
 
 /**
  * @brief Get I2S support device number
