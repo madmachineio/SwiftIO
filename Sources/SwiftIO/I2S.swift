@@ -15,7 +15,7 @@ import CSwiftIO
 
  public final class I2S {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var config = swift_i2s_cfg_t()
 
@@ -29,6 +29,15 @@ import CSwiftIO
                 case .leftJustified:
                 config.mode = SWIFT_I2S_MODE_LEFT_JUSTIFIED
             }
+        }
+    }
+
+    private var configOptions: ConfigOptions {
+        get {
+            ConfigOptions(rawValue: config.options)
+        }
+        set {
+            config.options = newValue.rawValue
         }
     }
 
@@ -48,6 +57,15 @@ import CSwiftIO
         }
         set {
             config.sample_rate = Int32(newValue)
+        }
+    }
+
+    private var timeout: Int {
+        get {
+            Int(config.timeout)
+        }
+        set {
+            config.timeout = Int32(newValue)
         }
     }
 
@@ -74,7 +92,8 @@ import CSwiftIO
         _ idName: IdName,
         rate: Int = 16_000,
         bits: Int = 16,
-        mode: Mode = .philips
+        mode: Mode = .philips,
+        timeout: Int = Int(SWIFT_FOREVER)
     ) {
         guard supportedSampleRate.contains(rate) else {
             fatalError("The specified sampleRate \(rate) is not supported!")
@@ -82,11 +101,19 @@ import CSwiftIO
         guard supportedSampleBits.contains(bits) else {
             fatalError("The specified sampleBits \(bits) is not supported!")
         }
+
         self.id = idName.value
+        if let ptr = swifthal_i2s_open(id) {
+            obj = UnsafeRawPointer(ptr)
+        } else {
+            fatalError("I2S\(idName.value) initialization failed!")
+        }
+
         self.mode = mode
 
         config.sample_bits = Int32(bits)
         config.sample_rate = Int32(rate)
+        config.timeout = Int32(timeout)
 
         switch mode {
             case .philips:
@@ -97,19 +124,10 @@ import CSwiftIO
             config.mode = SWIFT_I2S_MODE_LEFT_JUSTIFIED
         }
 
-        config.options = ConfigOptions.defaultConfig.rawValue
         config.channels = 2
-        config.timeout = SWIFT_FOREVER
-
-
-        if let ptr = swifthal_i2s_open(id) {
-            obj = UnsafeMutableRawPointer(ptr)
-        } else {
-            fatalError("I2S\(idName.value) initialization failed!")
-        }
+        configOptions = ConfigOptions.defaultConfig
 
         swifthal_i2s_config_set(obj, SWIFT_I2S_DIR_TX, &config)
-
         swifthal_i2s_trigger(obj, SWIFT_I2S_DIR_TX, SWIFT_I2S_TRIGGER_START)
     }
 
@@ -117,28 +135,36 @@ import CSwiftIO
         swifthal_i2s_close(obj)
     }
 
-    // public func setSampleProperty(
-    //     rate: Int, bits: Int
-    // ) {
-    //     guard supportedSampleRate.contains(rate) else {
-    //         fatalError("The specified sampleRate \(rate) is not supported!")
-    //     }
-    //     guard supportedSampleBits.contains(bits) else {
-    //         fatalError("The specified sampleBits \(bits) is not supported!")
-    //     }
+    @discardableResult
+    public func setSampleProperty(
+        rate: Int, bits: Int
+    ) -> Result<(), Errno> {
+        guard supportedSampleRate.contains(rate) else {
+            fatalError("The specified sampleRate \(rate) is not supported!")
+        }
+        guard supportedSampleBits.contains(bits) else {
+            fatalError("The specified sampleBits \(bits) is not supported!")
+        }
 
-    //     self.sampleBits = bits
-    //     self.sampleRate = rate
+        self.sampleBits = bits
+        self.sampleRate = rate
 
-    //     if swifthal_i2s_config_set(obj, &config) != 0 {
-    //         print("I2S\(id) configeration failed!")
-    //     }
-    // }
+        let result = nothingOrErrno(
+            swifthal_i2s_config_set(obj, SWIFT_I2S_DIR_TX, &config)
+        )
 
+        if case .failure(let err) = result {
+           print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+        return result
+    }
+
+    //@discardableResult
     public func write(
         _ sample: [UInt8],
         count: Int? = nil
     ) {
+    //) -> Result<(), Errno> {
         let length: Int32
 
         if let count = count {
@@ -147,11 +173,17 @@ import CSwiftIO
             length = Int32(sample.count)
         }
         
-        let ret = swifthal_i2s_write(obj, sample, length)
+        //let result = nothingOrErrno(
+            let ret = swifthal_i2s_write(obj, sample, length)
+        //)
 
         if ret != 0 {
-            print("I2S\(id) write error!")
+            print("I2S write result = \(ret)")
         }
+        //if case .failure(let err) = result {
+        //    print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        //}
+        //return result
     }
 }
 
