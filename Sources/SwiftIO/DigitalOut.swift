@@ -105,7 +105,7 @@ public final class DigitalOut {
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
 
     private var modeRawValue: swift_gpio_mode_t
-    private var mode: Mode {
+    public private(set) var mode: Mode {
         willSet {
             modeRawValue = DigitalOut.getModeRawValue(newValue)
         }

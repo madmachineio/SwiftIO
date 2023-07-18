@@ -29,6 +29,8 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public init(_ raw: CInt) { self.init(rawValue: raw) }
 
+  @_alwaysEmitIntoClient
+  public init(_ raw: Int) { self.init(rawValue: CInt(raw)) }
   /// Success.
   ///
   /// The corresponding C result is 0.
@@ -824,6 +826,17 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EOPNOTSUPP`.
   @_alwaysEmitIntoClient
   public static var notSupportedOnSocket: Errno { Errno(EOPNOTSUPP) }
+}
+
+// Constants defined in header but not man page
+/*System 0.0.1, @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)*/
+extension Errno {
+
+  /// Operation would block.
+  ///
+  /// The corresponding C error is `EWOULDBLOCK`.
+  @_alwaysEmitIntoClient
+  public static var wouldBlock: Errno { Errno(EWOULDBLOCK) }
 }
 
 

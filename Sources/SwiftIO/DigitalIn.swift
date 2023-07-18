@@ -55,14 +55,14 @@ public final class DigitalIn {
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
 
     private var modeRawValue: swift_gpio_mode_t
-    private var mode: Mode {
+    public private(set) var mode: Mode {
         willSet {
             modeRawValue = DigitalIn.getModeRawValue(newValue)
         }
     }
 
     private var interruptModeRawValue: swift_gpio_int_mode_t
-    private var interruptMode: InterruptMode {
+    public private(set) var interruptMode: InterruptMode {
         willSet {
             interruptModeRawValue = DigitalIn.getInterruptModeRawValue(
                 newValue
