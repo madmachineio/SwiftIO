@@ -4,7 +4,7 @@
 # Those project files in the dependent libraries would be IGNORED
 
 # Specify the board name below
-# There are "SwiftIOBoard" and "SwiftIOFeather" now
+# There are "SwiftIOBoard" and "SwiftIOMicro" now
 board = ""
 
 # Specifiy the target triple below
