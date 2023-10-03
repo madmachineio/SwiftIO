@@ -52,9 +52,20 @@ import CSwiftIO
  */
 public final class AnalogIn {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
-    private var info = swift_adc_info_t()
+    private let info: swift_adc_info_t
+
+    /**
+     The number of bits in the absolute value of the ADC.
+     Different ADC has different resolutions.
+     The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is
+     4095.
+
+     */
+    public var resolutionBits: Int {
+        Int(info.resolution)
+    }
 
     /**
      The max raw value of the ADC. Different ADC has different resolutions.
@@ -63,11 +74,11 @@ public final class AnalogIn {
 
      */
     public var maxRawValue: Int {
-        Int(info.max_raw_value)
+        1 << Int(info.resolution) - 1
     }
 
     /**
-     The reference voltage of the board.
+     The reference voltage of the ADC.
 
      */
     public var refVoltage: Float {
@@ -91,11 +102,13 @@ public final class AnalogIn {
     public init(_ idName: IdName) {
         id = idName.value
         if let ptr = swifthal_adc_open(id) {
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("AnalogIn \(idName.value) init failed")
         }
-        swifthal_adc_info_get(obj, &info)
+        var _info = swift_adc_info_t()
+        swifthal_adc_info_get(obj, &_info)
+        info = _info
     }
 
     deinit {
@@ -104,7 +117,7 @@ public final class AnalogIn {
 
     /**
      Reads the raw value of the input from the specified analog pin.
-     
+
      - Returns: A raw value in the range of 0 to max resolution.
      */
     @inlinable
@@ -123,11 +136,20 @@ public final class AnalogIn {
     }
 
     /**
-     Gets the percentage of current input and max value from a specified analog pin.
+     Reads the raw value of the input from the specified analog pin.
+
+     - Returns: A raw value in the range of 0 to max resolution.
+     */
+    public func read() -> Int {
+        return readRawValue()
+    }
+
+    /**
+     Get the percentage of current input and max value from a specified analog pin.
      
      - Returns: A percentage of voltage in the range of 0.0 to 1.0.
      */
-    public func readPercent() -> Float {
+    public func readPercentage() -> Float {
         let rawValue = Float(readRawValue())
         return rawValue / Float(maxRawValue)
     }
