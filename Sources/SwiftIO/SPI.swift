@@ -137,11 +137,11 @@ import CSwiftIO
  */
  public final class SPI {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var operation: Operation
 
-    public private(set) var speed: Int32
+    public private(set) var speed: Int
     public var CPOL: Bool {
         operation.contains(.CPOL)
     }
@@ -196,7 +196,7 @@ import CSwiftIO
 
     ) {
         self.id = idName.value
-        self.speed = Int32(speed)
+        self.speed = speed
         self.csPin = csPin
         self.operation = .eightBits
 
@@ -222,7 +222,7 @@ import CSwiftIO
                 cs.setMode(.pushPull)
                 cs.write(true)
             }
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = UnsafeRawPointer(ptr)
         } else {
             fatalError("SPI \(idName.value) init failed!")
         }
@@ -381,7 +381,29 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_read(obj, &buffer, Int32(readLength))
+                swifthal_spi_read(obj, &buffer, readLength)
+            )
+            csDisable()
+        }
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+     @discardableResult
+    public func read<Element: BinaryInteger>(into buffer: inout [Element], count: Int? = nil) -> Result<(), Errno> {
+        var readLength = 0
+        var result = validateLength(buffer, count: count, length: &readLength)
+
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                buffer.withUnsafeMutableBytes { pointer in
+                    swifthal_spi_read(obj, pointer.baseAddress, readLength)
+                }
             )
             csDisable()
         }
@@ -410,7 +432,7 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_read(obj, buffer.baseAddress, Int32(readLength))
+                swifthal_spi_read(obj, buffer.baseAddress, readLength)
             )
             csDisable()
         }
@@ -457,7 +479,29 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_write(obj, data, Int32(writeLength))
+                swifthal_spi_write(obj, data, writeLength)
+            )
+            csDisable()
+        }
+
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+     @discardableResult
+    public func write<Element: BinaryInteger>(_ data: [Element], count: Int? = nil) -> Result<(), Errno> {
+        var writeLength = 0
+        var result = validateLength(data, count: count, length: &writeLength)
+
+        if case .success = result {
+            csEnable()
+            result = nothingOrErrno(
+                data.withUnsafeBytes { pointer in 
+                    swifthal_spi_write(obj, pointer.baseAddress, writeLength)
+                }
             )
             csDisable()
         }
@@ -490,7 +534,7 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_write(obj, data.baseAddress, Int32(writeLength))
+                swifthal_spi_write(obj, data.baseAddress, writeLength)
             )
             csDisable()
         }
@@ -537,7 +581,7 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_transceive(obj, &byte, 1, &buffer, Int32(readLength))
+                swifthal_spi_transceive(obj, &byte, 1, &buffer, readLength)
             )
             csDisable()
         }
@@ -595,7 +639,7 @@ import CSwiftIO
         if case .success = result {
             csEnable()
             result = nothingOrErrno(
-                swifthal_spi_transceive(obj, data, Int32(writeLength), &buffer, Int32(readLength))
+                swifthal_spi_transceive(obj, data, writeLength, &buffer, readLength)
             )
             csDisable()
         }
