@@ -7,6 +7,8 @@
 #ifndef _SWIFT_I2C_H_
 #define _SWIFT_I2C_H_
 
+#include <sys/types.h>
+
 #define SWIFT_I2C_SPEED_STANDARD (100 * 1000)
 #define SWIFT_I2C_SPEED_FAST (400 * 1000)
 #define SWIFT_I2C_SPEED_FAST_PLUS (1000 * 1000)
@@ -17,7 +19,7 @@
  * @param id I2C id
  * @return I2C handle, NULL is fail
  */
-void *swifthal_i2c_open(int id);
+const void *swifthal_i2c_open(int id);
 
 /**
  * @brief Close i2c
@@ -27,7 +29,7 @@ void *swifthal_i2c_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_close(void *i2c);
+int swifthal_i2c_close(const void *i2c);
 
 /**
  * @brief Config i2c speed
@@ -41,7 +43,7 @@ int swifthal_i2c_close(void *i2c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_config(void *i2c, unsigned int speed);
+int swifthal_i2c_config(const void *i2c, uint32_t speed);
 
 /**
  * @brief Write a set amount of data to an I2C device.
@@ -56,7 +58,7 @@ int swifthal_i2c_config(void *i2c, unsigned int speed);
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_write(void *i2c, unsigned char address, const unsigned char *buf, int length);
+int swifthal_i2c_write(const void *i2c, uint8_t address, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Read a set amount of data from an I2C device.
@@ -71,7 +73,7 @@ int swifthal_i2c_write(void *i2c, unsigned char address, const unsigned char *bu
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_read(void *i2c, unsigned char address, unsigned char *buf, int length);
+int swifthal_i2c_read(const void *i2c, uint8_t address, uint8_t *buf, ssize_t length);
 
 /**
  * @brief Write then read data from an I2C device.
@@ -90,9 +92,9 @@ int swifthal_i2c_read(void *i2c, unsigned char address, unsigned char *buf, int 
  * @retval 0 if successful
  * @retval negative on error.
  */
-int swifthal_i2c_write_read(void *i2c, unsigned char addr,
-			    const void *write_buf, int num_write,
-			    void *read_buf, int num_read);
+int swifthal_i2c_write_read(const void *i2c, uint8_t addr,
+			    const void *write_buf, ssize_t num_write,
+			    void *read_buf, ssize_t num_read);
 
 /**
  * @brief Get I2C support device number

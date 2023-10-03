@@ -68,7 +68,7 @@ import CSwiftIO
  */
 public final class DigitalInOut {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var directionRawValue: swift_gpio_direction_t
     private var outputModeRawValue: swift_gpio_mode_t
@@ -140,7 +140,7 @@ public final class DigitalInOut {
         }
     
         if let ptr = swifthal_gpio_open(id, directionRawValue, modeRawValue) {
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = UnsafeRawPointer(ptr)
             if direction == .output {
                 swifthal_gpio_set(obj, outputValue ? 1 : 0)
             }

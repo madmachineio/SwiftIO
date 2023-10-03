@@ -144,7 +144,7 @@ import CSwiftIO
  */
  public final class I2C {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var speedRawValue: UInt32
     private var speed: Speed {
@@ -175,7 +175,7 @@ import CSwiftIO
         guard let ptr = swifthal_i2c_open(id) else {
             fatalError("I2C\(idName.value) init failed")
         }
-        obj = UnsafeMutableRawPointer(ptr)
+        obj = UnsafeRawPointer(ptr)
         if swifthal_i2c_config(obj, speedRawValue) != 0 {
             fatalError("I2C\(idName.value) init config failed")
         }
@@ -257,7 +257,7 @@ import CSwiftIO
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_i2c_read(obj, address, &buffer, Int32(readLength))
+                swifthal_i2c_read(obj, address, &buffer, readLength)
             )
         }
 
@@ -301,7 +301,7 @@ import CSwiftIO
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_i2c_write(obj, address, data, Int32(writeLength))
+                swifthal_i2c_write(obj, address, data, writeLength)
             )
         }
 
@@ -366,7 +366,7 @@ import CSwiftIO
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_i2c_write_read(obj, address, [byte], 1, &buffer, Int32(readLength))
+                swifthal_i2c_write_read(obj, address, [byte], 1, &buffer, readLength)
             )
         }
         if case .failure(let err) = result {
@@ -414,9 +414,9 @@ import CSwiftIO
                 swifthal_i2c_write_read(obj,
                                         address,
                                         data,
-                                        Int32(writeLength),
+                                        writeLength,
                                         &buffer,
-                                        Int32(readLength))
+                                        readLength)
             )
         }
         if case .failure(let err) = result {
