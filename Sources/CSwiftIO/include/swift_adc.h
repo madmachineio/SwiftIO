@@ -8,6 +8,8 @@
 #ifndef _SWIFT_ADC_H_
 #define _SWIFT_ADC_H_
 
+#include <sys/types.h>
+
 /**
  * @brief Structure to receive adc information
  *
@@ -15,7 +17,7 @@
  * @param ref_voltage adc refer volage
  */
 struct swift_adc_info {
-	int resolution;
+	ssize_t resolution;
 	float ref_voltage;
 };
 
@@ -48,7 +50,7 @@ int swifthal_adc_close(const void *adc);
  * @retval Positive indicates the adc value.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_read(const void *adc, unsigned short *sample_buffer);
+int swifthal_adc_read(const void *adc, uint16_t *sample_buffer);
 
 /**
  * @brief Get adc infomation

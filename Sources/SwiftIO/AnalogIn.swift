@@ -64,7 +64,7 @@ public final class AnalogIn {
 
      */
     public var resolutionBits: Int {
-        Int(info.resolution)
+        info.resolution
     }
 
     /**
@@ -74,7 +74,7 @@ public final class AnalogIn {
 
      */
     public var maxRawValue: Int {
-        1 << Int(info.resolution) - 1
+        1 << info.resolution - 1
     }
 
     /**
@@ -82,7 +82,7 @@ public final class AnalogIn {
 
      */
     public var refVoltage: Float {
-        Float(info.ref_voltage)
+        info.ref_voltage
     }
 
     /**

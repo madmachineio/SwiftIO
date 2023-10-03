@@ -11,7 +11,6 @@
 //===----------------------------------------------------------------------===//
 
 import CSwiftIO
-import CNewlib
 
 @inlinable
 internal func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeRawPointer {
