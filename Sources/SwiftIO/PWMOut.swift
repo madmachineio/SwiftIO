@@ -91,25 +91,25 @@ In this example, the sound from a buzzer relates to the movement of its internal
 */
 public final class PWMOut {
     private let id: Int32 
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private let info: swift_pwm_info_t
 
-    private var period: Int32 = 0
-    private var pulse: Int32 = 0
+    private var period: Int = 0
+    private var pulse: Int = 0
     /**
      The max frequency of PWM output.
      */
 
     public var maxFrequency: Int {
-        Int(info.max_frequency)
+        info.max_frequency
     }
 
     /**
      The min frequency of PWM output.
      */
     public var minFrequency: Int {
-        Int(info.min_frequency)
+        info.min_frequency
     }
 
     /**
@@ -147,10 +147,12 @@ public final class PWMOut {
         dutycycle: Float = 0.0
     ) {
         self.id = idName.value
-        guard let ptr = swifthal_pwm_open(id) else {
+        if let ptr = swifthal_pwm_open(id) {
+            obj = UnsafeRawPointer(ptr)
+        }
+        else {
             fatalError("PWM\(idName.value) initialization failed!")
         }
-        obj = UnsafeMutableRawPointer(ptr)
 
         var _info = swift_pwm_info_t()
         swifthal_pwm_info_get(obj, &_info)
@@ -170,16 +172,17 @@ public final class PWMOut {
         from 0.0 to 1.0.
      */
     public func set(frequency: Int, dutycycle: Float) {
-        guard frequency >= minFrequency
-            && frequency <= maxFrequency
-            && dutycycle >= 0
-            && dutycycle <= 1.0 else {
-            print("Frequency must be non-negative and dutycycle must fit in [0.0, 1.0]!")
+        guard frequency >= minFrequency && frequency <= maxFrequency else {
+            print("Frequency must fit in [\(minFrequency), \(maxFrequency)]!")
+            return
+        }
+        guard dutycycle >= 0 && dutycycle <= 1.0 else {
+            print("Dutycycle must fit in [0.0, 1.0]!")
             return
         }
 
-        period = 1_000_000 / Int32(frequency)
-        pulse = Int32(Float(period) * dutycycle)
+        period = 1_000_000 / frequency
+        pulse = Int(Float(period) * dutycycle)
         
         swifthal_pwm_set(obj, period, pulse)
     }
@@ -192,8 +195,8 @@ public final class PWMOut {
      of high voltage in microsecond. This time can't be longer than the period.
      */
     public func set(period: Int, pulse: Int) {
-        self.period = Int32(period)
-        self.pulse = Int32(pulse)
+        self.period = period
+        self.pulse = pulse
 
         swifthal_pwm_set(obj, self.period, self.pulse)
     }
@@ -211,7 +214,7 @@ public final class PWMOut {
             return
         }
 
-        pulse = Int32(Float(period) * dutycycle)
+        pulse = Int(Float(period) * dutycycle)
         swifthal_pwm_set(obj, period, pulse)
     }
     
