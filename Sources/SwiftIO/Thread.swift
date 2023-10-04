@@ -15,14 +15,14 @@ public func yield() {
 
 
 public struct Mutex {
-    let mutex: UnsafeMutableRawPointer
+    let mutex: UnsafeRawPointer
 
     public init() {
         mutex = swifthal_os_mutex_create()
     }
 
     @discardableResult
-    public func lock(_ timeout: Int = -1) -> Result<(), Errno> {
+    public func lock(_ timeout: Int = Int(SWIFT_FOREVER)) -> Result<(), Errno> {
         return nothingOrErrno(
             swifthal_os_mutex_lock(mutex, Int32(timeout))
         )
@@ -44,25 +44,25 @@ public struct Mutex {
 
 
 public struct MessageQueue {
-    let queue: UnsafeMutableRawPointer
+    let queue: UnsafeRawPointer
 
     public init(maxMessageBytes: Int, maxMessageCount: Int) {
-        queue = swifthal_os_mq_create(Int32(maxMessageBytes), Int32(maxMessageCount))
+        queue = swifthal_os_mq_create(maxMessageBytes, maxMessageCount)
     }
 
     public func destroy() {
-        swifthal_os_mq_destory(queue)
+        swifthal_os_mq_destroy(queue)
     }
 
     @discardableResult
-    public func send(data: UnsafeMutableRawPointer, timeout: Int = -1) -> Result<(), Errno> {
+    public func send(data: UnsafeRawPointer, timeout: Int = Int(SWIFT_FOREVER)) -> Result<(), Errno> {
         return nothingOrErrno(
             swifthal_os_mq_send(queue, data, Int32(timeout))
         )
     }
 
     @discardableResult
-    public func receive(into data: UnsafeMutableRawPointer, timeout: Int = -1) -> Result<(), Errno> {
+    public func receive(into data: UnsafeMutableRawPointer, timeout: Int = Int(SWIFT_FOREVER)) -> Result<(), Errno> {
         return nothingOrErrno(
             swifthal_os_mq_recv(queue, data, Int32(timeout))
         )
@@ -80,7 +80,7 @@ public struct MessageQueue {
 
 
 public struct Semaphore {
-    let sem: UnsafeMutableRawPointer
+    let sem: UnsafeRawPointer
 
     public init(initialCount: Int = 0, maxCount: Int = 1) {
         guard initialCount >= 0 && maxCount >= 1 else {
@@ -90,7 +90,7 @@ public struct Semaphore {
     }
 
     @discardableResult
-    public func take(_ timeout: Int = -1) -> Result<(), Errno> {
+    public func take(_ timeout: Int = Int(SWIFT_FOREVER)) -> Result<(), Errno> {
         return nothingOrErrno(
             swifthal_os_sem_take(sem, Int32(timeout))
         )
@@ -100,7 +100,7 @@ public struct Semaphore {
         swifthal_os_sem_give(sem)
     }
 
-    public func eset() {
+    public func reset() {
         swifthal_os_sem_reset(sem)
     }
 
