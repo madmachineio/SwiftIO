@@ -7,6 +7,9 @@
 #ifndef _SWIFT_I2S_H_
 #define _SWIFT_I2S_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /** @brief I2S work mode. */
 enum swift_i2s_mode {
 	SWIFT_I2S_MODE_PHILIPS,

@@ -7,6 +7,7 @@
 #ifndef _SWIFT_SPI_H_
 #define _SWIFT_SPI_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 #define SWIFT_SPI_MODE_CPOL             (1 << 1)

@@ -7,6 +7,7 @@
 #ifndef _SWIFT_I2C_H_
 #define _SWIFT_I2C_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 #define SWIFT_I2C_SPEED_STANDARD (100 * 1000)

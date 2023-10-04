@@ -7,6 +7,7 @@
 #ifndef _SWIFT_PLATFORM_H_
 #define _SWIFT_PLATFORM_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 #define SWIFT_NO_WAIT   0

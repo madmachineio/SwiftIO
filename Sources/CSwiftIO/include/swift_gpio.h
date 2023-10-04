@@ -7,6 +7,9 @@
 #ifndef _SWIFT_GPIO_H_
 #define _SWIFT_GPIO_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /** @brief GPIO direction, Input or output. */
 enum swift_gpio_direction {
 	SWIFT_GPIO_DIRECTION_OUT,

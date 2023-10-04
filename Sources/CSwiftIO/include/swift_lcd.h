@@ -7,6 +7,9 @@
 #ifndef _SWIFT_LCD_H_
 #define _SWIFT_LCD_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /** @brief lcd pixel color format */
 enum swift_lcd_pixel_format {
 	SWIFT_LCD_PIXEL_FORMAT_RGB_888,

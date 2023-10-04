@@ -7,6 +7,9 @@
 #ifndef _SWIFT_FS_H_
 #define _SWIFT_FS_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 #define SWIFT_FS_O_READ       0x01
 #define SWIFT_FS_O_WRITE      0x02
 #define SWIFT_FS_O_RDWR       (SWIFT_FS_O_READ | SWIFT_FS_O_WRITE)

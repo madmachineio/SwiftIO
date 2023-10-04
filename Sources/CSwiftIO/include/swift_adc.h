@@ -8,6 +8,7 @@
 #ifndef _SWIFT_ADC_H_
 #define _SWIFT_ADC_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 /**

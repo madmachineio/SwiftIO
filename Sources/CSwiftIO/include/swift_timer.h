@@ -7,6 +7,7 @@
 #ifndef _SWIFT_TIMER_H_
 #define _SWIFT_TIMER_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 /**

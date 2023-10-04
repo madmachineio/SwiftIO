@@ -7,6 +7,7 @@
 #ifndef _SWIFT_UART_H_
 #define _SWIFT_UART_H_
 
+#include <stdint.h>
 #include <sys/types.h>
 
 /** @brief Parity modes */

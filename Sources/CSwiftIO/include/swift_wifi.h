@@ -1,6 +1,9 @@
 #ifndef _SWIFT_WIFI_H_
 #define _SWIFT_WIFI_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 #define SWIFT_WIFI_SSID_MAX_LEN 32
 #define SWIFT_WIFI_IPV4_STR_LEN 17
 /** @brief wifi security type */
