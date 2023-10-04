@@ -7,6 +7,8 @@
 #ifndef _SWIFT_TIMER_H_
 #define _SWIFT_TIMER_H_
 
+#include <sys/types.h>
+
 /**
  * @brief Timer trigger type
  */
@@ -24,7 +26,7 @@ typedef enum swift_timer_type swift_timer_type_t;
  *
  * @return void*	Timer handle,NULL if not found or cannot be used.
  */
-void *swifthal_timer_open();
+const void *swifthal_timer_open();
 
 /**
  * @brief Close a timer
@@ -34,7 +36,7 @@ void *swifthal_timer_open();
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_close(void *timer);
+int swifthal_timer_close(const void *timer);
 
 /**
  * @brief Start timer
@@ -46,7 +48,7 @@ int swifthal_timer_close(void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_start(void *timer, swift_timer_type_t type, int period);
+int swifthal_timer_start(const void *timer, swift_timer_type_t type, ssize_t period);
 
 /**
  * @brief Stop timer
@@ -56,7 +58,7 @@ int swifthal_timer_start(void *timer, swift_timer_type_t type, int period);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_stop(void *timer);
+int swifthal_timer_stop(const void *timer);
 
 /**
  * @brief Add callback for timer expire
@@ -68,7 +70,7 @@ int swifthal_timer_stop(void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)(const void *));
+int swifthal_timer_add_callback(const void *timer, const void *param, void (*callback)(const void *));
 
 /**
  * @brief Read timer status.
@@ -82,7 +84,18 @@ int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)
  *
  * @return Timer status.
  */
-unsigned int swifthal_timer_status_get(void *timer);
+uint32_t swifthal_timer_status_get(const void *timer);
 
+/**
+ * @brief Get time remaining before a timer next expires.
+ *
+ * This routine computes the (approximate) time remaining before a running timer
+ * next expires. If the timer is not running, it returns zero.
+ *
+ * @param timer Timer handle
+ *
+ * @return Remaining time (in milliseconds).
+ */
+uint32_t swifthal_timer_remaining_get(const void *timer);
 
 #endif  /*_SWIFT_TIMER_H_*/
