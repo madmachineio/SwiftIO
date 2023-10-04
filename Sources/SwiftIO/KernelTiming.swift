@@ -29,7 +29,7 @@ public func wait(us: Int) {
  */
 @inlinable
 public func sleep(ms: Int) {
-    swifthal_ms_sleep(Int32(ms))
+    swifthal_ms_sleep(ms)
 }
 
 /**
