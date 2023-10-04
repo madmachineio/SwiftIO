@@ -62,12 +62,6 @@ struct swift_fs_statvfs {
 
 typedef struct swift_fs_statvfs swift_fs_statvfs_t;
 
-/**
- * @brief Get fs mount point
- *
- * @return Mount point string
- */
-char *swifthal_mount_point_get(void);
 
 /**
  * @brief File open
