@@ -27,7 +27,7 @@ import CSwiftIO
 /// but cannot track too long (usually several seconds) in case of overflow.
 public final class Counter {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var mode: Mode
     private var periodTicks: UInt32
@@ -55,7 +55,7 @@ public final class Counter {
             fatalError("Counter \(idName.value) init failed")
         }
             
-        obj = UnsafeMutableRawPointer(ptr)
+        obj = UnsafeRawPointer(ptr)
         counterFrequency = swifthal_counter_freq(obj)
         maxCountTicks = swifthal_counter_get_max_top_value(obj)
         maxCountMicroseconds = swifthal_counter_ticks_to_us(obj, maxCountTicks)
@@ -130,14 +130,24 @@ public final class Counter {
     /// long, the value may overflow.
     /// 
     /// - Returns: The number of ticks in UInt32.
-    public func getTicks() -> UInt32 {
-        return swifthal_counter_read(obj)
+    public func getTicks() -> Result<UInt32, Errno> {
+        var ticks: UInt32 = 0
+
+        let result = nothingOrErrno(
+            swifthal_counter_read(obj, &ticks)
+        )
+        if case .failure(let err) = result {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+            return .failure(err)
+        }
+
+        return .success(ticks)
     }
 
     /// Converts the time in microsecond to the number of ticks.
     /// - Parameter period: The specified time period.
     /// - Returns: The corresponding number of ticks.
-    public func getTicks(_ period: UInt64) -> UInt32 {
+    public func getTicks(from period: UInt64) -> UInt32 {
         return swifthal_counter_us_to_ticks(obj, period)
     }
     
