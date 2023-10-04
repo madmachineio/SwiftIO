@@ -71,13 +71,13 @@ UART is a two-wire serial communication protocol used to communicate with
 */
 public final class UART {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    public let obj: UnsafeRawPointer
 
     private var config: swift_uart_cfg_t
 
     private var baudRate: Int {
         willSet {
-            config.baudrate = Int32(newValue)
+            config.baudrate = newValue
         }
     }
 
@@ -101,7 +101,7 @@ public final class UART {
 
     private var readBufferLength: Int {
         willSet {
-            config.read_buf_len = Int32(newValue)
+            config.read_buf_len = newValue
         }
     }
 
@@ -125,7 +125,7 @@ public final class UART {
         parity: Parity = .none,
         stopBits: StopBits = .oneBit,
         dataBits: DataBits = .eightBits,
-        readBufferLength: Int = 64
+        readBufferLength: Int = 1024
     ) {
         self.id = idName.value
         self.baudRate = baudRate
@@ -135,14 +135,14 @@ public final class UART {
         self.readBufferLength = readBufferLength
 
         config = swift_uart_cfg_t()
-        config.baudrate = Int32(baudRate)
+        config.baudrate = baudRate
         config.parity = UART.getParityRawValue(parity)
         config.stop_bits = UART.getStopBitsRawValue(stopBits)
         config.data_bits = UART.getDataBitsRawValue(dataBits)
-        config.read_buf_len = Int32(readBufferLength)
+        config.read_buf_len = readBufferLength
 
         if let ptr = swifthal_uart_open(id, &config) {
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = UnsafeRawPointer(ptr)
         } else {
             fatalError("UART \(idName.value) init failed")
         }
@@ -237,7 +237,7 @@ public final class UART {
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_uart_write(obj, data, Int32(writeLength))
+                swifthal_uart_write(obj, data, writeLength)
             )
         }
         if case .failure(let err) = result {
@@ -260,7 +260,7 @@ public final class UART {
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_uart_write(obj, data.baseAddress, Int32(writeLength))
+                swifthal_uart_write(obj, data.baseAddress, writeLength)
             )
         }
         if case .failure(let err) = result {
@@ -279,7 +279,7 @@ public final class UART {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
 
         let result = nothingOrErrno(
-            swifthal_uart_write(obj, data, Int32(data.count))
+            swifthal_uart_write(obj, data, data.count)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -381,7 +381,7 @@ public final class UART {
             result = .failure(err)
         } else {
             result = valueOrErrno(
-                swifthal_uart_read(obj, &buffer, Int32(readLength), timeoutValue)
+                swifthal_uart_read(obj, &buffer, readLength, timeoutValue)
             )
         }
 
@@ -442,7 +442,7 @@ public final class UART {
             result = .failure(err)
         } else {
             result = valueOrErrno(
-                swifthal_uart_read(obj, buffer.baseAddress, Int32(readLength), timeoutValue)
+                swifthal_uart_read(obj, buffer.baseAddress, readLength, timeoutValue)
             )
         }
         if case .failure(let err) = result {

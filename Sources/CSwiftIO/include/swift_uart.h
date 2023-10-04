@@ -7,6 +7,8 @@
 #ifndef _SWIFT_UART_H_
 #define _SWIFT_UART_H_
 
+#include <sys/types.h>
+
 /** @brief Parity modes */
 enum swift_uart_parity {
 	SWIFT_UART_PARITY_NONE,
@@ -42,11 +44,11 @@ typedef enum swift_uart_data_bits swift_uart_data_bits_t;
  * @param read_buf_len uart read buffer size
  */
 struct swift_uart_cfg {
-	int baudrate;
+	ssize_t baudrate;
 	swift_uart_parity_t parity;
 	swift_uart_stop_bits_t stop_bits;
 	swift_uart_data_bits_t data_bits;
-	int read_buf_len;
+	ssize_t read_buf_len;
 };
 
 typedef struct swift_uart_cfg swift_uart_cfg_t;
@@ -59,7 +61,7 @@ typedef struct swift_uart_cfg swift_uart_cfg_t;
  *
  * @return void*	Uart handle,NULL if not found or cannot be used.
  */
-void *swifthal_uart_open(int id, const swift_uart_cfg_t *cfg);
+const void *swifthal_uart_open(int id, const swift_uart_cfg_t *cfg);
 
 /**
  * @brief Close a Uart
@@ -68,7 +70,7 @@ void *swifthal_uart_open(int id, const swift_uart_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_close(void *uart);
+int swifthal_uart_close(const void *uart);
 
 /**
  * @brief Set uart baudrate
@@ -79,7 +81,7 @@ int swifthal_uart_close(void *uart);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_baudrate_set(void *uart, int baudrate);
+int swifthal_uart_baudrate_set(const void *uart, ssize_t baudrate);
 
 /**
  * @brief Set uart parity
@@ -90,7 +92,7 @@ int swifthal_uart_baudrate_set(void *uart, int baudrate);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_parity_set(void *uart, swift_uart_parity_t parity);
+int swifthal_uart_parity_set(const void *uart, swift_uart_parity_t parity);
 
 /**
  * @brief Set uart stop bits
@@ -101,7 +103,7 @@ int swifthal_uart_parity_set(void *uart, swift_uart_parity_t parity);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_stop_bits_set(void *uart, swift_uart_stop_bits_t stop_bits);
+int swifthal_uart_stop_bits_set(const void *uart, swift_uart_stop_bits_t stop_bits);
 
 /**
  * @brief Set uart data bits
@@ -112,7 +114,7 @@ int swifthal_uart_stop_bits_set(void *uart, swift_uart_stop_bits_t stop_bits);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_swift_uart_data_bits_set(void *uart, swift_uart_stop_bits_t data_bits);
+int swifthal_swift_uart_data_bits_set(const void *uart, swift_uart_stop_bits_t data_bits);
 
 /**
  * @brief Get uart config information
@@ -123,7 +125,7 @@ int swifthal_swift_uart_data_bits_set(void *uart, swift_uart_stop_bits_t data_bi
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_config_get(void *uart, swift_uart_cfg_t *cfg);
+int swifthal_uart_config_get(const void *uart, swift_uart_cfg_t *cfg);
 
 /**
  * @brief Send one character through UART.
@@ -134,7 +136,7 @@ int swifthal_uart_config_get(void *uart, swift_uart_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_put(void *uart, unsigned char c);
+int swifthal_uart_char_put(const void *uart, uint8_t c);
 
 /**
  * @brief Receive on character to buffer through UART.
@@ -146,7 +148,7 @@ int swifthal_uart_char_put(void *uart, unsigned char c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_get(void *uart, unsigned char *c, int timeout);
+int swifthal_uart_char_get(const void *uart, uint8_t *c, int timeout);
 
 /**
  * @brief Send given number of bytes from buffer through UART.
@@ -158,7 +160,7 @@ int swifthal_uart_char_get(void *uart, unsigned char *c, int timeout);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_write(void *uart, const unsigned char *buf, int length);
+int swifthal_uart_write(const void *uart, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Recvice given number of bytes to buffer through UART.
@@ -171,7 +173,7 @@ int swifthal_uart_write(void *uart, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_read(void *uart, unsigned char *buf, int length, int timeout);
+int swifthal_uart_read(const void *uart, uint8_t *buf, ssize_t length, int timeout);
 
 /**
  * @brief Get data amount in read buffer
@@ -180,7 +182,7 @@ int swifthal_uart_read(void *uart, unsigned char *buf, int length, int timeout);
  *
  * @return data amount
  */
-int swifthal_uart_remainder_get(void *uart);
+int swifthal_uart_remainder_get(const void *uart);
 
 /**
  * @brief Clear read buffer of UART
@@ -190,7 +192,7 @@ int swifthal_uart_remainder_get(void *uart);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_buffer_clear(void *uart);
+int swifthal_uart_buffer_clear(const void *uart);
 
 /**
  * @brief Get UART support device number
