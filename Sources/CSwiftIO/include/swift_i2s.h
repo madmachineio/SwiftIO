@@ -253,3 +253,4 @@ int swifthal_i2s_read(void *i2s, unsigned char *buf, int length);
 int swifthal_i2s_dev_number_get(void);
 
 #endif /* _SWIFT_I2S_H_ */
+

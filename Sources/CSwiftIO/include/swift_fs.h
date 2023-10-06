@@ -42,7 +42,7 @@ typedef enum swift_fs_dir_entry_type swift_fs_dir_entry_type_t;
 struct swift_fs_dirent {
 	swift_fs_dir_entry_type_t type;
 	char name[256];
-	unsigned int size;
+	ssize_t size;
 };
 
 typedef struct swift_fs_dirent swift_fs_dirent_t;
@@ -72,6 +72,7 @@ typedef struct swift_fs_statvfs swift_fs_statvfs_t;
  * Opens or creates, if does not exist, file depending on flags provided
  * and associates a stream with it.
  *
+ * @param fp   Pointer to save the file descriptor
  * @param path The path with name of file to open
  * @param flags The mode flags
  *
@@ -82,9 +83,9 @@ typedef struct swift_fs_statvfs swift_fs_statvfs_t;
  *   SWIFT_FS_O_CREATE  create file if it does not exist
  *   SWIFT_FS_O_APPEND  move to end of file before each write
  *
- * @retval File handle, NULL is fail
+ * @retval 0 Success
  */
-void *swifthal_fs_open(const char *path, unsigned char flags);
+int swifthal_fs_open(void **fp, const char *path, uint8_t flags);
 
 /**
  * @brief Close file
@@ -129,7 +130,7 @@ int swifthal_fs_rename(const char *from, char *to);
  * of bytes requested to be written. Any other value, indicates an error. Will
  * return -ERRNO code on error.
  */
-int swifthal_fs_write(void *fp, const void *buf, unsigned int size);
+int swifthal_fs_write(void *fp, const void *buf, ssize_t size);
 
 /**
  * @brief File read
@@ -145,7 +146,7 @@ int swifthal_fs_write(void *fp, const void *buf, unsigned int size);
  * requested if there are not enough bytes available in file. Will return
  * -ERRNO code on error.
  */
-int swifthal_fs_read(void *fp, void *buf, unsigned int size);
+int swifthal_fs_read(void *fp, void *buf, ssize_t size);
 
 /**
  * @brief File seek
@@ -160,7 +161,7 @@ int swifthal_fs_read(void *fp, void *buf, unsigned int size);
  * @retval 0 Success
  * @retval -ERRNO errno code if error.
  */
-int swifthal_fs_seek(void *fp, int offset, int whence);
+int swifthal_fs_seek(void *fp, ssize_t offset, int whence);
 
 /**
  * @brief Get current file position.
@@ -186,7 +187,7 @@ int swifthal_fs_tell(void *fp);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_fs_truncate(void *fp, unsigned int length);
+int swifthal_fs_truncate(void *fp, ssize_t length);
 
 /**
  * @brief Flushes any cached write of an open file
@@ -211,11 +212,12 @@ int swifthal_fs_mkdir(const char *path);
 /**
  * @brief Directory open
  *
+ * @param dp   Pointer to save the directory descriptor
  * @param path Path to the directory to open
  *
  * @retval Directory handle, NULL is fail
  */
-void *swifthal_fs_opendir(const char *path);
+int swifthal_fs_opendir(void **dp, const char *path);
 
 /**
  * @brief Directory read entry
