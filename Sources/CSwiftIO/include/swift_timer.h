@@ -27,7 +27,7 @@ typedef enum swift_timer_type swift_timer_type_t;
  *
  * @return void*	Timer handle,NULL if not found or cannot be used.
  */
-const void *swifthal_timer_open();
+void *swifthal_timer_open();
 
 /**
  * @brief Close a timer
@@ -37,7 +37,7 @@ const void *swifthal_timer_open();
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_close(const void *timer);
+int swifthal_timer_close(void *timer);
 
 /**
  * @brief Start timer
@@ -49,7 +49,7 @@ int swifthal_timer_close(const void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_start(const void *timer, swift_timer_type_t type, ssize_t period);
+int swifthal_timer_start(void *timer, swift_timer_type_t type, ssize_t period);
 
 /**
  * @brief Stop timer
@@ -59,7 +59,7 @@ int swifthal_timer_start(const void *timer, swift_timer_type_t type, ssize_t per
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_stop(const void *timer);
+int swifthal_timer_stop(void *timer);
 
 /**
  * @brief Add callback for timer expire
@@ -71,7 +71,7 @@ int swifthal_timer_stop(const void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_add_callback(const void *timer, const void *param, void (*callback)(const void *));
+int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)(const void *));
 
 /**
  * @brief Read timer status.
@@ -85,7 +85,7 @@ int swifthal_timer_add_callback(const void *timer, const void *param, void (*cal
  *
  * @return Timer status.
  */
-uint32_t swifthal_timer_status_get(const void *timer);
+uint32_t swifthal_timer_status_get(void *timer);
 
 /**
  * @brief Get time remaining before a timer next expires.
@@ -97,6 +97,6 @@ uint32_t swifthal_timer_status_get(const void *timer);
  *
  * @return Remaining time (in milliseconds).
  */
-uint32_t swifthal_timer_remaining_get(const void *timer);
+uint32_t swifthal_timer_remaining_get(void *timer);
 
 #endif  /*_SWIFT_TIMER_H_*/

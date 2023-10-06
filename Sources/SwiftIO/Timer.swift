@@ -72,7 +72,7 @@ import CSwiftIO
  ```
 */
 public final class Timer {
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var modeRawValue: swift_timer_type_t
 
@@ -97,7 +97,7 @@ public final class Timer {
         self.period = period
 
         if let ptr = swifthal_timer_open() {
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("Timer init failed!")
         }

@@ -54,7 +54,7 @@ typedef enum swift_gpio_int_mode swift_gpio_int_mode_t;
  *
  * @return GPIO handle, NULL is fail
  */
-const void *swifthal_gpio_open(int id,
+void *swifthal_gpio_open(int id,
 			 swift_gpio_direction_t direction,
 			 swift_gpio_mode_t io_mode);
 
@@ -66,7 +66,7 @@ const void *swifthal_gpio_open(int id,
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_close(const void *gpio);
+int swifthal_gpio_close(void *gpio);
 
 /**
  * @brief Configure opened GPIO, change direction and mode
@@ -84,7 +84,7 @@ int swifthal_gpio_close(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_config(const void *gpio,
+int swifthal_gpio_config(void *gpio,
 			 swift_gpio_direction_t direction,
 			 swift_gpio_mode_t io_mode);
 
@@ -99,7 +99,7 @@ int swifthal_gpio_config(const void *gpio,
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_set(const void *gpio, int level);
+int swifthal_gpio_set(void *gpio, int level);
 
 /**
  * @brief Get input GPIO level
@@ -110,7 +110,7 @@ int swifthal_gpio_set(const void *gpio, int level);
  * @retval 1 high level
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_get(const void *gpio);
+int swifthal_gpio_get(void *gpio);
 
 /**
  * @brief Config input GPIO interrupt
@@ -126,7 +126,7 @@ int swifthal_gpio_get(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_config(const void *gpio, swift_gpio_int_mode_t int_mode);
+int swifthal_gpio_interrupt_config(void *gpio, swift_gpio_int_mode_t int_mode);
 
 /**
  * @brief The installed callback will be called when the interrupt is generated
@@ -138,7 +138,7 @@ int swifthal_gpio_interrupt_config(const void *gpio, swift_gpio_int_mode_t int_m
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_callback_install(const void *gpio, const void *param, void (*callback)(const void *));
+int swifthal_gpio_interrupt_callback_install(void *gpio, const void *param, void (*callback)(const void *));
 
 /**
  * @brief Uninstall interrupt callback
@@ -148,7 +148,7 @@ int swifthal_gpio_interrupt_callback_install(const void *gpio, const void *param
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_callback_uninstall(const void *gpio);
+int swifthal_gpio_interrupt_callback_uninstall(void *gpio);
 
 /**
  * @brief Enable GPIO interrupt
@@ -158,7 +158,7 @@ int swifthal_gpio_interrupt_callback_uninstall(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_enable(const void *gpio);
+int swifthal_gpio_interrupt_enable(void *gpio);
 
 /**
  * @brief Disable GPIO interrupt
@@ -168,7 +168,7 @@ int swifthal_gpio_interrupt_enable(const void *gpio);
  * @retval 0 Success
  * @retval -ERRNO errno code if error
  */
-int swifthal_gpio_interrupt_disable(const void *gpio);
+int swifthal_gpio_interrupt_disable(void *gpio);
 
 /**
  * @brief Get GPIO support device number

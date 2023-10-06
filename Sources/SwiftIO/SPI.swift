@@ -137,7 +137,7 @@ import CSwiftIO
  */
  public final class SPI {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var operation: Operation
 
@@ -222,7 +222,7 @@ import CSwiftIO
                 cs.setMode(.pushPull)
                 cs.write(true)
             }
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("SPI \(idName.value) init failed!")
         }

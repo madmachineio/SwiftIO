@@ -15,7 +15,7 @@ import CSwiftIO
 
  public final class I2S {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var config = swift_i2s_cfg_t()
 
@@ -104,7 +104,7 @@ import CSwiftIO
 
         self.id = idName.value
         if let ptr = swifthal_i2s_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("I2S\(idName.value) initialization failed!")
         }

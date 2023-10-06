@@ -71,7 +71,7 @@ UART is a two-wire serial communication protocol used to communicate with
 */
 public final class UART {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var config: swift_uart_cfg_t
 
@@ -142,7 +142,7 @@ public final class UART {
         config.read_buf_len = readBufferLength
 
         if let ptr = swifthal_uart_open(id, &config) {
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("UART \(idName.value) init failed")
         }

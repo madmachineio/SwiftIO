@@ -27,7 +27,7 @@ import CSwiftIO
 /// but cannot track too long (usually several seconds) in case of overflow.
 public final class Counter {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var mode: Mode
     private var periodTicks: UInt32
@@ -55,7 +55,7 @@ public final class Counter {
             fatalError("Counter \(idName.value) init failed")
         }
             
-        obj = UnsafeRawPointer(ptr)
+        obj = ptr
         counterFrequency = swifthal_counter_freq(obj)
         maxCountTicks = swifthal_counter_get_max_top_value(obj)
         maxCountMicroseconds = swifthal_counter_ticks_to_us(obj, maxCountTicks)

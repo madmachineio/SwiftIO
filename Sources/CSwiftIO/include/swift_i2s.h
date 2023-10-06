@@ -156,7 +156,7 @@ void *swifthal_i2s_handle_get(int id);
  *
  * @return I2S ID
  */
-int swifthal_i2s_id_get(const void *i2s);
+int swifthal_i2s_id_get(void *i2s);
 
 
 /**
@@ -167,7 +167,7 @@ int swifthal_i2s_id_get(const void *i2s);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_close(const void *i2s);
+int swifthal_i2s_close(void *i2s);
 
 
 /**
@@ -180,7 +180,7 @@ int swifthal_i2s_close(const void *i2s);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_config_set(const void *i2s, const swift_i2s_dir_t dir, const swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_set(void *i2s, const swift_i2s_dir_t dir, const swift_i2s_cfg_t *cfg);
 
 /**
  * @brief Get i2s config information
@@ -192,7 +192,7 @@ int swifthal_i2s_config_set(const void *i2s, const swift_i2s_dir_t dir, const sw
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_config_get(const void *i2s, const swift_i2s_dir_t dir, swift_i2s_cfg_t *cfg);
+int swifthal_i2s_config_get(void *i2s, const swift_i2s_dir_t dir, swift_i2s_cfg_t *cfg);
 
 /**
  * @brief Send a trigger command.
@@ -204,7 +204,7 @@ int swifthal_i2s_config_get(const void *i2s, const swift_i2s_dir_t dir, swift_i2
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_trigger(const void *i2s, const swift_i2s_dir_t dir, const i2s_trigger_cmd_t cmd);
+int swifthal_i2s_trigger(void *i2s, const swift_i2s_dir_t dir, const i2s_trigger_cmd_t cmd);
 
 /**
  * @brief Get i2s send work status
@@ -215,7 +215,7 @@ int swifthal_i2s_trigger(const void *i2s, const swift_i2s_dir_t dir, const i2s_t
  * @retval Negative errno code if failure.
  */
 
-int swifthal_i2s_status_get(const void *i2s, const swift_i2s_dir_t dir);
+int swifthal_i2s_status_get(void *i2s, const swift_i2s_dir_t dir);
 
 
 /**
@@ -228,7 +228,7 @@ int swifthal_i2s_status_get(const void *i2s, const swift_i2s_dir_t dir);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_write(const void *i2s, const unsigned char *buf, int length);
+int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length);
 
 /**
  * @brief Receive given number of bytes from buffer through I2S.
@@ -241,7 +241,7 @@ int swifthal_i2s_write(const void *i2s, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_read(const void *i2s, unsigned char *buf, int length);
+int swifthal_i2s_read(void *i2s, unsigned char *buf, int length);
 
 /**
  * @brief Get I2S support device number

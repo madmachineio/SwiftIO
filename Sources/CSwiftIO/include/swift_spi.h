@@ -27,7 +27,7 @@
  * @param r_notify  Read async notify
  * @return SPI handle, NULL is fail
  */
-const void *swifthal_spi_open(int id,
+void *swifthal_spi_open(int id,
 			ssize_t speed,
 			uint16_t operation,
 			void (*w_notify)(void *),
@@ -41,7 +41,7 @@ const void *swifthal_spi_open(int id,
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_close(const void *spi);
+int swifthal_spi_close(void *spi);
 
 /**
  * @brief Config spi speed
@@ -53,7 +53,7 @@ int swifthal_spi_close(const void *spi);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_config(const void *spi, ssize_t speed, uint16_t operation);
+int swifthal_spi_config(void *spi, ssize_t speed, uint16_t operation);
 
 /**
  * @brief Send given number of bytes from buffer through SPI.
@@ -65,7 +65,7 @@ int swifthal_spi_config(const void *spi, ssize_t speed, uint16_t operation);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_write(const void *spi, const uint8_t *buf, ssize_t length);
+int swifthal_spi_write(void *spi, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Recvice given number of bytes to buffer through SPI.
@@ -77,7 +77,7 @@ int swifthal_spi_write(const void *spi, const uint8_t *buf, ssize_t length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_read(const void *spi, uint8_t *buf, ssize_t length);
+int swifthal_spi_read(void *spi, uint8_t *buf, ssize_t length);
 
 
 /**
@@ -93,7 +93,7 @@ int swifthal_spi_read(const void *spi, uint8_t *buf, ssize_t length);
  * @retval Negative errno code if failure.
  */
 
-int swifthal_spi_transceive(const void *spi,
+int swifthal_spi_transceive(void *spi,
 			    const uint8_t *w_buf, ssize_t w_length,
 			    uint8_t *r_buf, ssize_t r_length);
 
@@ -107,7 +107,7 @@ int swifthal_spi_transceive(const void *spi,
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_async_write(const void *spi, const uint8_t *buf, ssize_t length);
+int swifthal_spi_async_write(void *spi, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Asynchronous revice given number of bytes from buffer through SPI.
@@ -119,7 +119,7 @@ int swifthal_spi_async_write(const void *spi, const uint8_t *buf, ssize_t length
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_spi_async_read(const void *spi, uint8_t *buf, ssize_t length);
+int swifthal_spi_async_read(void *spi, uint8_t *buf, ssize_t length);
 
 /**
  * @brief Get SPI support device number

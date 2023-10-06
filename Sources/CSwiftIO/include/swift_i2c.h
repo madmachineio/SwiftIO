@@ -20,7 +20,7 @@
  * @param id I2C id
  * @return I2C handle, NULL is fail
  */
-const void *swifthal_i2c_open(int id);
+void *swifthal_i2c_open(int id);
 
 /**
  * @brief Close i2c
@@ -30,7 +30,7 @@ const void *swifthal_i2c_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_close(const void *i2c);
+int swifthal_i2c_close(void *i2c);
 
 /**
  * @brief Config i2c speed
@@ -44,7 +44,7 @@ int swifthal_i2c_close(const void *i2c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2c_config(const void *i2c, uint32_t speed);
+int swifthal_i2c_config(void *i2c, uint32_t speed);
 
 /**
  * @brief Write a set amount of data to an I2C device.
@@ -59,7 +59,7 @@ int swifthal_i2c_config(const void *i2c, uint32_t speed);
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_write(const void *i2c, uint8_t address, const uint8_t *buf, ssize_t length);
+int swifthal_i2c_write(void *i2c, uint8_t address, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Read a set amount of data from an I2C device.
@@ -74,7 +74,7 @@ int swifthal_i2c_write(const void *i2c, uint8_t address, const uint8_t *buf, ssi
  * @retval 0 If successful.
  * @retval -EIO General input / output error.
  */
-int swifthal_i2c_read(const void *i2c, uint8_t address, uint8_t *buf, ssize_t length);
+int swifthal_i2c_read(void *i2c, uint8_t address, uint8_t *buf, ssize_t length);
 
 /**
  * @brief Write then read data from an I2C device.
@@ -93,7 +93,7 @@ int swifthal_i2c_read(const void *i2c, uint8_t address, uint8_t *buf, ssize_t le
  * @retval 0 if successful
  * @retval negative on error.
  */
-int swifthal_i2c_write_read(const void *i2c, uint8_t addr,
+int swifthal_i2c_write_read(void *i2c, uint8_t addr,
 			    const void *write_buf, ssize_t num_write,
 			    void *read_buf, ssize_t num_read);
 

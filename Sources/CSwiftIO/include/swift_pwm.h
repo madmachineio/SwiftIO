@@ -29,7 +29,7 @@ typedef struct swift_pwm_info swift_pwm_info_t;
  * @param id PWM id
  * @return PWM handle, NULL is fail
  */
-const void *swifthal_pwm_open(int id);
+void *swifthal_pwm_open(int id);
 
 /**
  * @brief Close pwm
@@ -39,7 +39,7 @@ const void *swifthal_pwm_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_close(const void *pwm);
+int swifthal_pwm_close(void *pwm);
 
 /**
  * @brief Set pwm paramater
@@ -51,7 +51,7 @@ int swifthal_pwm_close(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_set(const void *pwm, ssize_t period, ssize_t pulse);
+int swifthal_pwm_set(void *pwm, ssize_t period, ssize_t pulse);
 
 /**
  * @brief Suspend pwm output
@@ -61,7 +61,7 @@ int swifthal_pwm_set(const void *pwm, ssize_t period, ssize_t pulse);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_suspend(const void *pwm);
+int swifthal_pwm_suspend(void *pwm);
 
 /**
  * @brief Resume pwm output
@@ -71,7 +71,7 @@ int swifthal_pwm_suspend(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_resume(const void *pwm);
+int swifthal_pwm_resume(void *pwm);
 
 /**
  * @brief Get pwm infomation
@@ -82,7 +82,7 @@ int swifthal_pwm_resume(const void *pwm);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_pwm_info_get(const void *pwm, swift_pwm_info_t *info);
+int swifthal_pwm_info_get(void *pwm, swift_pwm_info_t *info);
 
 /**
  * @brief Get PWM support device number

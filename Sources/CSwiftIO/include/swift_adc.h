@@ -30,7 +30,7 @@ typedef struct swift_adc_info swift_adc_info_t;
  * @param id ADC id
  * @return ADC handle, NULL is fail
  */
-const void *swifthal_adc_open(int id);
+void *swifthal_adc_open(int id);
 
 /**
  * @brief Close adc
@@ -40,7 +40,7 @@ const void *swifthal_adc_open(int id);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_close(const void *adc);
+int swifthal_adc_close(void *adc);
 
 /**
  * @brief Read adc value
@@ -51,7 +51,7 @@ int swifthal_adc_close(const void *adc);
  * @retval Positive indicates the adc value.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_read(const void *adc, uint16_t *sample_buffer);
+int swifthal_adc_read(void *adc, uint16_t *sample_buffer);
 
 /**
  * @brief Get adc infomation
@@ -62,7 +62,7 @@ int swifthal_adc_read(const void *adc, uint16_t *sample_buffer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_info_get(const void *adc, swift_adc_info_t *info);
+int swifthal_adc_info_get(void *adc, swift_adc_info_t *info);
 
 /**
  * @brief Get ADC support device number

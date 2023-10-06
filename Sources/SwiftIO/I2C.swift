@@ -144,7 +144,7 @@ import CSwiftIO
  */
  public final class I2C {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private var speedRawValue: UInt32
     private var speed: Speed {
@@ -175,7 +175,7 @@ import CSwiftIO
         guard let ptr = swifthal_i2c_open(id) else {
             fatalError("I2C\(idName.value) init failed")
         }
-        obj = UnsafeRawPointer(ptr)
+        obj = ptr
         if swifthal_i2c_config(obj, speedRawValue) != 0 {
             fatalError("I2C\(idName.value) init config failed")
         }

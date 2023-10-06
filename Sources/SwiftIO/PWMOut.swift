@@ -91,7 +91,7 @@ In this example, the sound from a buzzer relates to the movement of its internal
 */
 public final class PWMOut {
     private let id: Int32 
-    public let obj: UnsafeRawPointer
+    public let obj: UnsafeMutableRawPointer
 
     private let info: swift_pwm_info_t
 
@@ -148,7 +148,7 @@ public final class PWMOut {
     ) {
         self.id = idName.value
         if let ptr = swifthal_pwm_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         }
         else {
             fatalError("PWM\(idName.value) initialization failed!")
