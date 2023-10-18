@@ -228,7 +228,7 @@ int swifthal_i2s_status_get(void *i2s, const swift_i2s_dir_t dir);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length);
+int swifthal_i2s_write(void *i2s, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Receive given number of bytes from buffer through I2S.
@@ -241,7 +241,7 @@ int swifthal_i2s_write(void *i2s, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_i2s_read(void *i2s, unsigned char *buf, int length);
+int swifthal_i2s_read(void *i2s, uint8_t *buf, ssize_t length);
 
 /**
  * @brief Get I2S support device number

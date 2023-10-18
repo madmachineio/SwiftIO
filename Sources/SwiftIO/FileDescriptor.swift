@@ -128,6 +128,7 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
+    @discardableResult
     public func read(into buffer: UnsafeMutableRawBufferPointer,
                      count: Int? = nil) throws -> Int {
         let length: Int
@@ -158,6 +159,7 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
+    @discardableResult
     public func read(fromAbsoluteOffest offset: Int, into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil) throws -> Int {
         let length: Int
 
@@ -192,6 +194,7 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
+    @discardableResult
     public func read(into buffer: inout [UInt8], count: Int? = nil) throws -> Int {
         let length: Int
 
@@ -223,6 +226,7 @@ public struct FileDescriptor {
 
      - Returns: The bytes successfully read.
      */
+    @discardableResult
     public func read(fromAbsoluteOffest offset: Int,
                      into buffer: inout [UInt8], count: Int? = nil) throws -> Int {
         let length: Int
@@ -258,6 +262,7 @@ public struct FileDescriptor {
      - Parameter offset: **REQUIRED** The new offset for the file descriptor.
      - Parameter whence: **OPTIONAL** The origin of the new offset.
      */
+    @discardableResult
     public func seek(offset: Int, from whence: SeekOrigin = .start) throws -> Int {
         let seekResult = valueOrErrno(
             swifthal_fs_seek(filePointer, offset, whence.rawValue)
@@ -274,6 +279,7 @@ public struct FileDescriptor {
      Writes the contents of a string at the current file offset.
       - Parameter string: **REQUIRED** The string being written.
      */
+    @discardableResult
     public func write(_ string: String) throws -> Int {
         let data = string.utf8CString
         let size = data.count - 1
@@ -298,6 +304,7 @@ public struct FileDescriptor {
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
+    @discardableResult
     public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) throws -> Int {
         let length: Int
 
@@ -326,6 +333,7 @@ public struct FileDescriptor {
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
+    @discardableResult
     public func write(toAbsoluteOffset offset: Int,
                       _ buffer: UnsafeRawBufferPointer, count: Int? = nil) throws -> Int {
         let length: Int
@@ -360,6 +368,7 @@ public struct FileDescriptor {
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
+    @discardableResult
     public func write(_ buffer: [UInt8], count: Int? = nil) throws -> Int {
         let length: Int
 
@@ -391,6 +400,7 @@ public struct FileDescriptor {
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
      */
+    @discardableResult
     public func write(toAbsoluteOffset offset: Int,
                       _ buffer: [UInt8], count: Int? = nil) throws -> Int {
         let length: Int

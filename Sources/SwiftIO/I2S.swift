@@ -159,31 +159,53 @@ import CSwiftIO
         return result
     }
 
-    //@discardableResult
+    @discardableResult
     public func write(
-        _ sample: [UInt8],
+        _ data: [UInt8],
         count: Int? = nil
-    ) {
-    //) -> Result<(), Errno> {
-        let length: Int32
+    ) -> Result<Int, Errno> {
+        var writeLength = 0
+        let validateResult = validateLength(data, count: count, length: &writeLength)
+        var writeResult: Result<Int, Errno> = .success(0)
 
-        if let count = count {
-            length = Int32(min(count, sample.count))
+        if case .success = validateResult {
+            writeResult = valueOrErrno(
+                data.withUnsafeBytes { pointer in 
+                    swifthal_i2s_write(obj, pointer.baseAddress, writeLength)
+                }
+            )
         } else {
-            length = Int32(sample.count)
+            return .failure(Errno.invalidArgument)
         }
         
-        //let result = nothingOrErrno(
-            let ret = swifthal_i2s_write(obj, sample, length)
-        //)
-
-        if ret != 0 {
-            print("I2S write result = \(ret)")
+        if case .failure(let err) = writeResult {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
-        //if case .failure(let err) = result {
-        //    print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        //}
-        //return result
+
+        return writeResult
+    }
+
+     @discardableResult
+    public func write<Element: BinaryInteger>(_ data: [Element], count: Int? = nil) -> Result<Int, Errno> {
+        var writeLength = 0
+        let validateResult = validateLength(data, count: count, length: &writeLength)
+        var writeResult: Result<Int, Errno> = .success(0)
+
+        if case .success = validateResult {
+            writeResult = valueOrErrno(
+                data.withUnsafeBytes { pointer in 
+                    swifthal_i2s_write(obj, pointer.baseAddress, writeLength)
+                }
+            )
+        } else {
+            return .failure(Errno.invalidArgument)
+        }
+
+        if case .failure(let err) = writeResult {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return writeResult
     }
 }
 
