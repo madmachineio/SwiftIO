@@ -116,7 +116,7 @@ public final class DigitalOut {
      Write to this property would change the output value.
      
      */
-    var value: Bool {
+    public var value: Bool {
         willSet {
 			swifthal_gpio_set(obj, newValue ? 1 : 0)
 		}

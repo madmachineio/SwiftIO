@@ -236,7 +236,6 @@ public final class DigitalInOut {
     /// > Note: If the pin is used as input before, it will be automatically set
     /// to output.
     /// - Parameter value: The output value: `true` or `false`.
-    @inlinable
 	public func write(_ value: Bool) {
         if direction == .output {
             swifthal_gpio_set(obj, value ? 1 : 0)
@@ -263,7 +262,6 @@ public final class DigitalInOut {
 
     /// Reads the value from the pin.
     /// - Returns: `true` or `false` of the logic value.
-    @inlinable
 	public func read() -> Bool {
         if direction == .output {
             setToInput()

@@ -120,7 +120,6 @@ public final class AnalogIn {
 
      - Returns: A raw value in the range of 0 to max resolution.
      */
-    @inlinable
     public func readRawValue() -> Int {
         var sample: UInt16 = 0
 
@@ -140,6 +139,7 @@ public final class AnalogIn {
 
      - Returns: A raw value in the range of 0 to max resolution.
      */
+    @inlinable
     public func read() -> Int {
         return readRawValue()
     }
