@@ -91,7 +91,7 @@ In this example, the sound from a buzzer relates to the movement of its internal
 */
 public final class PWMOut {
     private let id: Int32 
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let info: swift_pwm_info_t
 

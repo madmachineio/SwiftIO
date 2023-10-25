@@ -52,7 +52,7 @@ import CSwiftIO
  */
 public final class AnalogIn {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let info: swift_adc_info_t
 
