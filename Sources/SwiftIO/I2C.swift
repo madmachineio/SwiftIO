@@ -16,10 +16,10 @@ import CSwiftIO
  Inter-Integrated Circuit, I2C (I squared C) for short, is a two wire protocol for
  short distance communication between different devices.
 
- The I2C class allows some operations through I2C protocol, including reading messages from devices and writing messages to devices. The messages are in the form of
- a byte (`UInt8`) or an array of bytes (`[UInt8]`). Currently the I2C class
- only support master mode.
- 
+ The I2C class allows you to read and write messages through I2C protocol.
+ The messages can be a single byte (`UInt8`) or an array of bytes (`[UInt8]`).
+ Currently the I2C class only support master mode.
+
  - Note: Different I2C devices have different attributes. Please reference their
  device manual for detailed configuration.
 
@@ -28,7 +28,7 @@ import CSwiftIO
  For example, initialize the pin I2C0 for communication:
 
  ```swift
- // Initialize an I2C interface with its speed set to default.
+ // Initialize an I2C interface with its speed set to standard (100Kbps).
  let i2c = I2C(Id.I2C0)
  ```
  Each I2C interface consists of a SCL (serial clock) and SDA (serial data). So I2C0
@@ -36,48 +36,50 @@ import CSwiftIO
 
  Besides, the supported clock speed for different devices may not be the same.
  Make sure to configure it according to datasheet. By default, it is standard
- mode (100kbps).
+ mode (100Kbps).
 
  ### Read or write data
 
- After initializing an I2C instance, to read or write data, use the related
- methods in the class.
+ After initializing an I2C instance, to read or write data, you still need the
+ device adddress of the device for communication
 
- For example, read a byte from a device:
+ For example, to read a byte from a device:
 
  ```swift
  var byte: UInt8 = 0
- i2c.read(into: &byte, from: ...)
+ let address: UInt8 = 0x44
+ i2c.read(into: &byte, from: address)
  ```
- The address to read from is the desired device address. If several devices are
- connected, only the device with that address will respond. The address of each
- device is written on its manual and defined when the devices are manufactured.
+ The address is specific to the desired device. When multiple devices are connected,
+ only the one with the matching address will respond. Each device's address is
+ typically provided in its manual and set during the manufacturing process.
 
- The statements above allow you to get data and replace the `byte` with the new data received.
+ The statements gets data from the device and replace the `byte` with the new
+ data received.
 
- If you want to write a byte to a device:
+ If you want to write a byte to the device:
 
  ```swift
- let value: UInt8 = ...
- i2c.write(value, to: ...)
+ let value: UInt8 = 0x01
+ i2c.write(value, to: address)
  ```
  No matter how many data is sent or received, they are all in UInt8.
 
 
  ### Read or write data and handle error
 
- In fact, the communication may fail due to all kinds of reason. You will
- thus get wrong data. So the methods involving reading or writing data will
- return the results in `Result` type. You can capture the error and provide
- other solutions in advance.
+ Indeed, communication can fail for various reasons, potentially leading to
+ incorrect data. So methods related to reading or writing data will return
+ results in a `Result` type. This allows you to handle errors and find 
+ alternative solutions.
 
  ```swift
  // Read a byte from the provided address and get the results.
- let result = i2c.read(into: &byte, from: ...)
+ let result = i2c.read(into: &byte, from: address)
 
  if case .failure(let err) = result {
      // If the communication fails, execute the specified task.
-     ...
+
  }
  ```
  If the data is successfully read, it is stored in `byte`. If the communication
@@ -102,14 +104,14 @@ import CSwiftIO
  // Send data to the device.
  var result = i2c.write([0x24, 0x0B], to: address)
  if case .failure(let err) = result {
-     ...
+
  }
 
  // Read data from the device and store them in the buffer.
  var readBuffer = [UInt8](repeating: 0, count: 6)
  result = i2c.read(into: &readBuffer, from: address)
  if case .failure(let err) = result {
-    ...
+
  }
  ```
 
@@ -139,7 +141,8 @@ import CSwiftIO
  has configured the sensor by sending and receiving data via I2C bus.
  Therefore, you can directly read temperature using the predefined APIs.
 
- BTW, you can find more drivers for different devices in [MadDrivers](https://github.com/madmachineio/MadDrivers).
+ BTW, you can find more drivers for different devices in 
+ [MadDrivers](https://github.com/madmachineio/MadDrivers).
 
  */
  public final class I2C {
@@ -155,12 +158,13 @@ import CSwiftIO
 
 
     /**
-     Initializes a specific I2C interface as a master device.
+     Initializes a specific I2C interface with specified speed.
 
-     > Note: Please make sure the communication speed set for the I2C is supported
+     > Important: Please make sure the communication speed set for the I2C is supported
      by the slave device.
 
-     - Parameter idName: **REQUIRED** The name of I2C pin. See Id for the board in
+     - Parameter idName: **REQUIRED** Name/label for a physical pin which is
+     associated with the I2C peripheral. See Id for the board in
      [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
      - Parameter speed: **OPTIONAL** The clock speed for data transmission,
      standard (100 Kbps) by default.
@@ -188,17 +192,20 @@ import CSwiftIO
     /**
      Gets the current clock speed of the data transmission.
      
-     - Returns: The current speed: `.standard` (100 Kbps), `.fast` (400 Kbps) or `.fastPlus` (1Mbps).
+     - Returns: The current speed: `.standard` (100 Kbps), `.fast` (400 Kbps) or
+     `.fastPlus` (1 Mbps).
      */
     public func getSpeed() -> Speed {
         return speed
     }
 
-    /**
-     Sets the clock speed to change the transmission rate.
-     - Parameter speed: The clock speed for data transmission:
-     `.standard` (100 Kbps), `.fast` (400 Kbps) or `.fastPlus` (1Mbps).
-     */
+     /**
+      Changes the clock speed over I2C bus.
+      - Parameter speed: The clock speed for data transmission:
+      `.standard` (100 Kbps), `.fast` (400 Kbps) or `.fastPlus` (1 Mbps).
+      - Returns: Whether the configration succeeds. If not, it returns the
+      specific error.
+      */
     public func setSpeed(_ speed: Speed) -> Result<(), Errno> {
         let oldSpeed = self.speed
         self.speed = speed
@@ -315,8 +322,8 @@ import CSwiftIO
      /// Writes a UInt8 to the specified slave device with the given address and
      /// then read a UInt8 from it.
      ///
-     /// > Note: This method is not a simple combination of ``write(_:to:)`` and
-     /// ``read(into:from:)`` due to some details of data transmission.
+     /// > Important: This method is not a simple combination of ``write(_:to:)``
+     /// and ``read(into:from:)`` due to some details of data transmission.
      /// Usually, you can find the info about I2C communication about each device
      /// on its manual.
      /// - Parameters:
@@ -343,8 +350,8 @@ import CSwiftIO
      /// Writes a UInt8 to the specified slave device with the given address and
      /// then read bytes from it.
      ///
-     /// > Note: This method is not a simple combination of ``write(_:to:)`` and
-     /// ``read(into:count:from:)`` due to some details of data transmission.
+     /// > Important: This method is not a simple combination of ``write(_:to:)`` 
+     /// and ``read(into:count:from:)`` due to some details of data transmission.
      /// Usually, you can find the info about I2C communication about each device
      /// on its manual.
      /// - Parameters:
@@ -379,7 +386,7 @@ import CSwiftIO
      /// Writes an array of UInt8 to the slave device with the given address and
      /// then read bytes from it.
      ///
-     /// > Note: This method is not a simple combination of ``write(_:count:to:)``
+     /// > Important: This method is not a simple combination of ``write(_:count:to:)``
      /// and ``read(into:count:from:)`` due to some details of data transmission.
      /// Usually, you can find the info about I2C communication about each device
      /// on its manual.
@@ -428,10 +435,7 @@ import CSwiftIO
 }
 
 extension I2C {
-    /**
-     The clock speed settings used to synchronize the data transmission between
-     devices.
-     */
+    /// The clock speed used to synchronize the data transmission between devices.
     public enum Speed {
         /// 100 Kbps
         case standard

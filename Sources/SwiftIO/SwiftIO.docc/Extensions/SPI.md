@@ -10,13 +10,15 @@
 
 - ``read(into:)``
 - ``read(into:count:)-8i18b``
-- ``read(into:count:)-1ae4o``
+- ``read(into:count:)-227i3``
+- ``read(into:count:)-mhbj``
 
 ### Writing data
 
 - ``write(_:)``
 - ``write(_:count:)-x9v4``
-- ``write(_:count:)-71bmp``
+- ``write(_:count:)-9wh8x``
+- ``write(_:count:)-8007q``
 
 ### Writing and reading data
 
@@ -25,8 +27,6 @@
 
 ### Configuring SPI
 
-- ``setSpeed(_:)``
 - ``getSpeed()``
-- ``setMode(CPOL:CPHA:bitOrder:)``
 - ``getMode()``
 - ``BitOrder``

@@ -24,36 +24,33 @@ import CSwiftIO
  let spi = SPI(Id.SPI0)
  ```
  An SPI interface consists of a clock line, two lines for sending and reading data
- respectively and a CS line. In this case, the pins for SPI are SCK0, SDO0, SDI0,
- as well as any digital output pin used as a CS pin.
+ respectively and a CS line. In this case, the pins for SPI are SCK0, SDO0, SDI0. 
+ The cs pin is not defined, thus you need to configure it manually: set it to
+ low/high to activate/release it.
 
  The devices on an SPI bus are distinguished by a CS line. Before communicating
  with a specified device, its CS line needs to be activated. Other devices
  connected on the same bus will ignore all data.
 
- If the cs pin is not defined, you need to configure it manually: set it to low
- or high to activate or release it.
-
- You can also pass the cs pin when initializing an SPI device, so the spi will
- manage cs when you read or write data.
+ You can also specify the cs pin when initializing an SPI device, so the spi will
+ manage automatically cs when you read or write data.
 
  ```swift
  // Initialize the cs pin for the device.
  let cs = DigitalOut(Id.D0)
- // Pass the cs pin so it will be set automatically during communication.
+ // Specify the cs pin so it will be set automatically during communication.
  let spi = SPI(Id.SPI0, csPin: cs)
  ```
 
- What's more, there are four modes for SPI communication which is decided by CPOL
- and CPHA. It depends on the device your board talks to. And the parameter
- bitOrder tells how data is sent on the bus. Make sure to set them correctly.
-
+ What's more, SPI communication has four modes determined by the CPOL and CPHA.
+ And the `bitOrder` specifies how data is sent on the bus.
+ They depends on the device your board is communicating with.
 
  ### Read or write data
 
  SPI uses two data lines: one for sending data and the other for receiving data.
- After initialization, you can use the write and read method to talk to the
- desired devices:
+ After initialization, you can use the write and read method to communicate with
+ the desired devices:
 
  ```swift
  // Read a UInt8 from the device and store it in a variable.
@@ -61,16 +58,16 @@ import CSwiftIO
  spi.read(into: &byte)
 
  // Write a UInt8 value to the device.
- let value: UInt8 = ...
+ let value: UInt8 = 0x01
  spi.write(value)
  ```
 
  ### Read or write data and handle error
 
- In fact, the communication may fail due to all kinds of reason. You will
- thus get wrong data. So the methods involving reading or writing data will
- return the results in `Result` type. You can capture the error and provide
- other solutions in advance.
+ Indeed, communication can fail for various reasons, potentially leading to
+ incorrect data. So methods related to reading or writing data will return
+ results in a Result type. This allows you to handle errors and find
+ alternative solutions.
 
  ```swift
  // Read a byte from the provided address and get the results.
@@ -78,7 +75,7 @@ import CSwiftIO
 
  if case .failure(let err) = result {
      // If the communication fails, execute the specified task.
-     ...
+
  }
  ```
  
@@ -103,7 +100,7 @@ import CSwiftIO
  let result = spi.write([0x00, 0x01])
  if case .failure(let err) = result {
      // If the communication fails, execute the specified task.
-     ...
+
  }
  
  ```
@@ -140,20 +137,27 @@ import CSwiftIO
     public let obj: UnsafeMutableRawPointer
 
     private var operation: Operation
-
-    public private(set) var speed: Int
+     
+     /// The transmission speed of SPI communication.
+     public private(set) var speed: Int
+     /// The state of SCK line when it’s idle.
     public var CPOL: Bool {
         operation.contains(.CPOL)
     }
+     /// The phase to sample data, false for the first edge of the clock pulse,
+     /// true for the second edge.
     public var CPHA: Bool {
         operation.contains(.CPHA)
     }
+     /// Whether the bit order is MSB.
     public var MSB: Bool {
         operation.contains(.MSB)
     }
+     /// Whether the bit order is LSB.
     public var LSB: Bool {
         operation.contains(.LSB)
     }
+     /// The bit order on data line.
     public var bitOrder: BitOrder {
         if operation.contains(.MSB) {
             return .MSB
@@ -175,16 +179,17 @@ import CSwiftIO
      /// Initializes a specified interface for SPI communication as a master device.
      ///
      /// - Parameters:
-     ///   - idName: **REQUIRED** The name of SPI pin. See Id for the board in
+     ///   - idName: **REQUIRED** Name/label for a physical pin which is
+     ///   associated with the I2C peripheral. See Id for the board in
      ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
-     ///   - speed: **OPTIONAL** The clock speed for data transmission, 5000000
+     ///   - speed: **OPTIONAL** The clock speed for data transmission, 5_000_000
      ///   by default. It should not exceed the maximum supported speed by the device.
-     ///   - csPin: **OPTIONAL** The digital output pin connected to device's
-     ///   cs pin. The spi will manage it for you. If it's nil, you have to
-     ///   control it manually through any ``DigitalOut`` pin.
-     ///   - CPOL: **OPTIONAL** The state of SCK line when it's idle, false by default.
-     ///   - CPHA: **OPTIONAL** The phase to sample data, false (the first edge
-     ///   of clock pulse) by default.
+     ///   - csPin: **OPTIONAL** The digital output pin connected to slave device's
+     ///   cs pin. When provided, the SPI interface will manage this CS pin for you.
+     ///   If it's nil, you need to control it manually using any ``DigitalOut`` pin.
+     ///   - CPOL: **OPTIONAL** The state of SCK line when it's idle, `false` by default.
+     ///   - CPHA: **OPTIONAL** The phase to sample data, false for the first 
+     ///   edge of the clock pulse, true for the second edge. `false` by default.
      ///   - bitOrder: **OPTIONAL** The bit order on data line, MSB by default.
     public init(
         _ idName: IdName,
@@ -393,6 +398,14 @@ import CSwiftIO
         return result
     }
 
+     /// Read an array of binary integer from the slave device.
+     /// - Parameters:
+     ///   - buffer: An array used to store the received data in specified format.
+     ///   - count: The number of bytes to read. Make sure it doesn’t exceed the
+     ///   length of the buffer. If it’s nil, the number equals the length of the
+     ///   buffer.
+     /// - Returns: Whether the communication succeeds. If not, it returns the
+     /// specific error.
      @discardableResult
     public func read<Element: BinaryInteger>(into buffer: inout [Element], count: Int? = nil) -> Result<(), Errno> {
         var readLength = 0
@@ -491,6 +504,14 @@ import CSwiftIO
         return result
     }
 
+     /// Write an array of binary integer to the slave device.
+     ///
+     /// - Parameters:
+     ///   - data: An array of data stored in the specified format.
+     ///   - count: The count of data to be sent. If nil, it equals the count
+     ///   of elements in data.
+     /// - Returns: Whether the communication succeeds. If not, it returns the
+     /// specific error.
      @discardableResult
     public func write<Element: BinaryInteger>(_ data: [Element], count: Int? = nil) -> Result<(), Errno> {
         var writeLength = 0

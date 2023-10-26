@@ -13,18 +13,17 @@
 import CSwiftIO
 
 /**
- The AnalogIn class is used to read the external voltage applied to an analog
- input pin.
+ The AnalogIn class reads external voltage from an analog input pin, which 
+ functions like a multimeter for measuring input values.
 
- You could regard an analog pin as a multimeter to measure the input value on 
- that pin.
-
- At first, you need to initialize a pin as an AnalogIn pin. A pin on board may
- be multifunctional (digital input/output, analog...), plus many pins can be
- used as analog input pins. So you should specify a pin and its function.
+ 
+ At first, initialize a pin as an AnalogIn pin. A physical pin may be connected
+ to various internal peripherals and thus serve multiple functionalities.
+ You need to identify the specific pin using its id and specify the pin's
+ functionality before using it.
  - `AnalogIn` tells the pin's usage.
  - `Id.A0` defines which pin is used. You may refer to the board's pinout
- which shows all pins and their corresponding functions in a diagram.
+ which shows all pins and their corresponding usages.
 
  ```swift
  let pin = AnalogIn(Id.A0)
@@ -68,9 +67,8 @@ public final class AnalogIn {
     }
 
     /**
-     The max raw value of the ADC. Different ADC has different resolutions.
-     The max raw value of an 8-bit ADC is 255 and that one of a 10-bit ADC is
-     4095.
+     The max raw value of the ADC. It depends on ADC resolution,
+     i.e. 255 for an 8-bit ADC and 4095 for a 12-bit ADC.
 
      */
     public var maxRawValue: Int {
@@ -88,12 +86,13 @@ public final class AnalogIn {
     /**
      Initializes a specified pin as AnalogIn.
      
-     - Parameter idName: **REQUIRED** The name of analog pin. See Id for the board in
+     - Parameter idName: **REQUIRED** Name/label for a physical pin which is
+     associated with the AnalogIn peripheral. See Id for the board in
     [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
      
      To initialize an analog pin, only the pin name is required. Take pin A0 for
-     example, the prefix A tells the function of the pin. The number 0 locates the
-     pin. 
+     example, the prefix A tells the functionality of the pin, that is, AnalogIn.
+     The number 0 locates the pin.
      ```swift
      // Initialize an analog pin A0.
      let pin = AnalogIn(Id.A0)
@@ -116,9 +115,13 @@ public final class AnalogIn {
     }
 
     /**
-     Reads the raw value of the input from the specified analog pin.
+     Reads the raw value representing the analog voltage level on the specified pin.
 
-     - Returns: A raw value in the range of 0 to max resolution.
+     The raw value is the direct output of the ADC without any additional processing.
+     For n-bit ADCs, the raw value will be in the range of 0 to 2^n, which can be
+     calculated into actual voltage: (raw value / 2^n) x reference voltage.
+
+     - Returns: A raw value in the range of 0 to 2^n - 1 (for n-bit resolution).
      */
     @inlinable
     public func readRawValue() -> Int {
@@ -136,18 +139,21 @@ public final class AnalogIn {
     }
 
     /**
-     Reads the raw value of the input from the specified analog pin.
+     Reads the raw value representing the analog voltage level on the specified pin. 
+     It's the same as `readRawValue()`.
 
-     - Returns: A raw value in the range of 0 to max resolution.
+     - Returns: A raw value in the range of 0 to 2^n - 1 (for n-bit resolution).
      */
     public func read() -> Int {
         return readRawValue()
     }
 
     /**
-     Get the percentage of current input and max value from a specified analog pin.
-     
-     - Returns: A percentage of voltage in the range of 0.0 to 1.0.
+     Read the percentage of current input in relation to the max value from a
+     specified analog pin.
+
+     - Returns: A percentage of input value in relation to the max value,
+     0.0 to 1.0.
      */
     public func readPercentage() -> Float {
         let rawValue = Float(readRawValue())
