@@ -52,7 +52,7 @@ import CSwiftIO
  */
 public final class AnalogIn {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let info: swift_adc_info_t
 
@@ -120,7 +120,6 @@ public final class AnalogIn {
 
      - Returns: A raw value in the range of 0 to max resolution.
      */
-    @inlinable
     public func readRawValue() -> Int {
         var sample: UInt16 = 0
 
@@ -140,6 +139,7 @@ public final class AnalogIn {
 
      - Returns: A raw value in the range of 0 to max resolution.
      */
+    @inlinable
     public func read() -> Int {
         return readRawValue()
     }

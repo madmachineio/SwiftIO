@@ -137,7 +137,7 @@ import CSwiftIO
  */
  public final class SPI {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private var operation: Operation
 

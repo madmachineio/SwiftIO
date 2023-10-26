@@ -100,7 +100,7 @@ At first, you need to initialize a pin as a DigitalOut pin. A pin on board may
  */
 public final class DigitalOut {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
 
@@ -116,8 +116,7 @@ public final class DigitalOut {
      Write to this property would change the output value.
      
      */
-    @usableFromInline
-    var value: Bool {
+    public var value: Bool {
         willSet {
 			swifthal_gpio_set(obj, newValue ? 1 : 0)
 		}

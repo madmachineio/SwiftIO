@@ -50,7 +50,7 @@ import CSwiftIO
  */
 public final class DigitalIn {
     private let id: Int32 
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
 
@@ -163,7 +163,6 @@ public final class DigitalIn {
      
      - Returns: `true` or `false` of the logic value.
      */
-    @inlinable
 	public func read() -> Bool {
         let result = valueOrErrno(
             swifthal_gpio_get(obj)
