@@ -21,9 +21,10 @@ import CSwiftIO
  and duty cycle. **Frequency** defines the speed of on-off switching.
  **Duty cycle** decides the proportion of high output in a period.
 
- To start with, you need to initialize a pin as a PWMOut pin. A pin on board may
- be multifunctional (PWM output, analog...), plus many pins can be
- used as PWM output pins. So you should specify a pin and its function.
+ To start with, you need to initialize a pin as a PWMOut pin. A physical pin 
+ may be connected to various internal peripherals and thus serve multiple
+ functionalities. You need to identify the specific pin using its id and specify
+ the pin's functionality before using it.
  - `PWMOut` tells the pin's usage.
  - `Id.PWM0A` defines which pin is used. You may refer to the board's pinout
  which shows all pins and their corresponding functions in a diagram.
@@ -50,13 +51,15 @@ let pin = PWMOut(Id.PWM0A)
  // Import the MadBoard to decide which pin is used for the specific function.
  import MadBoard
  
-// Initialize a PWMOut pin PWM0A with default setting.
-let led = PWMOut(Id.PWM0A)
- 
-// Setting the duty cycle to light the LED with half brightness.
-while true {
-    led.setDutycycle(0.5)
-}
+ // Initialize a PWMOut pin PWM0A with default setting.
+ let led = PWMOut(Id.PWM0A)
+
+ // Setting the duty cycle to light the LED with half brightness.
+ led.setDutycycle(0.5)
+
+ while true {
+    sleep(ms: 1000)
+ }
 ```
 
  In this case, the duty cycle of PWM output affects the LED brightness, since it
@@ -97,48 +100,47 @@ public final class PWMOut {
 
     private var period: Int = 0
     private var pulse: Int = 0
-    /**
-     The max frequency of PWM output.
-     */
-
+     
+    /// The max frequency of PWM output.
     public var maxFrequency: Int {
         info.max_frequency
     }
 
-    /**
-     The min frequency of PWM output.
-     */
+    /// The min frequency of PWM output.
     public var minFrequency: Int {
         info.min_frequency
     }
 
     /**
-     Initializes a PWM output pin.
-     
-     - Parameter idName: **REQUIRED** The name of output pin. See Id for the board in
-     [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
-     - Parameter frequency: **OPTIONAL** The frequency of the PWM signal in hertz, 1000hz by default.
-     - Parameter dutycycle: **OPTIONAL** The duration of high output in a
-     period. It ranges from 0.0 to 1.0, and 0 by default.
+     Initializes a PWM output with the specified frequency and dutycycle.
 
-
-     The pin name is required to initialize a PWM pin. The pins able to output PWM
-     signal are marked with a tilde (~) on your board. However, the ids of PWM pins
-     aren't directly marked, so you need the board pinout.
+     The pin name is required to initialize a PWM pin. PWM pins are marked with
+     a tilde (~) on your board, but you'll need the board's pinout to find their
+     specific id.
 
      ```swift
      // Initialize the pin PWM0A with other parameters set to default.
      let pin = PWMOut(Id.PWM0A)
      ```
-     You may notice the id is a little different from those of other pins like D0, A0... Actually, the pins with the same number are paired, like PWM3A and PWM3B.
-     And be sure the pins in a group share the same frequency.
+     
+     > Important: The pins with the same number are paired, like PWM3A and PWM3B.
+     Ensure that pins within a group share the same frequency when utilizing them.
 
-     You can also set the default frequency and duty cycle of the PWM output:
+     You can also set the default frequency and duty cycle of the PWM output
+     when initializing a pin:
 
      ```swift
-     // Initialize the pin PWM0A with the frequency set to 2000hz and the dutycycle set to 0.5.
+     // Initialize the pin PWM0A with the frequency set to 2000Hhz and the dutycycle set to 0.5.
      let pin = PWMOut(Id.PWM0A, frequency: 2000, dutycycle: 0.5)
      ```
+
+     - Parameter idName: **REQUIRED** Name/label for a physical pin which is
+     associated with the PWM peripheral. See Id for the board in
+     [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
+     - Parameter frequency: **OPTIONAL** The frequency of the PWM signal in hertz, 
+     1000Hz by default.
+     - Parameter dutycycle: **OPTIONAL** The percentage of time during a period
+     in which the output is high, from 0.0 to 1.0. 0 by default.
 
      */
     public init(
@@ -168,8 +170,8 @@ public final class PWMOut {
     /**
      Sets the frequency and the dutycycle of PWM output signal.
      - Parameter frequency: The frequency of the PWM signal.
-     - Parameter dutycycle: The duration of high output in the time period
-        from 0.0 to 1.0.
+     - Parameter dutycycle: The percentage of time during a period in which the
+     output is high, from 0.0 to 1.0
      */
     public func set(frequency: Int, dutycycle: Float) {
         guard frequency >= minFrequency && frequency <= maxFrequency else {
@@ -203,8 +205,8 @@ public final class PWMOut {
 
 
     /**
-     Sets the duty cycle of a PWM output signal, that's to say, set the duration
-    of the on-state of a signal. The value should be a float between 0.0 and 1.0.
+     Sets the percentage of time during a period in which the output is high,
+     from 0.0 to 1.0
      - Parameter dutycycle: The duration of high output in the time period
         from 0.0 to 1.0.
      */
@@ -218,16 +220,12 @@ public final class PWMOut {
         swifthal_pwm_set(obj, period, pulse)
     }
     
-    /**
-     Suspends the PWM output.
-     */
+    /// Suspends the PWM output.
     public func suspend() {
         swifthal_pwm_suspend(obj)
     }
 
-    /**
-     Continues the PWM output.
-     */
+    /// Continues the PWM output.
     public func resume() {
         swifthal_pwm_resume(obj)
     }

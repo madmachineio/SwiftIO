@@ -15,8 +15,8 @@ import CSwiftIO
 /// The Counter class is used to track the number of the clock ticks.
 ///
 /// It is actually a hardware timer. The clock tick is derived from hardware clock
-/// cycle. To create a counter, you can specify the counter's period in
-/// microsecond and don't need to calculate the number of ticks in a period.
+/// cycle. To create a counter, you can directly specify the counter's period in
+/// microsecond.
 ///
 /// ```swift
 /// // Initialize a periodic counter with a default period of 1s.
@@ -40,7 +40,7 @@ public final class Counter {
     /// The maximum time for counter in microsecond.
     public let maxCountMicroseconds: UInt64
 
-    /// Initializes a counter.
+    /// Initializes a counter by specifying its period in microsecond.
     /// - Parameters:
     ///   - idName: **REQUIRED** The id of the counter. See Id in
     ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
@@ -128,8 +128,9 @@ public final class Counter {
 
     /// Gets the number of ticks that have elapsed. If the elapsed time is too
     /// long, the value may overflow.
-    /// 
-    /// - Returns: The number of ticks in UInt32.
+    ///  
+    /// - Returns: The number of ticks in UInt32 or the specific error
+    /// which happens during the execution.
     public func getTicks() -> Result<UInt32, Errno> {
         var ticks: UInt32 = 0
 
@@ -157,8 +158,8 @@ public final class Counter {
 
 
 extension Counter {
-    /// There are two modes: oneShot means the counter works only once;
-    /// period means it works periodically.
+    /// There are two modes: `oneShot` means the counter works once;
+    /// `period` means it works periodically.
     public enum Mode {
         case oneShot, period
     }

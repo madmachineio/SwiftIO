@@ -13,12 +13,13 @@
 import CSwiftIO
 
 /**
- The DigitalIn class is intended to detect the state of a digital input pin.
- The input value is either true(1) or false(0).
+ The DigitalIn class is intended to detect the state of a digital input pin,
+ either true or false.
 
- You need to initialize a pin before reading input. A pin on board may be
- multifunctional (digital input/output, analog...), plus many pins can be used
- as digital input pins. So you should specify a pin and its function.
+ You need to initialize a pin before reading input. A physical pin may be connected
+ to various internal peripherals and thus serve multiple functionalities.
+ You need to identify the specific pin using its id and specify the pin's
+ functionality before using it.
 
  - `DigitalIn` specifies the pin's usage.
  - `Id.D0` defines which pin is used. You may refer to the board's pinout
@@ -55,6 +56,8 @@ public final class DigitalIn {
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_IN
 
     private var modeRawValue: swift_gpio_mode_t
+    
+    /// The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     public private(set) var mode: Mode {
         willSet {
             modeRawValue = DigitalIn.getModeRawValue(newValue)
@@ -62,6 +65,8 @@ public final class DigitalIn {
     }
 
     private var interruptModeRawValue: swift_gpio_int_mode_t
+    
+    /// The current interrupt mode: `.rising`, `falling` or `bothEdge`.
     public private(set) var interruptMode: InterruptMode {
         willSet {
             interruptModeRawValue = DigitalIn.getInterruptModeRawValue(
@@ -82,8 +87,7 @@ public final class DigitalIn {
     ///
     /// All ids for different boards are in the
     /// [MadBoards](https://github.com/madmachineio/MadBoards) library.
-    /// Take pin 0 for example, the pin is ready to read input after
-    /// initialization:
+    /// Take pin 0 for example:
     ///
     /// ```swift
     /// // The simplest way to initialize a pin D0, with other parameters set to default.
@@ -97,9 +101,11 @@ public final class DigitalIn {
     /// ```
     ///
     /// - Parameters:
-    ///   - idName: **REQUIRED** The name of input pin. See Id for the board in
+    ///   - idName: **REQUIRED** Name/label for a physical pin which is
+    ///   associated with the GPIO peripheral. See Id for the board in
     ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
-    ///   - mode: **OPTIONAL** The input mode, `.pullDown` by default.
+    ///   - mode: **OPTIONAL** The input mode which defines pull-up and pull-down
+    ///   resistor, `.pullDown` by default.
 	public init(_ idName: IdName,
                 mode: Mode = .pullDown) {
         self.id = idName.value
@@ -124,15 +130,17 @@ public final class DigitalIn {
     }
 
     /**
-     Gets the current input mode on a specified pin.
-     
+     Gets the configuration of the internal pull-up and pull-down resistor on a
+     specified input pin.
+
      - Returns: The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
      */
     public func getMode() -> Mode {
         return mode
     }
 
-    /// Sets the input mode for a digital input pin.
+    /// Sets the input mode, which means the pull-up and pull-down resistor pull-up
+    /// and pull-down resistor.
     /// - Parameter mode: The input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     /// - Returns: Whether the configuration succeeds. If it fails, it returns
     /// the specific error.
@@ -158,7 +166,8 @@ public final class DigitalIn {
      Reads value from a digital input pin.
      
      - Attention: Dependind on the hardware, the internal pull resister may be
-     very weak. **Don't** just rely on the pull resister for reading the value. **Especially** when you just changed the input mode, the internal pad needs
+     very weak. **Don't** just rely on the pull resister for reading the value. 
+     **Especially** when you just changed the input mode, the internal pad needs
      some time to charge or discharge through the pull resister!
      
      - Returns: `true` or `false` of the logic value.
@@ -189,7 +198,7 @@ public final class DigitalIn {
      - Important: The ISR should be able to finish in a very short time,
      usually in nanoseconds, like changing a number or a boolean value.
      Besides, changing digital output runs extremely quickly, so it also works.
-     However, printing a value usually takes several milliseconds and should be avoided.
+     Printing a value usually takes several milliseconds and should be avoided.
 
      ### Example: Toggle the LED once interrupt triggers
 
@@ -358,14 +367,11 @@ extension DigitalIn {
      - pullDown: the internal pull-down resistor is set.
      - pullNone: neither resistors is used for the pin.
 
-     It can change the default state (high, low or floating) of a pin by using the pull resistors.
-     For example, if a button is connected to an input pin and ground,
-     the mode should be `pullUp`. In this way, if the current can flow, the input
-     should be low, and if not, it reads high.
+     It can change the default state (high, low or floating) of a pin by using
+     the pull resistors.
 
-     - Attention: The pins D26 to D37 on SwiftIO board are connected separately
-     to an external 10kΩ resistor on the board. So even if they are changed to
-     pullUp, the output voltage of these pins is still low.
+     - Important: For the **SwiftIO board**, the pins **D26 to D37** are connected separately to an external 10kΩ pull-down resistor on the board. So even if they are changed to pullUp, the output voltage of these pins may be still low.
+     For the **SwiftIO Micro**, the pin **D32 to D43** are connected to an 10kΩ pull-down resistor, the pin **DL** are connected to 10kΩ pull-up resistor.
      */
     public enum Mode {
         case pullDown, pullUp, pullNone
@@ -383,9 +389,9 @@ extension DigitalIn {
     }
 
     /**
-     The interrupt mode determines the event to raise an interrupt.
+     Determines the event to raise an interrupt: rising edge, falling edge or both.
 
-     There are three options: rising, falling or both of them.
+     There are three options:
      - A falling edge is the transition of a digital input signal from high to low.
      - A rising edge is the transition of a digital input signal from low to high.
      - Both edges means as long as the signal changes, an interrupt happens.
@@ -408,10 +414,7 @@ extension DigitalIn {
         }
     }
 
-    /**
-     The interrupt state determines whether the interrupt will be enabled and occur.
-
-     */
+    /// Determines whether the interrupt is enabled and will occur.
     public enum InterruptState {
         case disable, enable
     }

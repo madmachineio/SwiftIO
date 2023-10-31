@@ -16,8 +16,8 @@ import CSwiftIO
  The Timer class can measure the time passed. If the time limit is reached, it
  can execute a specified task.
 
- A timer must be initialize at first. It can be one shot or periodic. And you can
- set the period of the timer.
+ It is actually a software timer. You need to initialize it at first.
+ It can operate as one-shot or periodic, with a customizable period.
 
  ```swift
  /// Create a periodic timer whose period is 2000s.
@@ -112,8 +112,7 @@ public final class Timer {
     /// > Important: The task for the interrupt should be executed in a very short
     /// time, usually in nanoseconds, like changing a number or a boolean value.
     /// Besides, changing digital output runs extremely quickly, so it also works.
-    /// However, printing a value usually takes several milliseconds and should
-    /// be avoided.
+    /// Printing a value usually takes several milliseconds and should be avoided.
     /// - Parameters:
     ///   - start: Whether to start the timer once it's set, true by default.
     ///   - callback: A task to execute once the time is up. It should be a void
@@ -167,8 +166,7 @@ public final class Timer {
     }
 
 
-    /// Get time remaining before a timer next expires. This routing computes the
-    /// (approximate) time remaining before a running timer next expires.
+    /// Computes the (approximate) time remaining before a running timer next expires.
     /// If the timer is not running, it returns zero.
     ///
     /// - Returns: Remaining time (in milliseconds).

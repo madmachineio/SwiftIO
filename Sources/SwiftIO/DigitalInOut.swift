@@ -56,11 +56,12 @@ import CSwiftIO
  while true {
     // Set the pin to output. The output value is false.
      pin.setToOutput(value: false)
-     sleep(ms: 18)
+     pin.high()
+     sleep(ms: 10)
 
     // Set the pin to input to read incoming signals.
      pin.setToInput()
-     while pin.read() != false {
+     while pin.read() {
         ...
      }
  }
@@ -73,19 +74,22 @@ public final class DigitalInOut {
     private var directionRawValue: swift_gpio_direction_t
     private var outputModeRawValue: swift_gpio_mode_t
     private var inputModeRawValue: swift_gpio_mode_t
-
+    
+    /// The pin's usage: `input` or `output`.
     public private(set) var direction: Direction {
         willSet {
             directionRawValue = DigitalInOut.getDirectionRawValue(newValue)
         } 
     }
-
+    
+    /// The pin's mode when used for output: pushPull/openDrain.
     public private(set) var outputMode: DigitalOut.Mode {
         willSet {
             outputModeRawValue = DigitalOut.getModeRawValue(newValue)
         }
     }
-
+    
+    /// The pin's mode when used for input: `pullUp`, `pullDown`, `pullNone`
     public private(set) var inputMode: DigitalIn.Mode {
         willSet {
             inputModeRawValue = DigitalIn.getModeRawValue(newValue)
@@ -106,13 +110,16 @@ public final class DigitalInOut {
     ///  let pin = DigitalInOut(Id.D0, direction: input)
     /// ```
     /// - Parameters:
-    ///   - idName: **REQUIRED** The name of digital pin. See Id for the board in
+    ///   - idName: **REQUIRED** Name/label for a physical pin which is
+    ///   associated with the GPIO peripheral. See Id for the board in
     ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
-    ///   - direction: **OPTIONAL** Whether the pin serves as input or output.
-    ///   - outputMode: **OPTIONAL** The output mode of the pin.
+    ///   - direction: **OPTIONAL** The pin serves as input or output,
+    ///   `output` by default.
+    ///   - outputMode: **OPTIONAL** The output mode of the pin,
     ///     `.pushPull` by default.
-    ///   - inputMode: **OPTIONAL** The input mode. `.pullUp` by default.
-    ///   - outputValue: **OPTIONAL** The output value after initialization.
+    ///   - inputMode: **OPTIONAL** The input mode which defines the
+    ///   pull-up/pull-down resistor, `.pullUp` by default.
+    ///   - outputValue: **OPTIONAL** The pin output high or low after initialization,
     ///     `false` by default.
     public init(
         _ idName: IdName,
@@ -155,18 +162,19 @@ public final class DigitalInOut {
     }
 
     /// Knows if the pin is used for input or output.
-    /// - Returns: The pin's function: `input` or `output`.
+    /// - Returns: The pin's functionality: `input` or `output`.
     public func getDirection() -> Direction {
         return direction
     }
 
-    /// Gets the current output mode on a specified pin.
+    /// Gets the current output mode (`pushPull`/`openDrain`) on a specified pin.
     /// - Returns: The current mode: `.pushPull` or `.openDrain`.
     public func getOutputMode() -> DigitalOut.Mode {
         return outputMode
     }
 
-    /// Gets the current input mode on a specified pin.
+    /// Gets the configuration of the internal pull-up and pull-down resistor
+    /// on a specified input pin.
     /// - Returns: The current input mode: `.pullUp`, `.pullDown` or `.pullNone`.
     public func getInputMode() -> DigitalIn.Mode {
         return inputMode
@@ -272,7 +280,7 @@ public final class DigitalInOut {
 
 
 extension DigitalInOut {
-    /// The functions of the specified digital pin: input or output.
+    /// Includes the functionalities of the digital pin: input or output.
     public enum Direction {
         case output, input
     }

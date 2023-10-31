@@ -17,27 +17,31 @@ The FileDescriptor struct is used to perform low-level file operations.
 
 ### Example: Open and read an ASCII file
 
-```swift
-import SwiftIO
+ ```swift
+ import SwiftIO
 
-// Open the file located in "/subDir/hello.txt"
-let file = FileDescriptor.open("/SD:/subDir/hello.txt")
+ // Open the file located in "/subDir/hello.txt"
+ if let file = try? FileDescriptor.open("/SD:/subDir/hello.txt") {
+     //Initialize a buffer to store the reading bytes.
+     var buffer = UnsafeMutableRawBufferPointer.allocate(byteCount: 10, alignment: 4)
 
-//Initialize a buffer to store the reading bytes.
-var buffer = UnsafeMutableRawBufferPointer.allocate(byteCount: 10, alignment: 4)
+     do {
+         // Read bytes into the buffer
+         try file.read(into: buffer)
 
-// Read bytes into the buffer
-file.read(into: buffer)
- 
-// Print the reding bytes.
-for i in 0..<buffer.count {
-    print(buffer[i])
-}
+         // Print the reding bytes.
+         for i in 0..<buffer.count {
+             print(buffer[i])
+         }
+     } catch {
+         print("Unexpected error: \(error).")
+     }
+ }
 
-while true {
+ while true {
     sleep(ms: 1000)
-}
-```
+ }
+ ```
 
 */
 
@@ -47,14 +51,19 @@ public struct FileDescriptor {
     private let filePointer: UnsafeMutableRawPointer
 
     private let filePath: FilePath
-
+    
+    /// Size of the file.
     public var size: Int { Int(dirEntry.size) }
 
     /**
      Open or creates, if does not exist, file.
+     > Attention:
+     The root directory for the micro SD card is "/SD:/"
+
      - Parameter path: **REQUIRED** The location of the file to open.
-     - Attention:
-        The root directory for the micro SD card is "/SD:/"
+     - Parameter mode: **OPTIONAL** The read and write access to use.
+     - Parameter options: **OPTIONAL** The behavior for opening the file.
+     - Returns: A file descriptor for the open file.
      */
     public static func open(
         _ path: String,
@@ -261,6 +270,8 @@ public struct FileDescriptor {
      Repositions the offset for the given file descriptor.
      - Parameter offset: **REQUIRED** The new offset for the file descriptor.
      - Parameter whence: **OPTIONAL** The origin of the new offset.
+
+     - Returns: The file’s offset location, in bytes from the beginning of the file.
      */
     @discardableResult
     public func seek(offset: Int, from whence: SeekOrigin = .start) throws -> Int {
@@ -278,6 +289,8 @@ public struct FileDescriptor {
     /**
      Writes the contents of a string at the current file offset.
       - Parameter string: **REQUIRED** The string being written.
+
+     - Returns: The number of bytes that were written.
      */
     @discardableResult
     public func write(_ string: String) throws -> Int {
@@ -303,6 +316,8 @@ public struct FileDescriptor {
       - Parameter buffer: **REQUIRED** The region of memory that contains the
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The number of bytes that were written.
      */
     @discardableResult
     public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) throws -> Int {
@@ -332,6 +347,8 @@ public struct FileDescriptor {
       - Parameter buffer: **REQUIRED** Te region of memory that contains the
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The number of bytes that were written.
      */
     @discardableResult
     public func write(toAbsoluteOffset offset: Int,
@@ -367,6 +384,8 @@ public struct FileDescriptor {
       - Parameter buffer: **REQUIRED** The region of memory that contains the
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The number of bytes that were written.
      */
     @discardableResult
     public func write(_ buffer: [UInt8], count: Int? = nil) throws -> Int {
@@ -399,6 +418,8 @@ public struct FileDescriptor {
       - Parameter buffer: **REQUIRED** Te region of memory that contains the
         data being written.
       - Parameter count: **OPTIONAL** The bytes you want to read.
+
+     - Returns: The number of bytes that were written.
      */
     @discardableResult
     public func write(toAbsoluteOffset offset: Int,
@@ -435,7 +456,7 @@ public struct FileDescriptor {
 
     /**
      Flushes any cached write of an open file.
-     - Attention:
+     > Attention:
      This method can be used to flush the cache of an open file. This can be
      called to ensure data gets written to the storage media immediately.
      This may be done to avoid data loss if power is removed unexpectedly.
@@ -479,27 +500,34 @@ struct FilePath {
 
 
 extension FileDescriptor {
-
+    
+    /// The desired read and write access for a newly opened file.
   public struct AccessMode: RawRepresentable {
     public var rawValue: UInt8
 
     public init(rawValue: UInt8) { self.rawValue = rawValue }
-
+      
+      /// Opens the file for reading only.
     public static var readOnly: AccessMode {
         AccessMode(rawValue: UInt8(SWIFT_FS_O_READ)) }
+      /// Opens the file for writing only.
     public static var writeOnly: AccessMode {
         AccessMode(rawValue: UInt8(SWIFT_FS_O_WRITE)) }
+      /// Opens the file for reading and writing.
     public static var readWrite: AccessMode {
         AccessMode(rawValue: UInt8(SWIFT_FS_O_RDWR)) }
 
   }
-
+    
+    /// Options that specify behavior for a newly-opened file.
     public struct OpenOptions: OptionSet {
         public var rawValue: UInt8
 
         public init(rawValue: UInt8) { self.rawValue = rawValue }
-
+        
+        /// Indicates that opening the file creates the file if it doesn’t exist.
         public static var create: OpenOptions { OpenOptions(rawValue: UInt8(SWIFT_FS_O_CREATE)) }
+        /// Indicates that each write operation appends to the file.
         public static var append: OpenOptions { OpenOptions(rawValue: UInt8(SWIFT_FS_O_APPEND)) }
     }
 
@@ -512,11 +540,16 @@ extension FileDescriptor {
         public var rawValue: Int32
 
         public init(rawValue: Int32) { self.rawValue = rawValue }
-
+        
+        /// Indicates that the offset should be set to the specified value.
         public static var start: SeekOrigin {
             SeekOrigin(rawValue: SWIFT_FS_SEEK_SET)}
+        /// Indicates that the offset should be set to the specified number of
+        /// bytes after the current location.
         public static var current: SeekOrigin {
             SeekOrigin(rawValue: SWIFT_FS_SEEK_CUR)}
+        /// Indicates that the offset should be set to the size of the file plus
+        /// the specified number of bytes.
         public static var end: SeekOrigin {
             SeekOrigin(rawValue: SWIFT_FS_SEEK_END)}
     }

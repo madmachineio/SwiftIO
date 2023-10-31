@@ -8,6 +8,7 @@
 
 ### Reading input
 
-- ``readPercent()``
+- ``read()``
+- ``readPercentage()``
 - ``readRawValue()``
 - ``readVoltage()``
