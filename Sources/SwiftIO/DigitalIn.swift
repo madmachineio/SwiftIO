@@ -14,7 +14,7 @@ import CSwiftIO
 
 /**
  The DigitalIn class is intended to detect the state of a digital input pin,
- either true (1) or false (0).
+ either true or false.
 
  You need to initialize a pin before reading input. A physical pin may be connected
  to various internal peripherals and thus serve multiple functionalities.
