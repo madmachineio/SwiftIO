@@ -11,7 +11,6 @@
 //===----------------------------------------------------------------------===//
 
 import CSwiftIO
-import CNewlib
 
 @inlinable
 internal func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeRawPointer {
@@ -44,21 +43,35 @@ public func nothingOrErrno(
 }
 
 
+// @inlinable
+// internal func validateLength(_ array: [UInt8], count: Int?, length: inout Int) -> Result<(), Errno> {
+//     if let count = count {
+//         if count > array.count || count < 0 {
+//             return .failure(Errno.invalidArgument)
+//         } else {
+//             length = count
+//         }
+//     } else {
+//         length = array.count
+//     }
+
+//     return .success(())
+// }
+
 @inlinable
-internal func validateLength(_ array: [UInt8], count: Int?, length: inout Int) -> Result<(), Errno> {
+internal func validateLength<Element: BinaryInteger>(_ array: [Element], count: Int?, length: inout Int) -> Result<(), Errno> {
     if let count = count {
         if count > array.count || count < 0 {
             return .failure(Errno.invalidArgument)
         } else {
-            length = count
+            length = count * MemoryLayout<Element>.stride
         }
     } else {
-        length = array.count
+        length = array.count * MemoryLayout<Element>.stride
     }
 
     return .success(())
 }
-
 
 @inlinable
 internal func validateLength(_ buffer: UnsafeMutableRawBufferPointer, count: Int?, length: inout Int) -> Result<(), Errno> {

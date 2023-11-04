@@ -8,14 +8,17 @@
 #ifndef _SWIFT_ADC_H_
 #define _SWIFT_ADC_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /**
  * @brief Structure to receive adc information
  *
- * @param max_raw_value max raw value for adc value
+ * @param resolution the number of bits in the absolute value of the sample
  * @param ref_voltage adc refer volage
  */
 struct swift_adc_info {
-	int max_raw_value;
+	ssize_t resolution;
 	float ref_voltage;
 };
 
@@ -48,7 +51,7 @@ int swifthal_adc_close(void *adc);
  * @retval Positive indicates the adc value.
  * @retval Negative errno code if failure.
  */
-int swifthal_adc_read(void *adc, unsigned short *sample_buffer);
+int swifthal_adc_read(void *adc, uint16_t *sample_buffer);
 
 /**
  * @brief Get adc infomation

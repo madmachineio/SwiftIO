@@ -16,9 +16,10 @@ import CSwiftIO
  The DigitalOut class configures a specified pin as a digital output pin and
  set its state (high or low output).
 
-At first, you need to initialize a pin as a DigitalOut pin. A pin on board may
- be multifunctional (digital input/output, analog...), plus many pins can be
- used as digital output pins. So you should specify a pin and its function.
+At first, you need to initialize a pin as a DigitalOut pin. A physical pin may 
+ be connected to various internal peripherals and thus serve multiple functionalities.
+ You need to identify the specific pin using its id and specify the pin's
+ functionality before using it.
  - `DigitalOut` tells the pin's usage.
  - `Id.D0` defines which pin is used. You may refer to the board's pinout
  which shows all pins and their corresponding functions in a diagram.
@@ -100,11 +101,13 @@ At first, you need to initialize a pin as a DigitalOut pin. A pin on board may
  */
 public final class DigitalOut {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private let direction: swift_gpio_direction_t = SWIFT_GPIO_DIRECTION_OUT
 
     private var modeRawValue: swift_gpio_mode_t
+    
+    /// The current output mode: `.pushPull` or `.openDrain`.
     public private(set) var mode: Mode {
         willSet {
             modeRawValue = DigitalOut.getModeRawValue(newValue)
@@ -116,8 +119,7 @@ public final class DigitalOut {
      Write to this property would change the output value.
      
      */
-    @usableFromInline
-    var value: Bool {
+    public var value: Bool {
         willSet {
 			swifthal_gpio_set(obj, newValue ? 1 : 0)
 		}
@@ -153,7 +155,8 @@ public final class DigitalOut {
     /// ```
     ///
     /// - Parameters:
-    ///   - idName: **REQUIRED** The name of output pin. See Id for the board in
+    ///   - idName: **REQUIRED** Name/label for a physical pin which is
+    ///   associated with the GPIO peripheral. See Id for the board in
     ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
     ///   - mode: **OPTIONAL** The output mode of the pin, `.pushPull` by default.
     ///   - value: **OPTIONAL** The output value after initialization, `false` by default.
@@ -169,7 +172,7 @@ public final class DigitalOut {
             fatalError("DigitalOut \(idName.value) init failed")
         }
             
-        obj = UnsafeMutableRawPointer(ptr)
+        obj = ptr
         swifthal_gpio_set(obj, value ? 1 : 0)
     }
 
@@ -191,7 +194,7 @@ public final class DigitalOut {
         return mode
     }
 
-    /// Sets the output mode.
+    /// Sets the output mode: `.pushPull` or `.openDrain.
     /// - Parameter mode: The output mode: `.pushPull` or `.openDrain`.
     /// - Returns: Whether the configuration succeeds. If it fails, it returns
     /// the specific error.
@@ -212,7 +215,7 @@ public final class DigitalOut {
 
 
     /**
-     Sets the output value of the specific pin: true for high voltage and false
+     Sets the output value of the specific pin: `true` for high voltage and `false`
      for low voltage.
 
      - Parameter value : The output value: `true` or `false`.
@@ -277,7 +280,7 @@ extension DigitalOut {
     /**
      The Mode enum includes the available output modes.
 
-     The output mode in most cases is pushPull. This mode enables the
+     The output mode in most cases is `pushPull`. This mode enables the
      digital pin to output high and low voltage levels, while the open-drain
      output cannot truly output a high level.
      

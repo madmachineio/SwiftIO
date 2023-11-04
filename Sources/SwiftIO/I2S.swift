@@ -13,9 +13,19 @@
 import CSwiftIO
 
 
+/// I2S (inter-integrated circuit sound) is a serial communication protocol
+/// that is designed specifically for digital audio data.
+///
+/// The I2S class allows the board to send and receive audio data as a master
+/// device. Make sure that the sample rate and sample bits match the audio.
+///
+///  ```swift
+/// // Initialize an I2S interface.
+/// let i2c = I2S(Id.I2S0, rate: 44_100, bits: 16)
+/// ```
  public final class I2S {
     private let id: Int32
-    public let obj: UnsafeRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private var config = swift_i2s_cfg_t()
 
@@ -68,11 +78,22 @@ import CSwiftIO
             config.timeout = Int32(newValue)
         }
     }
-
+     
+     /// The sample bits for the I2S data transmission, which refers to the
+     /// number of bits used to represent each sample.
+     ///
+     /// The supported sample bits are 8, 16, 24, 32.
     public let supportedSampleBits: Set = [
         8, 16, 24, 32
     ]
-
+     
+     /// The sample rate for the audio data, which defines how many times the
+     /// signal is sampled in one second.
+     ///
+     /// The supported sample rates are 
+     /// 8_000, 11_025, 12_000, 16_000,
+     /// 22_050, 24_000, 32_000, 44_100,
+     /// 48_000, 96_000, 192_000, 384_000.
     public let supportedSampleRate: Set = [
         8_000,
         11_025,
@@ -87,7 +108,19 @@ import CSwiftIO
         192_000,
         384_000
     ]
-
+     
+     /// Initializes an I2S interface with the specified sample rate and sample bits.
+     /// - Parameters:
+     ///   - idName: **REQUIRED** Name/label for a physical pin which is associated
+     ///   with the I2S peripheral. See Id for the board in
+     ///   [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
+     ///   - rate: **OPTIONAL** The audio sample rate, 16KHz by default. 
+     ///   Ensure that it aligns with one of the rates in the ``supportedSampleRate``.
+     ///   - bits: **OPTIONAL** The audio sample bit, 16-bit by default. 
+     ///   Ensure that it aligns with one of the settings in ``supportedSampleBits``.
+     ///   - mode: **OPTIONAL** The I2S mode which defines when data is sent, 
+     ///   `.philips` by default.
+     ///   - timeout: **OPTIONAL** Wait time for data transmission.
     public init(
         _ idName: IdName,
         rate: Int = 16_000,
@@ -104,7 +137,7 @@ import CSwiftIO
 
         self.id = idName.value
         if let ptr = swifthal_i2s_open(id) {
-            obj = UnsafeRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("I2S\(idName.value) initialization failed!")
         }
@@ -135,6 +168,14 @@ import CSwiftIO
         swifthal_i2s_close(obj)
     }
 
+     /// Set audio sample rate and bit.
+     /// - Parameters:
+     ///   - rate: The audio sample rate. Ensure that it aligns with one of the
+     ///   rates in the ``supportedSampleRate``.
+     ///   - bits: The audio sample bit. Ensure that it aligns
+     ///   with one of the settings in ``supportedSampleBits``.
+     /// - Returns: Whether the configration succeeds. If not, it returns the
+     /// specific error.
     @discardableResult
     public func setSampleProperty(
         rate: Int, bits: Int
@@ -159,35 +200,70 @@ import CSwiftIO
         return result
     }
 
-    //@discardableResult
+     /// Write an array of data to audio device.
+     /// - Parameters:
+     ///   - data: The audio data stored in a UInt8 array.
+     ///   - count: The count of data to be sent. If nil, it equals the count of
+     ///   elements in `data`.
+     /// - Returns: The result of the data transmission.
+    @discardableResult
     public func write(
-        _ sample: [UInt8],
+        _ data: [UInt8],
         count: Int? = nil
-    ) {
-    //) -> Result<(), Errno> {
-        let length: Int32
+    ) -> Result<Int, Errno> {
+        var writeLength = 0
+        let validateResult = validateLength(data, count: count, length: &writeLength)
+        var writeResult: Result<Int, Errno> = .success(0)
 
-        if let count = count {
-            length = Int32(min(count, sample.count))
+        if case .success = validateResult {
+            writeResult = valueOrErrno(
+                data.withUnsafeBytes { pointer in 
+                    swifthal_i2s_write(obj, pointer.baseAddress, writeLength)
+                }
+            )
         } else {
-            length = Int32(sample.count)
+            return .failure(Errno.invalidArgument)
         }
         
-        //let result = nothingOrErrno(
-            let ret = swifthal_i2s_write(obj, sample, length)
-        //)
-
-        if ret != 0 {
-            print("I2S write result = \(ret)")
+        if case .failure(let err) = writeResult {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
         }
-        //if case .failure(let err) = result {
-        //    print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
-        //}
-        //return result
+
+        return writeResult
+    }
+
+     /// Write an array of binary integers to audio device.
+     /// - Parameters:
+     ///   - data: The audio data stored in the specified format.
+     ///   - count: The count of data to be sent. If nil, it equals the count of
+     ///   elements in `data`.
+     /// - Returns: The result of the data transmission.
+     @discardableResult
+    public func write<Element: BinaryInteger>(_ data: [Element], count: Int? = nil) -> Result<Int, Errno> {
+        var writeLength = 0
+        let validateResult = validateLength(data, count: count, length: &writeLength)
+        var writeResult: Result<Int, Errno> = .success(0)
+
+        if case .success = validateResult {
+            writeResult = valueOrErrno(
+                data.withUnsafeBytes { pointer in 
+                    swifthal_i2s_write(obj, pointer.baseAddress, writeLength)
+                }
+            )
+        } else {
+            return .failure(Errno.invalidArgument)
+        }
+
+        if case .failure(let err) = writeResult {
+            print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return writeResult
     }
 }
 
 extension I2S {
+    /// The Mode enum inludes the ways that determine when the data is transmitted.
     public enum Mode {
         case philips
         case rightJustified

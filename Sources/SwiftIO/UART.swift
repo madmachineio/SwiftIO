@@ -36,7 +36,7 @@ UART is a two-wire serial communication protocol used to communicate with
 
  ```swift
  // Write a UInt8 to the external device.
- let data: UInt8 = ...
+ let data: UInt8 = 0x01
  uart.write(byte)
  ```
  To read data from a UART device,
@@ -49,21 +49,22 @@ UART is a two-wire serial communication protocol used to communicate with
 
  ### Read or write data and handle error
 
- In fact, the communication may fail due to all kinds of reason and thus you may
- get wrong data. Besides, the time may not be enough to receive data and thus
- you don't get all needed data. So the methods involving reading or writing data
- will return the results in `Result` type. You can know how the communication goes
- and provide other solutions in advance if something happens unexpectedly.
+
+ Indeed, communication can fail for various reasons, potentially leading to
+ incorrect data. Besides, the wait time may not be enough to receive data and thus
+ you don't get all needed data. So methods related to reading or writing data
+ will return results in a Result type. This allows you to handle errors and find
+ alternative solutions.
 
  ```swift
  let result = uart.read(into: &byte)
  switch result {
  case .success(let count):
      // Know if you have received enough data.
-     ...
+
  case .failure(let error):
      // If an error happens, execute the specified task.
-     ...
+     
  }
  ```
 
@@ -71,13 +72,13 @@ UART is a two-wire serial communication protocol used to communicate with
 */
 public final class UART {
     private let id: Int32
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private var config: swift_uart_cfg_t
 
     private var baudRate: Int {
         willSet {
-            config.baudrate = Int32(newValue)
+            config.baudrate = newValue
         }
     }
 
@@ -101,23 +102,25 @@ public final class UART {
 
     private var readBufferLength: Int {
         willSet {
-            config.read_buf_len = Int32(newValue)
+            config.read_buf_len = newValue
         }
     }
 
     /**
      Initializes an interface for UART communication.
-     - Parameter idName: **REQUIRED** The name of UART pin. See Id for the board in
+     - Parameter idName: **REQUIRED** Name/label for a physical pin which is
+     associated with the UART peripheral. See Id for the board in
      [MadBoards](https://github.com/madmachineio/MadBoards) library for reference.
      - Parameter baudRate: **OPTIONAL**The communication speed.
      The default baud rate is 115200.
      - Parameter parity: **OPTIONAL**The parity bit to confirm the accuracy
-        of the data transmission.
+        of the data transmission, `.none` by default.
      - Parameter stopBits: **OPTIONAL**The bits reserved to stop the
-        communication.
-     - Parameter dataBits : **OPTIONAL**The length of the data being transmitted.
+        communication, `.oneBit` by default.
+     - Parameter dataBits : **OPTIONAL**The length of the data being transmitted, 
+     `.eightBits` by default.
      - Parameter readBufferLength: **OPTIONAL**The length of the serial
-        buffer to store the data.
+        buffer to store the data, 1024 by default.
      */
     public init(
         _ idName: IdName,
@@ -125,7 +128,7 @@ public final class UART {
         parity: Parity = .none,
         stopBits: StopBits = .oneBit,
         dataBits: DataBits = .eightBits,
-        readBufferLength: Int = 64
+        readBufferLength: Int = 1024
     ) {
         self.id = idName.value
         self.baudRate = baudRate
@@ -135,14 +138,14 @@ public final class UART {
         self.readBufferLength = readBufferLength
 
         config = swift_uart_cfg_t()
-        config.baudrate = Int32(baudRate)
+        config.baudrate = baudRate
         config.parity = UART.getParityRawValue(parity)
         config.stop_bits = UART.getStopBitsRawValue(stopBits)
         config.data_bits = UART.getDataBitsRawValue(dataBits)
-        config.read_buf_len = Int32(readBufferLength)
+        config.read_buf_len = readBufferLength
 
         if let ptr = swifthal_uart_open(id, &config) {
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("UART \(idName.value) init failed")
         }
@@ -201,6 +204,9 @@ public final class UART {
 
     /**
      Returns the number of received data from the serial buffer.
+
+     UART has a receive buffer for incoming data. It checks the receive buffer
+     and determines the number of bytes that are currently available for reading.
      - Returns: The number of bytes received in the buffer.
      */
     public func checkBufferReceived() -> Int {
@@ -237,7 +243,7 @@ public final class UART {
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_uart_write(obj, data, Int32(writeLength))
+                swifthal_uart_write(obj, data, writeLength)
             )
         }
         if case .failure(let err) = result {
@@ -260,7 +266,7 @@ public final class UART {
 
         if case .success = result {
             result = nothingOrErrno(
-                swifthal_uart_write(obj, data.baseAddress, Int32(writeLength))
+                swifthal_uart_write(obj, data.baseAddress, writeLength)
             )
         }
         if case .failure(let err) = result {
@@ -279,7 +285,7 @@ public final class UART {
         let data: [UInt8] = string.utf8CString.map {UInt8($0)}
 
         let result = nothingOrErrno(
-            swifthal_uart_write(obj, data, Int32(data.count))
+            swifthal_uart_write(obj, data, data.count)
         )
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
@@ -381,7 +387,7 @@ public final class UART {
             result = .failure(err)
         } else {
             result = valueOrErrno(
-                swifthal_uart_read(obj, &buffer, Int32(readLength), timeoutValue)
+                swifthal_uart_read(obj, &buffer, readLength, timeoutValue)
             )
         }
 
@@ -442,7 +448,7 @@ public final class UART {
             result = .failure(err)
         } else {
             result = valueOrErrno(
-                swifthal_uart_read(obj, buffer.baseAddress, Int32(readLength), timeoutValue)
+                swifthal_uart_read(obj, buffer.baseAddress, readLength, timeoutValue)
             )
         }
         if case .failure(let err) = result {

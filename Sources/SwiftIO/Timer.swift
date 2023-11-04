@@ -16,8 +16,8 @@ import CSwiftIO
  The Timer class can measure the time passed. If the time limit is reached, it
  can execute a specified task.
 
- A timer must be initialize at first. It can be one shot or periodic. And you can
- set the period of the timer.
+ It is actually a software timer. You need to initialize it at first.
+ It can operate as one-shot or periodic, with a customizable period.
 
  ```swift
  /// Create a periodic timer whose period is 2000s.
@@ -72,7 +72,7 @@ import CSwiftIO
  ```
 */
 public final class Timer {
-    public let obj: UnsafeMutableRawPointer
+    private let obj: UnsafeMutableRawPointer
 
     private var modeRawValue: swift_timer_type_t
 
@@ -81,7 +81,7 @@ public final class Timer {
             modeRawValue = Timer.getModeRawvalue(newValue)
         }
     }
-    private var period: Int32
+    private var period: Int
     private var callback: (()->Void)?
 
 
@@ -94,10 +94,10 @@ public final class Timer {
         self.mode = mode
         self.modeRawValue = Timer.getModeRawvalue(mode)
 
-        self.period = Int32(period)
+        self.period = period
 
         if let ptr = swifthal_timer_open() {
-            obj = UnsafeMutableRawPointer(ptr)
+            obj = ptr
         } else {
             fatalError("Timer init failed!")
         }
@@ -112,8 +112,7 @@ public final class Timer {
     /// > Important: The task for the interrupt should be executed in a very short
     /// time, usually in nanoseconds, like changing a number or a boolean value.
     /// Besides, changing digital output runs extremely quickly, so it also works.
-    /// However, printing a value usually takes several milliseconds and should
-    /// be avoided.
+    /// Printing a value usually takes several milliseconds and should be avoided.
     /// - Parameters:
     ///   - start: Whether to start the timer once it's set, true by default.
     ///   - callback: A task to execute once the time is up. It should be a void
@@ -146,7 +145,7 @@ public final class Timer {
             self.mode = mode
         }
         if let period = period {
-            self.period = Int32(period)
+            self.period = period
         }
         swifthal_timer_start(obj, self.modeRawValue, self.period)
     }
@@ -161,16 +160,18 @@ public final class Timer {
     /// Gets the timer's status which indicates how many times the timer has expired
     /// since it was last read. It will reset the status to zero.
     ///
-    /// - Returns: The number that the timer has expired.
-    public func getStatus() -> Int {
-        return Int(swifthal_timer_status_get(obj))
+    /// - Returns: Timer status.
+    public func getStatus() -> UInt32 {
+        return swifthal_timer_status_get(obj)
     }
 
 
-    /// TODO
+    /// Computes the (approximate) time remaining before a running timer next expires.
+    /// If the timer is not running, it returns zero.
+    ///
+    /// - Returns: Remaining time (in milliseconds).
     public func getRemaining() -> UInt32 {
-        //return swifthal_timer_remaining_get(obj)
-        return 0
+        return swifthal_timer_status_get(obj)
     }
 
 }

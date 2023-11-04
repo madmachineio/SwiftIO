@@ -7,6 +7,9 @@
 #ifndef _SWIFT_UART_H_
 #define _SWIFT_UART_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /** @brief Parity modes */
 enum swift_uart_parity {
 	SWIFT_UART_PARITY_NONE,
@@ -42,11 +45,11 @@ typedef enum swift_uart_data_bits swift_uart_data_bits_t;
  * @param read_buf_len uart read buffer size
  */
 struct swift_uart_cfg {
-	int baudrate;
+	ssize_t baudrate;
 	swift_uart_parity_t parity;
 	swift_uart_stop_bits_t stop_bits;
 	swift_uart_data_bits_t data_bits;
-	int read_buf_len;
+	ssize_t read_buf_len;
 };
 
 typedef struct swift_uart_cfg swift_uart_cfg_t;
@@ -79,7 +82,7 @@ int swifthal_uart_close(void *uart);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_baudrate_set(void *uart, int baudrate);
+int swifthal_uart_baudrate_set(void *uart, ssize_t baudrate);
 
 /**
  * @brief Set uart parity
@@ -134,7 +137,7 @@ int swifthal_uart_config_get(void *uart, swift_uart_cfg_t *cfg);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_put(void *uart, unsigned char c);
+int swifthal_uart_char_put(void *uart, uint8_t c);
 
 /**
  * @brief Receive on character to buffer through UART.
@@ -146,7 +149,7 @@ int swifthal_uart_char_put(void *uart, unsigned char c);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_char_get(void *uart, unsigned char *c, int timeout);
+int swifthal_uart_char_get(void *uart, uint8_t *c, int timeout);
 
 /**
  * @brief Send given number of bytes from buffer through UART.
@@ -158,7 +161,7 @@ int swifthal_uart_char_get(void *uart, unsigned char *c, int timeout);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_write(void *uart, const unsigned char *buf, int length);
+int swifthal_uart_write(void *uart, const uint8_t *buf, ssize_t length);
 
 /**
  * @brief Recvice given number of bytes to buffer through UART.
@@ -171,7 +174,7 @@ int swifthal_uart_write(void *uart, const unsigned char *buf, int length);
  * @retval Positive indicates the number of bytes actually read.
  * @retval Negative errno code if failure.
  */
-int swifthal_uart_read(void *uart, unsigned char *buf, int length, int timeout);
+int swifthal_uart_read(void *uart, uint8_t *buf, ssize_t length, int timeout);
 
 /**
  * @brief Get data amount in read buffer

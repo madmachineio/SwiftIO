@@ -10,7 +10,7 @@
 //
 //===----------------------------------------------------------------------===//
 
-import CNewlib
+import CSwiftIO
 
 /// The Errno struct lists all the possible errors.
 public struct Errno: RawRepresentable, Error {

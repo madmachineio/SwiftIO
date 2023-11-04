@@ -7,6 +7,9 @@
 #ifndef _SWIFT_COUNTER_H_
 #define _SWIFT_COUNTER_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /**
  * @brief Open counter
  *
@@ -30,11 +33,12 @@ int swifthal_counter_close(void *counter);
  * @brief Read count result
  *
  * @param counter Counter Handle
+ * @param ticks  Pointer to where to store the current counter value
  *
- * @retval Positive indicates the count ticks.
+ * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-unsigned int swifthal_counter_read(void *counter);
+int swifthal_counter_read(void *counter, uint32_t *ticks);
 
 /**
  * @brief Set callback to a counter
@@ -45,7 +49,7 @@ unsigned int swifthal_counter_read(void *counter);
  *
  * @return Negative errno code if failure.
  */
-int swifthal_counter_add_callback(void *counter, const void *user_data, void (*callback)(unsigned int, const void *));
+int swifthal_counter_add_callback(void *counter, const void *user_data, void (*callback)(uint32_t, const void *));
 
 /**
  * @brief Function to get counter frequency.
@@ -55,7 +59,7 @@ int swifthal_counter_add_callback(void *counter, const void *user_data, void (*c
  * @return Frequency of the counter in Hz, or zero if the counter does
  * not have a fixed frequency.
  */
-unsigned int swifthal_counter_freq(void *counter);
+uint32_t swifthal_counter_freq(void *counter);
 
 /**
  * @brief Function to convert ticks to microseconds.
@@ -65,7 +69,7 @@ unsigned int swifthal_counter_freq(void *counter);
  *
  * @return Converted microseconds.
  */
-unsigned long long int swifthal_counter_ticks_to_us(void *counter, unsigned int ticks);
+uint64_t swifthal_counter_ticks_to_us(void *counter, uint32_t ticks);
 
 /**
  * @brief Function to convert microseconds to ticks.
@@ -75,7 +79,7 @@ unsigned long long int swifthal_counter_ticks_to_us(void *counter, unsigned int 
  *
  * @return Converted ticks. Ticks will be saturated if exceed 32 bits.
  */
-unsigned int swifthal_counter_us_to_ticks(void *counter, unsigned long long int us);
+uint32_t swifthal_counter_us_to_ticks(void *counter, uint64_t us);
 
 /**
  * @brief Function to retrieve maximum top value that can be set.
@@ -84,7 +88,7 @@ unsigned int swifthal_counter_us_to_ticks(void *counter, unsigned long long int 
  *
  * @return Max top value.
  */
-unsigned int swifthal_counter_get_max_top_value(void *counter);
+uint32_t swifthal_counter_get_max_top_value(void *counter);
 
 /**
  * @brief Set a single shot alarm.
@@ -99,7 +103,7 @@ unsigned int swifthal_counter_get_max_top_value(void *counter);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_counter_set_channel_alarm(void *counter, unsigned int ticks);
+int swifthal_counter_set_channel_alarm(void *counter, uint32_t ticks);
 
 /**
  * @brief Cancel an alarm.

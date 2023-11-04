@@ -7,6 +7,9 @@
 #ifndef _SWIFT_TIMER_H_
 #define _SWIFT_TIMER_H_
 
+#include <stdint.h>
+#include <sys/types.h>
+
 /**
  * @brief Timer trigger type
  */
@@ -46,7 +49,7 @@ int swifthal_timer_close(void *timer);
  * @retval 0 If successful.
  * @retval Negative errno code if failure.
  */
-int swifthal_timer_start(void *timer, swift_timer_type_t type, int period);
+int swifthal_timer_start(void *timer, swift_timer_type_t type, ssize_t period);
 
 /**
  * @brief Stop timer
@@ -82,7 +85,18 @@ int swifthal_timer_add_callback(void *timer, const void *param, void (*callback)
  *
  * @return Timer status.
  */
-unsigned int swifthal_timer_status_get(void *timer);
+uint32_t swifthal_timer_status_get(void *timer);
 
+/**
+ * @brief Get time remaining before a timer next expires.
+ *
+ * This routine computes the (approximate) time remaining before a running timer
+ * next expires. If the timer is not running, it returns zero.
+ *
+ * @param timer Timer handle
+ *
+ * @return Remaining time (in milliseconds).
+ */
+uint32_t swifthal_timer_remaining_get(void *timer);
 
 #endif  /*_SWIFT_TIMER_H_*/
