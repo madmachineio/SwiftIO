@@ -14,7 +14,7 @@ import CSwiftIO
 
 @inlinable
 internal func getClassPointer<T: AnyObject>(_ obj: T) -> UnsafeRawPointer {
-    return UnsafeRawPointer(Unmanaged.passUnretained(obj).toOpaque())
+  return UnsafeRawPointer(Unmanaged.passUnretained(obj).toOpaque())
 }
 
 internal func system_strerror(_ __errnum: Int32) -> UnsafeMutablePointer<Int8>! {
@@ -23,25 +23,24 @@ internal func system_strerror(_ __errnum: Int32) -> UnsafeMutablePointer<Int8>! 
 
 @inlinable
 public func valueOrErrno<D>(
-    _ data: D, _ ret: CInt
+  _ data: D, _ ret: CInt
 ) -> Result<D, Errno> {
   ret < 0 ? .failure(Errno(ret)) : .success(data)
 }
 
 @inlinable
 public func valueOrErrno(
-    _ ret: CInt
+  _ ret: CInt
 ) -> Result<Int, Errno> {
   ret < 0 ? .failure(Errno(ret)) : .success(Int(ret))
 }
 
 @inlinable
 public func nothingOrErrno(
-    _ ret: CInt
+  _ ret: CInt
 ) -> Result<(), Errno> {
   valueOrErrno(ret).map { _ in () }
 }
-
 
 // @inlinable
 // internal func validateLength(_ array: [UInt8], count: Int?, length: inout Int) -> Result<(), Errno> {
@@ -59,48 +58,52 @@ public func nothingOrErrno(
 // }
 
 @inlinable
-internal func validateLength<Element: BinaryInteger>(_ array: [Element], count: Int?, length: inout Int) -> Result<(), Errno> {
-    if let count = count {
-        if count > array.count || count < 0 {
-            return .failure(Errno.invalidArgument)
-        } else {
-            length = count * MemoryLayout<Element>.stride
-        }
+internal func validateLength<Element: BinaryInteger>(
+  _ array: [Element], count: Int?, length: inout Int
+) -> Result<(), Errno> {
+  if let count = count {
+    if count > array.count || count < 0 {
+      return .failure(Errno.invalidArgument)
     } else {
-        length = array.count * MemoryLayout<Element>.stride
+      length = count * MemoryLayout<Element>.stride
     }
+  } else {
+    length = array.count * MemoryLayout<Element>.stride
+  }
 
-    return .success(())
+  return .success(())
 }
 
 @inlinable
-internal func validateLength(_ buffer: UnsafeMutableRawBufferPointer, count: Int?, length: inout Int) -> Result<(), Errno> {
-    if let count = count {
-        if count > buffer.count || count < 0 {
-            return .failure(Errno.invalidArgument)
-        } else {
-            length = count
-        }
+internal func validateLength(
+  _ buffer: UnsafeMutableRawBufferPointer, count: Int?, length: inout Int
+) -> Result<(), Errno> {
+  if let count = count {
+    if count > buffer.count || count < 0 {
+      return .failure(Errno.invalidArgument)
     } else {
-        length = buffer.count
+      length = count
     }
+  } else {
+    length = buffer.count
+  }
 
-    return .success(())
+  return .success(())
 }
 
-
-
 @inlinable
-internal func validateLength(_ buffer: UnsafeRawBufferPointer, count: Int?, length: inout Int) -> Result<(), Errno> {
-    if let count = count {
-        if count > buffer.count || count < 0 {
-            return .failure(Errno.invalidArgument)
-        } else {
-            length = count
-        }
+internal func validateLength(_ buffer: UnsafeRawBufferPointer, count: Int?, length: inout Int)
+  -> Result<(), Errno>
+{
+  if let count = count {
+    if count > buffer.count || count < 0 {
+      return .failure(Errno.invalidArgument)
     } else {
-        length = buffer.count
+      length = count
     }
+  } else {
+    length = buffer.count
+  }
 
-    return .success(())
+  return .success(())
 }

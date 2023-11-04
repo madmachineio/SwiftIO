@@ -12,5 +12,5 @@
 
 /// The protocol for pin ids on your board.
 public protocol IdName {
-    var value: Int32 { get }
+  var value: Int32 { get }
 }
