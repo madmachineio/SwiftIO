@@ -4,10 +4,13 @@ public func createThread(
   name: String = "",
   priority: Int,
   stackSize: Int,
+  p1: UnsafeMutableRawPointer? = nil,
+  p2: UnsafeMutableRawPointer? = nil,
+  p3: UnsafeMutableRawPointer? = nil,
   _ deadloop: @escaping swifthal_task
 ) {
   var cName = [CChar](name.utf8CString)
-  swifthal_os_task_create(&cName, deadloop, nil, nil, nil, Int32(priority), Int32(stackSize))
+  swifthal_os_task_create(&cName, deadloop, p1, p2, p3, Int32(priority), Int32(stackSize))
 }
 
 public func yield() {
