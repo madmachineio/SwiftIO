@@ -273,8 +273,14 @@ public final class UART {
   /// - Returns: Whether the communication succeeds. If not, it returns the
   /// specific error.
   @discardableResult
-  public func write(_ string: String) -> Result<(), Errno> {
-    let data: [UInt8] = string.utf8CString.map { UInt8($0) }
+  public func write(_ string: String, addNullTerminator: Bool = false) -> Result<(), Errno> {
+    let data: [UInt8]
+
+    if addNullTerminator {
+      data = string.utf8CString.map { UInt8($0) }
+    } else {
+      data = [UInt8](string.utf8)
+    }
 
     let result = nothingOrErrno(
       swifthal_uart_write(obj, data, data.count)
