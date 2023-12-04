@@ -270,6 +270,7 @@ public final class UART {
 
   /// Writes a string to the external device through the serial connection.
   /// - Parameter string: A string to be sent to the device.
+  /// - Parameter addNullTerminator: Whether to add "\0" to the end of the string.
   /// - Returns: Whether the communication succeeds. If not, it returns the
   /// specific error.
   @discardableResult
