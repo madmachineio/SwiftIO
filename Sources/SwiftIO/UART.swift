@@ -154,6 +154,8 @@ public final class UART {
 
   /// Sets the baud rate for communication. It should be set ahead of time
   /// to ensure the same baud rate between devices.
+  /// - Attention: Now this method has issue due to the low-level driver in
+  /// Zephyr. Please close the UART and reopen it at a different baudrate.
   /// - Parameter baudRate: The communication speed.
   /// - Returns: Whether the configuration succeeds. If not, it returns the
   /// specific error.
@@ -270,11 +272,18 @@ public final class UART {
 
   /// Writes a string to the external device through the serial connection.
   /// - Parameter string: A string to be sent to the device.
+  /// - Parameter addNullTerminator: Whether to add "\0" to the end of the string.
   /// - Returns: Whether the communication succeeds. If not, it returns the
   /// specific error.
   @discardableResult
-  public func write(_ string: String) -> Result<(), Errno> {
-    let data: [UInt8] = string.utf8CString.map { UInt8($0) }
+  public func write(_ string: String, addNullTerminator: Bool = false) -> Result<(), Errno> {
+    let data: [UInt8]
+
+    if addNullTerminator {
+      data = string.utf8CString.map { UInt8($0) }
+    } else {
+      data = [UInt8](string.utf8)
+    }
 
     let result = nothingOrErrno(
       swifthal_uart_write(obj, data, data.count)
