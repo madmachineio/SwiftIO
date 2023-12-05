@@ -154,6 +154,8 @@ public final class UART {
 
   /// Sets the baud rate for communication. It should be set ahead of time
   /// to ensure the same baud rate between devices.
+  /// - Attention: Now this method has issue due to the low-level driver in
+  /// Zephyr. Please close the UART and reopen it at a different baudrate.
   /// - Parameter baudRate: The communication speed.
   /// - Returns: Whether the configuration succeeds. If not, it returns the
   /// specific error.
