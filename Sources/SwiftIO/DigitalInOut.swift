@@ -67,7 +67,7 @@ import CSwiftIO
 /// ```
 public final class DigitalInOut {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private var directionRawValue: swift_gpio_direction_t
   private var outputModeRawValue: swift_gpio_mode_t

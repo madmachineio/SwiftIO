@@ -48,7 +48,7 @@ import CSwiftIO
 /// ```
 public final class AnalogIn {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private let info: swift_adc_info_t
 

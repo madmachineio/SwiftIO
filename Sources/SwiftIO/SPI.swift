@@ -131,7 +131,7 @@ import CSwiftIO
 /// Therefore, you can directly read temperature using the predefined APIs.
 public final class SPI {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private var operation: Operation
 

@@ -68,7 +68,7 @@ import CSwiftIO
 ///  ```
 public final class UART {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private var config: swift_uart_cfg_t
 

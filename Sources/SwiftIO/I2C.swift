@@ -144,7 +144,7 @@ import CSwiftIO
 /// [MadDrivers](https://github.com/madmachineio/MadDrivers).
 public final class I2C {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private var speedRawValue: UInt32
   private var speed: Speed {

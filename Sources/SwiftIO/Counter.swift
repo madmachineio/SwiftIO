@@ -27,7 +27,7 @@ import CSwiftIO
 /// but cannot track too long (usually several seconds) in case of overflow.
 public final class Counter {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private var mode: Mode
   private var periodTicks: UInt32

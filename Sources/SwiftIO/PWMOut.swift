@@ -91,7 +91,7 @@ import CSwiftIO
 /// an important role.
 public final class PWMOut {
   private let id: Int32
-  private let obj: UnsafeMutableRawPointer
+  @_spi(SwiftIOPrivate) public let obj: UnsafeMutableRawPointer
 
   private let info: swift_pwm_info_t
 
