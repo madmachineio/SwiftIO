@@ -107,3 +107,8 @@ internal func validateLength(_ buffer: UnsafeRawBufferPointer, count: Int?, leng
 
   return .success(())
 }
+
+@inlinable
+public func getSpecifiedPointer(from address: UInt32) -> UnsafeMutableRawPointer {
+  swifthal_get_specified_pointer(address)
+}

@@ -57,4 +57,7 @@ uint32_t swifthal_hwcycle_to_ns(uint32_t cycles);
  */
 void swifthal_random_get(uint8_t *buf, ssize_t length);
 
+
+void *swifthal_get_specified_pointer(uint32_t address);
+
 #endif /*_SWIFT_PLATFORM_H_*/
