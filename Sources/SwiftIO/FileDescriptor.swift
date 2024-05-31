@@ -85,6 +85,9 @@ public struct FileDescriptor {
         throw Errno.notSupported
       }
     case .failure(let err):
+      if err == Errno.noSuchFileOrDirectory && (options.contains(.append) || options.contains(.create)) {
+        break
+      }
       throw err
     }
 
