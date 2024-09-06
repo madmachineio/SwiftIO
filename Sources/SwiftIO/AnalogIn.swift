@@ -95,12 +95,13 @@ public final class AnalogIn {
      let pin = AnalogIn(Id.A0)
      ```
      */
-  public init(_ idName: IdName) {
-    id = idName.value
+  public init(_ idName: Id) {
+    self.id = idName.rawValue
     if let ptr = swifthal_adc_open(id) {
       obj = ptr
     } else {
-      fatalError("AnalogIn \(idName.value) init failed")
+      print("error: AnalogIn \(id) init failed!")
+      fatalError()
     }
     var _info = swift_adc_info_t()
     swifthal_adc_info_get(obj, &_info)
@@ -128,7 +129,9 @@ public final class AnalogIn {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return Int(sample)

@@ -69,7 +69,7 @@ public struct FileDescriptor {
     _ path: String,
     _ mode: FileDescriptor.AccessMode = .readWrite,
     options: FileDescriptor.OpenOptions = FileDescriptor.OpenOptions()
-  ) throws -> FileDescriptor {
+  ) throws(Errno) -> FileDescriptor {
     let _filePath = FilePath(path)
     var _dirEntry = swift_fs_dirent_t()
 
@@ -106,7 +106,7 @@ public struct FileDescriptor {
      Flushes the associated stream and closes the file.
 
      */
-  public func close() throws {
+  public func close() throws(Errno) {
     let result = nothingOrErrno(
       swifthal_fs_close(filePointer)
     )
@@ -120,7 +120,7 @@ public struct FileDescriptor {
      Get current file position.
      - Returns: Current position in file.
      */
-  public func tell() throws -> Int {
+  public func tell() throws(Errno) -> Int {
     let result = valueOrErrno(
       swifthal_fs_tell(filePointer)
     )
@@ -143,7 +143,7 @@ public struct FileDescriptor {
   public func read(
     into buffer: UnsafeMutableRawBufferPointer,
     count: Int? = nil
-  ) throws -> Int {
+  ) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -175,7 +175,7 @@ public struct FileDescriptor {
   @discardableResult
   public func read(
     fromAbsoluteOffest offset: Int, into buffer: UnsafeMutableRawBufferPointer, count: Int? = nil
-  ) throws -> Int {
+  ) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -210,7 +210,7 @@ public struct FileDescriptor {
      - Returns: The bytes successfully read.
      */
   @discardableResult
-  public func read(into buffer: inout [UInt8], count: Int? = nil) throws -> Int {
+  public func read(into buffer: inout [UInt8], count: Int? = nil) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -245,7 +245,7 @@ public struct FileDescriptor {
   public func read(
     fromAbsoluteOffest offset: Int,
     into buffer: inout [UInt8], count: Int? = nil
-  ) throws -> Int {
+  ) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -282,7 +282,7 @@ public struct FileDescriptor {
      - Returns: The file’s offset location, in bytes from the beginning of the file.
      */
   @discardableResult
-  public func seek(offset: Int, from whence: SeekOrigin = .start) throws -> Int {
+  public func seek(offset: Int, from whence: SeekOrigin = .start) throws(Errno) -> Int {
     let seekResult = valueOrErrno(
       swifthal_fs_seek(filePointer, offset, whence.rawValue)
     )
@@ -301,7 +301,7 @@ public struct FileDescriptor {
      - Returns: The number of bytes that were written.
      */
   @discardableResult
-  public func write(_ string: String) throws -> Int {
+  public func write(_ string: String) throws(Errno) -> Int {
     let data = string.utf8CString
     let size = data.count - 1
 
@@ -328,7 +328,7 @@ public struct FileDescriptor {
      - Returns: The number of bytes that were written.
      */
   @discardableResult
-  public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) throws -> Int {
+  public func write(_ buffer: UnsafeRawBufferPointer, count: Int? = nil) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -362,7 +362,7 @@ public struct FileDescriptor {
   public func write(
     toAbsoluteOffset offset: Int,
     _ buffer: UnsafeRawBufferPointer, count: Int? = nil
-  ) throws -> Int {
+  ) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -398,7 +398,7 @@ public struct FileDescriptor {
      - Returns: The number of bytes that were written.
      */
   @discardableResult
-  public func write(_ buffer: [UInt8], count: Int? = nil) throws -> Int {
+  public func write(_ buffer: [UInt8], count: Int? = nil) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -435,7 +435,7 @@ public struct FileDescriptor {
   public func write(
     toAbsoluteOffset offset: Int,
     _ buffer: [UInt8], count: Int? = nil
-  ) throws -> Int {
+  ) throws(Errno) -> Int {
     let length: Int
 
     if let count = count {
@@ -475,7 +475,7 @@ public struct FileDescriptor {
      Note that closing a file will cause caches to be flushed correctly
      so it needs not be called if the file is being closed.
      */
-  public func sync() throws {
+  public func sync() throws(Errno) {
     let result = nothingOrErrno(
       swifthal_fs_sync(filePointer)
     )

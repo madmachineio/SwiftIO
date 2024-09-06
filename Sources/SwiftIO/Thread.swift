@@ -17,7 +17,7 @@ public func yield() {
   swifthal_os_task_yield()
 }
 
-public struct Mutex {
+public struct Mutex: @unchecked Sendable {
   let mutex: UnsafeRawPointer
 
   public init() {
@@ -43,7 +43,7 @@ public struct Mutex {
   }
 }
 
-public struct MessageQueue {
+public struct MessageQueue: @unchecked Sendable {
   let queue: UnsafeRawPointer
 
   public init(maxMessageBytes: Int, maxMessageCount: Int) {
@@ -79,12 +79,13 @@ public struct MessageQueue {
   }
 }
 
-public struct Semaphore {
+public struct Semaphore: @unchecked Sendable {
   let sem: UnsafeRawPointer
 
   public init(initialCount: Int = 0, maxCount: Int = 1) {
     guard initialCount >= 0 && maxCount >= 1 else {
-      fatalError("Semaphore initialCount must >= 0 and maxCount must >= 1")
+      print("error: Semaphore initialCount must >= 0 and maxCount must >= 1")
+      fatalError()
     }
     sem = swifthal_os_sem_create(UInt32(initialCount), UInt32(maxCount))
   }

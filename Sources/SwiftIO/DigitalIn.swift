@@ -105,10 +105,10 @@ public final class DigitalIn {
   ///   - mode: **OPTIONAL** The input mode which defines pull-up and pull-down
   ///   resistor, `.pullDown` by default.
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     mode: Mode = .pullDown
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     self.mode = mode
     self.modeRawValue = DigitalIn.getModeRawValue(mode)
     self.interruptMode = .falling
@@ -117,7 +117,8 @@ public final class DigitalIn {
     )
 
     guard let ptr = swifthal_gpio_open(id, direction, modeRawValue) else {
-      fatalError("DigitalIn \(idName.value) init failed")
+      print("error: DigitalIn \(id) init failed!")
+      fatalError()
     }
     obj = ptr
   }
@@ -154,7 +155,9 @@ public final class DigitalIn {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       self.mode = oldMode
     }
 
@@ -179,7 +182,9 @@ public final class DigitalIn {
     case .success(let value):
       return value == 1
     case .failure(let err):
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       return false
     }
   }
@@ -269,7 +274,9 @@ public final class DigitalIn {
       swifthal_gpio_interrupt_config(obj, interruptModeRawValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       interruptMode = oldInterruptMode
       return result
     }
@@ -283,14 +290,18 @@ public final class DigitalIn {
       }
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       return result
     }
 
     if enable {
       result = enableInterrupt()
       if case .failure(let err) = result {
-        print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        let errDescription = err.description
+        print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       }
     }
 
@@ -304,7 +315,9 @@ public final class DigitalIn {
   public func enableInterrupt() -> Result<(), Errno> {
     guard callback != nil else {
       let err = Errno.resourceBusy
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       return .failure(err)
     }
 

@@ -119,14 +119,14 @@ public final class UART {
         buffer to store the data, 1024 by default.
      */
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     baudRate: Int = 115200,
     parity: Parity = .none,
     stopBits: StopBits = .oneBit,
     dataBits: DataBits = .eightBits,
     readBufferLength: Int = 1024
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     self.baudRate = baudRate
     self.parity = parity
     self.stopBits = stopBits
@@ -143,7 +143,8 @@ public final class UART {
     if let ptr = swifthal_uart_open(id, &config) {
       obj = ptr
     } else {
-      fatalError("UART \(idName.value) init failed")
+      print("error: UART \(id) init failed!")
+      fatalError()
     }
 
   }
@@ -169,7 +170,9 @@ public final class UART {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       self.baudRate = oldBaudRate
     }
 
@@ -192,7 +195,9 @@ public final class UART {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -219,7 +224,9 @@ public final class UART {
       swifthal_uart_char_put(obj, byte)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -242,7 +249,9 @@ public final class UART {
       )
     }
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -265,7 +274,9 @@ public final class UART {
       )
     }
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -289,7 +300,9 @@ public final class UART {
       swifthal_uart_write(obj, data, data.count)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -335,7 +348,9 @@ public final class UART {
       swifthal_uart_read(obj, &buffer, 1, timeoutValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -395,7 +410,9 @@ public final class UART {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -457,7 +474,9 @@ public final class UART {
       )
     }
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }

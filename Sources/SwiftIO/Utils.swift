@@ -21,6 +21,26 @@ internal func system_strerror(_ __errnum: Int32) -> UnsafeMutablePointer<Int8>! 
   strerror(__errnum)
 }
 
+
+
+@_cdecl("posix_memalign")
+public func posix_memalign(ptr: UnsafeMutablePointer<UnsafeMutableRawPointer?>, alignment: Int, size: Int) -> CInt {
+  ptr.pointee = memalign(alignment, size)
+
+  if ptr.pointee != nil {
+    return 0
+  } else {
+    return -1
+  }
+}
+
+// @_cdecl("getentropy")
+// public func getentropy(buffer: UnsafeMutablePointer<UnsafeMutableRawPointer?>, size: Int) -> CInt {
+//   z_impl_sys_rand_get(buffer, size)
+//   return 0
+// }
+
+
 @inlinable
 public func valueOrErrno<D>(
   _ data: D, _ ret: CInt

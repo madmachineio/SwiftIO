@@ -187,7 +187,7 @@ public final class SPI {
   ///   edge of the clock pulse, true for the second edge. `false` by default.
   ///   - bitOrder: **OPTIONAL** The bit order on data line, MSB by default.
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     speed: Int = 5_000_000,
     csPin: DigitalOut? = nil,
     CPOL: Bool = false,
@@ -195,7 +195,7 @@ public final class SPI {
     bitOrder: BitOrder = .MSB
 
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     self.speed = speed
     self.csPin = csPin
     self.operation = .eightBits
@@ -224,7 +224,8 @@ public final class SPI {
       }
       obj = ptr
     } else {
-      fatalError("SPI \(idName.value) init failed!")
+      print("error: SPI \(id) init failed!")
+      fatalError()
     }
 
     var syncByte: UInt8 = 0
@@ -358,7 +359,9 @@ public final class SPI {
     csDisable()
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -386,7 +389,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -418,7 +423,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -449,7 +456,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -469,7 +478,9 @@ public final class SPI {
     )
     csDisable()
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -495,7 +506,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -527,7 +540,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -560,7 +575,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -609,7 +626,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -667,7 +686,9 @@ public final class SPI {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result

@@ -11,7 +11,8 @@ board = ""
 # There are "thumbv7em-unknown-none-eabi" and "thumbv7em-unknown-none-eabihf" now
 # If your code use significant floating-point calculation,
 # plz set it to "thumbv7em-unknown-none-eabihf"
-triple = "thumbv7em-unknown-none-eabi"
+# triple = "thumbv7em-unknown-none-eabi"
+triple = "armv7em-none-none-eabi"
 
 # Reserved for future use 
 version = 1
