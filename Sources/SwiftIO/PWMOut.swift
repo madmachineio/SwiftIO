@@ -141,15 +141,16 @@ public final class PWMOut {
 
      */
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     frequency: Int = 1000,
     dutycycle: Float = 0.0
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     if let ptr = swifthal_pwm_open(id) {
       obj = ptr
     } else {
-      fatalError("PWM\(idName.value) initialization failed!")
+      print("error: PWM \(id) initialization failed!")
+      fatalError()
     }
 
     var _info = swift_pwm_info_t()

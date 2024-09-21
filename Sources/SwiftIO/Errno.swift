@@ -771,13 +771,13 @@ extension Errno {
   public static var wouldBlock: Errno { Errno(EWOULDBLOCK) }
 }
 
-extension Errno {
-  @_alwaysEmitIntoClient
-  public static func ~= (_ lhs: Errno, _ rhs: Error) -> Bool {
-    guard let value = rhs as? Errno else { return false }
-    return lhs == value
-  }
-}
+// extension Errno {
+//   @_alwaysEmitIntoClient
+//   public static func ~= (_ lhs: Errno, _ rhs: Error) -> Bool {
+//     guard let value = rhs as? Errno else { return false }
+//     return lhs == value
+//   }
+// }
 
 // @available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
 extension Errno: CustomStringConvertible, CustomDebugStringConvertible {

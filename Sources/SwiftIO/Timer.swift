@@ -96,7 +96,8 @@ public final class Timer {
     if let ptr = swifthal_timer_open() {
       obj = ptr
     } else {
-      fatalError("Timer init failed!")
+      print("error: Timer init failed!")
+      fatalError()
     }
   }
 

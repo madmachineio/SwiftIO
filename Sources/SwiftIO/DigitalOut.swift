@@ -159,17 +159,18 @@ public final class DigitalOut {
   ///   - mode: **OPTIONAL** The output mode of the pin, `.pushPull` by default.
   ///   - value: **OPTIONAL** The output value after initialization, `false` by default.
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     mode: Mode = .pushPull,
     value: Bool = false
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     self.value = value
     self.mode = mode
     self.modeRawValue = DigitalOut.getModeRawValue(mode)
 
     guard let ptr = swifthal_gpio_open(id, direction, modeRawValue) else {
-      fatalError("DigitalOut \(idName.value) init failed")
+      print("error: DigitalOut \(id) init failed!")
+      fatalError()
     }
 
     obj = ptr
@@ -206,7 +207,9 @@ public final class DigitalOut {
       swifthal_gpio_config(obj, direction, modeRawValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       self.mode = oldMode
     }
 

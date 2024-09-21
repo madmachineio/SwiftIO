@@ -120,24 +120,27 @@ public final class I2S {
   ///   `.philips` by default.
   ///   - timeout: **OPTIONAL** Wait time for data transmission.
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     rate: Int = 16_000,
     bits: Int = 16,
     mode: Mode = .philips,
     timeout: Int = Int(SWIFT_FOREVER)
   ) {
     guard supportedSampleRate.contains(rate) else {
-      fatalError("The specified sampleRate \(rate) is not supported!")
+      print("error: The specified sampleRate \(rate) is not supported!")
+      fatalError()
     }
     guard supportedSampleBits.contains(bits) else {
-      fatalError("The specified sampleBits \(bits) is not supported!")
+      print("error: The specified sampleBits \(bits) is not supported!")
+      fatalError()
     }
 
-    self.id = idName.value
+    self.id = idName.rawValue
     if let ptr = swifthal_i2s_open(id) {
       obj = ptr
     } else {
-      fatalError("I2S\(idName.value) initialization failed!")
+      print("error: I2S \(id) initialization failed!")
+      fatalError()
     }
 
     self.mode = mode
@@ -179,10 +182,12 @@ public final class I2S {
     rate: Int, bits: Int
   ) -> Result<(), Errno> {
     guard supportedSampleRate.contains(rate) else {
-      fatalError("The specified sampleRate \(rate) is not supported!")
+      print("error: The specified sampleRate \(rate) is not supported!")
+      fatalError()
     }
     guard supportedSampleBits.contains(bits) else {
-      fatalError("The specified sampleBits \(bits) is not supported!")
+      print("error: The specified sampleBits \(bits) is not supported!")
+      fatalError()
     }
 
     self.sampleBits = bits
@@ -193,7 +198,9 @@ public final class I2S {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -224,7 +231,9 @@ public final class I2S {
     }
 
     if case .failure(let err) = writeResult {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return writeResult
@@ -255,7 +264,9 @@ public final class I2S {
     }
 
     if case .failure(let err) = writeResult {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return writeResult
@@ -292,7 +303,7 @@ extension I2S {
     case error
   }
 
-  public struct DataFormat: OptionSet {
+  public struct DataFormat: OptionSet, Sendable {
     public let rawValue: Int32
 
     public init(rawValue: Int32) {
@@ -308,7 +319,7 @@ extension I2S {
     static let defaultDataFormat: DataFormat = [.dataOrderMSB]
   }
 
-  public struct ConfigOptions: OptionSet {
+  public struct ConfigOptions: OptionSet, Sendable {
     public let rawValue: Int32
 
     public init(rawValue: Int32) {

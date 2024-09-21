@@ -120,14 +120,14 @@ public final class DigitalInOut {
   ///   - outputValue: **OPTIONAL** The pin output high or low after initialization,
   ///     `false` by default.
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     direction: Direction = .output,
     outputMode: DigitalOut.Mode = .pushPull,
     inputMode: DigitalIn.Mode = .pullUp,
     outputValue: Bool = false
   ) {
 
-    self.id = idName.value
+    self.id = idName.rawValue
     self.direction = direction
     self.outputMode = outputMode
     self.inputMode = inputMode
@@ -150,7 +150,8 @@ public final class DigitalInOut {
         swifthal_gpio_set(obj, outputValue ? 1 : 0)
       }
     } else {
-      fatalError("DigitalInOut \(idName.value) init failed")
+      print("error: DigitalInOut \(id) init failed!")
+      fatalError()
     }
   }
 
@@ -198,7 +199,9 @@ public final class DigitalInOut {
       swifthal_gpio_config(obj, directionRawValue, outputModeRawValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       outputMode = oldOutputMode
     }
 
@@ -228,7 +231,9 @@ public final class DigitalInOut {
       swifthal_gpio_config(obj, directionRawValue, inputModeRawValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       inputMode = oldInputMode
     }
 

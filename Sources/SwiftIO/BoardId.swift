@@ -1,4 +1,4 @@
-//=== BoardProtocol.swift -------------------------------------------------===//
+//=== BoardId.swift -------------------------------------------------------===//
 //
 // Copyright (c) MadMachine Limited
 // Licensed under MIT License
@@ -11,6 +11,10 @@
 //===----------------------------------------------------------------------===//
 
 /// The protocol for pin ids on your board.
-public protocol IdName {
-  var value: Int32 { get }
+public struct Id: RawRepresentable, Sendable {
+  public var rawValue: Int32
+
+  public init(rawValue: Int32) {
+    self.rawValue = rawValue
+  }
 }

@@ -24,15 +24,16 @@ public final class Ethernet {
     Int32
   ) -> Int32
 
-  static var mac: [UInt8] = [UInt8](repeating: 0x00, count: 6)
-  static var txHandler: EthernetTxHandler?
+  static nonisolated(unsafe) var mac: [UInt8] = [UInt8](repeating: 0x00, count: 6)
+  static nonisolated(unsafe) var txHandler: EthernetTxHandler?
   static public let rxHandler: EthernetRxHandler = { pointer, length in
     return swift_eth_rx(pointer, UInt16(length))
   }
 
   public static func setup(mac: [UInt8], txHandler: EthernetTxHandler) {
     guard mac.count == 6 else {
-      fatalError("error: mac address must be 6 bytes")
+      print("error: mac address must be 6 bytes")
+      fatalError()
     }
     Ethernet.mac = mac
     Ethernet.txHandler = txHandler

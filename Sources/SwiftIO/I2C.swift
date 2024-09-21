@@ -167,19 +167,21 @@ public final class I2C {
 
      */
   public init(
-    _ idName: IdName,
+    _ idName: Id,
     speed: Speed = .standard
   ) {
-    self.id = idName.value
+    self.id = idName.rawValue
     self.speed = speed
     self.speedRawValue = I2C.getSpeedRawValue(speed)
 
     guard let ptr = swifthal_i2c_open(id) else {
-      fatalError("I2C\(idName.value) init failed")
+      print("error: I2C \(id) init failed!")
+      fatalError()
     }
     obj = ptr
     if swifthal_i2c_config(obj, speedRawValue) != 0 {
-      fatalError("I2C\(idName.value) init config failed")
+      print("error: I2C \(id) init config failed!")
+      fatalError()
     }
   }
 
@@ -212,7 +214,9 @@ public final class I2C {
       swifthal_i2c_config(obj, speedRawValue)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       self.speed = oldSpeed
     }
 
@@ -236,7 +240,9 @@ public final class I2C {
     )
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -267,7 +273,9 @@ public final class I2C {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -286,7 +294,9 @@ public final class I2C {
       swifthal_i2c_write(obj, address, &byte, 1)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
     return result
   }
@@ -311,7 +321,9 @@ public final class I2C {
     }
 
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -339,7 +351,9 @@ public final class I2C {
       swifthal_i2c_write_read(obj, address, [byte], 1, &buffer, 1)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -375,7 +389,9 @@ public final class I2C {
       )
     }
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result
@@ -427,7 +443,9 @@ public final class I2C {
       )
     }
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
     }
 
     return result

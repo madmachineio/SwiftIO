@@ -47,12 +47,13 @@ public final class Counter {
   ///   - mode: **OPTIONAL** Whether the counter is periodic or one shot,
   ///   `.period` by default.
   ///   - period: **OPTIONAL** The period of the counter in microsecond.
-  public init(_ idName: IdName, mode: Mode = .period, period: UInt64 = 1_000_000) {
-    self.id = idName.value
+  public init(_ idName: Id, mode: Mode = .period, period: UInt64 = 1_000_000) {
+    self.id = idName.rawValue
     self.mode = mode
 
     guard let ptr = swifthal_counter_open(id) else {
-      fatalError("Counter \(idName.value) init failed")
+      print("error: Counter \(id) init failed!")
+      fatalError()
     }
 
     obj = ptr
@@ -136,7 +137,9 @@ public final class Counter {
       swifthal_counter_read(obj, &ticks)
     )
     if case .failure(let err) = result {
-      print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+      let errDescription = err.description
+      print("error: \(self).\(#function) line \(#line) -> " + errDescription)
       return .failure(err)
     }
 
