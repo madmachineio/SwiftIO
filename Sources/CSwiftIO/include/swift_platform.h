@@ -14,4 +14,5 @@
 #define SWIFT_FOREVER (-1)
 
 
+
 #endif /*_SWIFT_PLATFORM_H_*/
