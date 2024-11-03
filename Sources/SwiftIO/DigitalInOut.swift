@@ -54,7 +54,7 @@ public final class DigitalInOut {
         outputValue: Bool = false
     ) {
         
-        self.id = id
+        self.id = idName.rawValue
         self.direction = direction
         self.outputMode = outputMode
         self.inputMode = inputMode

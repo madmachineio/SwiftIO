@@ -65,7 +65,7 @@
         bitOrder: BitOrder = .MSB
 
     ) {
-        self.id = id
+        self.id = idName.rawValue
         self.speed = Int32(speed)
         self.csPin = csPin
         self.operation = .eightBits
@@ -291,6 +291,42 @@
 
         if case .failure(let err) = result {
             print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        }
+
+        return result
+    }
+
+    /// Write an array of binary integer to the slave device.
+    ///
+    /// - Parameters:
+    ///   - data: An array of data stored in the specified format.
+    ///   - count: The count of data to be sent. If nil, it equals the count
+    ///   of elements in data.
+    /// - Returns: Whether the communication succeeds. If not, it returns the
+    /// specific error.
+    @discardableResult
+    public func write<Element: BinaryInteger>(_ data: [Element], count: Int? = nil) -> Result<
+        (), Errno
+    > {
+        var writeLength = 0
+        let result = validateLength(data, count: count, length: &writeLength)
+
+        if case .success = result {
+            csEnable()
+            var writeData = [UInt8](repeating: 0, count: writeLength)
+            data.withUnsafeBytes { pointer in
+                for i in 0..<writeLength {
+                    writeData[i] = pointer[i]
+                }
+            }
+            written += writeData
+            csDisable()
+        }
+
+        if case .failure(let err) = result {
+        //print("error: \(self).\(#function) line \(#line) -> " + String(describing: err))
+        let errDescription = err.description
+        print("error: \(self).\(#function) line \(#line) -> " + errDescription)
         }
 
         return result

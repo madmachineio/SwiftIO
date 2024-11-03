@@ -58,7 +58,7 @@
      */
     public init(_ idName: Id,
                 speed: Speed = .standard) {
-        self.id = id
+        self.id = idName.rawValue
         self.speed = speed
     }
 

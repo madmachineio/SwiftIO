@@ -106,7 +106,7 @@ public enum Endian {
 
 
 public extension FixedWidthInteger {
-    public func getBytes(endian: Endian = .big) -> [UInt8] {
+	func getBytes(endian: Endian = .big) -> [UInt8] {
         let bytes = self.bitWidth / 8
         var result = [UInt8](repeating: 0, count: bytes)
 
@@ -127,7 +127,7 @@ public extension FixedWidthInteger {
 
 
 public extension Array where Element == UInt8 {
-    public func getUInt16(from index: Int = 0, endian: Endian = .big) -> UInt16 {
+	func getUInt16(from index: Int = 0, endian: Endian = .big) -> UInt16 {
         let msb, lsb: UInt16
         
         switch endian {
@@ -141,7 +141,7 @@ public extension Array where Element == UInt8 {
         return (msb | lsb)
     }
     
-    public func getInt16(from index: Int = 0, endian: Endian = .big) -> Int16 {
+	func getInt16(from index: Int = 0, endian: Endian = .big) -> Int16 {
         let msb, lsb: Int16
         
         switch endian {

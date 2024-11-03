@@ -101,7 +101,7 @@ public final class DigitalOut {
     public init(_ idName: Id,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
-        self.id = id
+        self.id = idName.rawValue
         self.value = value
         self.mode = mode
 

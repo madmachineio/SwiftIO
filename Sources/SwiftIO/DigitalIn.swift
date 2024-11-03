@@ -74,7 +74,7 @@ public final class DigitalIn {
      */
 	public init(_ idName: Id,
                 mode: Mode = .pullDown) {
-        self.id = id
+        self.id = idName.rawValue
         self.mode = mode
         self.interruptMode = .falling
 
