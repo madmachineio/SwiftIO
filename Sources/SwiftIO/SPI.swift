@@ -57,7 +57,7 @@
      ````
      */
     public init(
-        _ idName: IdName,
+        _ idName: Id,
         speed: Int = 5_000_000,
         csPin: DigitalOut? = nil,
         CPOL: Bool = false,
@@ -65,7 +65,7 @@
         bitOrder: BitOrder = .MSB
 
     ) {
-        self.id = idName.value
+        self.id = id
         self.speed = Int32(speed)
         self.csPin = csPin
         self.operation = .eightBits

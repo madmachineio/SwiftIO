@@ -56,9 +56,9 @@
      let i2cBus = I2C(Id.I2C0)
      ````
      */
-    public init(_ idName: IdName,
+    public init(_ idName: Id,
                 speed: Speed = .standard) {
-        self.id = idName.value
+        self.id = id
         self.speed = speed
     }
 

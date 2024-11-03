@@ -47,14 +47,14 @@ public final class DigitalInOut {
     ///   - outputValue: **OPTIONAL** The output value after initiation.
     ///     `false` by default.
     public init(
-        _ idName: IdName,
+        _ idName: Id,
         direction: Direction = .output,
         outputMode: DigitalOut.Mode = .pushPull,
         inputMode: DigitalIn.Mode = .pullUp,
         outputValue: Bool = false
     ) {
         
-        self.id = idName.value
+        self.id = id
         self.direction = direction
         self.outputMode = outputMode
         self.inputMode = inputMode

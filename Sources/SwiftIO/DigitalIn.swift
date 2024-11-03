@@ -72,9 +72,9 @@ public final class DigitalIn {
      let pin = DigitalIn(Id.D0, mode: .pullDown)
      ````
      */
-	public init(_ idName: IdName,
+	public init(_ idName: Id,
                 mode: Mode = .pullDown) {
-        self.id = idName.value
+        self.id = id
         self.mode = mode
         self.interruptMode = .falling
 

@@ -98,10 +98,10 @@ public final class DigitalOut {
      let outputPin3 = DigitalOut(Id.D3, mode: .openDrain, value: true)
      ````
      */
-    public init(_ idName: IdName,
+    public init(_ idName: Id,
                 mode: Mode = .pushPull,
                 value: Bool = false) {
-        self.id = idName.value
+        self.id = id
         self.value = value
         self.mode = mode
 
