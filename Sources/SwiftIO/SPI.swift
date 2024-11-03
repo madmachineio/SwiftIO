@@ -87,10 +87,10 @@
             operation.insert(.LSB)
         }
 
-            if let cs = csPin {
-                cs.setMode(.pushPull)
-                cs.write(true)
-            }
+        if let cs = csPin {
+            cs.setMode(.pushPull)
+            cs.write(true)
+        }
     }
 
     deinit {
