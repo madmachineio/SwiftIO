@@ -1,17 +1,28 @@
 # This is a MadMachine project file in TOML format
-# This file holds those parameters that could not be managed by SwiftPM
-# Edit this file would change the behavior of the building/downloading procedure
-# Those project files in the dependent libraries would be IGNORED
+# This file contains parameters that cannot be managed by SwiftPM
+# Editing this file will alter the behavior of the build/download process
+# Project files within dependent libraries will be IGNORED
 
 # Specify the board name below
-# There are "SwiftIOBoard" and "SwiftIOFeather" now
+# Supported boards are listed as follows
+# "SwiftIOBoard"
+# "SwiftIOMicro"
 board = ""
 
-# Specifiy the target triple below
-# There are "thumbv7em-unknown-none-eabi" and "thumbv7em-unknown-none-eabihf" now
-# If your code use significant floating-point calculation,
-# plz set it to "thumbv7em-unknown-none-eabihf"
-triple = "thumbv7em-unknown-none-eabi"
+# Specify the target triple below
+# Supported architectures are listed as follows
+# "thumbv7em-unknown-none-eabi"
+# "thumbv7em-unknown-none-eabihf"
+# "armv7em-none-none-eabi"
+triple = "armv7em-none-none-eabi"
+
+# Enable or disable hardware floating-point support below
+# If your code involves significant floating-point calculations, please set it to 'true'
+hard-float = true
+
+# Enable or disable float register below
+# If your code involves significant floating-point calculations, please set it to 'true'
+float-abi = false
 
 # Reserved for future use 
 version = 1

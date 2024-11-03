@@ -4,42 +4,69 @@
 [![Discord](https://img.shields.io/discord/592743353049808899?&logo=Discord&colorB=7289da)](https://madmachine.io/discord)
 [![twitter](https://img.shields.io/twitter/follow/madmachineio?label=%40madmachineio&style=social)](https://twitter.com/madmachineio)
 
-A Swift framework for microcontrollers. The SwiftIO board provides a good way to learn Swift code. Write your code in the IDE, download to your board, and you'll get the results in real time if you've had the circuit connected.
+A Swift framework for microcontrollers. You can program microcontrollers easily without worrying about complicated low-level stuff. After downloading your project to your board, you'll get the results in real time.
 
 
 ## Documentation
 
-The SwiftIO library provides an easy access to communicate with the external circuits simply by invoking the related classes/methods in the MadMachine IDE. You can read or write the digital and analog signal, as well as using the communication protocol.
+SwiftIO library provides easy access to communicate with the external circuits simply by invoking the related classes/methods. You can read or write digital and analog signals, as well as use communication protocols.
 
-* [API Documention](https://madmachineio.github.io/SwiftIO/) - acquire detailed information about the library 
+Go to [API Documentation](https://madmachineio.github.io/SwiftIO/documentation/swiftio/) for more detailed usage of all the functionalities.
 
 
 ## Library structure
 
-You can obtain the source code of each clasee in the following links.
-* [AnalogIn](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/AnalogIn.swift)
-* [Counter](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/Counter.swift)
-* [DigitalIn](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/DigitalIn.swift)
-* [DigitalOut](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/DigitalOut.swift)
-* [PWMOut](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/PWMOut.swift)
-* [I2C](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/I2C.swift)
-* [SPI](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/SPI.swift)
-* [Timer](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/Timer.swift)
-* [UART](https://github.com/madmachineio/SwiftIO/blob/main/Sources/SwiftIO/UART.swift)
+SwiftIO contains several classes to access different functionalities of the board:
 
+* AnalogIn - read analog input
+* Counter - count the number of clock ticks
+* DigitalIn - read digital input
+* DigitalOut - set high/low digital output
+* DigitalInOut - set a digital pin as both input and output
+* FileDescriptor - perform low-level file operations
+* I2C - use the I2C protocol to communicate with other devices
+* I2SIn - receive audio data from external devices
+* I2SOut - send audio data to external devices
+* KernelTiming - global functions related to time
+* PWMOut - modulate the pulse width of signal
+* SPI - use the SPI protocol to communicate with other devices
+* Timer - set a time interval to do a specified task
+* UART - use the UART protocol to communicate with other devices
+
+
+## Usage example
+
+```swift
+// Import the SwiftIO to use the related board functions.
+import SwiftIO
+// Import the MadBoard to decide which pin is used for the specific function.
+import MadBoard
+
+// Initialize the onboard blue LED to control it by setting output signal.
+let led = DigitalOut(Id.BLUE)
+​
+while true {
+    // Set a high voltage to turn off the onboard LED.
+    // The onboard LED needs a low voltage to be turned on due to circuit connection.
+    led.write(true)
+    sleep(ms: 1000)
+
+    // Set a low voltage to turn on the onboard LED.
+    led.write(false)
+    sleep(ms: 1000)
+}
+```
 
 ## Examples
 
-Before starting to write your project, you can download and run the example codes here to get familiar with the library usage.
+Before starting to create your project, let's start with these examples to get familiar with library usage.
 
-* [GetStarted](https://github.com/madmachineio/Examples/tree/main/GetStarted) - simple code to learn the basic skill
-* [SimpleIO](https://github.com/madmachineio/Examples/tree/main/SimpleIO) - examples using analog and digital signal
-* [AdvancedIO](https://github.com/madmachineio/Examples/tree/main/AdvancedIO/SHT3x) - examples using communication protocle
+* [GetStarted](https://docs.madmachine.io/projects/general/getting-started/overview) - get started and learn basic skills
+* [SimpleIO](https://docs.madmachine.io/projects/general/simpleio/overview) - dive deeper into the microcontroller world and strengthen your programming skills
 
 
-## IDE Installation
+## Preparation
 
-Please choose the version according to your operating system and install the IDE following the instructions below.
+We created the MadMachine extension for Visual Studio Code for easier usage. Please install and configure it following [this instruction](https://docs.madmachine.io/overview/getting-started/software-prerequisite).
 
-* [Download](https://docs.madmachine.io/overview/software/madmachine-ide)
-* [Installation instruction](https://docs.madmachine.io/overview/run-your-first-project) - step-by-step instruction to help you install the SDK
+Besides, if you are more comfortable with the command line, welcome to try [mm sdk](https://github.com/madmachineio/mm-sdk).

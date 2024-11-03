@@ -5,14 +5,15 @@
 //
 // Authors: Andy Liu
 // Created: 11/22/2021
-// Updated: 11/22/2021
+// Updated: 11/3/2024
 //
 // See https://madmachine.io for more information
 //
 //===----------------------------------------------------------------------===//
 
-import CNewlib
+import CSwiftIO
 
+/// The Errno struct lists all the possible errors.
 public struct Errno: RawRepresentable, Error {
 
   /// The raw C error number.
@@ -22,13 +23,15 @@ public struct Errno: RawRepresentable, Error {
   /// Creates a strongly typed error number from a raw C error number.
   @_alwaysEmitIntoClient
   public init(rawValue: CInt) {
-      //self.rawValue = rawValue < 0 ? -rawValue : rawValue
-      self.rawValue = abs(rawValue)
+    //self.rawValue = rawValue < 0 ? -rawValue : rawValue
+    self.rawValue = abs(rawValue)
   }
 
   @_alwaysEmitIntoClient
   public init(_ raw: CInt) { self.init(rawValue: raw) }
 
+  @_alwaysEmitIntoClient
+  public init(_ raw: Int) { self.init(rawValue: CInt(raw)) }
   /// Success.
   ///
   /// The corresponding C result is 0.
@@ -45,7 +48,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var notPermitted: Errno { Errno(EPERM) }
 
-
   /// No such file or directory.
   ///
   /// A component of a specified pathname didn't exist,
@@ -55,7 +57,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noSuchFileOrDirectory: Errno { Errno(ENOENT) }
 
-
   /// No such process.
   ///
   /// There isn't a process that corresponds to the specified process ID.
@@ -63,7 +64,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ESRCH`.
   @_alwaysEmitIntoClient
   public static var noSuchProcess: Errno { Errno(ESRCH) }
-
 
   /// Interrupted function call.
   ///
@@ -76,7 +76,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var interrupted: Errno { Errno(EINTR) }
 
-
   /// Input/output error.
   ///
   /// Some physical input or output error occurred.
@@ -88,7 +87,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var ioError: Errno { Errno(EIO) }
 
-
   /// No such device or address.
   ///
   /// Input or output on a special file referred to a device that didn't exist,
@@ -99,7 +97,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENXIO`.
   @_alwaysEmitIntoClient
   public static var noSuchAddressOrDevice: Errno { Errno(ENXIO) }
-
 
   /// The argument list is too long.
   ///
@@ -121,7 +118,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var execFormatError: Errno { Errno(ENOEXEC) }
 
-
   /// Bad file descriptor.
   ///
   /// A file descriptor argument was out of range,
@@ -133,7 +129,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var badFileDescriptor: Errno { Errno(EBADF) }
 
-
   /// No child processes.
   ///
   /// A `wait(2)` or `waitpid(2)` function was executed
@@ -144,7 +139,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noChildProcess: Errno { Errno(ECHILD) }
 
-
   /// Resource deadlock avoided.
   ///
   /// You attempted to lock a system resource
@@ -153,7 +147,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EDEADLK`.
   @_alwaysEmitIntoClient
   public static var deadlock: Errno { Errno(EDEADLK) }
-
 
   /// Can't allocate memory.
   ///
@@ -168,7 +161,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noMemory: Errno { Errno(ENOMEM) }
 
-
   /// Permission denied.
   ///
   /// You attempted to access a file
@@ -178,7 +170,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var permissionDenied: Errno { Errno(EACCES) }
 
-
   /// Bad address.
   ///
   /// An address passed as an argument to a system call was invalid.
@@ -186,7 +177,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EFAULT`.
   @_alwaysEmitIntoClient
   public static var badAddress: Errno { Errno(EFAULT) }
-
 
   /// Resource busy.
   ///
@@ -197,7 +187,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var resourceBusy: Errno { Errno(EBUSY) }
 
-
   /// File exists.
   ///
   /// An existing file was mentioned in an inappropriate context;
@@ -207,7 +196,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var fileExists: Errno { Errno(EEXIST) }
 
-
   /// Improper link.
   ///
   /// You attempted to create a hard link to a file on another file system.
@@ -215,7 +203,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EXDEV`.
   @_alwaysEmitIntoClient
   public static var improperLink: Errno { Errno(EXDEV) }
-
 
   /// Operation not supported by device.
   ///
@@ -225,7 +212,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENODEV`.
   @_alwaysEmitIntoClient
   public static var operationNotSupportedByDevice: Errno { Errno(ENODEV) }
-
 
   /// Not a directory.
   ///
@@ -237,7 +223,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var notDirectory: Errno { Errno(ENOTDIR) }
 
-
   /// Is a directory.
   ///
   /// You attempted to open a directory with write mode specified.
@@ -247,7 +232,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var isDirectory: Errno { Errno(EISDIR) }
 
-
   /// Invalid argument.
   ///
   /// One or more of the specified arguments wasn't valid;
@@ -256,7 +240,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EINVAL`.
   @_alwaysEmitIntoClient
   public static var invalidArgument: Errno { Errno(EINVAL) }
-
 
   /// The system has too many open files.
   ///
@@ -269,7 +252,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var tooManyOpenFilesInSystem: Errno { Errno(ENFILE) }
 
-
   /// This process has too many open files.
   ///
   /// To check the current limit,
@@ -278,7 +260,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EMFILE`.
   @_alwaysEmitIntoClient
   public static var tooManyOpenFiles: Errno { Errno(EMFILE) }
-
 
   /// Inappropriate control function.
   ///
@@ -289,7 +270,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENOTTY`.
   @_alwaysEmitIntoClient
   public static var inappropriateIOCTLForDevice: Errno { Errno(ENOTTY) }
-
 
   /// Text file busy.
   ///
@@ -312,7 +292,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var fileTooLarge: Errno { Errno(EFBIG) }
 
-
   /// Device out of space.
   ///
   /// A write to an ordinary file,
@@ -326,7 +305,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noSpace: Errno { Errno(ENOSPC) }
 
-
   /// Illegal seek.
   ///
   /// An `lseek(2)` function was issued on a socket, pipe or FIFO.
@@ -334,7 +312,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ESPIPE`.
   @_alwaysEmitIntoClient
   public static var illegalSeek: Errno { Errno(ESPIPE) }
-
 
   /// Read-only file system.
   ///
@@ -345,7 +322,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var readOnlyFileSystem: Errno { Errno(EROFS) }
 
-
   /// Too many links.
   ///
   /// The maximum number of hard links to a single file (32767)
@@ -354,7 +330,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EMLINK`.
   @_alwaysEmitIntoClient
   public static var tooManyLinks: Errno { Errno(EMLINK) }
-
 
   /// Broken pipe.
   ///
@@ -365,7 +340,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var brokenPipe: Errno { Errno(EPIPE) }
 
-
   /// Numerical argument out of domain.
   ///
   /// A numerical input argument was outside the defined domain of the
@@ -374,7 +348,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EDOM`.
   @_alwaysEmitIntoClient
   public static var outOfDomain: Errno { Errno(EDOM) }
-
 
   /// Numerical result out of range.
   ///
@@ -387,7 +360,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var outOfRange: Errno { Errno(ERANGE) }
 
-
   /// Resource temporarily unavailable.
   ///
   /// This is a temporary condition;
@@ -397,7 +369,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EAGAIN`.
   @_alwaysEmitIntoClient
   public static var resourceTemporarilyUnavailable: Errno { Errno(EAGAIN) }
-
 
   /// Operation now in progress.
   ///
@@ -410,7 +381,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var nowInProgress: Errno { Errno(EINPROGRESS) }
 
-
   /// Operation already in progress.
   ///
   /// You attempted an operation on a nonblocking object
@@ -420,13 +390,11 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var alreadyInProcess: Errno { Errno(EALREADY) }
 
-
   /// A socket operation was performed on something that isn't a socket.
   ///
   /// The corresponding C error is `ENOTSOCK`.
   @_alwaysEmitIntoClient
   public static var notSocket: Errno { Errno(ENOTSOCK) }
-
 
   /// Destination address required.
   ///
@@ -436,7 +404,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var addressRequired: Errno { Errno(EDESTADDRREQ) }
 
-
   /// Message too long.
   ///
   /// A message sent on a socket was larger than
@@ -445,7 +412,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EMSGSIZE`.
   @_alwaysEmitIntoClient
   public static var messageTooLong: Errno { Errno(EMSGSIZE) }
-
 
   /// Protocol wrong for socket type.
   ///
@@ -458,7 +424,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var protocolWrongTypeForSocket: Errno { Errno(EPROTOTYPE) }
 
-
   /// Protocol not available.
   ///
   /// A bad option or level was specified
@@ -467,7 +432,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENOPROTOOPT`.
   @_alwaysEmitIntoClient
   public static var protocolNotAvailable: Errno { Errno(ENOPROTOOPT) }
-
 
   /// Protocol not supported.
   ///
@@ -478,7 +442,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var protocolNotSupported: Errno { Errno(EPROTONOSUPPORT) }
 
-
   /// Not supported.
   ///
   /// The attempted operation isn't supported
@@ -488,7 +451,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var notSupported: Errno { Errno(ENOTSUP) }
 
-
   /// Protocol family not supported.
   ///
   /// The protocol family hasn't been configured into the system
@@ -497,7 +459,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EPFNOSUPPORT`.
   @_alwaysEmitIntoClient
   public static var protocolFamilyNotSupported: Errno { Errno(EPFNOSUPPORT) }
-
 
   /// The address family isn't supported by the protocol family.
   ///
@@ -509,7 +470,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var addressFamilyNotSupported: Errno { Errno(EAFNOSUPPORT) }
 
-
   /// Address already in use.
   ///
   /// Only one use of each address is normally permitted.
@@ -517,7 +477,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EADDRINUSE`.
   @_alwaysEmitIntoClient
   public static var addressInUse: Errno { Errno(EADDRINUSE) }
-
 
   /// Can't assign the requested address.
   ///
@@ -528,7 +487,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var addressNotAvailable: Errno { Errno(EADDRNOTAVAIL) }
 
-
   /// Network is down.
   ///
   /// A socket operation encountered a dead network.
@@ -536,7 +494,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENETDOWN`.
   @_alwaysEmitIntoClient
   public static var networkDown: Errno { Errno(ENETDOWN) }
-
 
   /// Network is unreachable.
   ///
@@ -546,7 +503,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var networkUnreachable: Errno { Errno(ENETUNREACH) }
 
-
   /// Network dropped connection on reset.
   ///
   /// The host you were connected to crashed and restarted.
@@ -555,7 +511,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var networkReset: Errno { Errno(ENETRESET) }
 
-
   /// Software caused a connection abort.
   ///
   /// A connection abort was caused internal to your host machine.
@@ -563,7 +518,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ECONNABORTED`.
   @_alwaysEmitIntoClient
   public static var connectionAbort: Errno { Errno(ECONNABORTED) }
-
 
   /// Connection reset by peer.
   ///
@@ -575,7 +529,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var connectionReset: Errno { Errno(ECONNRESET) }
 
-
   /// No buffer space available.
   ///
   /// An operation on a socket or pipe wasn't performed
@@ -585,7 +538,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENOBUFS`.
   @_alwaysEmitIntoClient
   public static var noBufferSpace: Errno { Errno(ENOBUFS) }
-
 
   /// Socket is already connected.
   ///
@@ -609,8 +561,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var socketNotConnected: Errno { Errno(ENOTCONN) }
 
-
-
   /// Operation timed out.
   ///
   /// A `connect(2)`, `connectx(2)` or `send(2)` request failed
@@ -621,7 +571,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ETIMEDOUT`.
   @_alwaysEmitIntoClient
   public static var timedOut: Errno { Errno(ETIMEDOUT) }
-
 
   /// Connection refused.
   ///
@@ -634,7 +583,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var connectionRefused: Errno { Errno(ECONNREFUSED) }
 
-
   /// Too many levels of symbolic links.
   ///
   /// A pathname lookup involved more than eight symbolic links.
@@ -642,7 +590,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ELOOP`.
   @_alwaysEmitIntoClient
   public static var tooManySymbolicLinkLevels: Errno { Errno(ELOOP) }
-
 
   /// The file name is too long.
   ///
@@ -653,7 +600,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var fileNameTooLong: Errno { Errno(ENAMETOOLONG) }
 
-
   /// The host is down.
   ///
   /// A socket operation failed because the destination host was down.
@@ -661,7 +607,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EHOSTDOWN`.
   @_alwaysEmitIntoClient
   public static var hostIsDown: Errno { Errno(EHOSTDOWN) }
-
 
   /// No route to host.
   ///
@@ -671,7 +616,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noRouteToHost: Errno { Errno(EHOSTUNREACH) }
 
-
   /// Directory not empty.
   ///
   /// A directory with entries other than `.` and `..`
@@ -680,8 +624,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ENOTEMPTY`.
   @_alwaysEmitIntoClient
   public static var directoryNotEmpty: Errno { Errno(ENOTEMPTY) }
-
-
 
   /// Disk quota exceeded.
   ///
@@ -696,7 +638,6 @@ public struct Errno: RawRepresentable, Error {
   /// @_alwaysEmitIntoClient
   /// public static var diskQuotaExceeded: Errno { Errno(EDQUOT) }
 
-
   /// Stale NFS file handle.
   ///
   /// You attempted access an open file on an NFS filesystem,
@@ -708,7 +649,6 @@ public struct Errno: RawRepresentable, Error {
   /// @_alwaysEmitIntoClient
   /// public static var staleNFSFileHandle: Errno { Errno(ESTALE) }
 
-
   /// No locks available.
   ///
   /// You have reached the system-imposed limit
@@ -718,7 +658,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noLocks: Errno { Errno(ENOLCK) }
 
-
   /// Function not implemented.
   ///
   /// You attempted a system call that isn't available on this system.
@@ -727,7 +666,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var noFunction: Errno { Errno(ENOSYS) }
 
-
   /// Operation canceled.
   ///
   /// The scheduled operation was canceled.
@@ -735,7 +673,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `ECANCELED`.
   @_alwaysEmitIntoClient
   public static var canceled: Errno { Errno(ECANCELED) }
-
 
   /// Illegal byte sequence.
   ///
@@ -746,7 +683,6 @@ public struct Errno: RawRepresentable, Error {
   /// The corresponding C error is `EILSEQ`.
   @_alwaysEmitIntoClient
   public static var illegalByteSequence: Errno { Errno(EILSEQ) }
-
 
   /// Bad message.
   ///
@@ -815,7 +751,6 @@ public struct Errno: RawRepresentable, Error {
   @_alwaysEmitIntoClient
   public static var timeout: Errno { Errno(ETIME) }
 
-
   /// Operation not supported on socket.
   ///
   /// The attempted operation isn't supported for the type of socket referenced;
@@ -826,14 +761,24 @@ public struct Errno: RawRepresentable, Error {
   public static var notSupportedOnSocket: Errno { Errno(EOPNOTSUPP) }
 }
 
-
+// Constants defined in header but not man page
+/*System 0.0.1, @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)*/
 extension Errno {
+
+  /// Operation would block.
+  ///
+  /// The corresponding C error is `EWOULDBLOCK`.
   @_alwaysEmitIntoClient
-  public static func ~=(_ lhs: Errno, _ rhs: Error) -> Bool {
-    guard let value = rhs as? Errno else { return false }
-    return lhs == value
-  }
+  public static var wouldBlock: Errno { Errno(EWOULDBLOCK) }
 }
+
+// extension Errno {
+//   @_alwaysEmitIntoClient
+//   public static func ~= (_ lhs: Errno, _ rhs: Error) -> Bool {
+//     guard let value = rhs as? Errno else { return false }
+//     return lhs == value
+//   }
+// }
 
 // @available(macOS 10.16, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
 extension Errno: CustomStringConvertible, CustomDebugStringConvertible {
