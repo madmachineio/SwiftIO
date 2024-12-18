@@ -1,0 +1,20 @@
+name: release
+
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/**'
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '35 17 * * 5'
+
+
+jobs:
+  build:
+    uses: madmachineio/actions/.github/workflows/build.yml@main
+    with: 
+      runners: '["ubuntu-22.04", "ubuntu-24.04", "macos-13", "macos-14", "macos-15"]'
