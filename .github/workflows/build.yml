@@ -4,7 +4,6 @@ name: build
 on:
   push:
     branches:
-      - develop
       - 'feature/**'
       - 'fix/**'
     paths:
@@ -17,4 +16,4 @@ jobs:
   build:
     uses: madmachineio/actions/.github/workflows/build.yml@main
     with:
-      runners: '["ubuntu-24.04", "macos-13"]'
+      runners: '["ubuntu-24.04", "macos-13", "macos-14"]'
