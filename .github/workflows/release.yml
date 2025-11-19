@@ -10,7 +10,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '35 17 * * 5'
+    - cron: '5 0 * * 0'
 
 
 jobs:
