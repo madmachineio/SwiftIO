@@ -17,4 +17,4 @@ jobs:
   build:
     uses: madmachineio/actions/.github/workflows/build.yml@main
     with: 
-      runners: '["ubuntu-22.04", "ubuntu-24.04", "macos-13", "macos-14", "macos-15"]'
+      runners: '["ubuntu-22.04", "ubuntu-24.04", "macos-14", "macos-15", "macos-15-intel"]'
